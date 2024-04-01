@@ -3,6 +3,9 @@ package net.smileycorp.deeperdepths.common;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+
 public class Constants {
 	
 	public static final String NAME = "Deeper Depths";
@@ -12,8 +15,9 @@ public class Constants {
 	public static final String PATH = "net.smileycorp.deeperdepths.";
 	public static final String CLIENT = PATH + "client.ClientProxy";
 	public static final String SERVER = PATH + "common.CommonProxy";
-    
-    public static String name(String name) {
+    public static final boolean IS_COPPER_TASTY = isCopperTasty();
+	
+	public static String name(String name) {
 		return MODID + "." + name.replace("_", "").replace(" ", "");
 	}
 	
@@ -29,6 +33,11 @@ public class Constants {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setString("id", id.toString());
 		return tag;
+	}
+	
+	private static boolean isCopperTasty() {
+		LocalDateTime time = LocalDateTime.now();
+		return time.getDayOfMonth() == 1 && time.getMonth().equals(Month.APRIL);
 	}
 	
 }
