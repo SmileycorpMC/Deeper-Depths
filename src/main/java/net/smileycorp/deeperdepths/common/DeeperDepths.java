@@ -6,6 +6,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.smileycorp.deeperdepths.common.world.DDRegisterStructures;
 import net.smileycorp.deeperdepths.common.world.DDWorldGen;
@@ -16,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 public class DeeperDepths {
     
     private static Logger logger = LogManager.getLogger(Constants.NAME);
-    
+    public static SimpleNetworkWrapper network;
     @SidedProxy(clientSide = Constants.CLIENT, serverSide = Constants.SERVER)
     public static CommonProxy proxy;
     
@@ -44,5 +46,20 @@ public class DeeperDepths {
     public void serverStart(FMLServerStartingEvent event){
         proxy.serverStart(event);
     }
-    
+
+
+    /**
+     * Make sure Unseen finishes this before going public using this animation system!
+     * Reference this for examples
+     * https://github.com/Jboymercs/test-ai-3/tree/main/animation/example
+     * @param message
+     * @param <MSG>
+     */
+    public static <MSG extends IMessage> void sendMSGToAll(MSG message) {
+        //TODO Still searching for proper method
+        //  for(EntityPlayerMP playerMP : Minecraft.getMinecraft().) {
+        //  sendNonLocal(message, playerMP);
+        //  }
+        //network.sendToAll(message);
+    }
 }
