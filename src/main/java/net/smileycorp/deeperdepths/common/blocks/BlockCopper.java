@@ -7,6 +7,9 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.smileycorp.deeperdepths.common.Constants;
@@ -45,6 +48,11 @@ public class BlockCopper extends Block {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(WEATHER_STAGE, EnumWeatherStage.values()[meta % 4]).withProperty(WAXED, meta >= 4);
+    }
+    
+    @Override
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+        for (int i = 0; i < 8; i++) items.add(new ItemStack(this, 1, i));
     }
     
 }

@@ -29,19 +29,18 @@ public class DeeperDepthsBlocks {
 
     //geodes
     public static final Block CALCITE = null;
-    public static final Block SMOOTH_BASALT = null;
-    public static final Block POLISHED_BASALT = null;
     public static final Block BLOCK_OF_AMETHYST = null;
     public static final Block AMETHYST_BUD = null;
     
     //copper
-    public static final Block COPPER_ORE = null;
+    //public static final Block COPPER_ORE = null;
     public static final Block COPPER_BLOCK = new BlockCopper("copper_block");
     public static final Block LIGHTNING_ROD = null;
     public static final Block CUT_COPPER = new BlockCopper("cut_copper_block");
-    public static final Block CUT_COPPER_SLAB = null;
-    public static final Block WAXED_CUT_COPPER_SLAB = null;
-    public static final Block CUT_COPPER_STAIRS = null;
+    public static final Block CUT_COPPER_SLAB = new BlockCopperSlab("cut_copper_slab", false);
+    public static final Block DOUBLE_CUT_COPPER_SLAB = new BlockCopperSlab("cut_copper_slab", true);
+    
+    /*public static final Block CUT_COPPER_STAIRS = null;
     public static final Block EXPOSED_CUT_COPPER_STAIRS = null;
     public static final Block WEATHERED_CUT_COPPER_STAIRS = null;
     public static final Block OXIDIZED_CUT_COPPER_STAIRS = null;
@@ -66,7 +65,7 @@ public class DeeperDepthsBlocks {
     public static final Block WAXED_COPPER_TRAPDOOR = null;
     public static final Block WAXED_EXPOSED_COPPER_TRAPDOOR = null;
     public static final Block WAXED_WEATHERED_COPPER_TRAPDOOR = null;
-    public static final Block WAXED_OXIDIZED_COPPER_TRAPDOOR = null;
+    public static final Block WAXED_OXIDIZED_COPPER_TRAPDOOR = null;*/
     
     //functional blocks
     public static final Block COPPER_BULB = null;
