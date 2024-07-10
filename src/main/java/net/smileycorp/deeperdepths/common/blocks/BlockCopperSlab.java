@@ -127,12 +127,7 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     @Override
     public String byMeta(int meta) {
-        return getPropertyName(meta);
-    }
-    
-    @Override
-    public String getName() {
-        return name;
+        return getPropertyName(meta)  + "_" + getRegistryName().getResourcePath();
     }
     
 }

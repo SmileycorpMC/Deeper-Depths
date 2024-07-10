@@ -1,17 +1,24 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+
 public interface IBlockProperties {
     
-        default int getMaxMeta(){
+    default int getMaxMeta(){
             return 0;
         }
         
-        default boolean usesCustomItemHandler(){
+    default boolean usesCustomItemHandler(){
             return false;
         }
     
-        default String byMeta(int meta) {
-            return "inventory";
-        }
+    default String byMeta(int meta) {
+        return "inventory";
+    }
+    
+    default String byState(IBlockState state) {
+        return byMeta(((Block)this).getMetaFromState(state));
+    }
     
 }
