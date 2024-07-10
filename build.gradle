@@ -1,0 +1,143 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+		maven { url "https://repo.spongepowered.org/repository/maven-public/" }
+        jcenter()
+        mavenCentral()
+		gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+}
+
+repositories {
+	maven {
+        url "https://www.cursemaven.com"
+    }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+}
+        
+apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
+version = "1.12.2-1.0.0"
+group = "net.smileycorp.deeperdepths"
+archivesBaseName = "Deeper-Depths"
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+minecraft {
+    mappings channel: 'snapshot', version: '20171003-1.12'
+    
+    accessTransformer = file('src/main/resources/META-INF/deeperdepths_at.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+        }
+
+        server {
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, "mixins.deeperdepths.refmap.json"
+}
+
+repositories {
+    maven { url = 'https://repo.spongepowered.org/maven' }
+}
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+	implementation "org.spongepowered:mixin:0.8"
+	implementation "curse.maven:futuremc-310059:5013081"
+    implementation "curse.maven:atlas-463826:3816069"
+    implementation "curse.maven:dynaores-1056043:5504933"
+    implementation "curse.maven:chisel-235279:2535488"
+    implementation "curse.maven:mekanism-268560:2835175"
+}
+
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "deeperdepths",
+            "Specification-Vendor": "smileycorp",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"smileycorp",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			"ForceLoadAsMod": true,
+			"FMLAT": "deeperdepths_at.cfg",
+			"FMLCorePluginContainsFMLMod": true,
+			"TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+			"MixinConfigs": "mixins.deeperdepths.json"
+        ])
+        
+    }
+}
+
+shadowJar {
+	classifier = ''
+	exclude 'LICENSE.txt'
+	dependencies {
+		include(dependency("org.spongepowered:mixin:0.8"))
+	}
+}
+
+build.dependsOn(shadowJar)
+
+reobf {
+    shadowJar {}
+}
+
+build.dependsOn(reobf)
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", "1.12.2"
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':"1.12.2"
+    }
+        
+    // copy everything else except the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
