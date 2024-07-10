@@ -18,11 +18,12 @@ import net.smileycorp.deeperdepths.common.DeeperDepths;
 
 import java.util.List;
 
-public class BlockCopperSlab extends BlockSlab {
+public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     public static final PropertyString VARIANT = new PropertyString("variant", getAllowedValues());
     
     private final boolean isDouble;
+    private final String name;
     
     public BlockCopperSlab(String name, boolean isDouble) {
         super(Material.IRON);
@@ -36,6 +37,7 @@ public class BlockCopperSlab extends BlockSlab {
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.TOP);
         setDefaultState(base);
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
+        this.name = name;
     }
     
     @Override
@@ -116,6 +118,21 @@ public class BlockCopperSlab extends BlockSlab {
             value = value.substring(0, 5);
         }
         return meta + EnumWeatherStage.fromName(value).ordinal();
+    }
+    
+    @Override
+    public int getMaxMeta() {
+        return 8;
+    }
+    
+    @Override
+    public String byMeta(int meta) {
+        return getPropertyName(meta);
+    }
+    
+    @Override
+    public String getName() {
+        return name;
     }
     
 }

@@ -45,8 +45,8 @@ public class ItemOminousBottle extends ItemDeeperDepths {
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
         if (!world.isRemote) {
             world.playSound(null, entity.getPosition(), DeeperDepthsSoundEvents.OMINOUS_BOTTLE_USE, entity.getSoundCategory(), 1, 1);
-            entity.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
-            entity.addPotionEffect(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000, getAmplifier(stack), false, false));
+            //entity.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
+            //entity.addPotionEffect(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000, getAmplifier(stack), false, false));
             if (entity instanceof EntityPlayerMP) CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entity, stack);
             if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).func_184812_l_())) stack.shrink(1);
         }
@@ -65,7 +65,7 @@ public class ItemOminousBottle extends ItemDeeperDepths {
         StringBuilder builder = new StringBuilder(I18n.translateToLocal("effect.deeperdepths.bad_omen").trim());
         int amplifier = getAmplifier(stack);
         if (amplifier > 0) builder.append(" " + I18n.translateToLocal("potion.potency." + amplifier).trim());
-        builder.append(" (" + Potion.getPotionDurationString(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000), 1f) + ")");
+        //builder.append(" (" + Potion.getPotionDurationString(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000), 1f) + ")");
         tooltip.add(TextFormatting.BLUE + builder.toString());
     }
     

@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 
-public class BlockDDStoneSlab extends BlockSlab {
+public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     
     public static final PropertyEnum<EnumStoneType> VARIANT = PropertyEnum.create("variant", EnumStoneType.class, EnumStoneType.SHAPED_TYPES);
     
@@ -87,6 +87,16 @@ public class BlockDDStoneSlab extends BlockSlab {
     @Override
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
         for (int i = 0; i < VARIANT.getAllowedValues().size(); i++) items.add(new ItemStack(this, 1, i));
+    }
+    
+    @Override
+    public int getMaxMeta() {
+        return 8;
+    }
+    
+    @Override
+    public String byMeta(int meta) {
+        return EnumStoneType.getShaped(meta).getName();
     }
     
 }

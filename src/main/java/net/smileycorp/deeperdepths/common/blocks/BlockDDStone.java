@@ -60,4 +60,15 @@ public class BlockDDStone extends BlockDeeperDepths {
         for (int i = 0; i < EnumStoneType.values().length; i++) items.add(new ItemStack(this, 1, i));
     }
     
+    @Override
+    public int getMaxMeta() {
+        return EnumStoneType.values().length;
+    }
+    
+    @Override
+    public String byMeta(int meta) {
+        return EnumStoneType.get(meta).getName();
+    }
+    
+    
 }

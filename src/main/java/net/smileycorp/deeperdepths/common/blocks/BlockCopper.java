@@ -47,4 +47,16 @@ public class BlockCopper extends BlockDeeperDepths {
         for (int i = 0; i < 8; i++) items.add(new ItemStack(this, 1, i));
     }
     
+    @Override
+    public int getMaxMeta() {
+        return 8;
+    }
+    
+    @Override
+    public String byMeta(int meta) {
+        StringBuilder builder = new StringBuilder();
+        if (meta % 8 >= 4) builder.append("waxed_");
+        return builder.append("_" + EnumWeatherStage.values()[meta % 4].getName()).toString();
+    }
+    
 }
