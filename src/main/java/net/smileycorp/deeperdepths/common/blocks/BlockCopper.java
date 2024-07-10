@@ -13,7 +13,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.smileycorp.deeperdepths.common.Constants;
-import net.smileycorp.deeperdepths.common.EnumWeatherStage;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 
 public class BlockCopper extends Block {
     
@@ -28,6 +28,7 @@ public class BlockCopper extends Block {
         setHardness(3);
         setResistance(6);
         setDefaultState(getBlockState().getBaseState().withProperty(WEATHER_STAGE, EnumWeatherStage.NORMAL).withProperty(WAXED, false));
+        setCreativeTab(DeeperDepths.CREATIVE_TAB);
     }
     
     @Override
