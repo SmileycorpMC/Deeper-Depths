@@ -3,10 +3,11 @@ package net.smileycorp.deeperdepths.common.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.smileycorp.atlas.api.block.IBlockProperties;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 
-public class BlockDeeperDepths extends Block {
+public class BlockDeeperDepths extends Block implements IBlockProperties {
     
     public BlockDeeperDepths(String name, Material material, float h, float r, int level) {
         super(material);

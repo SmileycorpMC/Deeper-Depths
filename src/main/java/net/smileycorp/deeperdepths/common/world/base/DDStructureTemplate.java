@@ -1,6 +1,5 @@
 package net.smileycorp.deeperdepths.common.world.base;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;

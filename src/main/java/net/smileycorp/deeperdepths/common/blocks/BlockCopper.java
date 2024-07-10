@@ -1,6 +1,5 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -12,23 +11,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.smileycorp.deeperdepths.common.Constants;
-import net.smileycorp.deeperdepths.common.DeeperDepths;
 
-public class BlockCopper extends Block {
+public class BlockCopper extends BlockDeeperDepths {
     
     public static final PropertyEnum<EnumWeatherStage> WEATHER_STAGE = PropertyEnum.create("weather_stage", EnumWeatherStage.class);
     public static final PropertyBool WAXED = PropertyBool.create("waxed");
     
     public BlockCopper(String name) {
-        super(Material.IRON);
-        setRegistryName(Constants.loc(name));
-        setUnlocalizedName(Constants.name(name));
-        setHarvestLevel("PICKAXE", 1);
-        setHardness(3);
-        setResistance(6);
+        super(name, Material.IRON, 3, 6, 1);
         setDefaultState(getBlockState().getBaseState().withProperty(WEATHER_STAGE, EnumWeatherStage.NORMAL).withProperty(WAXED, false));
-        setCreativeTab(DeeperDepths.CREATIVE_TAB);
     }
     
     @Override

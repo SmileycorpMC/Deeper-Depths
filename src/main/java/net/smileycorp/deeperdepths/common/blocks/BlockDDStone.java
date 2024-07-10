@@ -1,6 +1,5 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,21 +13,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.smileycorp.deeperdepths.common.Constants;
-import net.smileycorp.deeperdepths.common.DeeperDepths;
 
 import javax.annotation.Nullable;
 
-public class BlockDDStone extends Block {
+public class BlockDDStone extends BlockDeeperDepths {
     
     public static final PropertyEnum<EnumStoneType> VARIANT = PropertyEnum.create("variant", EnumStoneType.class);
     
     public BlockDDStone() {
-        super(Material.ROCK);
-        setRegistryName(Constants.loc("stone"));
-        setUnlocalizedName(Constants.name("Stone"));
+        super("stone", Material.ROCK, 1.5f, 6, 0);
         setDefaultState(getBlockState().getBaseState().withProperty(VARIANT, EnumStoneType.TUFF));
-        setCreativeTab(DeeperDepths.CREATIVE_TAB);
     }
     
     @Override

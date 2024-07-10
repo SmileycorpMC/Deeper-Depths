@@ -34,6 +34,8 @@ public class DeeperDepthsBlocks {
     public static final BlockSlab CUT_COPPER_SLAB = new BlockCopperSlab("cut_copper_slab", false);
     public static final BlockSlab DOUBLE_CUT_COPPER_SLAB = new BlockCopperSlab("cut_copper_slab", true);
     
+    public static final Block COPPER_GRATE = new BlockCopperGrate();
+    
     /*public static final Block CUT_COPPER_STAIRS = null;
     public static final Block EXPOSED_CUT_COPPER_STAIRS = null;
     public static final Block WEATHERED_CUT_COPPER_STAIRS = null;
@@ -43,7 +45,6 @@ public class DeeperDepthsBlocks {
     public static final Block WAXED_WEATHERED_CUT_COPPER_STAIRS = null;
     public static final Block WAXED_OXIDIZED_CUT_COPPER_STAIRS = null;
     public static final Block CHISELED_COPPER = null;
-    public static final Block COPPER_GRATE = null;
     public static final Block COPPER_DOOR = null;
     public static final Block EXPOSED_COPPER_DOOR = null;
     public static final Block WEATHERED_COPPER_DOOR = null;

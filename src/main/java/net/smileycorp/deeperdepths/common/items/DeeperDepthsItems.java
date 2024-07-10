@@ -14,10 +14,7 @@ import java.lang.reflect.Field;
 public class DeeperDepthsItems {
     
     //materials
-    public static final Item AMETHYST = null;
-    public static final Item COPPER_INGOT = null;
-    public static final Item ECHO_SHARD = null;
-    public static final Item BREEZE_ROD = null;
+    public static final Item MATERIALS = new ItemDeeperDepthsMaterial();
     public static final Item TALLOW = null;
     
     //useable items
