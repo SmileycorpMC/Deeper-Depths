@@ -12,7 +12,6 @@ public class DeeperDepthsItems {
     public static final Item TALLOW = null;
     
     //useable items
-    public static final Item AXOLOTL_BUCKET = null;
     public static final Item WIND_CHARGE = null;
     public static final Item OMINOUS_BOTTLE = null;
     public static final Item TRIAL_KEY = null;

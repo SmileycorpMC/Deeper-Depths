@@ -1,7 +1,10 @@
 package net.smileycorp.deeperdepths.common;
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.util.IStringSerializable;
+
+import java.util.Map;
 
 public enum EnumWeatherStage implements IStringSerializable {
    
@@ -10,6 +13,7 @@ public enum EnumWeatherStage implements IStringSerializable {
     WEATHERED("weathered", MapColor.CYAN),
     OXIDIZED("oxidized", MapColor.DIAMOND);
     
+    private static final Map<String, EnumWeatherStage> VALUES = Maps.newHashMap();
     private final String name;
     private final MapColor color;
     
@@ -25,6 +29,11 @@ public enum EnumWeatherStage implements IStringSerializable {
     
     public MapColor getMapColor() {
         return color;
+    }
+    
+    public static EnumWeatherStage fromName(String name) {
+        for (EnumWeatherStage stage : values()) if (stage.name.equals(name)) return stage;
+        return null;
     }
     
 }
