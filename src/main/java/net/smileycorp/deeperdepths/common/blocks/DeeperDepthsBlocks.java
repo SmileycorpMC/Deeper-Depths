@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
 import net.smileycorp.atlas.api.block.ShapedBlock;
-import net.smileycorp.atlas.api.block.wood.WoodBlock;
 
 import java.util.Map;
 
@@ -37,9 +36,9 @@ public class DeeperDepthsBlocks {
     
     //copper
     public static final Block COPPER_ORE = null;
-    public static final Block COPPER_BLOCK = null;
+    public static final Block COPPER_BLOCK = new BlockCopper("copper_block");
     public static final Block LIGHTNING_ROD = null;
-    public static final Block CUT_COPPER = null;
+    public static final Block CUT_COPPER = new BlockCopper("cut_copper_block");
     public static final Block CUT_COPPER_SLAB = null;
     public static final Block WAXED_CUT_COPPER_SLAB = null;
     public static final Block CUT_COPPER_STAIRS = null;

@@ -1,9 +1,8 @@
 {
   "compatibilityLevel": "JAVA_8",
   "package": "net.smileycorp.deeperdepths.mixin",
-  "refmap": "mixins.raids.refmap.json",
+  "refmap": "mixins.deeperdepths.refmap.json",
   "mixins": [
-    "MixinWorld"
   ],
   "client": [],
   "server": []
