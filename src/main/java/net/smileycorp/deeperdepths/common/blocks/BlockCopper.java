@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.smileycorp.deeperdepths.common.Constants;
 
 public class BlockCopper extends BlockDeeperDepths {
     
@@ -55,8 +56,8 @@ public class BlockCopper extends BlockDeeperDepths {
     @Override
     public String byMeta(int meta) {
         StringBuilder builder = new StringBuilder();
-        if (meta % 8 >= 4) builder.append("waxed_");
-        return builder.append("_" + EnumWeatherStage.values()[meta % 4].getName())  + "_" + getRegistryName().getResourcePath();
+        if (meta % 8 >= 4) builder.append("Waxed");
+        return builder.append(EnumWeatherStage.values()[meta % 4].getName()) + getUnlocalizedName().replace("tile." + Constants.MODID + ".", "");
     }
     
 }

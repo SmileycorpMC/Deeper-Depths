@@ -44,8 +44,8 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_GRATE, new MetaStateMapper());
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem) {
             if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++)
-                ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(Constants.MODID, ((IMetaItem) item).byMeta(i)));
-            else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Constants.MODID, item.getRegistryName().getResourcePath()));
+                ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i))));
+            else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Constants.locStr(item.getRegistryName().getResourcePath())));
         }
     }
     

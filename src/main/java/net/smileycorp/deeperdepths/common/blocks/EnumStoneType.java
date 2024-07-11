@@ -5,22 +5,23 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.util.IStringSerializable;
 
 import java.util.List;
+import java.util.Locale;
 
 public enum EnumStoneType implements IStringSerializable {
     
-    TUFF("tuff", Material.TUFF, true),
-    POLISHED_TUFF("polished_tuff", Material.TUFF, true),
-    CHISELED_TUFF("chiseled_tuff", Material.TUFF, false),
-    TUFF_BRICKS("tuff_bricks", Material.TUFF, true),
-    CHISELED_TUFF_BRICKS("chisled_tuff_bricks", Material.TUFF, false),
-    CALCITE("calcite", Material.CALCITE, false),
-    COBBLED_DEEPSLATE("cobbled_deepslate", Material.DEEPSLATE, true),
-    CHISELED_DEEPSLATE("chiseled_deepslate", Material.DEEPSLATE, false),
-    POLISHED_DEEPSLATE("polished_deepslate", Material.DEEPSLATE, true),
-    DEEPSLATE_BRICKS("deepslate_bricks", Material.DEEPSLATE, true),
-    CRACKED_DEEPSLATE_BRICKS("cracked_deepslate_bricks", Material.DEEPSLATE, false),
-    DEEPSLATE_TILES("deepslate_tiles", Material.DEEPSLATE, true),
-    CRACKED_DEEPSLATE_TILES("cracked_deepslate_tiles", Material.DEEPSLATE, false);
+    TUFF("Tuff", Material.TUFF, true),
+    POLISHED_TUFF("Polished_Tuff", Material.TUFF, true),
+    CHISELED_TUFF("Chiseled_Tuff", Material.TUFF, false),
+    TUFF_BRICKS("Tuff_Bricks", Material.TUFF, true),
+    CHISELED_TUFF_BRICKS("Chisled_Tuff_Bricks", Material.TUFF, false),
+    CALCITE("Calcite", Material.CALCITE, false),
+    COBBLED_DEEPSLATE("Cobbled_Deepslate", Material.DEEPSLATE, true),
+    CHISELED_DEEPSLATE("Phiseled_Deepslate", Material.DEEPSLATE, false),
+    POLISHED_DEEPSLATE("Polished_Deepslate", Material.DEEPSLATE, true),
+    DEEPSLATE_BRICKS("Deepslate_Bricks", Material.DEEPSLATE, true),
+    CRACKED_DEEPSLATE_BRICKS("Cracked_Deepslate_Bricks", Material.DEEPSLATE, false),
+    DEEPSLATE_TILES("Deepslate_Tiles", Material.DEEPSLATE, true),
+    CRACKED_DEEPSLATE_TILES("Cracked_Deepslate_Tiles", Material.DEEPSLATE, false);
     
     public static final List<EnumStoneType> SHAPED_TYPES = getShapedTypes();
     
@@ -30,12 +31,13 @@ public enum EnumStoneType implements IStringSerializable {
         return list;
     }
     
-    private final String name;
+    private final String name, unlocalizedName;
     private final Material material;
     private final boolean hasVariants;
     
     EnumStoneType(String name, Material material, boolean hasVariants) {
-        this.name = name;
+        this.name = name.toLowerCase(Locale.US);
+        this.unlocalizedName = name.replace("_", "");
         this.material = material;
         this.hasVariants = hasVariants;
     }
@@ -43,6 +45,10 @@ public enum EnumStoneType implements IStringSerializable {
     @Override
     public String getName() {
         return name;
+    }
+    
+    public String getUnlocalizedName() {
+        return unlocalizedName;
     }
     
     public MapColor getMapColor() {

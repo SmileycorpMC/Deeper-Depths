@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 
-public class BlockDeepslate extends BlockHorizontal {
+public class BlockDeepslate extends BlockHorizontal implements IBlockProperties {
     
     public BlockDeepslate() {
         super(Material.ROCK, MapColor.GRAY);

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -20,10 +21,10 @@ import java.util.List;
 
 public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
-    public static final PropertyString VARIANT = new PropertyString("variant", getAllowedValues());
+    private static final List<String> values = getAllowedValues();
+    public static final PropertyString VARIANT = new PropertyString("variant", values);
     
     private final boolean isDouble;
-    private final String name;
     
     public BlockCopperSlab(String name, boolean isDouble) {
         super(Material.IRON);
@@ -33,19 +34,23 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
         setHarvestLevel("PICKAXE", 1);
         setHardness(3);
         setResistance(6);
-        IBlockState base = getBlockState().getBaseState().withProperty(VARIANT, "normal");
-        if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.TOP);
+        IBlockState base = blockState.getBaseState().withProperty(VARIANT, values.get(0));
+        if (!isDouble) base = base.withProperty(HALF,EnumBlockHalf.BOTTOM);
         setDefaultState(base);
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
-        this.name = name;
+    }
+    
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return isDouble() ? new BlockStateContainer(this, VARIANT) : new BlockStateContainer(this, VARIANT, HALF);
     }
     
     @Override
     public String getUnlocalizedName(int meta) {
         StringBuilder builder = new StringBuilder(getUnlocalizedName());
-        if (meta % 8 >= 4) builder.append("_waxed");
-        if (meta % 4 > 0) builder.append("_" + EnumWeatherStage.values()[meta % 4].getName());
-        return builder.toString();
+        if (meta % 8 >= 4) builder.append("Waxed");
+        if (meta % 4 > 0) builder.append(EnumWeatherStage.values()[meta % 4].getUnlocalizedName());
+        return builder + getUnlocalizedName().replace("tile." + Constants.MODID + ".", "");
     }
     
     @Override
@@ -60,7 +65,7 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     @Override
     public Comparable<?> getTypeForItem(ItemStack stack) {
-        return getPropertyName(stack.getMetadata());
+        return values.get(stack.getMetadata() % 8);
     }
     
     @Override
@@ -76,7 +81,7 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return (isDouble ? getDefaultState() : getDefaultState().withProperty(HALF, meta == 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
-                .withProperty(VARIANT, getPropertyName(meta % 8));
+                .withProperty(VARIANT, values.get(meta % 8));
     }
     
     @Override
@@ -101,22 +106,24 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     private static List<String> getAllowedValues() {
         List<String> allowedValues = Lists.newArrayList();
-        for (int i = 0; i < 8; i++) allowedValues.add(getPropertyName(i));
+        for (int i = 0; i < 8; i++) {
+            StringBuilder builder = new StringBuilder();
+            if (i % 8 >= 4) builder.append("waxed_");
+            allowedValues.add(builder.append(EnumWeatherStage.values()[i % 4].getName()).toString());
+        }
+        DeeperDepths.info(allowedValues);
         return allowedValues;
     }
     
-    private static String getPropertyName(int meta) {
-        StringBuilder builder = new StringBuilder();
-        if (meta % 8 >= 4) builder.append("waxed_");
-        return builder.append("_" + EnumWeatherStage.values()[meta % 4].getName()).toString();
-    }
-    
     private int getMeta(String value) {
+        if (value == null) return 0;
         int meta = 0;
-        if (value.contains("waxed")) {
+        DeeperDepths.info(value);
+        if (value.contains("waxed_")) {
             meta = 4;
-            value = value.substring(0, 5);
+            value = value.replace("waxed_", "");
         }
+        DeeperDepths.info(value);
         return meta + EnumWeatherStage.fromName(value).ordinal();
     }
     
@@ -127,7 +134,7 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     @Override
     public String byMeta(int meta) {
-        return getPropertyName(meta)  + "_" + getRegistryName().getResourcePath();
+        return values.get(meta % 8) + "_" + getRegistryName().getResourcePath();
     }
     
 }

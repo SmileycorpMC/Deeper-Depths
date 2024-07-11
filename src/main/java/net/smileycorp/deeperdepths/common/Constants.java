@@ -24,4 +24,8 @@ public class Constants {
 		return new ResourceLocation(MODID, name.toLowerCase());
 	}
 	
+	public static String locStr(String name) {
+		return loc(name).toString();
+	}
+	
 }

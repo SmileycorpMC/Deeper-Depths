@@ -4,6 +4,7 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -24,8 +25,10 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     public BlockDDStoneSlab(boolean isDouble) {
         super(Material.IRON);
         this.isDouble = isDouble;
-        setRegistryName(Constants.loc("stone_slab"));
-        setUnlocalizedName(Constants.name("StoneSlab"));
+        String name = "Stone_Slab";
+        if (isDouble) name = "Double_" + name;
+        setRegistryName(Constants.loc(name));
+        setUnlocalizedName(Constants.name(name));
         setHarvestLevel("PICKAXE", 0);
         IBlockState base = getBlockState().getBaseState().withProperty(VARIANT, EnumStoneType.TUFF);
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.TOP);
@@ -34,8 +37,13 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     }
     
     @Override
+    protected BlockStateContainer createBlockState() {
+        return this.isDouble() ? new BlockStateContainer(this, VARIANT) : new BlockStateContainer(this, HALF, VARIANT);
+    }
+    
+    @Override
     public String getUnlocalizedName(int meta) {
-        return "tile." + Constants.MODID + "." + EnumStoneType.getShaped(meta).getName();
+        return "tile." + Constants.MODID + "." + EnumStoneType.getShaped(meta).getUnlocalizedName() + "Slab";
     }
     
     @Override
@@ -98,5 +106,6 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     public String byMeta(int meta) {
         return EnumStoneType.getShaped(meta).getName();
     }
+    
     
 }
