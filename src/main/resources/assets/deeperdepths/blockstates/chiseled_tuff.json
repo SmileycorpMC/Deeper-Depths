@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_column",
+    "textures": {
+      "end": "deeperdepths:blocks/chiseled_tuff_top",
+      "side": "deeperdepths:blocks/chiseled_tuff"
+    }
+  },
+  "variants": {
+    "normal": [{}]
+  }
+}

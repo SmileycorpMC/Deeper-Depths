@@ -104,7 +104,7 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     
     @Override
     public String byMeta(int meta) {
-        return EnumStoneType.getShaped(meta).getName();
+        return EnumStoneType.getShaped(meta).getName() + "_slab";
     }
     
     

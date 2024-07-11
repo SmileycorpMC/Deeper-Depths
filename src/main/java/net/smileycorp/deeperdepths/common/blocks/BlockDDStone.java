@@ -7,7 +7,10 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -23,6 +26,12 @@ public class BlockDDStone extends BlockDeeperDepths {
     public BlockDDStone() {
         super("stone", Material.ROCK, 1.5f, 6, 0);
         setDefaultState(getBlockState().getBaseState().withProperty(VARIANT, EnumStoneType.TUFF));
+    }
+    
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        ItemStack stack = placer.getHeldItem(hand);
+        return getDefaultState().withProperty(VARIANT, EnumStoneType.get(stack.getMetadata()));
     }
     
     @Override

@@ -1,6 +1,5 @@
 package net.smileycorp.deeperdepths.client;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
@@ -11,8 +10,7 @@ public class MetaStateMapper extends StateMapperBase {
     
     @Override
     protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-        Block block = state.getBlock();
-        return new ModelResourceLocation(Constants.MODID, ((IBlockProperties) block).byState(state));
+        return new ModelResourceLocation(Constants.locStr(((IBlockProperties) state.getBlock()).byState(state)));
     }
 
 }

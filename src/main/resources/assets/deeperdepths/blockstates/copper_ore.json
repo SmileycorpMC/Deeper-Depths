@@ -1,0 +1,1 @@
+{"forge_marker": 1,"defaults": {"model": "atlaslib:layered_cube", "textures": { "particle": "#base", "base": "minecraft:blocks/stone","overlay": "deeperdepths:blocks/copper_ore" } },"variants": {"normal": [{}], "inventory": [{}]}}

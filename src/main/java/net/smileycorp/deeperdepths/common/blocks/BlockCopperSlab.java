@@ -111,19 +111,16 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
             if (i % 8 >= 4) builder.append("waxed_");
             allowedValues.add(builder.append(EnumWeatherStage.values()[i % 4].getName()).toString());
         }
-        DeeperDepths.info(allowedValues);
         return allowedValues;
     }
     
     private int getMeta(String value) {
         if (value == null) return 0;
         int meta = 0;
-        DeeperDepths.info(value);
         if (value.contains("waxed_")) {
             meta = 4;
             value = value.replace("waxed_", "");
         }
-        DeeperDepths.info(value);
         return meta + EnumWeatherStage.fromName(value).ordinal();
     }
     

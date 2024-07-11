@@ -12,7 +12,7 @@ item.deeperdepths.TrialKey.name=Trial Key
 item.deeperdepths.OminousKey.name=Ominous Trial Key
 item.deeperdepths.Spyglass.name=Spyglass
 item.deeperdepths.RecoveryCompass.name=Recovery Compass
-item.deeperdepths.Mace.name=Recovery Compass
+item.deeperdepths.Mace.name=Mace
 
 tile.deeperdepths.Tuff.name=Tuff
 tile.deeperdepths.TuffSlab.name=Tuff Slab
@@ -150,3 +150,6 @@ entity.deeperdepths.Bogged.name=Bogged
 entity.deeperdepths.Breeze.name=Breeze
 entity.deeperdepths.Bleeze.name=Bleeze
 entity.deeperdepths.Warden.name=Warden
+
+potion.potency.3=IV
+potion.potency.4=V

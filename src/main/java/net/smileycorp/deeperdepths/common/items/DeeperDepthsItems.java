@@ -46,7 +46,7 @@ public class DeeperDepthsItems {
                 DeeperDepths.error(field, e);
             }
         }
-        for (Block block : DeeperDepthsBlocks.BLOCKS) registry.register(new ItemDDBlock(block));
+        for (Block block : DeeperDepthsBlocks.BLOCKS) register(registry, new ItemDDBlock(block));
         register(registry, new ItemDDSlab(DeeperDepthsBlocks.STONE_SLAB, DeeperDepthsBlocks.DOUBLE_STONE_SLAB));
         register(registry, new ItemDDSlab(DeeperDepthsBlocks.CUT_COPPER_SLAB, DeeperDepthsBlocks.DOUBLE_CUT_COPPER_SLAB));
     }
