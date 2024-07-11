@@ -7,7 +7,6 @@ import net.minecraftforge.common.config.Configuration;
 public class EntityAttributesEntry {
     
     private double movementSpeed;
-    private double flyingSpeed;
     private double followRange;
     private double attackDamage;
     private double maxHealth;
