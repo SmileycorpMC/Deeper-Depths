@@ -47,10 +47,10 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     @Override
     public String getUnlocalizedName(int meta) {
-        StringBuilder builder = new StringBuilder(getUnlocalizedName());
+        StringBuilder builder = new StringBuilder();
         if (meta % 8 >= 4) builder.append("Waxed");
         if (meta % 4 > 0) builder.append(EnumWeatherStage.values()[meta % 4].getUnlocalizedName());
-        return builder + getUnlocalizedName().replace("tile." + Constants.MODID + ".", "");
+        return "tile." + Constants.name(builder + getUnlocalizedName().replace("tile." + Constants.MODID + ".", ""));
     }
     
     @Override

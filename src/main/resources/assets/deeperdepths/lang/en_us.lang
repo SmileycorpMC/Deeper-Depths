@@ -1,0 +1,152 @@
+itemGroup.deeperdepths.tab=§3§lDeeper Depths
+
+item.deeperdepths.CopperIngot.name=Copper Ingot
+item.deeperdepths.AmethystShard.name=Amethyst Shard
+item.deeperdepths.EchoShard.name=Echo Shard
+item.deeperdepths.BreezeRod.name=Breeze Rod
+item.deeperdepths.Tallow.name=Tallow
+
+item.deeperdepths.WindCharge.name=Wind Charge
+item.deeperdepths.OminousBottle.name=Ominous Bottle
+item.deeperdepths.TrialKey.name=Trial Key
+item.deeperdepths.OminousKey.name=Ominous Trial Key
+item.deeperdepths.Spyglass.name=Spyglass
+item.deeperdepths.RecoveryCompass.name=Recovery Compass
+item.deeperdepths.Mace.name=Recovery Compass
+
+tile.deeperdepths.Tuff.name=Tuff
+tile.deeperdepths.TuffSlab.name=Tuff Slab
+tile.deeperdepths.TuffStairs.name=Tuff Stairs
+tile.deeperdepths.TuffWall.name=Tuff Wall
+tile.deeperdepths.PolishedTuff.name=Polished Tuff
+tile.deeperdepths.PolishedTuffSlab.name=Polished Tuff Slab
+tile.deeperdepths.PolishedTuffStairs.name=Polished Tuff Stairs
+tile.deeperdepths.PolishedTuffWall.name=Polished Tuff Wall
+tile.deeperdepths.ChiseledTuff.name=Chiseled Tuff
+tile.deeperdepths.TuffBrick.name=Tuff Bricks
+tile.deeperdepths.TuffBrickSlab.name=Tuff Brick Slab
+tile.deeperdepths.TuffBrickStairs.name=Tuff Brick Stairs
+tile.deeperdepths.TuffBrickWall.name=Tuff Brick Wall
+tile.deeperdepths.ChiseledTuffBrick.name=Chiseled Tuff Bricks
+
+tile.deeperdepths.Calcite.name=Calcite
+tile.deeperdepths.AmethystBlock.name=Amethyst Block
+tile.deeperdepths.SmallAmethystBud.name=Small Amethyst Bud
+tile.deeperdepths.MediumAmethystBud.name=Medium Amethyst Bud
+tile.deeperdepths.LargeAmethystBud.name=Large Amethyst Bud
+tile.deeperdepths.AmethystCluster.name=Amethyst Cluster
+
+tile.deeperdepths.Deepslate.name=Deepslate
+tile.deeperdepths.CobbledDeepslate.name=Cobbled Deepslate
+tile.deeperdepths.CobbledDeepslateSlab.name=Cobbled Deepslate Slab
+tile.deeperdepths.CobbledDeepslateStairs.name=Cobbled Deepslate Stairs
+tile.deeperdepths.CobbledDeepslateWall.name=Cobbled Deepslate Wall
+tile.deeperdepths.ChiseledDeepslate.name=Chiseled Deepslate
+tile.deeperdepths.PolishedDeepslate.name=Polished Deepslate
+tile.deeperdepths.PolishedDeepslateSlab.name=Polished Deepslate Slab
+tile.deeperdepths.PolishedDeepslateStairs.name=Polished Deepslate Stairs
+tile.deeperdepths.PolishedDeepslateWall.name=Polished Deepslate Wall
+tile.deeperdepths.DeepslateBrick.name=Deepslate Bricks
+tile.deeperdepths.DeepslateBrickSlab.name=Deepslate Brick Slab
+tile.deeperdepths.DeepslateBrickStairs.name=Deepslate Brick Stairs
+tile.deeperdepths.DeepslateBrickWall.name=Deepslate Brick Wall
+tile.deeperdepths.CrackedDeepslateBrick.name=Cracked Deepslate Bricks
+tile.deeperdepths.DeepslateTile.name=Deepslate Tiles
+tile.deeperdepths.DeepslateTileSlab.name=Deepslate Tile Slab
+tile.deeperdepths.DeepslateTileStairs.name=Deepslate Tile Stairs
+tile.deeperdepths.DeepslateTileWall.name=Deepslate Tile Wall
+tile.deeperdepths.CrackedDeepslateTile.name=Cracked Deepslate Tiles
+
+tile.deeperdepths.CopperOre.name=Copper Ore
+tile.deeperdepths.CopperBlock.name=Block of Copper
+tile.deeperdepths.ExposedCopper.name=Exposed Copper
+tile.deeperdepths.WeatheredCopper.name=Weathered Copper
+tile.deeperdepths.OxidizedCopper.name=Oxidized Copper
+tile.deeperdepths.WaxedCopperBlock.name=Waxed Block of Copper
+tile.deeperdepths.WaxedExposedCopper.name=Waxed Exposed Copper
+tile.deeperdepths.WaxedWeatheredCopper.name=Waxed Weathered Copper
+tile.deeperdepths.WaxedOxidizedCopper.name=Waxed Oxidized Copper
+
+tile.deeperdepths.ChiseledCopper.name=Chiseled Copper
+tile.deeperdepths.ExposedChiseledCopper.name=Exposed Chiseled Copper
+tile.deeperdepths.WeatheredChiseledCopper.name=Weathered Chiseled Copper
+tile.deeperdepths.OxidizedChiseledCopper.name=Oxidized Chiseled Copper
+tile.deeperdepths.WaxedChiseledCopper.name=Waxed Chiseled Copper
+tile.deeperdepths.WaxedExposedChiseledCopper.name=Waxed Exposed Chiseled Copper
+tile.deeperdepths.WaxedWeatheredChiseledCopper.name=Waxed Weathered Chiseled Copper
+tile.deeperdepths.WaxedOxidizedChiseledCopper.name=Waxed Oxidized Chiseled Copper
+
+tile.deeperdepths.CopperGrate.name=Copper Grate
+tile.deeperdepths.ExposedCopperGrate.name=Exposed Copper Grate
+tile.deeperdepths.WeatheredCopperGrate.name=Weathered Copper Grate
+tile.deeperdepths.OxidizedCopperGrate.name=Oxidized Copper Grate
+tile.deeperdepths.WaxedCopperGrate.name=Waxed Copper Grate
+tile.deeperdepths.WaxedExposedCopperGrate.name=Waxed Exposed Copper Grate
+tile.deeperdepths.WaxedWeatheredCopperGrate.name=Waxed Weathered Copper Grate
+tile.deeperdepths.WaxedOxidizedCopperGrate.name=Waxed Oxidized Copper Grate
+
+tile.deeperdepths.CutCopper.name=Cut Copper
+tile.deeperdepths.ExposedCutCopper.name=Exposed Cut Copper
+tile.deeperdepths.WeatheredCutCopper.name=Weathered Cut Copper
+tile.deeperdepths.OxidizedCutCopper.name=Oxidized Cut Copper
+tile.deeperdepths.WaxedCutCopper.name=Waxed Cut Copper
+tile.deeperdepths.WaxedExposedCutCopper.name=Waxed Exposed Cut Copper
+tile.deeperdepths.WaxedWeatheredCutCopper.name=Waxed Weathered Cut Copper
+tile.deeperdepths.WaxedOxidizedCutCopper.name=Waxed Oxidized Cut Copper
+
+tile.deeperdepths.CutCopperSlab.name=Cut Copper Slab
+tile.deeperdepths.ExposedCutCopperSlab.name=Exposed Cut Copper Slab
+tile.deeperdepths.WeatheredCutCopperSlab.name=Weathered Cut Copper Slab
+tile.deeperdepths.OxidizedCutCopperSlab.name=Oxidized Cut Copper Slab
+tile.deeperdepths.WaxedCutCopperSlab.name=Waxed Cut Copper Slab
+tile.deeperdepths.WaxedExposedCutCopperSlab.name=Waxed Exposed Cut Copper Slab
+tile.deeperdepths.WaxedWeatheredCutCopperSlab.name=Waxed Weathered Cut Copper Slab
+tile.deeperdepths.WaxedOxidizedCutCopperSlab.name=Waxed Oxidized Cut Copper Slab
+
+tile.deeperdepths.CutCopperStairs.name=Cut Copper Stairs
+tile.deeperdepths.ExposedCutCopperStairs.name=Exposed Cut Copper Stairs
+tile.deeperdepths.WeatheredCutCopperStairs.name=Weathered Cut Copper Stairs
+tile.deeperdepths.OxidizedCutCopperStairs.name=Oxidized Cut Copper Stairs
+tile.deeperdepths.WaxedCutCopperStairs.name=Waxed Cut Copper Stairs
+tile.deeperdepths.WaxedExposedCutCopperStairs.name=Waxed Exposed Cut Copper Stairs
+tile.deeperdepths.WaxedWeatheredCutCopperStairs.name=Waxed Weathered Cut Copper Stairs
+tile.deeperdepths.WaxedOxidizedCutCopperStairs.name=Waxed Oxidized Cut Copper Stairs
+
+tile.deeperdepths.CopperDoor.name=Copper Door
+tile.deeperdepths.ExposedCopperDoor.name=Exposed Copper Door
+tile.deeperdepths.WeatheredCopperDoor.name=Weathered Copper Door
+tile.deeperdepths.OxidizedCopperDoor.name=Oxidized Copper Door
+tile.deeperdepths.WaxedCopperDoor.name=Waxed Copper Door
+tile.deeperdepths.WaxedExposedCopperDoor.name=Waxed Exposed Copper Door
+tile.deeperdepths.WaxedWeatheredCopperDoor.name=Waxed Weathered Copper Door
+tile.deeperdepths.WaxedOxidizedCopperDoor.name=Waxed Oxidized Copper Door
+
+tile.deeperdepths.CopperTrapdoor.name=Copper Trapdoor
+tile.deeperdepths.ExposedCopperTrapdoor.name=Exposed Copper Trapdoor
+tile.deeperdepths.WeatheredCopperTrapdoor.name=Weathered Copper Trapdoor
+tile.deeperdepths.OxidizedCopperTrapdoor.name=Oxidized Copper Trapdoor
+tile.deeperdepths.WaxedCopperTrapdoor.name=Waxed Copper Trapdoor
+tile.deeperdepths.WaxedExposedCopperTrapdoor.name=Waxed Exposed Copper Trapdoor
+tile.deeperdepths.WaxedWeatheredCopperTrapdoor.name=Waxed Weathered Copper Trapdoor
+tile.deeperdepths.WaxedOxidizedCopperTrapdoor.name=Waxed Oxidized Copper Trapdoor
+
+tile.deeperdepths.CopperBulb.name=Copper Bulb
+tile.deeperdepths.ExposedCopperBulb.name=Exposed Copper Bulb
+tile.deeperdepths.WeatheredCopperBulb.name=Weathered Copper Bulb
+tile.deeperdepths.OxidizedCopperBulb.name=Oxidized Copper Bulb
+tile.deeperdepths.WaxedCopperBulb.name=Waxed Copper Bulb
+tile.deeperdepths.WaxedExposedCopperBulb.name=Waxed Exposed Copper Bulb
+tile.deeperdepths.WaxedWeatheredCopperBulb.name=Waxed Weathered Copper Bulb
+tile.deeperdepths.WaxedOxidizedCopperBulb.name=Waxed Oxidized Copper Bulb
+
+tile.deeperdepths.DecoratedPot.name=Decorated Pot
+tile.deeperdepths.TrialSpawner.name=Trial Spawner
+tile.deeperdepths.TrialVault.name=Trial Vault
+
+effect.deeperdepths.BadOmen.name=Bad Omen
+effect.deeperdepths.TrialOmen.name=Trial Omen
+
+entity.deeperdepths.Bogged.name=Bogged
+entity.deeperdepths.Breeze.name=Breeze
+entity.deeperdepths.Bleeze.name=Bleeze
+entity.deeperdepths.Warden.name=Warden

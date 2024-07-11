@@ -12,16 +12,16 @@ public enum EnumStoneType implements IStringSerializable {
     TUFF("Tuff", Material.TUFF, true),
     POLISHED_TUFF("Polished_Tuff", Material.TUFF, true),
     CHISELED_TUFF("Chiseled_Tuff", Material.TUFF, false),
-    TUFF_BRICKS("Tuff_Bricks", Material.TUFF, true),
-    CHISELED_TUFF_BRICKS("Chisled_Tuff_Bricks", Material.TUFF, false),
+    TUFF_BRICK("Tuff_Brick", Material.TUFF, true),
+    CHISELED_TUFF_BRICK("Chiseled_Tuff_Brick", Material.TUFF, false),
     CALCITE("Calcite", Material.CALCITE, false),
     COBBLED_DEEPSLATE("Cobbled_Deepslate", Material.DEEPSLATE, true),
-    CHISELED_DEEPSLATE("Phiseled_Deepslate", Material.DEEPSLATE, false),
+    CHISELED_DEEPSLATE("Chiseled_Deepslate", Material.DEEPSLATE, false),
     POLISHED_DEEPSLATE("Polished_Deepslate", Material.DEEPSLATE, true),
-    DEEPSLATE_BRICKS("Deepslate_Bricks", Material.DEEPSLATE, true),
-    CRACKED_DEEPSLATE_BRICKS("Cracked_Deepslate_Bricks", Material.DEEPSLATE, false),
-    DEEPSLATE_TILES("Deepslate_Tiles", Material.DEEPSLATE, true),
-    CRACKED_DEEPSLATE_TILES("Cracked_Deepslate_Tiles", Material.DEEPSLATE, false);
+    DEEPSLATE_BRICK("Deepslate_Brick", Material.DEEPSLATE, true),
+    CRACKED_DEEPSLATE_BRICK("Cracked_Deepslate_Brick", Material.DEEPSLATE, false),
+    DEEPSLATE_TILE("Deepslate_Tile", Material.DEEPSLATE, true),
+    CRACKED_DEEPSLATE_TILE("Cracked_Deepslate_Tile", Material.DEEPSLATE, false);
     
     public static final List<EnumStoneType> SHAPED_TYPES = getShapedTypes();
     

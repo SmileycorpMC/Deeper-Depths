@@ -24,7 +24,7 @@ import java.util.List;
 public class ItemOminousBottle extends ItemDeeperDepths {
     
     public ItemOminousBottle() {
-        super("ominous_bottle");
+        super("Ominous_Bottle");
         setHasSubtypes(true);
     }
     

@@ -17,7 +17,7 @@ public class Constants {
 	public static final ResourceLocation OUTPOST_CHESTS = loc("chests/pillager_outpost");
     
     public static String name(String name) {
-		return MODID + "." + name.replace("_", "");
+		return MODID + "." + name.replace("_", "").replace(" ", "");
 	}
 	
 	public static ResourceLocation loc(String name) {

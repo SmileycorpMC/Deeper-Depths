@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockCopperGrate extends BlockCopper {
     
     public BlockCopperGrate() {
-        super("copper_grate");
+        super("Copper_Grate");
     }
     
     @Override

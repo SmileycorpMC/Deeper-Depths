@@ -10,6 +10,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 
@@ -29,14 +30,14 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumStoneType, BlockStairs> STAIRS = Maps.newEnumMap(EnumStoneType.class);
     
     //copper
-    public static final Block COPPER_ORE = new BlockDeeperDepths("copper_ore", Material.ROCK, 3, 3, 1);
-    public static final Block COPPER_BLOCK = new BlockCopper("copper_block");
+    public static final Block COPPER_ORE = new BlockDeeperDepths("Copper_Ore", Material.ROCK, 3, 3, 1);
+    public static final Block COPPER_BLOCK = new BlockCopper("Copper_Block");
     //public static final Block LIGHTNING_ROD = null;
-    public static final Block CUT_COPPER = new BlockCopper("cut_copper");
-    public static final BlockSlab CUT_COPPER_SLAB = new BlockCopperSlab("cut_copper_slab", false);
-    public static final BlockSlab DOUBLE_CUT_COPPER_SLAB = new BlockCopperSlab("double_cut_copper_slab", true);
+    public static final Block CUT_COPPER = new BlockCopper("Cut_Copper");
+    public static final BlockSlab CUT_COPPER_SLAB = new BlockCopperSlab("Cut_Copper_Slab", false);
+    public static final BlockSlab DOUBLE_CUT_COPPER_SLAB = new BlockCopperSlab("Double_Cut_Copper_Slab", true);
     
-    public static final Block CHISELED_COPPER = new BlockCopper("chiseled_copper");
+    public static final Block CHISELED_COPPER = new BlockCopper("Chiseled_Copper");
     public static final Block COPPER_GRATE = new BlockCopperGrate();
     
     /*public static final Block CUT_COPPER_STAIRS = null;
@@ -91,7 +92,8 @@ public class DeeperDepthsBlocks {
             }
         }
         for (EnumStoneType type : EnumStoneType.SHAPED_TYPES)
-            STAIRS.put(type, register(registry, new BlockDDStairs(type.getName(), STONE.getDefaultState().withProperty(BlockDDStone.VARIANT, type))));
+            STAIRS.put(type, register(registry, new BlockDDStairs(TextUtils.toProperCase(type.getName())
+                    .replace(" ", "_"), STONE.getDefaultState().withProperty(BlockDDStone.VARIANT, type))));
     }
     
     private static <T extends Block> T register(IForgeRegistry<Block> registry, T block) {

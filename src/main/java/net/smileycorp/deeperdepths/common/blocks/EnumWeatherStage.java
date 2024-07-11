@@ -7,10 +7,10 @@ import java.util.Locale;
 
 public enum EnumWeatherStage implements IStringSerializable {
    
-    NORMAL("normal", MapColor.ADOBE),
-    EXPOSED("exposed", MapColor.SILVER_STAINED_HARDENED_CLAY),
-    WEATHERED("weathered", MapColor.CYAN),
-    OXIDIZED("oxidized", MapColor.DIAMOND);
+    NORMAL("Normal", MapColor.ADOBE),
+    EXPOSED("Exposed", MapColor.SILVER_STAINED_HARDENED_CLAY),
+    WEATHERED("Weathered", MapColor.CYAN),
+    OXIDIZED("Oxidized", MapColor.DIAMOND);
     
     private final String name, unlocalizedName;
     private final MapColor color;

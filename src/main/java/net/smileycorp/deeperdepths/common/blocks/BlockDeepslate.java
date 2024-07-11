@@ -1,12 +1,12 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 
-public class BlockDeepslate extends BlockHorizontal implements IBlockProperties {
+public class BlockDeepslate extends BlockRotatedPillar implements IBlockProperties {
     
     public BlockDeepslate() {
         super(Material.ROCK, MapColor.GRAY);

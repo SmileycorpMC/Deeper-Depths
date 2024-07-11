@@ -14,7 +14,7 @@ public interface IBlockProperties {
         }
     
     default String byMeta(int meta) {
-        return "inventory";
+        return "normal";
     }
     
     default String byState(IBlockState state) {

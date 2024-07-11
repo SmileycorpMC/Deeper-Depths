@@ -8,8 +8,6 @@ import net.smileycorp.deeperdepths.common.DeeperDepths;
 
 public class BlockDeeperDepths extends Block implements IBlockProperties {
     
-    private final String name;
-    
     public BlockDeeperDepths(String name, Material material, float h, float r, int level) {
         super(material);
         setResistance(r);
@@ -19,7 +17,6 @@ public class BlockDeeperDepths extends Block implements IBlockProperties {
         setUnlocalizedName(Constants.name(name));
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         setSoundType(SoundType.STONE);
-        this.name = name;
     }
     
 }
