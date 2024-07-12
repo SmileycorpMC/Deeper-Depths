@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "all": "deeperdepths:blocks/weathered_copper_bulb_lit"
+    }
+  },
+  "variants": {
+    "normal": [
+      {}
+    ]
+  }
+}

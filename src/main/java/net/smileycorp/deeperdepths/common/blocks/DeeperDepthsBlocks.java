@@ -39,6 +39,8 @@ public class DeeperDepthsBlocks {
     
     public static final Block CHISELED_COPPER = new BlockCopper("Chiseled_Copper");
     public static final Block COPPER_GRATE = new BlockCopperGrate();
+    public static final Block COPPER_BULB = new BlockCopperBulb(false);
+    public static final Block WAXED_COPPER_BULB = new BlockCopperBulb(true);
     
     /*public static final Block CUT_COPPER_STAIRS = null;
     public static final Block EXPOSED_CUT_COPPER_STAIRS = null;
@@ -66,7 +68,7 @@ public class DeeperDepthsBlocks {
     public static final Block WAXED_OXIDIZED_COPPER_TRAPDOOR = null;*/
     
     //functional blocks
-   /* public static final Block COPPER_BULB = null;
+   /*
     public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
     public static final Block TRIAL_SPAWNER = null;
     public static final Block TRIAL_VAULT = null;*/
