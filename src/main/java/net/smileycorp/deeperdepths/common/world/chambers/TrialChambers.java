@@ -1,6 +1,8 @@
 package net.smileycorp.deeperdepths.common.world.chambers;
 
+import com.google.common.collect.Lists;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureComponent;
@@ -22,10 +24,16 @@ public class TrialChambers {
     private int yAxel = 0;
 
 
+    private boolean isSecondMainCorridor = false;
+
+    private boolean hasGeneratedAConnect = false;
+    private boolean isLeft = false;
+    private boolean isRight = false;
+
     private int yAxel2Level = 0;
 
     //Make sure that you put the config option for size here too
-    private static final int SIZE = 1;
+    private static final int SIZE = 3;
 
     //this is just for a second floor used by my structures, you can realistically go as infinite with floors and levels as you'd like
     private static final int SECOND_SIZE = SIZE * 2;
@@ -33,8 +41,6 @@ public class TrialChambers {
     private boolean hasSpawnedSecondlevel = false;
 
     private boolean hasGeneratedBossRooms = false;
-
-
 
     public TrialChambers(World worldIn, TemplateManager template, List<StructureComponent> components) {
         this.world = worldIn;
@@ -67,6 +73,22 @@ public class TrialChambers {
         }
         components.add(template);
         components.add(template_hall_1);
+
+        if(!hasGeneratedAConnect) {
+            if(this.isRight && !this.isLeft) {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos.add(0, 1, 0), rot, ModRand.range(1, 4));
+            } else if (this.isLeft && !this.isRight) {
+                components.remove(template_hall_1);
+                generateRightConnect(parent, pos.add(0, 1, 0), rot, ModRand.range(1, 4));
+            }
+            //Fail Safe
+            else {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos.add(0, 1, 0), rot, ModRand.range(1, 4));
+            }
+            hasGeneratedAConnect = true;
+        }
         //fills the two spots inbetween the Trial Chambers
         generateFillPlate2(template_hall_1, pos, rot);
 
@@ -79,6 +101,7 @@ public class TrialChambers {
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generateFillPlate3(template_hall_1, pos, rot);
+        hasGeneratedAConnect = false;
         return true;
     }
 
@@ -92,6 +115,23 @@ public class TrialChambers {
         } else {
             generateEndCorridorPlate(template_hall_1, pos, rot);
         }
+
+        if(!hasGeneratedAConnect) {
+            if(this.isRight && !this.isLeft) {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos, rot, ModRand.range(1, 4));
+            } else if (this.isLeft && !this.isRight) {
+                components.remove(template_hall_1);
+                generateRightConnect(parent, pos, rot, ModRand.range(1, 4));
+            }
+            //Fail Safe
+            else {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos, rot, ModRand.range(1, 4));
+            }
+            hasGeneratedAConnect = true;
+        }
+
         return true;
     }
 
@@ -100,6 +140,7 @@ public class TrialChambers {
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generateThirdBoard(template_hall_1, pos, rot);
+        hasGeneratedAConnect = false;
         return true;
     }
 
@@ -107,14 +148,17 @@ public class TrialChambers {
         String[] c_hall_types = {"c_hall_entrance_1", "c_hall_entrance_2", "c_hall_entrance_3"};
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
-
+        hasGeneratedAConnect = false;
+        if(CORRIDOR_SIZE_LIMIT < 6 && !isSecondMainCorridor) {
+            generateCorridorCross(template_hall_1, pos, rot);
+        }
         return true;
     }
     //Second Plate End
     public boolean generateThirdBoard(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
         String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
         TrialChambersTemplate template = addAdjustedPieceWithoutCount(parent, pos.add(0, -1, 0), "c_board", rot);
-        TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos.add(0, 1, 0), ModRand.choice(c_hall_types), rot);
+        TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
 
         CORRIDOR_SIZE_LIMIT++;
         if(template.isCollidingExcParent(manager, parent, components)) {
@@ -122,6 +166,23 @@ public class TrialChambers {
         }
         components.add(template);
         components.add(template_hall_1);
+
+        if(!hasGeneratedAConnect) {
+            if(this.isRight && !this.isLeft) {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos, rot, ModRand.range(1, 4));
+            } else if (this.isLeft && !this.isRight) {
+                components.remove(template_hall_1);
+                generateRightConnect(parent, pos, rot, ModRand.range(1, 4));
+            }
+            //Fail Safe
+            else {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos, rot, ModRand.range(1, 4));
+            }
+            hasGeneratedAConnect = true;
+        }
+
         //fills the two spots inbetween the Trial Chambers
         generate3FillPlate2(template_hall_1, pos, rot);
 
@@ -133,6 +194,7 @@ public class TrialChambers {
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generate3FillPlate3(template_hall_1, pos, rot);
+        hasGeneratedAConnect = false;
         return true;
     }
 
@@ -141,15 +203,108 @@ public class TrialChambers {
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generateEndCorridorPlate(template_hall_1, pos, rot);
+
+        if(!hasGeneratedAConnect) {
+            if(this.isRight && !this.isLeft) {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos, rot, ModRand.range(1, 4));
+            } else if (this.isLeft && !this.isRight) {
+                components.remove(template_hall_1);
+                generateRightConnect(parent, pos, rot, ModRand.range(1, 4));
+            }
+            //Fail Safe
+            else {
+                components.remove(template_hall_1);
+                generateLeftConnect(parent, pos, rot, ModRand.range(1, 4));
+            }
+            hasGeneratedAConnect = true;
+        }
+
         return true;
     }
     //End Parts for 3rd Plate
 
-    public boolean generateCorridorBigEntrance(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] b_entrance_types = {"c_hall_big_entrance_1", "c_hall_big_entrance_2", "c_hall_big_entrance_3"};
-        TrialChambersTemplate template = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(b_entrance_types), rot);
-        components.add(template);
+    //handles generation of the Corridor 2 part and other chamber
+    public boolean generateCorridorCross(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate template_cross = addAdjustedPiece(parent, pos, "c_cross_1", rot);
+        components.add(template_cross);
 
+        if(world.rand.nextInt(2) == 0) {
+            generateSecondCorridor(template_cross, pos.add(18, 0, 0), rot.add(Rotation.CLOCKWISE_90));
+        } else {
+            generateSecondCorridor(template_cross, pos.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+        }
+        return true;
+    }
+
+    public boolean generateSecondCorridor(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate first_board = addAdjustedPieceWithoutCount(parent, pos.add(0, -8, 0), "c_board", rot);
+        String[] b_entrance_types = {"e_hall_big_entrance_1", "e_hall_big_entrance_2", "e_hall_big_entrance_3"};
+        TrialChambersTemplate bigEntryRoom = addAdjustedPieceWithoutCount(parent, pos.add(0, -7, 0), ModRand.choice(b_entrance_types), rot);
+        isSecondMainCorridor = true;
+        components.add(first_board);
+        components.add(bigEntryRoom);
+        generateSecondBoard(first_board, BlockPos.ORIGIN, rot);
+        CORRIDOR_SIZE_LIMIT++;
+
+    return true;
+    }
+
+    //Overrides the previous entry and places a entryway Left Side
+    public boolean generateLeftConnect(TrialChambersTemplate parent, BlockPos pos, Rotation rot, int levelsUp) {
+        isRight = false;
+        if(levelsUp == 1) {
+            TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cl_hall_connect_1", rot);
+            components.add(first_floor);
+            isLeft = true;
+            connectPieceOne(first_floor, pos.add(-7,2,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+
+        } if (levelsUp == 2) {
+            TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cl_hall_connect_2", rot);
+            components.add(first_floor);
+            isLeft = true;
+            connectPieceOne(first_floor, pos.add(-7,7,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+
+        } else if(levelsUp == 3) {
+            TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cl_hall_connect_3", rot);
+            components.add(first_floor);
+            isLeft = true;
+            connectPieceOne(first_floor, pos.add(-7,12,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+
+        }
+        return true;
+    }
+
+
+    //Overrides the previous entry and places a entryway Right Side
+    public boolean generateRightConnect(TrialChambersTemplate parent, BlockPos pos, Rotation rot, int levelsUp) {
+        isLeft = false;
+        if(levelsUp == 1) {
+            TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cr_hall_connect_1", rot);
+            components.add(first_floor);
+            isRight = true;
+        connectPieceOne(first_floor, pos.add(11,2,14), rot.add(Rotation.CLOCKWISE_90));
+
+        } if (levelsUp == 2) {
+            TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cr_hall_connect_2", rot);
+            components.add(first_floor);
+            isRight = true;
+            connectPieceOne(first_floor, pos.add(11,7,14), rot.add(Rotation.CLOCKWISE_90));
+
+        } else if(levelsUp == 3) {
+            TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cr_hall_connect_3", rot);
+            components.add(first_floor);
+            isRight = true;
+            connectPieceOne(first_floor, pos.add(11,12,14), rot.add(Rotation.CLOCKWISE_90));
+
+        }
+        return true;
+    }
+
+    public boolean connectPieceOne(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_1", rot);
+        components.add(connect_piece);
+        //generate Chamber
         return true;
     }
 

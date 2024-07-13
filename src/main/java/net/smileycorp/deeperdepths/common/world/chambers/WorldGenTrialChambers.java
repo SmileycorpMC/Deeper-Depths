@@ -101,7 +101,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
         //Here is where you specify the size of the structure in terms of rooms, I guess you could make this configurable if you want
         @Override
         public boolean isSizeableStructure() {
-            return components.size() > 0;
+            return components.size() > 1;
         }
     }
 
