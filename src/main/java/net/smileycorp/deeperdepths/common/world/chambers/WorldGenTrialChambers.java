@@ -22,7 +22,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
     @Override
     public boolean generate(World world, Random random, BlockPos pos) {
             //For this you can make it a configurable number and as well add additional parameters for spawning
-        if(spacing > 400) {
+        if(spacing > 1200) {
             getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
                     .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
             return true;
@@ -61,11 +61,11 @@ public class WorldGenTrialChambers extends WorldGenerator {
 
         public Start(World worldIn, Random rand, int chunkX, int chunkZ) {
             super(chunkX, chunkZ);
-            this.createChambers(worldIn, chunkX, chunkZ);
+            this.createChambers(worldIn, rand, chunkX, chunkZ);
         }
 
 
-        protected void createChambers(World world, int chunkX, int chunkZ) {
+        protected void createChambers(World world, Random rand, int chunkX, int chunkZ) {
             Random random = new Random(chunkX + chunkZ * 10387313L);
             int rand2 = random.nextInt(Rotation.values().length);
             BlockPos posI = new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8);
@@ -75,11 +75,13 @@ public class WorldGenTrialChambers extends WorldGenerator {
                     Rotation rotation = Rotation.values()[(rand2 + i) % Rotation.values().length];
                     components.clear();
                     //the set position plus whatever y axis you want
-                    BlockPos blockpos = posI.add(0, 13, 0);
+                    //CHANGE ME LATER FOR TESTING PURPOSES ONLY
+                    BlockPos blockpos = posI.add(0, 100, 0);
                     TrialChambers chambers = new TrialChambers(world, world.getSaveHandler().getStructureTemplateManager(), components);
                     //Starts the first room within the Trial Chambers
                     chambers.startChambers(blockpos, rotation);
                     this.updateBoundingBox();
+
 
 
                     if (this.isSizeableStructure()) {
@@ -99,7 +101,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
         //Here is where you specify the size of the structure in terms of rooms, I guess you could make this configurable if you want
         @Override
         public boolean isSizeableStructure() {
-            return components.size() > 5;
+            return components.size() > 0;
         }
     }
 

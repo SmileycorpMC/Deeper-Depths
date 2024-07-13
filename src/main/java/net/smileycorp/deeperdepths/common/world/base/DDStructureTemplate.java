@@ -48,7 +48,8 @@ public abstract class DDStructureTemplate extends StructureComponentTemplate {
     this.templatePosition = pos;
     this.rotation = rotation;
     templateId = numTemplates++;
-
+    this.loadTemplate(manager);
+    this.overwrite = overWriteIn;
     }
 
 
