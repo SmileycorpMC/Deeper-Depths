@@ -12,6 +12,7 @@ public class ItemDDSlab<T extends BlockSlab & IBlockProperties> extends ItemSlab
         super(half, half, full);
         setRegistryName(half.getRegistryName());
         setUnlocalizedName(half.getUnlocalizedName().substring(0, 5));
+        if (half.getMaxMeta() > 0) setHasSubtypes(true);
     }
     
     @Override

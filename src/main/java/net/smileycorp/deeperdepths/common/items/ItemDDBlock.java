@@ -14,6 +14,7 @@ public class ItemDDBlock<T extends Block & IBlockProperties> extends ItemBlock i
         super(block);
         setRegistryName(block.getRegistryName());
         setUnlocalizedName(block.getUnlocalizedName().substring(0, 5));
+        if (block.getMaxMeta() > 0) setHasSubtypes(true);
     }
     
     @Override

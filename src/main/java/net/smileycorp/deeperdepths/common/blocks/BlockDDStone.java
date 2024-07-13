@@ -40,6 +40,11 @@ public class BlockDDStone extends BlockDeeperDepths {
     }
     
     @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
+    }
+    
+    @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
         return state.getValue(VARIANT).getMapColor();
     }
@@ -78,6 +83,5 @@ public class BlockDDStone extends BlockDeeperDepths {
     public String byMeta(int meta) {
         return EnumStoneType.get(meta).getName();
     }
-    
     
 }

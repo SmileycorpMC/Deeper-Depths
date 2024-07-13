@@ -48,6 +48,11 @@ public class BlockCopper extends BlockDeeperDepths {
     }
     
     @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
+    }
+    
+    @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(WEATHER_STAGE, EnumWeatherStage.values()[meta % 4]).withProperty(WAXED, meta >= 4);
     }
