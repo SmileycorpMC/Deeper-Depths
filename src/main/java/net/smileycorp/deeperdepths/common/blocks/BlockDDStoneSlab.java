@@ -34,6 +34,7 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.TOP);
         setDefaultState(base);
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
+        useNeighborBrightness = true;
     }
     
     @Override
@@ -84,7 +85,7 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     
     @Override
     public ItemStack getItem(World world, BlockPos pos, IBlockState state) {
-        return new ItemStack(this, 1, getMetaFromState(state) % 8);
+        return new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 1, getMetaFromState(state) % 8);
     }
     
     @Override
@@ -106,6 +107,5 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     public String byMeta(int meta) {
         return EnumStoneType.getShaped(meta).getName() + "_slab";
     }
-    
     
 }

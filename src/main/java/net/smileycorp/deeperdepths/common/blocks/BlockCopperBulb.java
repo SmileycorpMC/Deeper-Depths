@@ -155,7 +155,7 @@ public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  
         return DeeperDepthsBlocks.WAXED_COPPER_BULB.getDefaultState().withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE))
                 .withProperty(LIT, state.getValue(LIT)).withProperty(POWERED, state.getValue(POWERED));
     }
-    
+
     @Override
     public IBlockState getWeathered(IBlockState state) {
         return state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).next());

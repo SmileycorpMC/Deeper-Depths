@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "uvlock": true,
+    "textures": {
+      "all": "deeperdepths:blocks/exposed_cut_copper",
+      "top": "#all",
+      "bottom": "#all",
+      "side": "#all"
+    }
+  },
+  "variants": {
+    "normal": [
+      {
+        "model": "half_slab"
+      }
+    ],
+    "double": [
+      {
+        "model": "cube_all"
+      }
+    ],
+    "half=top": [
+      {
+        "model": "half_slab",
+        "x": 180
+      }
+    ],
+    "half=bottom": [
+      {
+        "model": "half_slab"
+      }
+    ]
+  }
+}

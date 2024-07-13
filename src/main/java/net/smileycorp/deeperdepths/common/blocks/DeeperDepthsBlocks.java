@@ -34,15 +34,15 @@ public class DeeperDepthsBlocks {
     public static final Block COPPER_BLOCK = new BlockCopper("Copper_Block");
     //public static final Block LIGHTNING_ROD = null;
     public static final Block CUT_COPPER = new BlockCopper("Cut_Copper");
-    public static final BlockSlab CUT_COPPER_SLAB = new BlockCopperSlab("Cut_Copper_Slab", false);
-    public static final BlockSlab DOUBLE_CUT_COPPER_SLAB = new BlockCopperSlab("Double_Cut_Copper_Slab", true);
+    public static final BlockSlab CUT_COPPER_SLAB = new BlockCutCopperSlab(false);
+    public static final BlockSlab DOUBLE_CUT_COPPER_SLAB = new BlockCutCopperSlab(true);
     
     public static final Block CHISELED_COPPER = new BlockCopper("Chiseled_Copper");
     public static final Block COPPER_GRATE = new BlockCopperGrate();
     public static final Block COPPER_BULB = new BlockCopperBulb(false);
     public static final Block WAXED_COPPER_BULB = new BlockCopperBulb(true);
-    public static final Map<EnumWeatherStage, BlockStairs> COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
-    public static final Map<EnumWeatherStage, BlockStairs> WAXED_COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final Map<EnumWeatherStage, BlockStairs> CUT_COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final Map<EnumWeatherStage, BlockStairs> WAXED_CUT_COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
     
    /*
     public static final Block COPPER_DOOR = null;
@@ -92,8 +92,8 @@ public class DeeperDepthsBlocks {
             STONE_STAIRS.put(type, register(registry, new BlockDDStairs(TextUtils.toProperCase(type.getName())
                     .replace(" ", "_"), STONE.getDefaultState().withProperty(BlockDDStone.VARIANT, type))));
         for (EnumWeatherStage stage : EnumWeatherStage.values()) {
-            COPPER_STAIRS.put(stage, register(registry, new BlockCopperStairs(stage, false)));
-            WAXED_COPPER_STAIRS.put(stage, register(registry, new BlockCopperStairs(stage, true)));
+            CUT_COPPER_STAIRS.put(stage, register(registry, new BlockCutCopperStairs(stage, false)));
+            WAXED_CUT_COPPER_STAIRS.put(stage, register(registry, new BlockCutCopperStairs(stage, true)));
         }
     }
     

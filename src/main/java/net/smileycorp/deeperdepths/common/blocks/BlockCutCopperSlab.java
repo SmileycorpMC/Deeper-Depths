@@ -1,7 +1,6 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
 import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Table;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -20,17 +19,16 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 
-import java.util.List;
-
-public class BlockCopperSlab extends BlockSlab implements IBlockProperties, ICopperBlock {
+public class BlockCutCopperSlab extends BlockSlab implements IBlockProperties, ICopperBlock {
     
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
     
     private final boolean isDouble;
     
-    public BlockCopperSlab(String name, boolean isDouble) {
+    public BlockCutCopperSlab(boolean isDouble) {
         super(Material.IRON);
         this.isDouble = isDouble;
+        String name = (isDouble ? "Double_" : "") + "Cut_Copper_Slab";
         setRegistryName(Constants.loc(name));
         setUnlocalizedName(Constants.name(name));
         setHarvestLevel("PICKAXE", 1);
@@ -40,11 +38,12 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties, ICop
         if (!isDouble) base = base.withProperty(HALF,EnumBlockHalf.BOTTOM);
         setDefaultState(base);
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
+        useNeighborBrightness = true;
     }
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return isDouble() ? new BlockStateContainer(this, VARIANT) : new BlockStateContainer(this, VARIANT, HALF);
+        return isDouble ? new BlockStateContainer(this, VARIANT) : new BlockStateContainer(this, VARIANT, HALF);
     }
     
     @Override
@@ -93,7 +92,7 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties, ICop
     
     @Override
     public ItemStack getItem(World world, BlockPos pos, IBlockState state) {
-        return new ItemStack(this, 1, getMetaFromState(state) % 8);
+        return new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, getMetaFromState(state) % 8);
     }
     
     @Override
@@ -106,26 +105,6 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties, ICop
         for (int i = 0; i < 8; i++) items.add(new ItemStack(this, 1, i));
     }
     
-    private static List<String> getAllowedValues() {
-        List<String> allowedValues = Lists.newArrayList();
-        for (int i = 0; i < 8; i++) {
-            StringBuilder builder = new StringBuilder();
-            if (i % 8 >= 4) builder.append("waxed_");
-            allowedValues.add(builder.append(EnumWeatherStage.values()[i % 4].getName()).toString());
-        }
-        return allowedValues;
-    }
-    
-    private int getMeta(String value) {
-        if (value == null) return 0;
-        int meta = 0;
-        if (value.contains("waxed_")) {
-            meta = 4;
-            value = value.replace("waxed_", "");
-        }
-        return meta + EnumWeatherStage.fromName(value).ordinal();
-    }
-    
     @Override
     public int getMaxMeta() {
         return 8;
@@ -133,7 +112,8 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties, ICop
     
     @Override
     public String byMeta(int meta) {
-        return Variant.values()[meta] + "_" + getRegistryName().getResourcePath();
+        Variant variant = Variant.values()[meta % 8];
+        return (variant == Variant.NORMAL ? "" : variant.getName().replace("_normal", "") + "_") + "cut_copper_slab";
     }
     
     @Override

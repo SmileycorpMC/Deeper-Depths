@@ -1,4 +1,4 @@
-package net.smileycorp.deeperdepths.client;
+package net.smileycorp.deeperdepths.client.blocks;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

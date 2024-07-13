@@ -2,12 +2,12 @@ package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.state.IBlockState;
 
-public class BlockCopperStairs extends BlockDDStairs implements ICopperBlock {
+public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock {
     
     private final EnumWeatherStage stage;
     private final boolean waxed;
     
-    public BlockCopperStairs(EnumWeatherStage stage, boolean waxed) {
+    public BlockCutCopperStairs(EnumWeatherStage stage, boolean waxed) {
         super(getName(stage, waxed), DeeperDepthsBlocks.CUT_COPPER.getDefaultState().withProperty(WEATHER_STAGE, stage));
         this.stage = stage;
         this.waxed = waxed;
@@ -32,7 +32,7 @@ public class BlockCopperStairs extends BlockDDStairs implements ICopperBlock {
     
     @Override
     public IBlockState getScraped(IBlockState state) {
-        return stage == EnumWeatherStage.NORMAL ? state : copyProperties(state, DeeperDepthsBlocks.COPPER_STAIRS.get(waxed ? stage : stage.previous()).getDefaultState());
+        return stage == EnumWeatherStage.NORMAL ? state : copyProperties(state, DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(waxed ? stage : stage.previous()).getDefaultState());
     }
     
     private IBlockState copyProperties(IBlockState oldState, IBlockState newState) {
@@ -42,12 +42,12 @@ public class BlockCopperStairs extends BlockDDStairs implements ICopperBlock {
     
     @Override
     public IBlockState getWaxed(IBlockState state) {
-        return waxed ? state : copyProperties(state, DeeperDepthsBlocks.WAXED_COPPER_STAIRS.get(stage).getDefaultState());
+        return waxed ? state : copyProperties(state, DeeperDepthsBlocks.WAXED_CUT_COPPER_STAIRS.get(stage).getDefaultState());
     }
     
     @Override
     public IBlockState getWeathered(IBlockState state) {
-        return waxed || stage == EnumWeatherStage.OXIDIZED ? state : copyProperties(state,  DeeperDepthsBlocks.COPPER_STAIRS.get(stage.next()).getDefaultState());
+        return waxed || stage == EnumWeatherStage.OXIDIZED ? state : copyProperties(state,  DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(stage.next()).getDefaultState());
     }
     
 }
