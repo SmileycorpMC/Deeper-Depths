@@ -27,7 +27,7 @@ public class DeeperDepthsBlocks {
     public static final Block STONE = new BlockDDStone();
     public static final BlockSlab STONE_SLAB = new BlockDDStoneSlab(false);
     public static final BlockSlab DOUBLE_STONE_SLAB = new BlockDDStoneSlab(true);
-    public static final Map<EnumStoneType, BlockStairs> STAIRS = Maps.newEnumMap(EnumStoneType.class);
+    public static final Map<EnumStoneType, BlockStairs> STONE_STAIRS = Maps.newEnumMap(EnumStoneType.class);
     
     //copper
     public static final Block COPPER_ORE = new BlockDeeperDepths("Copper_Ore", Material.ROCK, 3, 3, 1);
@@ -41,15 +41,10 @@ public class DeeperDepthsBlocks {
     public static final Block COPPER_GRATE = new BlockCopperGrate();
     public static final Block COPPER_BULB = new BlockCopperBulb(false);
     public static final Block WAXED_COPPER_BULB = new BlockCopperBulb(true);
+    public static final Map<EnumWeatherStage, BlockStairs> COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final Map<EnumWeatherStage, BlockStairs> WAXED_COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
     
-    /*public static final Block CUT_COPPER_STAIRS = null;
-    public static final Block EXPOSED_CUT_COPPER_STAIRS = null;
-    public static final Block WEATHERED_CUT_COPPER_STAIRS = null;
-    public static final Block OXIDIZED_CUT_COPPER_STAIRS = null;
-    public static final Block WAXED_CUT_COPPER_STAIRS = null;
-    public static final Block WAXED_EXPOSED_CUT_COPPER_STAIRS = null;
-    public static final Block WAXED_WEATHERED_CUT_COPPER_STAIRS = null;
-    public static final Block WAXED_OXIDIZED_CUT_COPPER_STAIRS = null;
+   /*
     public static final Block COPPER_DOOR = null;
     public static final Block EXPOSED_COPPER_DOOR = null;
     public static final Block WEATHERED_COPPER_DOOR = null;
@@ -94,8 +89,12 @@ public class DeeperDepthsBlocks {
             }
         }
         for (EnumStoneType type : EnumStoneType.SHAPED_TYPES)
-            STAIRS.put(type, register(registry, new BlockDDStairs(TextUtils.toProperCase(type.getName())
+            STONE_STAIRS.put(type, register(registry, new BlockDDStairs(TextUtils.toProperCase(type.getName())
                     .replace(" ", "_"), STONE.getDefaultState().withProperty(BlockDDStone.VARIANT, type))));
+        for (EnumWeatherStage stage : EnumWeatherStage.values()) {
+            COPPER_STAIRS.put(stage, register(registry, new BlockCopperStairs(stage, false)));
+            WAXED_COPPER_STAIRS.put(stage, register(registry, new BlockCopperStairs(stage, true)));
+        }
     }
     
     private static <T extends Block> T register(IForgeRegistry<Block> registry, T block) {
