@@ -1,28 +1,30 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
+import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Table;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.smileycorp.atlas.api.block.PropertyString;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 
 import java.util.List;
 
-public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
+public class BlockCopperSlab extends BlockSlab implements IBlockProperties, ICopperBlock {
     
-    private static final List<String> values = getAllowedValues();
-    public static final PropertyString VARIANT = new PropertyString("variant", values);
+    public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
     
     private final boolean isDouble;
     
@@ -34,7 +36,7 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
         setHarvestLevel("PICKAXE", 1);
         setHardness(3);
         setResistance(6);
-        IBlockState base = blockState.getBaseState().withProperty(VARIANT, values.get(0));
+        IBlockState base = blockState.getBaseState().withProperty(VARIANT, Variant.NORMAL);
         if (!isDouble) base = base.withProperty(HALF,EnumBlockHalf.BOTTOM);
         setDefaultState(base);
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
@@ -65,7 +67,7 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     @Override
     public Comparable<?> getTypeForItem(ItemStack stack) {
-        return values.get(stack.getMetadata() % 8);
+        return Variant.values()[stack.getMetadata() % 8];
     }
     
     @Override
@@ -81,12 +83,12 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return (isDouble ? getDefaultState() : getDefaultState().withProperty(HALF, meta == 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
-                .withProperty(VARIANT, values.get(meta % 8));
+                .withProperty(VARIANT, Variant.values()[meta % 8]);
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return (isDouble ? 0 : (state.getValue(HALF) == EnumBlockHalf.TOP ? 8 : 0)) + getMeta(state.getValue(VARIANT));
+        return (isDouble ? 0 : (state.getValue(HALF) == EnumBlockHalf.TOP ? 8 : 0)) + state.getValue(VARIANT).ordinal();
     }
     
     @Override
@@ -131,7 +133,99 @@ public class BlockCopperSlab extends BlockSlab implements IBlockProperties {
     
     @Override
     public String byMeta(int meta) {
-        return values.get(meta % 8) + "_" + getRegistryName().getResourcePath();
+        return Variant.values()[meta] + "_" + getRegistryName().getResourcePath();
+    }
+    
+    @Override
+    public boolean isWaxed(IBlockState state) {
+        return state.getValue(VARIANT).isWaxed();
+    }
+    
+    @Override
+    public EnumWeatherStage getStage(IBlockState state) {
+        return state.getValue(VARIANT).getStage();
+    }
+    
+    @Override
+    public IBlockState getScraped(IBlockState state) {
+        Variant variant = state.getValue(VARIANT);
+        return variant.isWaxed() ? state.withProperty(VARIANT, variant.getUnwaxed()) : state.withProperty(VARIANT, variant.previous());
+    }
+    
+    @Override
+    public IBlockState getWaxed(IBlockState state) {
+        return state.withProperty(VARIANT, state.getValue(VARIANT).getWaxed());
+    }
+    
+    @Override
+    public IBlockState getWeathered(IBlockState state) {
+        return state.withProperty(VARIANT, state.getValue(VARIANT).next());
+    }
+    
+    public enum Variant implements IStringSerializable {
+        
+        NORMAL(EnumWeatherStage.NORMAL, false),
+        EXPOSED(EnumWeatherStage.EXPOSED, false),
+        WEATHERED(EnumWeatherStage.WEATHERED, false),
+        OXIDIZED(EnumWeatherStage.OXIDIZED, false),
+        WAXED(EnumWeatherStage.NORMAL, true),
+        WAXED_EXPOSED(EnumWeatherStage.EXPOSED, true),
+        WAXED_WEATHERED(EnumWeatherStage.WEATHERED, true),
+        WAXED_OXIDIZED(EnumWeatherStage.OXIDIZED, true);
+        
+        private static final Table<EnumWeatherStage, Boolean, Variant> VALUES = createTable();
+        
+        private static Table<EnumWeatherStage, Boolean, Variant> createTable() {
+            ImmutableTable.Builder<EnumWeatherStage, Boolean, Variant> builder = ImmutableTable.builder();
+            for (Variant variant : values()) builder.put(variant.stage, variant.waxed, variant);
+            return builder.build();
+        }
+        
+        private final EnumWeatherStage stage;
+        private final boolean waxed;
+        
+        Variant(EnumWeatherStage stage, boolean waxed) {
+            this.stage = stage;
+            this.waxed = waxed;
+        }
+        
+        public EnumWeatherStage getStage() {
+            return stage;
+        }
+        
+        public boolean isWaxed() {
+            return waxed;
+        }
+        
+        @Override
+        public String getName() {
+            return (waxed ? "waxed_" : "") + stage.getName();
+        }
+        
+        public String getUnlocalizedName() {
+            return (waxed ? "Waxed" : "") + stage.getUnlocalizedName();
+        }
+        
+        public Variant previous() {
+            return get(stage.previous(), waxed);
+        }
+        
+        public Variant next() {
+            return get(stage.next(), waxed);
+        }
+        
+        public Variant getWaxed() {
+            return get(stage, true);
+        }
+        
+        public Variant getUnwaxed() {
+            return get(stage, false);
+        }
+        
+        public static Variant get(EnumWeatherStage stage, boolean waxed) {
+            return VALUES.get(stage, waxed);
+        }
+        
     }
     
 }

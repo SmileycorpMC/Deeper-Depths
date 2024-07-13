@@ -3,7 +3,6 @@ package net.smileycorp.deeperdepths.common.blocks;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,9 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCopper extends BlockDeeperDepths {
+public class BlockCopper extends BlockDeeperDepths implements ICopperBlock {
     
-    public static final PropertyEnum<EnumWeatherStage> WEATHER_STAGE = PropertyEnum.create("weather_stage", EnumWeatherStage.class);
     public static final PropertyBool WAXED = PropertyBool.create("waxed");
     
     public BlockCopper(String name) {
@@ -73,6 +71,31 @@ public class BlockCopper extends BlockDeeperDepths {
         if (meta % 8 >= 4) builder.append("waxed_");
         if (meta % 4 > 0) builder.append(EnumWeatherStage.values()[meta % 4].getName() + "_");
         return builder + (meta % 4 > 0 ? getRegistryName().getResourcePath().replace("_block", "") : getRegistryName().getResourcePath());
+    }
+    
+    @Override
+    public boolean isWaxed(IBlockState state) {
+        return state.getValue(WAXED);
+    }
+    
+    @Override
+    public EnumWeatherStage getStage(IBlockState state) {
+        return state.getValue(WEATHER_STAGE);
+    }
+    
+    @Override
+    public IBlockState getScraped(IBlockState state) {
+        return state.getValue(WAXED) ? state.withProperty(WAXED, false) : state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).previous());
+    }
+    
+    @Override
+    public IBlockState getWaxed(IBlockState state) {
+        return state.withProperty(WAXED, true);
+    }
+    
+    @Override
+    public IBlockState getWeathered(IBlockState state) {
+        return state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).next());
     }
     
 }

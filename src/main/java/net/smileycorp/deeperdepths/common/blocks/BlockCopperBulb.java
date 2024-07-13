@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCopperBulb extends BlockDeeperDepths {
+public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  {
     
     public static final PropertyBool LIT = PropertyBool.create("lit");
     public static final PropertyBool POWERED = PropertyBool.create("powered");
@@ -24,14 +24,14 @@ public class BlockCopperBulb extends BlockDeeperDepths {
     
     public BlockCopperBulb(boolean waxed) {
         super((waxed ? "Waxed_" : "") + "Copper_Bulb", Material.IRON, 3, 6, 1);
-        setDefaultState(getBlockState().getBaseState().withProperty(BlockCopper.WEATHER_STAGE, EnumWeatherStage.NORMAL)
+        setDefaultState(getBlockState().getBaseState().withProperty(WEATHER_STAGE, EnumWeatherStage.NORMAL)
                 .withProperty(LIT, false).withProperty(POWERED, false));
         this.waxed = waxed;
     }
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, BlockCopper.WEATHER_STAGE, LIT, POWERED);
+        return new BlockStateContainer(this, WEATHER_STAGE, LIT, POWERED);
     }
     
     @Override
@@ -52,12 +52,12 @@ public class BlockCopperBulb extends BlockDeeperDepths {
     
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return state.getValue(BlockCopper.WEATHER_STAGE).getMapColor();
+        return state.getValue(WEATHER_STAGE).getMapColor();
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(BlockCopper.WEATHER_STAGE).ordinal() + (state.getValue(LIT) ? 4 : 0) + (state.getValue(POWERED) ? 8 : 0);
+        return state.getValue(WEATHER_STAGE).ordinal() + (state.getValue(LIT) ? 4 : 0) + (state.getValue(POWERED) ? 8 : 0);
     }
     
     @Override
@@ -67,7 +67,7 @@ public class BlockCopperBulb extends BlockDeeperDepths {
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(BlockCopper.WEATHER_STAGE, EnumWeatherStage.values()[meta % 4])
+        return getDefaultState().withProperty(WEATHER_STAGE, EnumWeatherStage.values()[meta % 4])
                 .withProperty(LIT, meta % 8 >= 4).withProperty(POWERED, meta >= 8);
     }
     
@@ -98,7 +98,7 @@ public class BlockCopperBulb extends BlockDeeperDepths {
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
         if (!state.getValue(LIT)) return 0;
-        switch (state.getValue(BlockCopper.WEATHER_STAGE)) {
+        switch (state.getValue(WEATHER_STAGE)) {
             case EXPOSED:
                 return 12;
             case WEATHERED:
@@ -131,6 +131,34 @@ public class BlockCopperBulb extends BlockDeeperDepths {
     
     public boolean isWaxed() {
         return waxed;
+    }
+    
+    @Override
+    public boolean isWaxed(IBlockState state) {
+        return waxed;
+    }
+    
+    @Override
+    public EnumWeatherStage getStage(IBlockState state) {
+        return state.getValue(WEATHER_STAGE);
+    }
+    
+    @Override
+    public IBlockState getScraped(IBlockState state) {
+        return waxed ? DeeperDepthsBlocks.COPPER_BULB.getDefaultState().withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE))
+                .withProperty(LIT, state.getValue(LIT)).withProperty(POWERED, state.getValue(POWERED))
+                : state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).previous());
+    }
+    
+    @Override
+    public IBlockState getWaxed(IBlockState state) {
+        return DeeperDepthsBlocks.WAXED_COPPER_BULB.getDefaultState().withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE))
+                .withProperty(LIT, state.getValue(LIT)).withProperty(POWERED, state.getValue(POWERED));
+    }
+    
+    @Override
+    public IBlockState getWeathered(IBlockState state) {
+        return state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).next());
     }
     
 }

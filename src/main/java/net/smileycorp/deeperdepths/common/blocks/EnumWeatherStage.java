@@ -34,6 +34,14 @@ public enum EnumWeatherStage implements IStringSerializable {
         return color;
     }
     
+    public EnumWeatherStage previous() {
+       return this == NORMAL ? NORMAL : values()[ordinal() - 1];
+    }
+    
+    public EnumWeatherStage next() {
+        return this == WEATHERED ? WEATHERED : values()[ordinal() + 1];
+    }
+    
     public static EnumWeatherStage fromName(String name) {
         for (EnumWeatherStage stage : values()) if (stage.name.equals(name)) return stage;
         return null;
