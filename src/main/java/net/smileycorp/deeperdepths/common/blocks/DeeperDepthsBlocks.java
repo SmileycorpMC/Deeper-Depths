@@ -9,10 +9,12 @@ import net.minecraft.block.material.Material;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileDecoratedPot;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -63,10 +65,11 @@ public class DeeperDepthsBlocks {
     public static final Block WAXED_OXIDIZED_COPPER_TRAPDOOR = null;*/
     
     //functional blocks
-   /*
-    public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
-    public static final Block TRIAL_SPAWNER = null;
-    public static final Block TRIAL_VAULT = null;*/
+   
+    //public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
+    /*public static final Block TRIAL_SPAWNER = null;
+    public static final Block VAULT = null*/
+    public static final Block DECORATED_POT = new BlockDecoratedPot();
     
     //sculk
     /*public static final Block SCULK = null;
@@ -95,6 +98,7 @@ public class DeeperDepthsBlocks {
             CUT_COPPER_STAIRS.put(stage, register(registry, new BlockCutCopperStairs(stage, false)));
             WAXED_CUT_COPPER_STAIRS.put(stage, register(registry, new BlockCutCopperStairs(stage, true)));
         }
+        GameRegistry.registerTileEntity(TileDecoratedPot.class, Constants.loc("pot"));
     }
     
     private static <T extends Block> T register(IForgeRegistry<Block> registry, T block) {

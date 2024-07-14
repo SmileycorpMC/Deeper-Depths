@@ -13,6 +13,7 @@ import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.client.blocks.CopperBulbStateMapper;
 import net.smileycorp.deeperdepths.client.blocks.MetaStateMapper;
+import net.smileycorp.deeperdepths.client.blocks.NormalStateMapper;
 import net.smileycorp.deeperdepths.client.blocks.SlabStateMapper;
 import net.smileycorp.deeperdepths.common.CommonProxy;
 import net.smileycorp.deeperdepths.common.Constants;
@@ -51,6 +52,7 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_STONE_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CUT_COPPER_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_CUT_COPPER_SLAB, new SlabStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DECORATED_POT, new NormalStateMapper());
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem) {
             if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
