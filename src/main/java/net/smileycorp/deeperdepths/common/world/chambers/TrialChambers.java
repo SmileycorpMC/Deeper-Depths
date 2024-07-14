@@ -257,20 +257,41 @@ public class TrialChambers {
             TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cl_hall_connect_1", rot);
             components.add(first_floor);
             isLeft = true;
-            connectPieceOne(first_floor, pos.add(-7,2,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            int randomDeter = ModRand.range(1, 4);
+
+            if(randomDeter == 1) {
+                connectPieceOne(first_floor, pos.add(-7,2,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else if (randomDeter == 2) {
+                connectPieceTwo(first_floor, pos.add(-7, 2, 4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else if (randomDeter == 3) {
+                connectPieceThree(first_floor, pos.add(-7, -5, 4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            }
 
         } if (levelsUp == 2) {
             TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cl_hall_connect_2", rot);
             components.add(first_floor);
             isLeft = true;
-            connectPieceOne(first_floor, pos.add(-7,7,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+
+            int randomDeter = ModRand.range(1, 4);
+
+            if(randomDeter == 1) {
+                connectPieceOne(first_floor, pos.add(-7,7,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else if (randomDeter == 2) {
+                connectPieceTwo(first_floor, pos.add(-7, 7, 4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else if (randomDeter == 3) {
+                connectPieceThree(first_floor, pos.add(-7, 0, 4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            }
 
         } else if(levelsUp == 3) {
             TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cl_hall_connect_3", rot);
             components.add(first_floor);
             isLeft = true;
-            connectPieceOne(first_floor, pos.add(-7,12,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
 
+            if(world.rand.nextInt(2)== 0) {
+                connectPieceOne(first_floor, pos.add(-7,12,4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else {
+                connectPieceThree(first_floor, pos.add(-7, 5, 4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            }
         }
         return true;
     }
@@ -283,48 +304,114 @@ public class TrialChambers {
             TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cr_hall_connect_1", rot);
             components.add(first_floor);
             isRight = true;
-        connectPieceOne(first_floor, pos.add(11,2,14), rot.add(Rotation.CLOCKWISE_90));
 
+            int randomDeter = ModRand.range(1, 4);
+
+            if(randomDeter == 1) {
+                connectPieceOne(first_floor, pos.add(11,2,14), rot.add(Rotation.CLOCKWISE_90));
+            } else if (randomDeter == 2) {
+                connectPieceTwo(first_floor, pos.add(11, 2, 14), rot.add(Rotation.CLOCKWISE_90));
+            } else if (randomDeter == 3) {
+                connectPieceThree(first_floor, pos.add(11, -5, 14), rot.add(Rotation.CLOCKWISE_90));
+            }
         } if (levelsUp == 2) {
             TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cr_hall_connect_2", rot);
             components.add(first_floor);
             isRight = true;
-            connectPieceOne(first_floor, pos.add(11,7,14), rot.add(Rotation.CLOCKWISE_90));
 
+            int randomDeter = ModRand.range(1, 4);
+
+            if(randomDeter == 1) {
+                connectPieceOne(first_floor, pos.add(11,7,14), rot.add(Rotation.CLOCKWISE_90));
+            } else if (randomDeter == 2) {
+                connectPieceTwo(first_floor, pos.add(11, 7, 14), rot.add(Rotation.CLOCKWISE_90));
+            } else if (randomDeter == 3) {
+                connectPieceThree(first_floor, pos.add(11, 0, 14), rot.add(Rotation.CLOCKWISE_90));
+            }
         } else if(levelsUp == 3) {
             TrialChambersTemplate first_floor = addAdjustedPieceWithoutCount(parent, pos, "connect/cr_hall_connect_3", rot);
             components.add(first_floor);
             isRight = true;
-            connectPieceOne(first_floor, pos.add(11,12,14), rot.add(Rotation.CLOCKWISE_90));
 
+            if(world.rand.nextInt(2)==0) {
+                connectPieceOne(first_floor, pos.add(11,12,14), rot.add(Rotation.CLOCKWISE_90));
+            }  else {
+                connectPieceThree(first_floor, pos.add(11, 5, 14), rot.add(Rotation.CLOCKWISE_90));
+            }
+           // connectPieceTwo(first_floor, pos.add(11, 12, 14), rot.add(Rotation.CLOCKWISE_90));
         }
         return true;
     }
 
     public boolean connectPieceOne(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
         TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_1", rot);
+        if(connect_piece.isCollidingExcParent(manager, parent, components)) {
+            return false;
+        }
+        components.add(connect_piece);
+        //generate Chamber
+      //  if(!generateRegularChamber(connect_piece, pos.add(-11, -8, -4), rot)) {
+          //  if(!secondChanceToGenerateChamber(connect_piece, pos, rot)) {
+           //     generateChamberEnd(connect_piece, pos, rot);
+           // }
+      //  }
+        generateRegularChamber(connect_piece, pos.add(0,-5, 0), rot);
+        return true;
+    }
+
+    public boolean connectPieceTwo(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_2", rot);
+        if(connect_piece.isCollidingExcParent(manager, parent, components)) {
+            return false;
+        }
         components.add(connect_piece);
         //generate Chamber
         return true;
     }
 
+    public boolean connectPieceThree(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_3", rot);
+        if(connect_piece.isCollidingExcParent(manager, parent, components)) {
+            return false;
+        }
+        components.add(connect_piece);
+        //generate Chamber
 
-    public boolean generateCross(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        return false;
+        return true;
     }
 
-    private boolean generateCorridor(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        return false;
+    //Generates a simple door at the end of the hall, I'll add more pieces that can generate later
+    public boolean generateChamberEnd(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate end = addAdjustedPieceWithoutCount(parent, pos, "chamber/chamber_end", rot);
+        components.add(end);
+        return true;
     }
 
-    private boolean generateEnd(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        return false;
+    //A second hall is added to try to generate the Chamber
+    public boolean secondChanceToGenerateChamber(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate chamer_connect = addAdjustedPieceWithoutCount(parent, pos, "chamber/chamber_connect", rot);
+        if(chamer_connect.isCollidingExcParent(manager, parent, components)) {
+            return false;
+        }
+
+        components.add(chamer_connect);
+
+        if(!generateRegularChamber(chamer_connect, pos.add(0, -5, 0), rot)) {
+            generateChamberEnd(chamer_connect, pos, rot);
+        }
+        return true;
     }
 
-    private boolean generateConnectPiece(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        return false;
-    }
+    //generates a regular chamber, more to come later
+    public boolean generateRegularChamber(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate chamber = addAdjustedPiece(parent, pos, "chamber/chamber_1", rot);
+        if(chamber.isCollidingExcParent(manager, parent, components)) {
+            return false;
+        }
+        components.add(chamber);
 
+        return true;
+    }
 
 
 
