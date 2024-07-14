@@ -152,6 +152,10 @@ public class TrialChambers {
         if(CORRIDOR_SIZE_LIMIT < 6 && !isSecondMainCorridor) {
             generateCorridorCross(template_hall_1, pos, rot);
         }
+
+        if(isSecondMainCorridor) {
+            generateRegularChamber(template_hall_1, pos.add(0, -5, 0), rot);
+        }
         return true;
     }
     //Second Plate End
@@ -343,6 +347,7 @@ public class TrialChambers {
         return true;
     }
 
+    //Connect Piece 1
     public boolean connectPieceOne(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
         TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_1", rot);
         if(connect_piece.isCollidingExcParent(manager, parent, components)) {
@@ -350,14 +355,16 @@ public class TrialChambers {
         }
         components.add(connect_piece);
         //generate Chamber
-      //  if(!generateRegularChamber(connect_piece, pos.add(-11, -8, -4), rot)) {
-          //  if(!secondChanceToGenerateChamber(connect_piece, pos, rot)) {
-           //     generateChamberEnd(connect_piece, pos, rot);
-           // }
-      //  }
-        generateRegularChamber(connect_piece, pos.add(0,-5, 0), rot);
+       if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN.add(0, -5, 0), rot)) {
+            if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
+                generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+            }
+        }
+
         return true;
     }
+
+    //End Connect Piece 1
 
     public boolean connectPieceTwo(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
         TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_2", rot);
@@ -366,6 +373,11 @@ public class TrialChambers {
         }
         components.add(connect_piece);
         //generate Chamber
+        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN.add(0, 2, 0), rot)) {
+            if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
+                generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+            }
+        }
         return true;
     }
 
@@ -376,6 +388,11 @@ public class TrialChambers {
         }
         components.add(connect_piece);
         //generate Chamber
+        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN.add(0, -5, 0), rot)) {
+            if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
+                generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+            }
+        }
 
         return true;
     }
