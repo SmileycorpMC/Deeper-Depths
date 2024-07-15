@@ -57,7 +57,20 @@ public class TrialChambers {
         CORRIDOR_SIZE_LIMIT++;
         System.out.println("Generated Trial Chambers at" + pos);
         TrialChambersTemplate.resetTemplateCount();
+        int entryVar = ModRand.range(1, 3);
+        placeEntryRoom(templateStart, BlockPos.ORIGIN, rot.add(Rotation.CLOCKWISE_180), entryVar);
+    }
 
+    public boolean placeEntryRoom(TrialChambersTemplate parent, BlockPos pos, Rotation rot, int id) {
+        if(id == 1) {
+            TrialChambersTemplate room = addAdjustedPieceWithoutCount(parent, pos.add(19, 7, 18), "chamber/chamber_entry_2",rot);
+            components.add(room);
+        } else if(id == 2) {
+            TrialChambersTemplate room = addAdjustedPieceWithoutCount(parent, pos.add(19, 7, 18), "chamber/chamber_entry_1",rot);
+            components.add(room);
+        }
+
+        return true;
     }
 
     public boolean generateSecondBoard(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
@@ -234,8 +247,10 @@ public class TrialChambers {
 
         if(world.rand.nextInt(2) == 0) {
             generateSecondCorridor(template_cross, pos.add(18, 0, 0), rot.add(Rotation.CLOCKWISE_90));
+            secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
         } else {
             generateSecondCorridor(template_cross, pos.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,0,0), rot.add(Rotation.CLOCKWISE_90));
         }
         return true;
     }

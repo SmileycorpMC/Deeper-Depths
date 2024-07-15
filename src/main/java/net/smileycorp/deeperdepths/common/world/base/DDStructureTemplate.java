@@ -24,7 +24,6 @@ public abstract class DDStructureTemplate extends StructureComponentTemplate {
     private static final PlacementSettings OVERWRITE = (new PlacementSettings()).setIgnoreEntities(true);
 
     private static final PlacementSettings INSERT = (new PlacementSettings()).setIgnoreEntities(true).setReplacedBlock(Blocks.AIR);
-
     private String pieceName;
 
     private Rotation rotation;
@@ -99,8 +98,9 @@ public abstract class DDStructureTemplate extends StructureComponentTemplate {
 
 
     private void loadTemplate(TemplateManager manager) {
+
         Template template = manager.getTemplate((MinecraftServer) null, new ResourceLocation(Constants.MODID, this.templateLocation() + "/" + this.pieceName));
-        PlacementSettings placementsettings = (this.overwrite ? OVERWRITE : INSERT).copy().setRotation(this.rotation);
+        PlacementSettings placementsettings = (this.overwrite ? OVERWRITE : INSERT).copy().setRotation(this.rotation).setReplacedBlock(Blocks.STRUCTURE_VOID);
         this.setup(template, this.templatePosition, placementsettings);
     }
 

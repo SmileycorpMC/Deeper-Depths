@@ -40,6 +40,7 @@ public class DeeperDepths {
         proxy.init(event);
         //Handles structure registration
         DDRegisterStructures.handleStructureRegistries();
+
     }
     
     @Mod.EventHandler

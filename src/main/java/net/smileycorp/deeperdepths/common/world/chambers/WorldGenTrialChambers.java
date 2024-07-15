@@ -76,7 +76,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
                     components.clear();
                     //the set position plus whatever y axis you want
                     //CHANGE ME LATER FOR TESTING PURPOSES ONLY
-                    BlockPos blockpos = posI.add(0, 100, 0);
+                    BlockPos blockpos = posI.add(0, 22, 0);
                     TrialChambers chambers = new TrialChambers(world, world.getSaveHandler().getStructureTemplateManager(), components);
                     //Starts the first room within the Trial Chambers
                     chambers.startChambers(blockpos, rotation);

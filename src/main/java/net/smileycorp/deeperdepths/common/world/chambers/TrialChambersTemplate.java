@@ -1,5 +1,6 @@
 package net.smileycorp.deeperdepths.common.world.chambers;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,6 +19,7 @@ public class TrialChambersTemplate extends DDStructureTemplate {
 
     public TrialChambersTemplate(TemplateManager manager, String type, BlockPos pos, Rotation rot, int distance, boolean overWriteIn) {
         super(manager, type, pos,distance, rot, overWriteIn);
+
     }
 
 
