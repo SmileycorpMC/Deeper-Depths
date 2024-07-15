@@ -14,6 +14,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
+import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
+import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileDecoratedPot;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;

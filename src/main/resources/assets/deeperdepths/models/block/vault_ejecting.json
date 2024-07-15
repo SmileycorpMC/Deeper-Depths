@@ -1,0 +1,7 @@
+{
+    "parent": "deeperdepths:block/vault",
+    "textures": {
+		"front": "deeperdepths:blocks/vault_front_ejecting",
+		"side": "deeperdepths:blocks/vault_side_active"
+    }
+}

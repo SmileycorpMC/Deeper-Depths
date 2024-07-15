@@ -1,6 +1,7 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.state.IBlockState;
+import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
 public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock {
     

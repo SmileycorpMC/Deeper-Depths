@@ -1,0 +1,9 @@
+{
+    "parent": "deeperdepths:block/vault",
+    "textures": {
+		"up": "deeperdepths:blocks/vault_top_ominous",
+		"front": "deeperdepths:blocks/vault_front_ominous",
+		"side": "deeperdepths:blocks/vault_side_ominous",
+		"down": "deeperdepths:blocks/vault_bottom"
+    }
+}

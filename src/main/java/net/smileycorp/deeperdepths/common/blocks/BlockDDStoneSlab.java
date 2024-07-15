@@ -15,6 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
+import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 
 public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     

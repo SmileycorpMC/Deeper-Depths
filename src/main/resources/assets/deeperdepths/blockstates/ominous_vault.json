@@ -1,0 +1,68 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": {
+            "model": "deeperdepths:ominous_vault"
+        },
+        "state=inactive,facing=north": {
+            "model": "deeperdepths:ominous_vault"
+        },
+        "state=inactive,facing=south": {
+            "model": "deeperdepths:ominous_vault",
+            "y": 180
+        },
+        "state=inactive,facing=west": {
+            "model": "deeperdepths:ominous_vault",
+            "y": 270
+        },
+        "state=inactive,facing=east": {
+            "model": "deeperdepths:ominous_vault",
+            "y": 90
+        },
+        "state=active,facing=north": {
+            "model": "deeperdepths:ominous_vault_active"
+        },
+        "state=active,facing=south": {
+            "model": "deeperdepths:ominous_vault_active",
+            "y": 180
+        },
+        "state=active,facing=west": {
+            "model": "deeperdepths:ominous_vault_active",
+            "y": 270
+        },
+        "state=active,facing=east": {
+            "model": "deeperdepths:ominous_vault_active",
+            "y": 90
+        },
+        "state=unlocking,facing=north": {
+            "model": "deeperdepths:ominous_vault_unlocking"
+        },
+        "state=unlocking,facing=south": {
+            "model": "deeperdepths:ominous_vault_unlocking",
+            "y": 180
+        },
+        "state=unlocking,facing=west": {
+            "model": "deeperdepths:ominous_vault_unlocking",
+            "y": 270
+        },
+        "state=unlocking,facing=east": {
+            "model": "deeperdepths:ominous_vault_unlocking",
+            "y": 90
+        },
+        "state=ejecting,facing=north": {
+            "model": "deeperdepths:ominous_vault_ejecting"
+        },
+        "state=ejecting,facing=south": {
+            "model": "deeperdepths:ominous_vault_ejecting",
+            "y": 180
+        },
+        "state=ejecting,facing=west": {
+            "model": "deeperdepths:ominous_vault_ejecting",
+            "y": 270
+        },
+        "state=ejecting,facing=east": {
+            "model": "deeperdepths:ominous_vault_ejecting",
+            "y": 90
+        }
+    }
+}

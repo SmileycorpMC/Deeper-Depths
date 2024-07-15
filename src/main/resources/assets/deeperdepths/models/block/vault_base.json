@@ -1,0 +1,14 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "up": "deeperdepths:blocks/vault_top",
+        "front": "deeperdepths:blocks/vault_front",
+        "side": "deeperdepths:blocks/vault_side",
+        "down": "deeperdepths:blocks/vault_bottom",
+        "particle": "#front",
+        "north": "#front",
+        "east": "#side",
+        "south": "#side",
+        "west": "#side"
+    }
+}
