@@ -153,8 +153,9 @@ public class TrialChambers {
             generateCorridorCross(template_hall_1, pos, rot);
         }
 
+        int chamberVar = ModRand.range(1, 3);
         if(isSecondMainCorridor) {
-            generateRegularChamber(template_hall_1, pos.add(0, -5, 0), rot);
+            generateRegularChamber(template_hall_1, pos, rot,chamberVar);
         }
         return true;
     }
@@ -354,8 +355,9 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
+        int chamberVar = ModRand.range(1, 4);
         //generate Chamber
-       if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN.add(0, -5, 0), rot)) {
+       if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
                 generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
             }
@@ -372,10 +374,11 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
+        int chamberVar = ModRand.range(1, 4);
         //generate Chamber
-        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN.add(0, 2, 0), rot)) {
-            if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
-                generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+        if(!generateRegularChamberForConnectTwo(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+            if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
+                generateChamberEnd(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot);
             }
         }
         return true;
@@ -387,8 +390,9 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
+        int chamberVar = ModRand.range(1, 4);
         //generate Chamber
-        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN.add(0, -5, 0), rot)) {
+        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
                 generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
             }
@@ -412,20 +416,54 @@ public class TrialChambers {
         }
 
         components.add(chamer_connect);
-
-        if(!generateRegularChamber(chamer_connect, pos.add(0, -5, 0), rot)) {
-            generateChamberEnd(chamer_connect, pos, rot);
+        int chamberVar = ModRand.range(1, 4);
+        if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
+            generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
         }
         return true;
     }
 
-    //generates a regular chamber, more to come later
-    public boolean generateRegularChamber(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        TrialChambersTemplate chamber = addAdjustedPiece(parent, pos, "chamber/chamber_1", rot);
-        if(chamber.isCollidingExcParent(manager, parent, components)) {
-            return false;
+    public boolean generateRegularChamberForConnectTwo(TrialChambersTemplate parent, BlockPos pos, Rotation rot, int id) {
+        TrialChambersTemplate chamber = null;
+        if(id == 1) {
+            chamber = addAdjustedPiece(parent, pos.add(0,2,0), "chamber/chamber_1", rot);
+        } else if(id == 2) {
+            chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_2", rot);
+        } else if(id ==3 ) {
+            chamber = addAdjustedPiece(parent, pos.add(0, -2, -2), "chamber/chamber_3", rot);
         }
-        components.add(chamber);
+
+        if(chamber != null) {
+            if(chamber.isCollidingExcParent(manager, parent, components)) {
+                return false;
+            }
+            components.add(chamber);
+        }
+
+        return true;
+    }
+
+    //generates a regular chamber, more to come later
+    public boolean generateRegularChamber(TrialChambersTemplate parent, BlockPos pos, Rotation rot, int id) {
+
+        TrialChambersTemplate chamber = null;
+        if(id == 1) {
+            chamber = addAdjustedPiece(parent, pos.add(0, -5, 0), "chamber/chamber_1", rot);
+        } else if (id == 2) {
+            chamber = addAdjustedPiece(parent, pos, "chamber/chamber_2", rot);
+       } else if(id == 3) {
+            chamber = addAdjustedPiece(parent, pos.add(0, -9, -2), "chamber/chamber_3",rot);
+        }
+
+
+
+        if(chamber != null) {
+            if (chamber.isCollidingExcParent(manager, parent, components)) {
+                return false;
+            }
+            components.add(chamber);
+        }
+
 
         return true;
     }
