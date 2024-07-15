@@ -20,9 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -47,25 +45,28 @@ public class BlockDecoratedPot extends BlockDeeperDepths implements ITileEntityP
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote && world.getBlockState(pos) instanceof TileDecoratedPot &! stack.isEmpty()) {
-            TileDecoratedPot tile = (TileDecoratedPot) world.getBlockState(pos);
-            if (tile.isItemValidForSlot(0, stack)) {
+        if (player.isSneaking() |! (world.getTileEntity(pos) instanceof TileDecoratedPot || stack.isEmpty()))
+            return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+        TileDecoratedPot tile = (TileDecoratedPot) world.getTileEntity(pos);
+        if (!tile.isItemValidForSlot(0, stack)) return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+        if (!world.isRemote) {
+            if (tile.isEmpty()) tile.setInventorySlotContents(0, stack.splitStack(1));
+            else {
                 tile.getStackInSlot(0).grow(1);
                 stack.shrink(1);
             }
         }
-        return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+        return true;
     }
     
     @Override
-    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         if (!world.isRemote) {
-            ItemStack stack = player.getHeldItemMainhand();
             if ((stack.getItem() instanceof ItemTool || stack.getItem() instanceof ItemHoe
                     || stack.getItem() instanceof ItemSword) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) < 1)
-                world.setBlockState(pos, state.withProperty(CRACKED, true), 3);
+                state = state.withProperty(CRACKED, true);
         }
-        return super.removedByPlayer(state, world, pos, player, willHarvest);
+        super.harvestBlock(world, player, pos, state, te, stack);
     }
     
     @Override
@@ -74,6 +75,7 @@ public class BlockDecoratedPot extends BlockDeeperDepths implements ITileEntityP
            TileEntity te = world.getTileEntity(pos);
            drops.add(new ItemStack(Items.BRICK, 4));
            if (te instanceof TileDecoratedPot &! ((TileDecoratedPot)te).isEmpty()) drops.add(((TileDecoratedPot) te).getStackInSlot(0));
+           return;
        }
        super.getDrops(drops, world, pos, state, fortune);
     }
@@ -99,12 +101,12 @@ public class BlockDecoratedPot extends BlockDeeperDepths implements ITileEntityP
     
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return getDefaultState().withProperty(BlockHorizontal.FACING, facing);
+        return getDefaultState().withProperty(BlockHorizontal.FACING, placer.getHorizontalFacing().getOpposite());
     }
     
     @Override
-    public String getHarvestTool(IBlockState state) {
-        return null;
+    public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+        return true;
     }
     
     @Nullable
@@ -129,7 +131,23 @@ public class BlockDecoratedPot extends BlockDeeperDepths implements ITileEntityP
     }
     
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {}
+    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
+        super.dropBlockAsItemWithChance(world, pos, state, chance, fortune);
+        world.removeTileEntity(pos);
+    }
     
+    
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {}
+    
+    @Override
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
+        return state.withProperty(BlockHorizontal.FACING, rot.rotate(state.getValue(BlockHorizontal.FACING)));
+    }
+    
+    @Override
+    public IBlockState withMirror(IBlockState state, Mirror mirror) {
+        return state.withRotation(mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
+    }
     
 }

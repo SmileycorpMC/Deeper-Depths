@@ -15,6 +15,8 @@ import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileDecoratedPot;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -67,8 +69,8 @@ public class DeeperDepthsBlocks {
     //functional blocks
    
     //public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
-    /*public static final Block TRIAL_SPAWNER = null;
-    public static final Block VAULT = null*/
+    public static final Block TRIAL_SPAWNER = new BlockTrialSpawner();
+    public static final Block VAULT = new BlockVault();
     public static final Block DECORATED_POT = new BlockDecoratedPot();
     
     //sculk
@@ -98,6 +100,8 @@ public class DeeperDepthsBlocks {
             CUT_COPPER_STAIRS.put(stage, register(registry, new BlockCutCopperStairs(stage, false)));
             WAXED_CUT_COPPER_STAIRS.put(stage, register(registry, new BlockCutCopperStairs(stage, true)));
         }
+        GameRegistry.registerTileEntity(TileTrialSpawner.class, Constants.loc("trial_spawner"));
+        GameRegistry.registerTileEntity(TileVault.class, Constants.loc("vault"));
         GameRegistry.registerTileEntity(TileDecoratedPot.class, Constants.loc("pot"));
     }
     

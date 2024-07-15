@@ -1,8 +1,6 @@
 package net.smileycorp.deeperdepths.common.world.chambers;
 
-import com.google.common.collect.Lists;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureComponent;
