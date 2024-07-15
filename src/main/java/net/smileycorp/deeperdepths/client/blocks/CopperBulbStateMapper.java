@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.BlockCopperBulb;
-import net.smileycorp.deeperdepths.common.blocks.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.blocks.ICopperBlock;
+import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
 public class CopperBulbStateMapper extends StateMapperBase {
     

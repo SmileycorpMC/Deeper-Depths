@@ -142,6 +142,7 @@ tile.deeperdepths.WaxedOxidizedCopperBulb.name=Waxed Oxidized Copper Bulb
 tile.deeperdepths.DecoratedPot.name=Pot
 tile.deeperdepths.TrialSpawner.name=Trial Spawner
 tile.deeperdepths.Vault.name=Vault
+tile.deeperdepths.OminousVault.name=Ominous Vault
 
 effect.deeperdepths.BadOmen.name=Bad Omen
 effect.deeperdepths.TrialOmen.name=Trial Omen

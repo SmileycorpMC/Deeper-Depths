@@ -2,6 +2,7 @@ package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -15,6 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public abstract class BlockTrial extends BlockDeeperDepths implements ITileEntityProvider {
+    
+    public static final PropertyBool OMINOUS = PropertyBool.create("ominous");
     
     public BlockTrial(String name) {
         super(name, Material.ROCK, 50, 50, 0);
@@ -38,13 +41,13 @@ public abstract class BlockTrial extends BlockDeeperDepths implements ITileEntit
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.CUTOUT;
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
     
     @Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess world, BlockPos pos, EnumFacing side) {
-        return !world.getBlockState(pos.offset(side)).doesSideBlockRendering(world, pos, side.getOpposite());
+        return true;
     }
     
 }

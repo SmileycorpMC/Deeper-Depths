@@ -1,0 +1,9 @@
+{
+    "parent": "deeperdepths:block/vault_base",
+    "textures": {
+		"up": "deeperdepths:blocks/vault_top",
+		"front": "deeperdepths:blocks/vault_front",
+		"side": "deeperdepths:blocks/vault_side",
+		"down": "deeperdepths:blocks/vault_bottom"
+    }
+}

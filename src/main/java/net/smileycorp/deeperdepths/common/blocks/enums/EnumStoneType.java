@@ -1,4 +1,4 @@
-package net.smileycorp.deeperdepths.common.blocks;
+package net.smileycorp.deeperdepths.common.blocks.enums;
 
 import com.google.common.collect.Lists;
 import net.minecraft.block.material.MapColor;
