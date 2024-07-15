@@ -26,8 +26,7 @@ public class DeeperDepthsItems {
     //useable items
     //public static final Item WIND_CHARGE = null;
     public static final Item OMINOUS_BOTTLE = new ItemOminousBottle();
-    /*public static final Item TRIAL_KEY = null;
-    public static final Item OMINOUS_KEY = null;*/
+    public static final Item TRIAL_KEY = new ItemTrialKey();
     
     //tools
     /*public static final Item SPYGLASS = null;
@@ -35,7 +34,7 @@ public class DeeperDepthsItems {
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Item> event) {
+    public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Field field : DeeperDepthsItems.class.getDeclaredFields()) {
             try {
