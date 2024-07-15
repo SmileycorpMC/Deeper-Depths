@@ -353,7 +353,7 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
-        int chamberVar = ModRand.range(1, 4);
+        int chamberVar = ModRand.range(1, 5);
         //generate Chamber
        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
@@ -372,7 +372,7 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
-        int chamberVar = ModRand.range(1, 4);
+        int chamberVar = ModRand.range(1, 5);
         //generate Chamber
         if(!generateRegularChamberForConnectTwo(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
@@ -388,7 +388,7 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
-        int chamberVar = ModRand.range(1, 4);
+        int chamberVar = ModRand.range(1, 5);
         //generate Chamber
         if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
@@ -414,7 +414,7 @@ public class TrialChambers {
         }
 
         components.add(chamer_connect);
-        int chamberVar = ModRand.range(1, 4);
+        int chamberVar = ModRand.range(1, 5);
         if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
             generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
         }
@@ -429,6 +429,8 @@ public class TrialChambers {
             chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_2", rot);
         } else if(id ==3 ) {
             chamber = addAdjustedPiece(parent, pos.add(0, -2, -2), "chamber/chamber_3", rot);
+        } else if(id == 4) {
+            chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_4", rot);
         }
 
         if(chamber != null) {
@@ -451,6 +453,8 @@ public class TrialChambers {
             chamber = addAdjustedPiece(parent, pos, "chamber/chamber_2", rot);
        } else if(id == 3) {
             chamber = addAdjustedPiece(parent, pos.add(0, -9, -2), "chamber/chamber_3",rot);
+        } else if(id == 4) {
+            chamber = addAdjustedPiece(parent, pos, "chamber/chamber_4", rot);
         }
 
 
