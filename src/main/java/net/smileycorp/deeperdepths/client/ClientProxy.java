@@ -5,6 +5,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -17,6 +18,7 @@ import net.smileycorp.deeperdepths.client.blocks.*;
 import net.smileycorp.deeperdepths.common.CommonProxy;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
+import net.smileycorp.deeperdepths.common.blocks.IBlockProperties;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 
@@ -43,6 +45,7 @@ public class ClientProxy extends CommonProxy {
     public static void registerModels(ModelRegistryEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TileEntityMobSpawnerRenderer());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE, new MetaStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_WALL, new WallStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_BLOCK, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CUT_COPPER, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CHISELED_COPPER, new MetaStateMapper());
@@ -56,7 +59,10 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DECORATED_POT, new NormalStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.VAULT, new VaultStateMapper());
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
-        for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem) {
+        ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), stack ->
+                new ModelResourceLocation(Constants.locStr((((IMetaItem)stack.getItem()).byMeta(stack.getMetadata()))), "inventory"));
+        for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
+                ((IBlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
             if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
                 ModelResourceLocation loc = new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i)));
                 ModelLoader.setCustomModelResourceLocation(item, i, loc);

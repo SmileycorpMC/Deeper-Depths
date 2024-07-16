@@ -1,21 +1,26 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.BlockSlab;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
+
+import javax.annotation.Nullable;
 
 public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     
@@ -24,7 +29,7 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     private final boolean isDouble;
     
     public BlockDDStoneSlab(boolean isDouble) {
-        super(Material.IRON);
+        super(Material.ROCK);
         this.isDouble = isDouble;
         String name = "Stone_Slab";
         if (isDouble) name = "Double_" + name;
@@ -41,6 +46,20 @@ public class BlockDDStoneSlab extends BlockSlab implements IBlockProperties{
     @Override
     protected BlockStateContainer createBlockState() {
         return this.isDouble() ? new BlockStateContainer(this, VARIANT) : new BlockStateContainer(this, HALF, VARIANT);
+    }
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getValue(VARIANT).getMapColor();
+    }
+    
+    @Override
+    public float getBlockHardness(IBlockState state, World world, BlockPos pos) {
+        return state.getValue(VARIANT).getHardness();
+    }
+    
+    @Override
+    public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion) {
+        return world.getBlockState(pos).getValue(VARIANT).getResistance() / 5f;
     }
     
     @Override
