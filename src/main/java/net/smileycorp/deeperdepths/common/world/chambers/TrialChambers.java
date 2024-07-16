@@ -1,11 +1,14 @@
 package net.smileycorp.deeperdepths.common.world.chambers;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.smileycorp.deeperdepths.common.world.base.ModRand;
+import org.lwjgl.Sys;
 
 import java.util.List;
 
@@ -47,7 +50,9 @@ public class TrialChambers {
     }
 
 
+    protected BlockPos posIdentified;
     public void startChambers(BlockPos pos, Rotation rot) {
+        posIdentified = pos;
         TrialChambersTemplate template = new TrialChambersTemplate(manager, "c_board", pos, rot, 0, true);
         String[] b_entrance_types = {"e_hall_big_entrance_1", "e_hall_big_entrance_2", "e_hall_big_entrance_3"};
         TrialChambersTemplate templateStart = new TrialChambersTemplate(manager, ModRand.choice(b_entrance_types), pos.add(0, 1, 0), rot, 0,true);
@@ -61,15 +66,52 @@ public class TrialChambers {
         placeEntryRoom(templateStart, BlockPos.ORIGIN, rot.add(Rotation.CLOCKWISE_180), entryVar);
     }
 
+
+    protected int chamberTubeVarHeight = 0;
     public boolean placeEntryRoom(TrialChambersTemplate parent, BlockPos pos, Rotation rot, int id) {
         if(id == 1) {
             TrialChambersTemplate room = addAdjustedPieceWithoutCount(parent, pos.add(19, 7, 18), "chamber/chamber_entry_2",rot);
             components.add(room);
+            //Add config to have this disabled
+                placeModifyTube(room, BlockPos.ORIGIN.add(-12, 18, 0), rot);
+                chamberTubeVarHeight = 51;
+
         } else if(id == 2) {
             TrialChambersTemplate room = addAdjustedPieceWithoutCount(parent, pos.add(19, 7, 18), "chamber/chamber_entry_1",rot);
             components.add(room);
+            //add config to have this disabled
+                placeModifyTube(room, BlockPos.ORIGIN.add(-12,21, 0), rot);
+                chamberTubeVarHeight = 54;
         }
 
+        return true;
+    }
+
+    //chamber 1 = 51
+    //chamber 2 = 48
+
+
+    protected int tube_count = 1;
+    public boolean placeModifyTube(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        String[] tube_types = {"extra/tube_1", "extra/tube_2", "extra/tube_3", "extra/tube_4"};
+        TrialChambersTemplate tube = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(tube_types), rot);
+        components.add(tube);
+        int yDifference = getGroundFromAbove(world, posIdentified.getX(), posIdentified.getZ());
+        System.out.println("Surface Height at" + yDifference);
+
+        if((yDifference - chamberTubeVarHeight) / 3 >= tube_count * 2) {
+            tube_count++;
+            placeModifyTube(tube, BlockPos.ORIGIN.add(-5, 3, 0), rot);
+        } else {
+            //PLace Top
+            placeTubeTop(tube, BlockPos.ORIGIN.add(-5, 3, 0), rot);
+        }
+        return true;
+    }
+
+    public boolean placeTubeTop(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate top = addAdjustedPieceWithoutCount(parent, pos, "extra/top_1", rot);
+        components.add(top);
         return true;
     }
 
@@ -423,7 +465,8 @@ public class TrialChambers {
 
     //A second hall is added to try to generate the Chamber
     public boolean secondChanceToGenerateChamber(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        TrialChambersTemplate chamer_connect = addAdjustedPieceWithoutCount(parent, pos, "chamber/chamber_connect", rot);
+        String[] b_entrance_types = {"chamber/chamber_connect", "chamber/chamber_connect_2", "chamber/chamber_connect_3"};
+        TrialChambersTemplate chamer_connect = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(b_entrance_types), rot);
         if(chamer_connect.isCollidingExcParent(manager, parent, components)) {
             return false;
         }
@@ -483,6 +526,20 @@ public class TrialChambers {
 
 
         return true;
+    }
+
+
+    public static int getGroundFromAbove(World world, int x, int z)
+    {
+        int y = 255;
+        boolean foundGround = false;
+        while(!foundGround && y-- >= 31)
+        {
+            Block blockAt = world.getBlockState(new BlockPos(x,y,z)).getBlock();
+            foundGround =  blockAt != Blocks.AIR && blockAt != Blocks.LEAVES && blockAt != Blocks.LEAVES2;
+        }
+
+        return y;
     }
 
 
