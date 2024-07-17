@@ -6,7 +6,6 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -17,34 +16,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
-import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
-public class BlockCutCopperSlab extends BlockSlab implements IBlockProperties, ICopperBlock {
+public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
     
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
     
-    private final boolean isDouble;
-    
     public BlockCutCopperSlab(boolean isDouble) {
-        super(Material.IRON);
-        this.isDouble = isDouble;
-        String name = (isDouble ? "Double_" : "") + "Cut_Copper_Slab";
-        setRegistryName(Constants.loc(name));
-        setUnlocalizedName(Constants.name(name));
+        super(Material.IRON, "Cut_Copper_Slab", isDouble);
         setHarvestLevel("PICKAXE", 1);
         setHardness(3);
         setResistance(6);
         IBlockState base = blockState.getBaseState().withProperty(VARIANT, Variant.NORMAL);
-        if (!isDouble) base = base.withProperty(HALF,EnumBlockHalf.BOTTOM);
+        if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.BOTTOM);
         setDefaultState(base);
-        setCreativeTab(DeeperDepths.CREATIVE_TAB);
-        useNeighborBrightness = true;
-    }
-    
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return isDouble ? new BlockStateContainer(this, VARIANT) : new BlockStateContainer(this, VARIANT, HALF);
     }
     
     @Override
@@ -53,11 +38,6 @@ public class BlockCutCopperSlab extends BlockSlab implements IBlockProperties, I
         if (meta % 8 >= 4) builder.append("Waxed");
         if (meta % 4 > 0) builder.append(EnumWeatherStage.values()[meta % 4].getUnlocalizedName());
         return "tile." + Constants.name(builder + getUnlocalizedName().replace("tile." + Constants.MODID + ".", ""));
-    }
-    
-    @Override
-    public boolean isDouble() {
-        return isDouble;
     }
     
     @Override
@@ -82,13 +62,13 @@ public class BlockCutCopperSlab extends BlockSlab implements IBlockProperties, I
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return (isDouble ? getDefaultState() : getDefaultState().withProperty(HALF, meta == 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
+        return (isDouble() ? getDefaultState() : getDefaultState().withProperty(HALF, meta == 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
                 .withProperty(VARIANT, Variant.values()[meta % 8]);
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return (isDouble ? 0 : (state.getValue(HALF) == EnumBlockHalf.TOP ? 8 : 0)) + state.getValue(VARIANT).ordinal();
+        return (isDouble() ? 0 : (state.getValue(HALF) == EnumBlockHalf.TOP ? 8 : 0)) + state.getValue(VARIANT).ordinal();
     }
     
     @Override
@@ -141,6 +121,11 @@ public class BlockCutCopperSlab extends BlockSlab implements IBlockProperties, I
     @Override
     public IBlockState getWeathered(IBlockState state) {
         return state.withProperty(VARIANT, state.getValue(VARIANT).next());
+    }
+    
+    @Override
+    public BlockDDSlab getDouble() {
+        return DeeperDepthsBlocks.DOUBLE_CUT_COPPER_SLAB;
     }
     
     public enum Variant implements IStringSerializable {
