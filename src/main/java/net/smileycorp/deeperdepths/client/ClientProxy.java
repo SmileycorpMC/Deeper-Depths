@@ -59,8 +59,6 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DECORATED_POT, new NormalStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.VAULT, new VaultStateMapper());
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
-        ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), stack ->
-                new ModelResourceLocation(Constants.locStr((((IMetaItem)stack.getItem()).byMeta(stack.getMetadata()))), "inventory"));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
                 ((IBlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
             if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
@@ -72,6 +70,8 @@ public class ClientProxy extends CommonProxy {
                 ModelLoader.setCustomModelResourceLocation(item, 0, loc);
             }
         }
+        for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
+                    new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
     }
     
 }
