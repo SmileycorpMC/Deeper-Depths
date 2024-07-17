@@ -33,6 +33,7 @@ public class DeeperDepthsBlocks {
     public static final BlockDDStoneSlab DOUBLE_STONE_SLAB = new BlockDDStoneSlab(true);
     public static final Map<EnumStoneType, BlockDDStairs> STONE_STAIRS = Maps.newEnumMap(EnumStoneType.class);
     public static final BlockDDStoneWall STONE_WALL = new BlockDDStoneWall();
+    public static final BlockReinforcedDeepslate REINFORCED_DEEPSLATE = new BlockReinforcedDeepslate();
     
     //copper
     public static final BlockDeeperDepths COPPER_ORE = new BlockDeeperDepths("Copper_Ore", Material.ROCK, 3, 3, 1);
