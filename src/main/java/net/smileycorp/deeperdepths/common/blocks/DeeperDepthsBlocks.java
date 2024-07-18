@@ -74,7 +74,7 @@ public class DeeperDepthsBlocks {
     //public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
     public static final BlockTrialSpawner TRIAL_SPAWNER = new BlockTrialSpawner();
     public static final BlockVault VAULT = new BlockVault();
-    public static final BlockDecoratedPot DECORATED_POT = new BlockDecoratedPot();
+    public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
     
     //sculk
     /*public static final Block SCULK = null;

@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.smileycorp.deeperdepths.common.world.base.ModRand;
-import org.lwjgl.Sys;
 
 import java.util.List;
 

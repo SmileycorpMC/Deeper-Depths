@@ -5,6 +5,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -28,13 +30,16 @@ import net.smileycorp.deeperdepths.common.blocks.tiles.TileDecoratedPot;
 
 import javax.annotation.Nullable;
 
-public class BlockDecoratedPot extends BlockDeeperDepths implements ITileEntityProvider {
+public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvider {
+    
+    public static final AxisAlignedBB AABB = new AxisAlignedBB(0.125, 0.0D, 0.125, 0.875, 1, 0.875);
     
     public static final PropertyBool CRACKED = PropertyBool.create("cracked");
     
-    public BlockDecoratedPot() {
-        super("Decorated_Pot", Material.ROCK, 0, 0, 0);
+    public BlockTrialPot() {
+        super("Trial_Pot", Material.ROCK, 0, 0, 0);
         setDefaultState(blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH).withProperty(CRACKED, false));
+        useNeighborBrightness = true;
     }
     
     @Override
@@ -136,6 +141,15 @@ public class BlockDecoratedPot extends BlockDeeperDepths implements ITileEntityP
         world.removeTileEntity(pos);
     }
     
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return AABB;
+    }
+    
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing facing) {
+        return BlockFaceShape.UNDEFINED;
+    }
     
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {}
@@ -148,6 +162,21 @@ public class BlockDecoratedPot extends BlockDeeperDepths implements ITileEntityP
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirror) {
         return state.withRotation(mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
+    }
+    
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+    
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+    
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
     
 }

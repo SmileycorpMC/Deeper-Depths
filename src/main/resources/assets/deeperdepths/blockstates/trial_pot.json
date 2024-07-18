@@ -1,0 +1,23 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": {
+            "model": "deeperdepths:trial_pot"
+        },
+        "facing=north": {
+            "model": "deeperdepths:trial_pot"
+        },
+        "facing=south": {
+            "model": "deeperdepths:trial_pot",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "deeperdepths:trial_pot",
+            "y": 270
+        },
+        "facing=east": {
+            "model": "deeperdepths:trial_pot",
+            "y": 90
+        }
+	}
+}
