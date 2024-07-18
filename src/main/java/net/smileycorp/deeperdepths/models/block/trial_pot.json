@@ -1,0 +1,55 @@
+{
+	"parent": "block/block",
+	"textures":
+	{
+		"2": "deeperdepths:blocks/trial_pot_top",
+		"3": "deeperdepths:blocks/trial_pot_side2",
+		"4": "deeperdepths:blocks/trial_pot_neck",
+		"5": "deeperdepths:blocks/trial_pot_side1",
+		"particle": "deeperdepths:blocks/trial_pot_top"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [2, 0, 2],
+			"to": [14, 12, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
+			"faces": {
+				"north": {"uv": [2, 2, 14, 14], "texture": "#5"},
+				"east": {"uv": [2, 2, 14, 14], "texture": "#3"},
+				"south": {"uv": [2, 2, 14, 14], "texture": "#5"},
+				"west": {"uv": [2, 2, 14, 14], "texture": "#3"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#2"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#2"}
+			}
+		},
+		{
+			"name": "neck",
+			"from": [4.99, 11.99, 4.99],
+			"to": [11.01, 20.01, 11.01],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 4, 7]},
+			"faces": {
+				"north": {"uv": [0, 1, 6, 9], "texture": "#4"},
+				"east": {"uv": [0, 1, 6, 9], "texture": "#4"},
+				"south": {"uv": [0, 1, 6, 9], "texture": "#4"},
+				"west": {"uv": [0, 1, 6, 9], "texture": "#4"},
+				"up": {"uv": [7, 2, 13, 8], "texture": "#4"},
+				"down": {"uv": [0, 0, 3, 3], "texture": "#4"}
+			}
+		},
+		{
+			"name": "handles",
+			"from": [2, 12, 8],
+			"to": [14, 17, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 12, 6]},
+			"faces": {
+				"north": {"uv": [0, 11, 12, 16], "texture": "#4"},
+				"east": {"uv": [0, 0, 0, 1.25], "texture": "#4"},
+				"south": {"uv": [0, 11, 12, 16], "texture": "#4"},
+				"west": {"uv": [0, 0, 0, 1.25], "texture": "#4"},
+				"up": {"uv": [0, 0, 3, 0], "texture": "#4"},
+				"down": {"uv": [0, 0, 3, 0], "texture": "#4"}
+			}
+		}
+	]
+}
