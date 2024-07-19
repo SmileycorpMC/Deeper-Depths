@@ -48,6 +48,8 @@ public class DeeperDepthsBlocks {
     public static final BlockCopperBulb WAXED_COPPER_BULB = new BlockCopperBulb(true);
     public static final Map<EnumWeatherStage, BlockDDStairs> CUT_COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockDDStairs> WAXED_CUT_COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final Map<EnumWeatherStage, BlockCopperTrapdoor> COPPER_TRAPDOORS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final Map<EnumWeatherStage, BlockCopperTrapdoor> WAXED_COPPER_TRAPDOORS = Maps.newEnumMap(EnumWeatherStage.class);
     
     //public static final Block LIGHTNING_ROD = null;
     
@@ -93,6 +95,8 @@ public class DeeperDepthsBlocks {
         for (EnumWeatherStage stage : EnumWeatherStage.values()) {
             CUT_COPPER_STAIRS.put(stage, new BlockCutCopperStairs(stage, false));
             WAXED_CUT_COPPER_STAIRS.put(stage, new BlockCutCopperStairs(stage, true));
+            COPPER_TRAPDOORS.put(stage, new BlockCopperTrapdoor(stage, false));
+            WAXED_COPPER_TRAPDOORS.put(stage, new BlockCopperTrapdoor(stage, true));
         }
         for (Field field : DeeperDepthsBlocks.class.getDeclaredFields()) {
             try {
