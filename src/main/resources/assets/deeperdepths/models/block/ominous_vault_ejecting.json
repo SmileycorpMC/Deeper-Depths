@@ -1,5 +1,5 @@
 {
-    "parent": "deeperdepths:block/vault_ominous",
+    "parent": "deeperdepths:block/ominous_vault",
     "textures": {
 		"front": "deeperdepths:blocks/vault_front_ejecting_ominous",
 		"side": "deeperdepths:blocks/vault_side_active_ominous"
