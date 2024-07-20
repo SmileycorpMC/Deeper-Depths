@@ -1,0 +1,6 @@
+{
+  "parent": "block/trapdoor_top",
+  "textures": {
+    "texture": "deeperdepths:blocks/copper_trapdoor"
+  }
+}
