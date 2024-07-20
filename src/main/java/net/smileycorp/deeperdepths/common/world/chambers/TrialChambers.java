@@ -98,18 +98,19 @@ public class TrialChambers {
         int yDifference = getGroundFromAbove(world, posIdentified.getX(), posIdentified.getZ());
         System.out.println("Surface Height at" + yDifference);
 
-        if((yDifference - chamberTubeVarHeight) / 3 >= tube_count * 2) {
+        if((yDifference - (chamberTubeVarHeight)) / 3 >= (tube_count + 2) * 2) {
             tube_count++;
             placeModifyTube(tube, BlockPos.ORIGIN.add(-5, 3, 0), rot);
         } else {
             //PLace Top
-            placeTubeTop(tube, BlockPos.ORIGIN.add(-5, 3, 0), rot);
+            placeTubeTop(tube, BlockPos.ORIGIN.add(-7, 3, 0), rot);
         }
         return true;
     }
 
     public boolean placeTubeTop(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        TrialChambersTemplate top = addAdjustedPieceWithoutCount(parent, pos, "extra/top_1", rot);
+        String[] tube_tops = {"extra/top_2", "extra/top_3"};
+        TrialChambersTemplate top = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(tube_tops), rot);
         components.add(top);
         return true;
     }
