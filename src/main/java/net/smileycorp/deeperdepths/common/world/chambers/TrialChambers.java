@@ -206,7 +206,7 @@ public class TrialChambers {
             generateCorridorCross(template_hall_1, pos, rot);
         }
 
-        int chamberVar = ModRand.range(1, 3);
+        int chamberVar = ModRand.range(1, 9);
         if(isSecondMainCorridor) {
             generateRegularChamber(template_hall_1, pos, rot,chamberVar);
         }
@@ -410,7 +410,7 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
-        int chamberVar = ModRand.range(1, 5);
+        int chamberVar = ModRand.range(1, 9);
         //generate Chamber
        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
@@ -429,7 +429,7 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
-        int chamberVar = ModRand.range(1, 5);
+        int chamberVar = ModRand.range(1, 9);
         //generate Chamber
         if(!generateRegularChamberForConnectTwo(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
@@ -445,7 +445,7 @@ public class TrialChambers {
             return false;
         }
         components.add(connect_piece);
-        int chamberVar = ModRand.range(1, 5);
+        int chamberVar = ModRand.range(1, 9);
         //generate Chamber
         if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
@@ -472,7 +472,7 @@ public class TrialChambers {
         }
 
         components.add(chamer_connect);
-        int chamberVar = ModRand.range(1, 5);
+        int chamberVar = ModRand.range(1, 9);
         if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
             generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
         }
@@ -489,6 +489,14 @@ public class TrialChambers {
             chamber = addAdjustedPiece(parent, pos.add(0, -2, -2), "chamber/chamber_3", rot);
         } else if(id == 4) {
             chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_4", rot);
+        } else if(id == 5) {
+            chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_5", rot);
+        } else if(id == 6) {
+            chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_6", rot);
+        } else if(id == 7) {
+            chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_7", rot);
+        }else if(id == 8) {
+            chamber = addAdjustedPiece(parent, pos.add(0, 7, 0), "chamber/chamber_8", rot);
         }
 
         if(chamber != null) {
@@ -513,7 +521,16 @@ public class TrialChambers {
             chamber = addAdjustedPiece(parent, pos.add(0, -9, -2), "chamber/chamber_3",rot);
         } else if(id == 4) {
             chamber = addAdjustedPiece(parent, pos, "chamber/chamber_4", rot);
+        }  else if(id == 5) {
+            chamber = addAdjustedPiece(parent, pos, "chamber/chamber_5", rot);
+        } else if(id == 6) {
+            chamber = addAdjustedPiece(parent, pos, "chamber/chamber_6", rot);
+        } else if(id == 7) {
+            chamber = addAdjustedPiece(parent, pos, "chamber/chamber_7", rot);
+        } else if(id == 8) {
+            chamber = addAdjustedPiece(parent, pos, "chamber/chamber_8", rot);
         }
+
 
 
 
