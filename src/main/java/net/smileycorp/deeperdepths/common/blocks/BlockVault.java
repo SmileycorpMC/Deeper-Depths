@@ -6,6 +6,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -46,13 +47,22 @@ public class BlockVault extends BlockTrial {
     
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileVault();
+        return new TileVault(meta % 2 == 1);
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+        if (player.isSneaking() |! (world.getTileEntity(pos) instanceof TileVault || stack.isEmpty()) || state.getValue(STATE) != EnumVaultState.ACTIVE)
+            return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+        if (!world.isRemote) ((TileVault) world.getTileEntity(pos)).interact(player, stack);
+        return true;
     }
     
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity te = world.getTileEntity(pos);
-        return (te instanceof TileVault) ?  state.withProperty(STATE, ((TileVault)te).getState()) : state;
+        return (te instanceof TileVault) ? state.withProperty(STATE, ((TileVault)te).getState()) : state;
     }
     
     @Override

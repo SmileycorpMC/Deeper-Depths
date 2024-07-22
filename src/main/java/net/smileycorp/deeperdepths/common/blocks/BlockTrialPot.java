@@ -26,7 +26,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.smileycorp.deeperdepths.common.blocks.tiles.TileDecoratedPot;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialPot;
 
 import javax.annotation.Nullable;
 
@@ -50,9 +50,9 @@ public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvi
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-        if (player.isSneaking() |! (world.getTileEntity(pos) instanceof TileDecoratedPot || stack.isEmpty()))
+        if (player.isSneaking() |! (world.getTileEntity(pos) instanceof TileTrialPot || stack.isEmpty()))
             return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
-        TileDecoratedPot tile = (TileDecoratedPot) world.getTileEntity(pos);
+        TileTrialPot tile = (TileTrialPot) world.getTileEntity(pos);
         if (!tile.isItemValidForSlot(0, stack)) return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
         if (!world.isRemote) {
             if (tile.isEmpty()) tile.setInventorySlotContents(0, stack.splitStack(1));
@@ -79,7 +79,7 @@ public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvi
        if (state.getValue(CRACKED)) {
            TileEntity te = world.getTileEntity(pos);
            drops.add(new ItemStack(Items.BRICK, 4));
-           if (te instanceof TileDecoratedPot &! ((TileDecoratedPot)te).isEmpty()) drops.add(((TileDecoratedPot) te).getStackInSlot(0));
+           if (te instanceof TileTrialPot &! ((TileTrialPot)te).isEmpty()) drops.add(((TileTrialPot) te).getStackInSlot(0));
            return;
        }
        super.getDrops(drops, world, pos, state, fortune);
@@ -117,7 +117,7 @@ public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvi
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World world, int i) {
-        return new TileDecoratedPot();
+        return new TileTrialPot();
     }
     
     @Override

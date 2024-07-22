@@ -19,7 +19,7 @@ import net.smileycorp.atlas.api.util.RecipeUtils;
 
 import javax.annotation.Nullable;
 
-public class TileDecoratedPot extends TileEntity implements ILootContainer, IInventory {
+public class TileTrialPot extends TileEntity implements ILootContainer, IInventory {
     
     protected final IItemHandler inventory = new InvWrapper(this);
     

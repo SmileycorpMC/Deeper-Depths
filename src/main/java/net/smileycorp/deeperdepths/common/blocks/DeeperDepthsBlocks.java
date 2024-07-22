@@ -14,7 +14,7 @@ import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
-import net.smileycorp.deeperdepths.common.blocks.tiles.TileDecoratedPot;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialPot;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 
@@ -113,7 +113,7 @@ public class DeeperDepthsBlocks {
         }
         GameRegistry.registerTileEntity(TileTrialSpawner.class, Constants.loc("trial_spawner"));
         GameRegistry.registerTileEntity(TileVault.class, Constants.loc("vault"));
-        GameRegistry.registerTileEntity(TileDecoratedPot.class, Constants.loc("pot"));
+        GameRegistry.registerTileEntity(TileTrialPot.class, Constants.loc("pot"));
     }
     
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

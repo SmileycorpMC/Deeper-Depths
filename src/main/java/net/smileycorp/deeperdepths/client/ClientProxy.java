@@ -15,11 +15,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.client.blocks.*;
+import net.smileycorp.deeperdepths.client.tesr.TESRVault;
 import net.smileycorp.deeperdepths.common.CommonProxy;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.IBlockProperties;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid= Constants.MODID)
@@ -73,6 +75,7 @@ public class ClientProxy extends CommonProxy {
         }
         for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
                     new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileVault.class, new TESRVault());
     }
     
 }
