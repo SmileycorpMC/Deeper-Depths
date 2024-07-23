@@ -1,0 +1,2748 @@
+{
+    "block.amethyst_block.break": {
+        "sounds": [
+            "deeperdepths:block/amethyst/break1",
+            "deeperdepths:block/amethyst/break2",
+            "deeperdepths:block/amethyst/break3",
+            "deeperdepths:block/amethyst/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.amethyst_block.chime": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/amethyst/shimmer",
+                "volume": 0.2
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.amethyst_block.chime"
+    },
+    "block.amethyst_block.fall": {
+        "sounds": [
+            "deeperdepths:block/amethyst/step1",
+            "deeperdepths:block/amethyst/step2",
+            "deeperdepths:block/amethyst/step3",
+            "deeperdepths:block/amethyst/step4",
+            "deeperdepths:block/amethyst/step5",
+            "deeperdepths:block/amethyst/step6",
+            "deeperdepths:block/amethyst/step7",
+            "deeperdepths:block/amethyst/step8",
+            "deeperdepths:block/amethyst/step9",
+            "deeperdepths:block/amethyst/step10",
+            "deeperdepths:block/amethyst/step11",
+            "deeperdepths:block/amethyst/step12",
+            "deeperdepths:block/amethyst/step14"
+        ]
+    },
+    "block.amethyst_block.hit": {
+        "sounds": [
+            "deeperdepths:block/amethyst/step1",
+            "deeperdepths:block/amethyst/step2",
+            "deeperdepths:block/amethyst/step3",
+            "deeperdepths:block/amethyst/step4",
+            "deeperdepths:block/amethyst/step5",
+            "deeperdepths:block/amethyst/step6",
+            "deeperdepths:block/amethyst/step7",
+            "deeperdepths:block/amethyst/step8",
+            "deeperdepths:block/amethyst/step9",
+            "deeperdepths:block/amethyst/step10",
+            "deeperdepths:block/amethyst/step11",
+            "deeperdepths:block/amethyst/step12"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.amethyst_block.place": {
+        "sounds": [
+            "deeperdepths:block/amethyst/place1",
+            "deeperdepths:block/amethyst/place2",
+            "deeperdepths:block/amethyst/place3",
+            "deeperdepths:block/amethyst/place4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.amethyst_block.resonate": {
+        "sounds": [
+            {
+                "attenuation_distance": 48,
+                "name": "deeperdepths:block/amethyst/resonate1"
+            },
+            {
+                "attenuation_distance": 48,
+                "name": "deeperdepths:block/amethyst/resonate2"
+            },
+            {
+                "attenuation_distance": 48,
+                "name": "deeperdepths:block/amethyst/resonate3"
+            },
+            {
+                "attenuation_distance": 48,
+                "name": "deeperdepths:block/amethyst/resonate4"
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.amethyst_block.resonate"
+    },
+    "block.amethyst_block.step": {
+        "sounds": [
+            "deeperdepths:block/amethyst/step1",
+            "deeperdepths:block/amethyst/step2",
+            "deeperdepths:block/amethyst/step3",
+            "deeperdepths:block/amethyst/step4",
+            "deeperdepths:block/amethyst/step5",
+            "deeperdepths:block/amethyst/step6",
+            "deeperdepths:block/amethyst/step7",
+            "deeperdepths:block/amethyst/step8",
+            "deeperdepths:block/amethyst/step9",
+            "deeperdepths:block/amethyst/step10",
+            "deeperdepths:block/amethyst/step11",
+            "deeperdepths:block/amethyst/step12",
+            "deeperdepths:block/amethyst/step13",
+            "deeperdepths:block/amethyst/step14"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.amethyst_cluster.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/amethyst_cluster/break1",
+                "pitch": 0.8,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/amethyst_cluster/break2",
+                "pitch": 0.8,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/amethyst_cluster/break3",
+                "pitch": 0.8,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/amethyst_cluster/break4",
+                "pitch": 0.8,
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.amethyst_cluster.fall": {
+        "sounds": [
+            "deeperdepths:block/amethyst/step1",
+            "deeperdepths:block/amethyst/step2",
+            "deeperdepths:block/amethyst/step3",
+            "deeperdepths:block/amethyst/step4",
+            "deeperdepths:block/amethyst/step5",
+            "deeperdepths:block/amethyst/step6",
+            "deeperdepths:block/amethyst/step7",
+            "deeperdepths:block/amethyst/step8",
+            "deeperdepths:block/amethyst/step9",
+            "deeperdepths:block/amethyst/step10",
+            "deeperdepths:block/amethyst/step11",
+            "deeperdepths:block/amethyst/step12",
+            "deeperdepths:block/amethyst/step14"
+        ]
+    },
+    "block.amethyst_cluster.hit": {
+        "sounds": [
+            "deeperdepths:block/amethyst/step1",
+            "deeperdepths:block/amethyst/step2",
+            "deeperdepths:block/amethyst/step3",
+            "deeperdepths:block/amethyst/step4",
+            "deeperdepths:block/amethyst/step5",
+            "deeperdepths:block/amethyst/step6",
+            "deeperdepths:block/amethyst/step7",
+            "deeperdepths:block/amethyst/step8",
+            "deeperdepths:block/amethyst/step9",
+            "deeperdepths:block/amethyst/step10",
+            "deeperdepths:block/amethyst/step11",
+            "deeperdepths:block/amethyst/step12"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.amethyst_cluster.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/amethyst_cluster/place1",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/amethyst_cluster/place2",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/amethyst_cluster/place3",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/amethyst_cluster/place4",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.amethyst_cluster.step": {
+        "sounds": [
+            "deeperdepths:block/amethyst/step1",
+            "deeperdepths:block/amethyst/step2",
+            "deeperdepths:block/amethyst/step3",
+            "deeperdepths:block/amethyst/step4",
+            "deeperdepths:block/amethyst/step5",
+            "deeperdepths:block/amethyst/step6",
+            "deeperdepths:block/amethyst/step7",
+            "deeperdepths:block/amethyst/step8",
+            "deeperdepths:block/amethyst/step9",
+            "deeperdepths:block/amethyst/step10",
+            "deeperdepths:block/amethyst/step11",
+            "deeperdepths:block/amethyst/step12",
+            "deeperdepths:block/amethyst/step13",
+            "deeperdepths:block/amethyst/step14"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.calcite.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/calcite/break1",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/calcite/break2",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/calcite/break3",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/calcite/break4",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.calcite.fall": {
+        "sounds": [
+            "deeperdepths:block/calcite/step1",
+            "deeperdepths:block/calcite/step2",
+            "deeperdepths:block/calcite/step3",
+            "deeperdepths:block/calcite/step4",
+            "deeperdepths:block/calcite/step5",
+            "deeperdepths:block/calcite/step6"
+        ]
+    },
+    "block.calcite.hit": {
+        "sounds": [
+            "deeperdepths:block/calcite/step1",
+            "deeperdepths:block/calcite/step2",
+            "deeperdepths:block/calcite/step3",
+            "deeperdepths:block/calcite/step4",
+            "deeperdepths:block/calcite/step5",
+            "deeperdepths:block/calcite/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.calcite.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/calcite/place1",
+                "volume": 0.94
+            },
+            {
+                "name": "deeperdepths:block/calcite/place2",
+                "volume": 0.94
+            },
+            {
+                "name": "deeperdepths:block/calcite/place3",
+                "volume": 0.94
+            },
+            {
+                "name": "deeperdepths:block/calcite/place4",
+                "volume": 0.94
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.calcite.step": {
+        "sounds": [
+            "deeperdepths:block/calcite/step1",
+            "deeperdepths:block/calcite/step2",
+            "deeperdepths:block/calcite/step3",
+            "deeperdepths:block/calcite/step4",
+            "deeperdepths:block/calcite/step5",
+            "deeperdepths:block/calcite/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.candle.ambient": {
+        "sounds": [
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient1"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient1",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient1",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient2"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient2",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient2",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient3"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient3",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient3",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient4"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient4",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient4",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient5"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient5",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient5",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient6"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient6",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient6",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient7"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient7",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient7",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient8"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient8",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient8",
+                "pitch": 0.9,
+                "volume": 0.8
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient9"
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient9",
+                "pitch": 0.8,
+                "volume": 0.7
+            },
+            {
+                "attenuation_distance": 3,
+                "name": "deeperdepths:block/candle/ambient9",
+                "pitch": 0.9,
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.candle.crackle"
+    },
+    "block.candle.break": {
+        "sounds": [
+            "deeperdepths:block/candle/break1",
+            "deeperdepths:block/candle/break2",
+            "deeperdepths:block/candle/break3",
+            "deeperdepths:block/candle/break4",
+            "deeperdepths:block/candle/break5"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.candle.extinguish": {
+        "sounds": [
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish1"
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish1",
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish1",
+                "pitch": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish1",
+                "pitch": 0.9,
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish1",
+                "pitch": 1.1
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish1",
+                "pitch": 1.1,
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish2"
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish2",
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish2",
+                "pitch": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish2",
+                "pitch": 0.9,
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish2",
+                "pitch": 1.1
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish2",
+                "pitch": 1.1,
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish3"
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish3",
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish3",
+                "pitch": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish3",
+                "pitch": 0.9,
+                "volume": 0.9
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish3",
+                "pitch": 1.1
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:block/candle/extinguish3",
+                "pitch": 1.1,
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.candle.extinguish"
+    },
+    "block.candle.fall": {
+        "sounds": [
+            "deeperdepths:block/candle/step1",
+            "deeperdepths:block/candle/step2",
+            "deeperdepths:block/candle/step3",
+            "deeperdepths:block/candle/step4",
+            "deeperdepths:block/candle/step5"
+        ]
+    },
+    "block.candle.hit": {
+        "sounds": [
+            "deeperdepths:block/candle/step1",
+            "deeperdepths:block/candle/step2",
+            "deeperdepths:block/candle/step3",
+            "deeperdepths:block/candle/step4",
+            "deeperdepths:block/candle/step5"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.candle.place": {
+        "sounds": [
+            "deeperdepths:block/candle/break1",
+            "deeperdepths:block/candle/break2",
+            "deeperdepths:block/candle/break3",
+            "deeperdepths:block/candle/break4",
+            "deeperdepths:block/candle/break5"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.candle.step": {
+        "sounds": [
+            "deeperdepths:block/candle/step1",
+            "deeperdepths:block/candle/step2",
+            "deeperdepths:block/candle/step3",
+            "deeperdepths:block/candle/step4",
+            "deeperdepths:block/candle/step5"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.copper.break": {
+        "sounds": [
+            "deeperdepths:block/copper/break1",
+            "deeperdepths:block/copper/break2",
+            "deeperdepths:block/copper/break3",
+            "deeperdepths:block/copper/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.copper.fall": {
+        "sounds": [
+            "deeperdepths:block/copper/step1",
+            "deeperdepths:block/copper/step2",
+            "deeperdepths:block/copper/step3",
+            "deeperdepths:block/copper/step4",
+            "deeperdepths:block/copper/step5",
+            "deeperdepths:block/copper/step6"
+        ]
+    },
+    "block.copper.hit": {
+        "sounds": [
+            "deeperdepths:block/copper/step1",
+            "deeperdepths:block/copper/step2",
+            "deeperdepths:block/copper/step3",
+            "deeperdepths:block/copper/step4",
+            "deeperdepths:block/copper/step5",
+            "deeperdepths:block/copper/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.copper.place": {
+        "sounds": [
+            "deeperdepths:block/copper/break1",
+            "deeperdepths:block/copper/break2",
+            "deeperdepths:block/copper/break3",
+            "deeperdepths:block/copper/break4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.copper.step": {
+        "sounds": [
+            "deeperdepths:block/copper/step1",
+            "deeperdepths:block/copper/step2",
+            "deeperdepths:block/copper/step3",
+            "deeperdepths:block/copper/step4",
+            "deeperdepths:block/copper/step5",
+            "deeperdepths:block/copper/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.copper_bulb.break": {
+        "sounds": [
+            "deeperdepths:block/copper_bulb/break1",
+            "deeperdepths:block/copper_bulb/break2",
+            "deeperdepths:block/copper_bulb/break3",
+            "deeperdepths:block/copper_bulb/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.copper_bulb.fall": {
+        "sounds": [
+            "deeperdepths:block/copper_bulb/step1",
+            "deeperdepths:block/copper_bulb/step2",
+            "deeperdepths:block/copper_bulb/step3",
+            "deeperdepths:block/copper_bulb/step4",
+            "deeperdepths:block/copper_bulb/step5",
+            "deeperdepths:block/copper_bulb/step6"
+        ]
+    },
+    "block.copper_bulb.hit": {
+        "sounds": [
+            "deeperdepths:block/copper_bulb/step1",
+            "deeperdepths:block/copper_bulb/step2",
+            "deeperdepths:block/copper_bulb/step3",
+            "deeperdepths:block/copper_bulb/step4",
+            "deeperdepths:block/copper_bulb/step5",
+            "deeperdepths:block/copper_bulb/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.copper_bulb.place": {
+        "sounds": [
+            "deeperdepths:block/copper_bulb/place1",
+            "deeperdepths:block/copper_bulb/place2",
+            "deeperdepths:block/copper_bulb/place3",
+            "deeperdepths:block/copper_bulb/place4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.copper_bulb.step": {
+        "sounds": [
+            "deeperdepths:block/copper_bulb/step1",
+            "deeperdepths:block/copper_bulb/step2",
+            "deeperdepths:block/copper_bulb/step3",
+            "deeperdepths:block/copper_bulb/step4",
+            "deeperdepths:block/copper_bulb/step5",
+            "deeperdepths:block/copper_bulb/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.copper_bulb.turn_off": {
+        "sounds": [
+            {
+                "attenuation_distance": 6,
+                "name": "deeperdepths:block/copper_bulb/toggle",
+                "pitch": 0.75
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_bulb.turn_off"
+    },
+    "block.copper_bulb.turn_on": {
+        "sounds": [
+            {
+                "attenuation_distance": 6,
+                "name": "deeperdepths:block/copper_bulb/toggle"
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_bulb.turn_on"
+    },
+    "block.copper_door.close": {
+        "sounds": [
+            "deeperdepths:block/copper_door/toggle1",
+            "deeperdepths:block/copper_door/toggle2",
+            "deeperdepths:block/copper_door/toggle3"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.door.toggle"
+    },
+    "block.copper_door.open": {
+        "sounds": [
+            "deeperdepths:block/copper_door/toggle1",
+            "deeperdepths:block/copper_door/toggle2",
+            {
+                "name": "deeperdepths:block/copper_door/toggle2",
+                "pitch": 1.1
+            },
+            "deeperdepths:block/copper_door/toggle3",
+            {
+                "name": "deeperdepths:block/copper_door/toggle3",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.door.toggle"
+    },
+    "block.copper_grate.break": {
+        "sounds": [
+            "deeperdepths:block/copper_grate/break1",
+            "deeperdepths:block/copper_grate/break2",
+            "deeperdepths:block/copper_grate/break3",
+            "deeperdepths:block/copper_grate/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.copper_grate.fall": {
+        "sounds": [
+            "deeperdepths:block/copper_grate/step1",
+            "deeperdepths:block/copper_grate/step2",
+            "deeperdepths:block/copper_grate/step3",
+            "deeperdepths:block/copper_grate/step4",
+            "deeperdepths:block/copper_grate/step5",
+            "deeperdepths:block/copper_grate/step6"
+        ]
+    },
+    "block.copper_grate.hit": {
+        "sounds": [
+            "deeperdepths:block/copper_grate/step1",
+            "deeperdepths:block/copper_grate/step2",
+            "deeperdepths:block/copper_grate/step3",
+            "deeperdepths:block/copper_grate/step4",
+            "deeperdepths:block/copper_grate/step5",
+            "deeperdepths:block/copper_grate/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.copper_grate.place": {
+        "sounds": [
+            "deeperdepths:block/copper_grate/break1",
+            {
+                "name": "deeperdepths:block/copper_grate/break1",
+                "pitch": 0.95
+            },
+            "deeperdepths:block/copper_grate/break2",
+            "deeperdepths:block/copper_grate/break3",
+            "deeperdepths:block/copper_grate/break4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.copper_grate.step": {
+        "sounds": [
+            "deeperdepths:block/copper_grate/step1",
+            "deeperdepths:block/copper_grate/step2",
+            "deeperdepths:block/copper_grate/step3",
+            "deeperdepths:block/copper_grate/step4",
+            "deeperdepths:block/copper_grate/step5",
+            "deeperdepths:block/copper_grate/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.copper_trapdoor.close": {
+        "sounds": [
+            "deeperdepths:block/copper_trapdoor/toggle1",
+            "deeperdepths:block/copper_trapdoor/toggle2",
+            "deeperdepths:block/copper_trapdoor/toggle3",
+            "deeperdepths:block/copper_trapdoor/toggle4"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_trapdoor.close"
+    },
+    "block.copper_trapdoor.open": {
+        "sounds": [
+            "deeperdepths:block/copper_trapdoor/toggle1",
+            "deeperdepths:block/copper_trapdoor/toggle2",
+            "deeperdepths:block/copper_trapdoor/toggle3",
+            "deeperdepths:block/copper_trapdoor/toggle4"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_trapdoor.open"
+    },
+    "block.copper.scrape": {
+        "sounds": [
+            "deeperdepths:block/copper/scrape1",
+            {
+                "name": "deeperdepths:block/copper/scrape1",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/scrape1",
+                "pitch": 1.1
+            },
+            "deeperdepths:block/copper/scrape2",
+            {
+                "name": "deeperdepths:block/copper/scrape2",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/scrape2",
+                "pitch": 1.1
+            },
+            "deeperdepths:block/copper/scrape3",
+            {
+                "name": "deeperdepths:block/copper/scrape3",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/scrape3",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper.scrape"
+    },
+    "block.copper.wax_off": {
+        "sounds": [
+            "deeperdepths:block/copper/wax_off1",
+            {
+                "name": "deeperdepths:block/copper/wax_off1",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/wax_off1",
+                "pitch": 1.1
+            },
+            "deeperdepths:block/copper/wax_off2",
+            {
+                "name": "deeperdepths:block/copper/wax_off2",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/wax_off2",
+                "pitch": 1.1
+            },
+            "deeperdepths:block/copper/wax_off3",
+            {
+                "name": "deeperdepths:block/copper/wax_off3",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/wax_off3",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper.wax_off"
+    },
+    "block.copper.wax_on": {
+        "sounds": [
+            "deeperdepths:block/copper/wax_on1",
+            {
+                "name": "deeperdepths:block/copper/wax_on1",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/wax_on1",
+                "pitch": 1.1
+            },
+            "deeperdepths:block/copper/wax_on2",
+            {
+                "name": "deeperdepths:block/copper/wax_on2",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/wax_on2",
+                "pitch": 1.1
+            },
+            "deeperdepths:block/copper/wax_on3",
+            {
+                "name": "deeperdepths:block/copper/wax_on3",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/copper/wax_on3",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper.wax_on"
+    },
+    "block.trial_pot.break": {
+        "sounds": [
+            "deeperdepths:block/trial_pot/break1",
+            "deeperdepths:block/trial_pot/break2",
+            "deeperdepths:block/trial_pot/break3",
+            "deeperdepths:block/trial_pot/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.trial_pot.fall": {
+        "sounds": [
+            "deeperdepths:block/trial_pot/step1",
+            "deeperdepths:block/trial_pot/step2",
+            "deeperdepths:block/trial_pot/step3",
+            "deeperdepths:block/trial_pot/step4",
+            "deeperdepths:block/trial_pot/step5"
+        ]
+    },
+    "block.trial_pot.hit": {
+        "sounds": [
+            "deeperdepths:block/trial_pot/step1",
+            "deeperdepths:block/trial_pot/step2",
+            "deeperdepths:block/trial_pot/step3",
+            "deeperdepths:block/trial_pot/step4",
+            "deeperdepths:block/trial_pot/step5"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.trial_pot.insert": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/trial_pot/insert1",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_pot/insert2",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_pot/insert3",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_pot/insert4",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_pot.insert"
+    },
+    "block.trial_pot.insert_fail": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/trial_pot/insert_fail1",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_pot/insert_fail2",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_pot/insert_fail3",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_pot/insert_fail4",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_pot/insert_fail5",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_pot.insert_fail"
+    },
+    "block.trial_pot.place": {
+        "sounds": [
+            "deeperdepths:block/trial_pot/break1",
+            "deeperdepths:block/trial_pot/break2",
+            "deeperdepths:block/trial_pot/break3",
+            "deeperdepths:block/trial_pot/break4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.trial_pot.shatter": {
+        "sounds": [
+            "deeperdepths:block/trial_pot/shatter1",
+            "deeperdepths:block/trial_pot/shatter2",
+            "deeperdepths:block/trial_pot/shatter3",
+            "deeperdepths:block/trial_pot/shatter4",
+            "deeperdepths:block/trial_pot/shatter5"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_pot.shatter"
+    },
+    "block.trial_pot.step": {
+        "sounds": [
+            "deeperdepths:block/trial_pot/step1",
+            "deeperdepths:block/trial_pot/step2",
+            "deeperdepths:block/trial_pot/step3",
+            "deeperdepths:block/trial_pot/step4",
+            "deeperdepths:block/trial_pot/step5"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.deepslate.break": {
+        "sounds": [
+            "deeperdepths:block/deepslate/break1",
+            "deeperdepths:block/deepslate/break2",
+            "deeperdepths:block/deepslate/break3",
+            "deeperdepths:block/deepslate/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.deepslate.fall": {
+        "sounds": [
+            "deeperdepths:block/deepslate/step1",
+            "deeperdepths:block/deepslate/step2",
+            "deeperdepths:block/deepslate/step3",
+            "deeperdepths:block/deepslate/step4",
+            "deeperdepths:block/deepslate/step5",
+            "deeperdepths:block/deepslate/step6"
+        ]
+    },
+    "block.deepslate.hit": {
+        "sounds": [
+            "deeperdepths:block/deepslate/step1",
+            "deeperdepths:block/deepslate/step2",
+            "deeperdepths:block/deepslate/step3",
+            "deeperdepths:block/deepslate/step4",
+            "deeperdepths:block/deepslate/step5",
+            "deeperdepths:block/deepslate/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.deepslate.place": {
+        "sounds": [
+            "deeperdepths:block/deepslate/place1",
+            "deeperdepths:block/deepslate/place2",
+            "deeperdepths:block/deepslate/place3",
+            "deeperdepths:block/deepslate/place4",
+            "deeperdepths:block/deepslate/place5",
+            "deeperdepths:block/deepslate/place6"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.deepslate.step": {
+        "sounds": [
+            "deeperdepths:block/deepslate/step1",
+            "deeperdepths:block/deepslate/step2",
+            "deeperdepths:block/deepslate/step3",
+            "deeperdepths:block/deepslate/step4",
+            "deeperdepths:block/deepslate/step5",
+            "deeperdepths:block/deepslate/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.deepslate_bricks.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place1",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place2",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place3",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place4",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place5",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place6",
+                "volume": 0.85
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.deepslate_bricks.fall": {
+        "sounds": [
+            "deeperdepths:block/deepslate_bricks/step1",
+            "deeperdepths:block/deepslate_bricks/step2",
+            "deeperdepths:block/deepslate_bricks/step3",
+            "deeperdepths:block/deepslate_bricks/step4",
+            "deeperdepths:block/deepslate_bricks/step5"
+        ]
+    },
+    "block.deepslate_bricks.hit": {
+        "sounds": [
+            "deeperdepths:block/deepslate_bricks/step1",
+            "deeperdepths:block/deepslate_bricks/step2",
+            "deeperdepths:block/deepslate_bricks/step3",
+            "deeperdepths:block/deepslate_bricks/step4",
+            "deeperdepths:block/deepslate_bricks/step5"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.deepslate_bricks.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place1",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place2",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place3",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place4",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place5",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place6",
+                "volume": 0.85
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.deepslate_bricks.step": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step1",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step2",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step3",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step4",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step5",
+                "pitch": 0.9
+            }
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.deepslate_tiles.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place1",
+                "pitch": 1.3,
+                "volume": 0.92
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place2",
+                "pitch": 1.3,
+                "volume": 0.92
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place3",
+                "pitch": 1.3,
+                "volume": 0.92
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place4",
+                "pitch": 1.3,
+                "volume": 0.92
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place5",
+                "pitch": 1.3,
+                "volume": 0.92
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place6",
+                "pitch": 1.3,
+                "volume": 0.92
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.deepslate_tiles.fall": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step1",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step2",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step3",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step4",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step5",
+                "pitch": 1.3
+            }
+        ]
+    },
+    "block.deepslate_tiles.hit": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step1",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step2",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step3",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step4",
+                "pitch": 1.3
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step5",
+                "pitch": 1.3
+            }
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.deepslate_tiles.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place1",
+                "pitch": 1.2,
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place2",
+                "pitch": 1.2,
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place3",
+                "pitch": 1.2,
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place4",
+                "pitch": 1.2,
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place5",
+                "pitch": 1.2,
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/place6",
+                "pitch": 1.2,
+                "volume": 0.85
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.deepslate_tiles.step": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step1",
+                "pitch": 1.2
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step2",
+                "pitch": 1.2
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step3",
+                "pitch": 1.2
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step4",
+                "pitch": 1.2
+            },
+            {
+                "name": "deeperdepths:block/deepslate_bricks/step5",
+                "pitch": 1.2
+            }
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.heavy_core.break": {
+        "sounds": [
+            "deeperdepths:block/heavy_core/break1",
+            "deeperdepths:block/heavy_core/break2",
+            "deeperdepths:block/heavy_core/break3",
+            "deeperdepths:block/heavy_core/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.heavy_core.fall": {
+        "sounds": [
+            "deeperdepths:block/heavy_core/step1",
+            "deeperdepths:block/heavy_core/step2",
+            "deeperdepths:block/heavy_core/step3",
+            "deeperdepths:block/heavy_core/step4"
+        ]
+    },
+    "block.heavy_core.hit": {
+        "sounds": [
+            "deeperdepths:block/heavy_core/step1",
+            "deeperdepths:block/heavy_core/step2",
+            "deeperdepths:block/heavy_core/step3",
+            "deeperdepths:block/heavy_core/step4"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.heavy_core.place": {
+        "sounds": [
+            "deeperdepths:block/heavy_core/break1",
+            "deeperdepths:block/heavy_core/break2",
+            "deeperdepths:block/heavy_core/break3",
+            "deeperdepths:block/heavy_core/break4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.heavy_core.step": {
+        "sounds": [
+            "deeperdepths:block/heavy_core/step1",
+            "deeperdepths:block/heavy_core/step2",
+            "deeperdepths:block/heavy_core/step3",
+            "deeperdepths:block/heavy_core/step4"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.sculk.break": {
+        "sounds": [
+            "deeperdepths:block/sculk/break1",
+            "deeperdepths:block/sculk/break2",
+            "deeperdepths:block/sculk/break3",
+            "deeperdepths:block/sculk/break4",
+            "deeperdepths:block/sculk/break5",
+            "deeperdepths:block/sculk/break6",
+            "deeperdepths:block/sculk/break7",
+            "deeperdepths:block/sculk/break8",
+            "deeperdepths:block/sculk/break9",
+            "deeperdepths:block/sculk/break10",
+            "deeperdepths:block/sculk/break11",
+            "deeperdepths:block/sculk/break12",
+            "deeperdepths:block/sculk/break13",
+            "deeperdepths:block/sculk/break14"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.sculk.charge": {
+        "sounds": [
+            "deeperdepths:block/sculk/charge1",
+            "deeperdepths:block/sculk/charge2",
+            "deeperdepths:block/sculk/charge3",
+            "deeperdepths:block/sculk/charge4",
+            "deeperdepths:block/sculk/charge5"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.sculk.charge"
+    },
+    "block.sculk.fall": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ]
+    },
+    "block.sculk.hit": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.sculk.place": {
+        "sounds": [
+            "deeperdepths:block/sculk/place1",
+            "deeperdepths:block/sculk/place2",
+            "deeperdepths:block/sculk/place3",
+            "deeperdepths:block/sculk/place4",
+            "deeperdepths:block/sculk/place5"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.sculk.spread": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk/spread1",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk/spread2",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk/spread3",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk/spread4",
+                "pitch": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk/spread5",
+                "pitch": 0.9
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.sculk.spread"
+    },
+    "block.sculk.step": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.sculk_catalyst.bloom": {
+        "sounds": [
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed1",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed2",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed3",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed4",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed5",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed6",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed7",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed8",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed9",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed10",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed11",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed12",
+                "volume": 0.25
+            },
+            {
+                "attenuation_distance": 12,
+                "name": "enchant/soulspeed/soulspeed13",
+                "volume": 0.25
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.sculk_catalyst.bloom"
+    },
+    "block.sculk_catalyst.break": {
+        "sounds": [
+            "deeperdepths:block/sculk_catalyst/break1",
+            "deeperdepths:block/sculk_catalyst/break2",
+            "deeperdepths:block/sculk_catalyst/break3",
+            "deeperdepths:block/sculk_catalyst/break4",
+            "deeperdepths:block/sculk_catalyst/break5",
+            "deeperdepths:block/sculk_catalyst/break6",
+            "deeperdepths:block/sculk_catalyst/break7",
+            "deeperdepths:block/sculk_catalyst/break8",
+            "deeperdepths:block/sculk_catalyst/break9",
+            "deeperdepths:block/sculk_catalyst/break10"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.sculk_catalyst.fall": {
+        "sounds": [
+            "deeperdepths:block/sculk_catalyst/step1",
+            "deeperdepths:block/sculk_catalyst/step2",
+            "deeperdepths:block/sculk_catalyst/step3",
+            "deeperdepths:block/sculk_catalyst/step4",
+            "deeperdepths:block/sculk_catalyst/step5",
+            "deeperdepths:block/sculk_catalyst/step6"
+        ]
+    },
+    "block.sculk_catalyst.hit": {
+        "sounds": [
+            "deeperdepths:block/sculk_catalyst/step1",
+            "deeperdepths:block/sculk_catalyst/step2",
+            "deeperdepths:block/sculk_catalyst/step3",
+            "deeperdepths:block/sculk_catalyst/step4",
+            "deeperdepths:block/sculk_catalyst/step5",
+            "deeperdepths:block/sculk_catalyst/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.sculk_catalyst.place": {
+        "sounds": [
+            "deeperdepths:block/sculk_catalyst/place1",
+            "deeperdepths:block/sculk_catalyst/place2",
+            "deeperdepths:block/sculk_catalyst/place3",
+            "deeperdepths:block/sculk_catalyst/place4",
+            "deeperdepths:block/sculk_catalyst/place5"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.sculk_catalyst.step": {
+        "sounds": [
+            "deeperdepths:block/sculk_catalyst/step1",
+            "deeperdepths:block/sculk_catalyst/step2",
+            "deeperdepths:block/sculk_catalyst/step3",
+            "deeperdepths:block/sculk_catalyst/step4",
+            "deeperdepths:block/sculk_catalyst/step5",
+            "deeperdepths:block/sculk_catalyst/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.sculk_sensor.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_sensor/break1",
+                "pitch": 1.2,
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/break2",
+                "pitch": 1.2,
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/break3",
+                "pitch": 1.2,
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/break4",
+                "pitch": 1.2,
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/break5",
+                "pitch": 1.2,
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.sculk_sensor.clicking": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking1",
+                "volume": 0.73
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking2",
+                "volume": 0.73
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking3",
+                "volume": 0.73
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking4",
+                "volume": 0.73
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking5",
+                "volume": 0.73
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking6",
+                "volume": 0.73
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.sculk_sensor.clicking"
+    },
+    "block.sculk_sensor.clicking_stop": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking_stop1",
+                "volume": 0.62
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking_stop2",
+                "volume": 0.62
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking_stop3",
+                "volume": 0.62
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking_stop4",
+                "volume": 0.62
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/sculk_clicking_stop5",
+                "volume": 0.62
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.sculk_sensor.clicking_stop"
+    },
+    "block.sculk_sensor.fall": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ]
+    },
+    "block.sculk_sensor.hit": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.sculk_sensor.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_sensor/place1",
+                "pitch": 1.2,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/place2",
+                "pitch": 1.2,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/place3",
+                "pitch": 1.2,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/place4",
+                "pitch": 1.2,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_sensor/place5",
+                "pitch": 1.2,
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.sculk_sensor.step": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.sculk_shrieker.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_shrieker/break1",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/break2",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/break3",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/break4",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/break5",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/break6",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.sculk_shrieker.fall": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ]
+    },
+    "block.sculk_shrieker.hit": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.sculk_shrieker.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_shrieker/place1",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/place2",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/place3",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/place4",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/place5",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.sculk_shrieker.shriek": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_shrieker/shriek1",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/shriek2",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/shriek3",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/shriek4",
+                "volume": 0.85
+            },
+            {
+                "name": "deeperdepths:block/sculk_shrieker/shriek5",
+                "volume": 0.85
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.sculk_shrieker.shriek"
+    },
+    "block.sculk_shrieker.step": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.sculk_vein.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_vein/break1",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break2",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break3",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break4",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break5",
+                "pitch": 1.1,
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.sculk_vein.fall": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ]
+    },
+    "block.sculk_vein.hit": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.sculk_vein.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/sculk_vein/break1",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break2",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break3",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break4",
+                "pitch": 1.1,
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/sculk_vein/break5",
+                "pitch": 1.1,
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.sculk_vein.step": {
+        "sounds": [
+            "deeperdepths:block/sculk/step1",
+            "deeperdepths:block/sculk/step2",
+            "deeperdepths:block/sculk/step3",
+            "deeperdepths:block/sculk/step4",
+            "deeperdepths:block/sculk/step5",
+            "deeperdepths:block/sculk/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.trial_spawner.about_to_spawn_item": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/about_to_spawn_item"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.about_to_spawn_item"
+    },
+    "block.trial_spawner.ambient": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/ambient1",
+            "deeperdepths:block/trial_spawner/ambient2",
+            "deeperdepths:block/trial_spawner/ambient3",
+            "deeperdepths:block/trial_spawner/ambient4",
+            "deeperdepths:block/trial_spawner/ambient5"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.ambient"
+    },
+    "block.trial_spawner.ambient_ominous": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/ambient_ominous1",
+            "deeperdepths:block/trial_spawner/ambient_ominous2",
+            "deeperdepths:block/trial_spawner/ambient_ominous3",
+            "deeperdepths:block/trial_spawner/ambient_ominous4",
+            "deeperdepths:block/trial_spawner/ambient_ominous5"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.ambient_ominous"
+    },
+    "block.trial_spawner.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/trial_spawner/break1",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_spawner/break2",
+                "volume": 0.9
+            },
+            {
+                "name": "deeperdepths:block/trial_spawner/break3",
+                "volume": 0.9
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.trial_spawner.close_shutter": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/close_shutter"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.close_shutter"
+    },
+    "block.trial_spawner.detect_player": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/detect_player1",
+            {
+                "name": "deeperdepths:block/trial_spawner/detect_player1",
+                "pitch": 0.95
+            },
+            "deeperdepths:block/trial_spawner/detect_player2",
+            {
+                "name": "deeperdepths:block/trial_spawner/detect_player2",
+                "pitch": 0.95
+            },
+            "deeperdepths:block/trial_spawner/detect_player3",
+            {
+                "name": "deeperdepths:block/trial_spawner/detect_player3",
+                "pitch": 0.95
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.detect_player"
+    },
+    "block.trial_spawner.eject_item": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/eject_item1"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.eject_item"
+    },
+    "block.trial_spawner.fall": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/step1",
+            "deeperdepths:block/trial_spawner/step2",
+            "deeperdepths:block/trial_spawner/step3",
+            "deeperdepths:block/trial_spawner/step4",
+            "deeperdepths:block/trial_spawner/step5"
+        ]
+    },
+    "block.trial_spawner.hit": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/step1",
+            "deeperdepths:block/trial_spawner/step2",
+            "deeperdepths:block/trial_spawner/step3",
+            "deeperdepths:block/trial_spawner/step4",
+            "deeperdepths:block/trial_spawner/step5"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.trial_spawner.ominous_activate": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/ominous_activate"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.ominous_activate"
+    },
+    "block.trial_spawner.open_shutter": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/open_shutter"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.open_shutter"
+    },
+    "block.trial_spawner.place": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/place1",
+            "deeperdepths:block/trial_spawner/place2",
+            "deeperdepths:block/trial_spawner/place3"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.trial_spawner.spawn_item": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/spawn_item1",
+            "deeperdepths:block/trial_spawner/spawn_item2",
+            "deeperdepths:block/trial_spawner/spawn_item3"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.spawn_item"
+    },
+    "block.trial_spawner.spawn_item_begin": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/spawn_item_begin1",
+            "deeperdepths:block/trial_spawner/spawn_item_begin2",
+            "deeperdepths:block/trial_spawner/spawn_item_begin3"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.spawn_item_begin"
+    },
+    "block.trial_spawner.spawn_mob": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/spawn1",
+            "deeperdepths:block/trial_spawner/spawn2",
+            "deeperdepths:block/trial_spawner/spawn3",
+            "deeperdepths:block/trial_spawner/spawn4"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.trial_spawner.spawn_mob"
+    },
+    "block.trial_spawner.step": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/step1",
+            "deeperdepths:block/trial_spawner/step2",
+            "deeperdepths:block/trial_spawner/step3",
+            "deeperdepths:block/trial_spawner/step4",
+            "deeperdepths:block/trial_spawner/step5"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.tuff.break": {
+        "sounds": [
+            "deeperdepths:block/tuff/break1",
+            "deeperdepths:block/tuff/break2",
+            "deeperdepths:block/tuff/break3",
+            "deeperdepths:block/tuff/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.tuff.fall": {
+        "sounds": [
+            "deeperdepths:block/tuff/step1",
+            "deeperdepths:block/tuff/step2",
+            "deeperdepths:block/tuff/step3",
+            "deeperdepths:block/tuff/step4",
+            "deeperdepths:block/tuff/step5",
+            "deeperdepths:block/tuff/step6"
+        ]
+    },
+    "block.tuff.hit": {
+        "sounds": [
+            "deeperdepths:block/tuff/step1",
+            "deeperdepths:block/tuff/step2",
+            "deeperdepths:block/tuff/step3",
+            "deeperdepths:block/tuff/step4",
+            "deeperdepths:block/tuff/step5",
+            "deeperdepths:block/tuff/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.tuff.place": {
+        "sounds": [
+            "deeperdepths:block/tuff/break1",
+            "deeperdepths:block/tuff/break2",
+            "deeperdepths:block/tuff/break3",
+            "deeperdepths:block/tuff/break4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.tuff.step": {
+        "sounds": [
+            "deeperdepths:block/tuff/step1",
+            "deeperdepths:block/tuff/step2",
+            "deeperdepths:block/tuff/step3",
+            "deeperdepths:block/tuff/step4",
+            "deeperdepths:block/tuff/step5",
+            "deeperdepths:block/tuff/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.tuff_bricks.break": {
+        "sounds": [
+            "deeperdepths:block/tuff_bricks/place1",
+            "deeperdepths:block/tuff_bricks/place2",
+            "deeperdepths:block/tuff_bricks/place3",
+            "deeperdepths:block/tuff_bricks/place4",
+            "deeperdepths:block/tuff_bricks/place5"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.tuff_bricks.fall": {
+        "sounds": [
+            "deeperdepths:block/tuff_bricks/step1",
+            "deeperdepths:block/tuff_bricks/step2",
+            "deeperdepths:block/tuff_bricks/step3",
+            "deeperdepths:block/tuff_bricks/step4",
+            "deeperdepths:block/tuff_bricks/step5",
+            "deeperdepths:block/tuff_bricks/step6"
+        ]
+    },
+    "block.tuff_bricks.hit": {
+        "sounds": [
+            "deeperdepths:block/tuff_bricks/step1",
+            "deeperdepths:block/tuff_bricks/step2",
+            "deeperdepths:block/tuff_bricks/step3",
+            "deeperdepths:block/tuff_bricks/step4",
+            "deeperdepths:block/tuff_bricks/step5",
+            "deeperdepths:block/tuff_bricks/step6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.tuff_bricks.place": {
+        "sounds": [
+            "deeperdepths:block/tuff_bricks/place1",
+            "deeperdepths:block/tuff_bricks/place2",
+            "deeperdepths:block/tuff_bricks/place3",
+            "deeperdepths:block/tuff_bricks/place4",
+            "deeperdepths:block/tuff_bricks/place5"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.tuff_bricks.step": {
+        "sounds": [
+            "deeperdepths:block/tuff_bricks/step1",
+            "deeperdepths:block/tuff_bricks/step2",
+            "deeperdepths:block/tuff_bricks/step3",
+            "deeperdepths:block/tuff_bricks/step4",
+            "deeperdepths:block/tuff_bricks/step5",
+            "deeperdepths:block/tuff_bricks/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.vault.activate": {
+        "sounds": [
+            "deeperdepths:block/vault/activate"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.activate"
+    },
+    "block.vault.ambient": {
+        "sounds": [
+            "deeperdepths:block/vault/ambient1",
+            "deeperdepths:block/vault/ambient2",
+            "deeperdepths:block/vault/ambient3"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.ambient"
+    },
+    "block.vault.break": {
+        "sounds": [
+            "deeperdepths:block/vault/break1",
+            "deeperdepths:block/vault/break2",
+            "deeperdepths:block/vault/break3",
+            "deeperdepths:block/vault/break4"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.vault.close_shutter": {
+        "sounds": [
+            "deeperdepths:block/trial_spawner/close_shutter"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.close_shutter"
+    },
+    "block.vault.deactivate": {
+        "sounds": [
+            "deeperdepths:block/vault/deactivate"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.deactivate"
+    },
+    "block.vault.eject_item": {
+        "sounds": [
+            "deeperdepths:block/vault/eject1",
+            "deeperdepths:block/vault/eject2",
+            "deeperdepths:block/vault/eject3"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.eject_item"
+    },
+    "block.vault.fall": {
+        "sounds": [
+            "deeperdepths:block/vault/step1",
+            "deeperdepths:block/vault/step2",
+            "deeperdepths:block/vault/step3",
+            "deeperdepths:block/vault/step4",
+            "deeperdepths:block/vault/step5",
+            "deeperdepths:block/vault/step6",
+            "deeperdepths:block/vault/step7",
+            "deeperdepths:block/vault/step8"
+        ]
+    },
+    "block.vault.hit": {
+        "sounds": [
+            "deeperdepths:block/vault/step1",
+            "deeperdepths:block/vault/step2",
+            "deeperdepths:block/vault/step3",
+            "deeperdepths:block/vault/step4",
+            "deeperdepths:block/vault/step5",
+            "deeperdepths:block/vault/step6",
+            "deeperdepths:block/vault/step7",
+            "deeperdepths:block/vault/step8"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.vault.insert_item": {
+        "sounds": [
+            "deeperdepths:block/vault/insert"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.insert_item"
+    },
+    "block.vault.insert_item_fail": {
+        "sounds": [
+            "deeperdepths:block/vault/insert_fail"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.insert_item_fail"
+    },
+    "block.vault.open_shutter": {
+        "sounds": [
+            "deeperdepths:block/vault/open_shutter"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.open_shutter"
+    },
+    "block.vault.place": {
+        "sounds": [
+            "deeperdepths:block/vault/place1",
+            "deeperdepths:block/vault/place2",
+            "deeperdepths:block/vault/place3",
+            "deeperdepths:block/vault/place4"
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.vault.reject_rewarded_player": {
+        "sounds": [
+            "deeperdepths:block/vault/reject_rewarded_player"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.vault.reject_rewarded_player"
+    },
+    "block.vault.step": {
+        "sounds": [
+            "deeperdepths:block/vault/step1",
+            "deeperdepths:block/vault/step2",
+            "deeperdepths:block/vault/step3",
+            "deeperdepths:block/vault/step4",
+            "deeperdepths:block/vault/step5",
+            "deeperdepths:block/vault/step6",
+            "deeperdepths:block/vault/step7",
+            "deeperdepths:block/vault/step8"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "entity.bogged.ambient": {
+        "sounds": [
+            "deeperdepths:mob/bogged/ambient1",
+            "deeperdepths:mob/bogged/ambient2",
+            "deeperdepths:mob/bogged/ambient3",
+            "deeperdepths:mob/bogged/ambient4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.bogged.ambient"
+    },
+    "entity.bogged.death": {
+        "sounds": [
+            "deeperdepths:mob/bogged/death"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.bogged.death"
+    },
+    "entity.bogged.hurt": {
+        "sounds": [
+            "deeperdepths:mob/bogged/hurt1",
+            "deeperdepths:mob/bogged/hurt2",
+            "deeperdepths:mob/bogged/hurt3",
+            "deeperdepths:mob/bogged/hurt4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.bogged.hurt"
+    },
+    "entity.bogged.shear": {
+        "sounds": [
+            "deeperdepths:mob/sheep/shear"
+        ],
+        "subtitle": "subtitles.deeperdepths.item.shears.shear"
+    },
+    "entity.bogged.step": {
+        "sounds": [
+            "deeperdepths:mob/bogged/step1",
+            "deeperdepths:mob/bogged/step2",
+            "deeperdepths:mob/bogged/step3",
+            "deeperdepths:mob/bogged/step4"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "entity.breeze.charge": {
+        "sounds": [
+            "deeperdepths:mob/breeze/charge1",
+            "deeperdepths:mob/breeze/charge2",
+            "deeperdepths:mob/breeze/charge3"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.charge"
+    },
+    "entity.breeze.death": {
+        "sounds": [
+            "deeperdepths:mob/breeze/death1",
+            "deeperdepths:mob/breeze/death2"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.death"
+    },
+    "entity.breeze.deflect": {
+        "sounds": [
+            "deeperdepths:mob/breeze/deflect1",
+            "deeperdepths:mob/breeze/deflect2",
+            "deeperdepths:mob/breeze/deflect3"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.deflect"
+    },
+    "entity.breeze.hurt": {
+        "sounds": [
+            "deeperdepths:mob/breeze/hurt1",
+            "deeperdepths:mob/breeze/hurt2",
+            "deeperdepths:mob/breeze/hurt3"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.hurt"
+    },
+    "entity.breeze.idle_air": {
+        "sounds": [
+            "deeperdepths:mob/breeze/idle_air1",
+            "deeperdepths:mob/breeze/idle_air2",
+            "deeperdepths:mob/breeze/idle_air3",
+            "deeperdepths:mob/breeze/idle_air4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.idle_air"
+    },
+    "entity.breeze.idle_ground": {
+        "sounds": [
+            "deeperdepths:mob/breeze/idle1",
+            "deeperdepths:mob/breeze/idle2",
+            "deeperdepths:mob/breeze/idle3",
+            "deeperdepths:mob/breeze/idle4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.idle_ground"
+    },
+    "entity.breeze.inhale": {
+        "sounds": [
+            "deeperdepths:mob/breeze/inhale1",
+            {
+                "name": "deeperdepths:mob/breeze/inhale1",
+                "pitch": 1.1
+            },
+            "deeperdepths:mob/breeze/inhale2",
+            {
+                "name": "deeperdepths:mob/breeze/inhale2",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.inhale"
+    },
+    "entity.breeze.jump": {
+        "sounds": [
+            "deeperdepths:mob/breeze/jump1",
+            "deeperdepths:mob/breeze/jump2"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.jump"
+    },
+    "entity.breeze.land": {
+        "sounds": [
+            "deeperdepths:mob/breeze/land1",
+            "deeperdepths:mob/breeze/land2"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.land"
+    },
+    "entity.breeze.shoot": {
+        "sounds": [
+            "deeperdepths:mob/breeze/shoot",
+            {
+                "name": "deeperdepths:mob/breeze/shoot",
+                "pitch": 1.1
+            },
+            {
+                "name": "deeperdepths:mob/breeze/shoot",
+                "pitch": 1.2
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.shoot"
+    },
+    "entity.breeze.slide": {
+        "sounds": [
+            "deeperdepths:mob/breeze/slide1",
+            "deeperdepths:mob/breeze/slide2",
+            "deeperdepths:mob/breeze/slide3",
+            "deeperdepths:mob/breeze/slide4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.slide"
+    },
+    "entity.breeze.whirl": {
+        "sounds": [
+            "deeperdepths:mob/breeze/whirl"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.whirl"
+    },
+    "entity.breeze.wind_burst": {
+        "sounds": [
+            {
+                "name": "deeperdepths:mob/breeze/wind_burst1",
+                "pitch": 1.2
+            },
+            {
+                "name": "deeperdepths:mob/breeze/wind_burst2",
+                "pitch": 1.2
+            },
+            {
+                "name": "deeperdepths:mob/breeze/wind_burst3",
+                "pitch": 1.2
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.breeze.wind_burst"
+    },
+    "entity.warden.agitated": {
+        "sounds": [
+            "deeperdepths:mob/warden/agitated_1",
+            "deeperdepths:mob/warden/agitated_2",
+            "deeperdepths:mob/warden/agitated_3",
+            "deeperdepths:mob/warden/agitated_4",
+            "deeperdepths:mob/warden/agitated_5",
+            "deeperdepths:mob/warden/agitated_6"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.agitated"
+    },
+    "entity.warden.ambient": {
+        "sounds": [
+            "deeperdepths:mob/warden/ambient_1",
+            "deeperdepths:mob/warden/ambient_2",
+            "deeperdepths:mob/warden/ambient_3",
+            "deeperdepths:mob/warden/ambient_4",
+            "deeperdepths:mob/warden/ambient_5",
+            "deeperdepths:mob/warden/ambient_6",
+            "deeperdepths:mob/warden/ambient_7",
+            "deeperdepths:mob/warden/ambient_8",
+            "deeperdepths:mob/warden/ambient_9",
+            "deeperdepths:mob/warden/ambient_10",
+            "deeperdepths:mob/warden/ambient_11",
+            "deeperdepths:mob/warden/ambient_12"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.ambient"
+    },
+    "entity.warden.angry": {
+        "sounds": [
+            "deeperdepths:mob/warden/angry_1",
+            "deeperdepths:mob/warden/angry_2",
+            "deeperdepths:mob/warden/angry_3",
+            "deeperdepths:mob/warden/angry_4",
+            "deeperdepths:mob/warden/angry_5",
+            "deeperdepths:mob/warden/angry_6"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.angry"
+    },
+    "entity.warden.attack_impact": {
+        "sounds": [
+            "deeperdepths:mob/warden/attack_impact_1",
+            "deeperdepths:mob/warden/attack_impact_2"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.attack_impact"
+    },
+    "entity.warden.death": {
+        "sounds": [
+            "deeperdepths:mob/warden/death_1",
+            "deeperdepths:mob/warden/death_2"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.death"
+    },
+    "entity.warden.dig": {
+        "sounds": [
+            "deeperdepths:mob/warden/dig"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.dig"
+    },
+    "entity.warden.emerge": {
+        "sounds": [
+            "deeperdepths:mob/warden/emerge"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.emerge"
+    },
+    "entity.warden.heartbeat": {
+        "sounds": [
+            "deeperdepths:mob/warden/heartbeat_1",
+            "deeperdepths:mob/warden/heartbeat_2",
+            "deeperdepths:mob/warden/heartbeat_3",
+            "deeperdepths:mob/warden/heartbeat_4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.heartbeat"
+    },
+    "entity.warden.hurt": {
+        "sounds": [
+            "deeperdepths:mob/warden/hurt_1",
+            "deeperdepths:mob/warden/hurt_2",
+            "deeperdepths:mob/warden/hurt_3",
+            "deeperdepths:mob/warden/hurt_4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.hurt"
+    },
+    "entity.warden.listening": {
+        "sounds": [
+            "deeperdepths:mob/warden/listening_1",
+            "deeperdepths:mob/warden/listening_2",
+            "deeperdepths:mob/warden/listening_3",
+            "deeperdepths:mob/warden/listening_4",
+            "deeperdepths:mob/warden/listening_5"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.listening"
+    },
+    "entity.warden.listening_angry": {
+        "sounds": [
+            "deeperdepths:mob/warden/listening_angry_1",
+            "deeperdepths:mob/warden/listening_angry_2",
+            "deeperdepths:mob/warden/listening_angry_3",
+            "deeperdepths:mob/warden/listening_angry_4",
+            "deeperdepths:mob/warden/listening_angry_5"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.listening_angry"
+    },
+    "entity.warden.nearby_close": {
+        "sounds": [
+            "deeperdepths:mob/warden/nearby_close_1",
+            "deeperdepths:mob/warden/nearby_close_2",
+            "deeperdepths:mob/warden/nearby_close_3",
+            "deeperdepths:mob/warden/nearby_close_4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.nearby_close"
+    },
+    "entity.warden.nearby_closer": {
+        "sounds": [
+            "deeperdepths:mob/warden/nearby_closer_1",
+            "deeperdepths:mob/warden/nearby_closer_2",
+            "deeperdepths:mob/warden/nearby_closer_3"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.nearby_closer"
+    },
+    "entity.warden.nearby_closest": {
+        "sounds": [
+            "deeperdepths:mob/warden/nearby_closest_1",
+            "deeperdepths:mob/warden/nearby_closest_2",
+            "deeperdepths:mob/warden/nearby_closest_3"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.nearby_closest"
+    },
+    "entity.warden.roar": {
+        "sounds": [
+            "deeperdepths:mob/warden/roar_1",
+            "deeperdepths:mob/warden/roar_2",
+            "deeperdepths:mob/warden/roar_3",
+            "deeperdepths:mob/warden/roar_4",
+            "deeperdepths:mob/warden/roar_5"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.roar"
+    },
+    "entity.warden.sniff": {
+        "sounds": [
+            {
+                "name": "deeperdepths:mob/warden/sniff_1",
+                "volume": 0.75
+            },
+            {
+                "name": "deeperdepths:mob/warden/sniff_2",
+                "volume": 0.75
+            },
+            {
+                "name": "deeperdepths:mob/warden/sniff_3",
+                "volume": 0.75
+            },
+            {
+                "name": "deeperdepths:mob/warden/sniff_4",
+                "volume": 0.75
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.sniff"
+    },
+    "entity.warden.sonic_boom": {
+        "sounds": [
+            "deeperdepths:mob/warden/sonic_boom1",
+            "deeperdepths:mob/warden/sonic_boom2",
+            "deeperdepths:mob/warden/sonic_boom3",
+            "deeperdepths:mob/warden/sonic_boom4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.sonic_boom"
+    },
+    "entity.warden.sonic_charge": {
+        "sounds": [
+            "deeperdepths:mob/warden/sonic_charge1",
+            "deeperdepths:mob/warden/sonic_charge2",
+            "deeperdepths:mob/warden/sonic_charge3",
+            "deeperdepths:mob/warden/sonic_charge4"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.sonic_charge"
+    },
+    "entity.warden.step": {
+        "sounds": [
+            {
+                "name": "deeperdepths:mob/warden/step_1",
+                "volume": 0.3
+            },
+            {
+                "name": "deeperdepths:mob/warden/step_2",
+                "volume": 0.3
+            },
+            {
+                "name": "deeperdepths:mob/warden/step_3",
+                "volume": 0.3
+            },
+            {
+                "name": "deeperdepths:mob/warden/step_4",
+                "volume": 0.3
+            }
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "entity.warden.tendril_clicks": {
+        "sounds": [
+            "deeperdepths:mob/warden/tendril_clicks_1",
+            "deeperdepths:mob/warden/tendril_clicks_2",
+            "deeperdepths:mob/warden/tendril_clicks_3",
+            "deeperdepths:mob/warden/tendril_clicks_4",
+            "deeperdepths:mob/warden/tendril_clicks_5",
+            "deeperdepths:mob/warden/tendril_clicks_6"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.warden.tendril_clicks"
+    },
+    "entity.wind_charge.throw": {
+        "sounds": [
+            "random/bow"
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.wind_charge.throw"
+    },
+    "entity.wind_charge.wind_burst": {
+        "sounds": [
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:entity/wind_charge/wind_burst1",
+                "pitch": 1.25
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:entity/wind_charge/wind_burst2",
+                "pitch": 1.25
+            },
+            {
+                "attenuation_distance": 8,
+                "name": "deeperdepths:entity/wind_charge/wind_burst3",
+                "pitch": 1.25
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.entity.wind_charge.wind_burst"
+    },
+    "event.mob_effect.bad_omen": {
+        "sounds": [
+            "deeperdepths:event/mob_effects/bad_omen"
+        ],
+        "subtitle": "subtitles.deeperdepths.event.mob_effect.bad_omen"
+    },
+    "event.mob_effect.trial_omen": {
+        "sounds": [
+            "deeperdepths:event/mob_effects/trial_omen"
+        ],
+        "subtitle": "subtitles.deeperdepths.event.mob_effect.trial_omen"
+    },
+    "item.mace.smash_air": {
+        "sounds": [
+            "deeperdepths:item/mace/smash_air1",
+            "deeperdepths:item/mace/smash_air2",
+            "deeperdepths:item/mace/smash_air3"
+        ],
+        "subtitle": "subtitles.deeperdepths.item.mace.smash_air"
+    },
+    "item.mace.smash_ground": {
+        "sounds": [
+            "deeperdepths:item/mace/smash_ground1",
+            "deeperdepths:item/mace/smash_ground2",
+            "deeperdepths:item/mace/smash_ground3",
+            "deeperdepths:item/mace/smash_ground4"
+        ],
+        "subtitle": "subtitles.deeperdepths.item.mace.smash_ground"
+    },
+    "item.mace.smash_ground_heavy": {
+        "sounds": [
+            "deeperdepths:item/mace/smash_ground_heavy"
+        ],
+        "subtitle": "subtitles.deeperdepths.item.mace.smash_ground"
+    },
+    "item.spyglass.stop_using": {
+        "sounds": [
+            {
+                "name": "deeperdepths:item/spyglass/stop",
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:item/spyglass/stop",
+                "pitch": 0.8,
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:item/spyglass/stop",
+                "pitch": 0.9,
+                "volume": 0.5
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.item.spyglass.stop_using"
+    },
+    "item.spyglass.use": {
+        "sounds": [
+            {
+                "name": "deeperdepths:item/spyglass/use",
+                "pitch": 1.15,
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:item/spyglass/use",
+                "pitch": 1.33,
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:item/spyglass/use",
+                "pitch": 1.4,
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:item/spyglass/use",
+                "pitch": 1.55,
+                "volume": 0.5
+            }
+        ],
+        "subtitle": "subtitles.deeperdepths.item.spyglass.use"
+    },
+    "item.ominous_bottle.dispose": {
+        "sounds": [
+            "deeperdepths:item/ominous_bottle_dispose"
+        ],
+        "subtitle": "subtitles.deeperdepths.item.ominous_bottle.dispose"
+    }
+}
