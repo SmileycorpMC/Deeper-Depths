@@ -86,6 +86,7 @@ dependencies {
     //implementation "curse.maven:dynaores-1056043:5504933"
     //implementation "curse.maven:chisel-235279:2535488"
     //implementation "curse.maven:mekanism-268560:2835175"
+    implementation "curse.maven:raids-977633:5386775"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

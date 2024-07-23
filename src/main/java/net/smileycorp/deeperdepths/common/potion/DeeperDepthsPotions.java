@@ -15,8 +15,8 @@ import net.smileycorp.deeperdepths.common.Constants;
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class DeeperDepthsPotions
 {
-    public static final Potion BAD_OMEN = null;
-    public static final Potion TRIAL_OMEN = null;
+    public static final Potion BAD_OMEN = new PotionBadOmen();
+    public static final Potion TRIAL_OMEN = new PotionDeeperDepths("Trial_Omen", false, 0x16A6A6);
     public static final Potion OOZING = new PotionOozing("oozing", true, 10092451, EntitySlime.class, 2, false);
     public static final Potion INFESTED = new PotionInfested("infested", true, 9214860, EntitySilverfish.class, 10, 1, 2, false);
     public static final Potion WEAVING = new PotionWeaving("weaving", true, 7891290, Blocks.WEB, 2, 3, 1);
@@ -28,6 +28,8 @@ public class DeeperDepthsPotions
     @SubscribeEvent
     public static void onPotionRegister(RegistryEvent.Register<Potion> event)
     {
+        event.getRegistry().register(BAD_OMEN);
+        event.getRegistry().register(TRIAL_OMEN);
         event.getRegistry().register(DeeperDepthsPotions.OOZING);
         event.getRegistry().register(DeeperDepthsPotions.INFESTED);
         event.getRegistry().register(DeeperDepthsPotions.WEAVING);
