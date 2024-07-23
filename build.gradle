@@ -81,11 +81,11 @@ configurations {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 	implementation "org.spongepowered:mixin:0.8"
-	implementation "curse.maven:futuremc-310059:5013081"
+	//implementation "curse.maven:futuremc-310059:5013081"
     implementation "curse.maven:atlas-463826:3816069"
-    implementation "curse.maven:dynaores-1056043:5504933"
-    implementation "curse.maven:chisel-235279:2535488"
-    implementation "curse.maven:mekanism-268560:2835175"
+    //implementation "curse.maven:dynaores-1056043:5504933"
+    //implementation "curse.maven:chisel-235279:2535488"
+    //implementation "curse.maven:mekanism-268560:2835175"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

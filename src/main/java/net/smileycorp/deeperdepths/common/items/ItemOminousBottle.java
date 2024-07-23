@@ -45,7 +45,7 @@ public class ItemOminousBottle extends ItemDeeperDepths {
             //entity.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
             //entity.addPotionEffect(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000, getAmplifier(stack), false, false));
             if (entity instanceof EntityPlayerMP) CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entity, stack);
-            if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).func_184812_l_())) stack.shrink(1);
+            if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative())) stack.shrink(1);
         }
         return stack;
     }

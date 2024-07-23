@@ -82,7 +82,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             loot_table = world.getLootTableManager().getLootTableFromLocation(loot_table_loc);
         }
         stored_items = loot_table.generateLootForPools(loot_table_seed == 0 ? new Random() : new Random(loot_table_seed),
-                new LootContext.Builder((WorldServer) world).withPlayer(player).withLuck(player.func_184817_da()).build());
+                new LootContext.Builder((WorldServer) world).withPlayer(player).withLuck(player.getLuck()).build());
         if (stored_items.isEmpty()) return;
         stack.shrink(1);
         rewarded_players.add(player.getUniqueID());
@@ -90,7 +90,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     }
     
     private boolean canReward(Entity entity) {
-        return !((EntityPlayer)entity).func_175149_v() &! rewarded_players.contains(entity.getUniqueID());
+        return !((EntityPlayer)entity).isSpectator() &! rewarded_players.contains(entity.getUniqueID());
     }
     
     private ItemStack getRandomDisplayItem() {
