@@ -14,7 +14,7 @@ import net.smileycorp.raids.config.RaidConfig;
 public class RaidsIntegration {
     
     public static void tickBadOmen(EntityPlayerMP player, int amplifier) {
-        World world = player.world;
+      /*  World world = player.world;
         if (world.getDifficulty() == EnumDifficulty.PEACEFUL) return;
         if (!Raid.isVillage(world, player.getPosition())) return;
         if (RaidConfig.ominousBottles) {
@@ -25,7 +25,7 @@ public class RaidsIntegration {
                 player.removePotionEffect(RaidsContent.BAD_OMEN);
             }
         }
-        else WorldDataRaids.getData((WorldServer) world).createOrExtendRaid(player);
+        else WorldDataRaids.getData((WorldServer) world).createOrExtendRaid(player);*/
     }
     
     
