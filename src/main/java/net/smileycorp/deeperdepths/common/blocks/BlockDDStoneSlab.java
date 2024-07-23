@@ -93,7 +93,7 @@ public class BlockDDStoneSlab extends BlockDDSlab {
     
     @Override
     public String byMeta(int meta) {
-        return EnumStoneType.getShaped(meta).getName() + "_slab";
+        return EnumStoneType.getShaped(meta % 8).getName() + "_slab";
     }
     
     @Override
