@@ -17,12 +17,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableList;
+import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.BlockTrial;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
@@ -38,7 +37,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     private EnumVaultState state = EnumVaultState.INACTIVE;
     private ResourceLocation loot_table_loc;
     private long loot_table_seed;
-    private LootTable loot_table = LootTable.EMPTY_LOOT_TABLE;
+    private LootTable loot_table = null;
     private ItemStack displayed_item = ItemStack.EMPTY;
     private List<ItemStack> stored_items = Lists.newArrayList();
     private List<UUID> rewarded_players = Lists.newArrayList();
@@ -46,7 +45,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     public TileVault() {}
     
     public TileVault(boolean ominous) {
-        loot_table_loc = LootTableList.CHESTS_SIMPLE_DUNGEON/*Constants.loc(ominous ? "ominous_vault" : "vault")*/;
+        loot_table_loc = Constants.loc(ominous ? "ominous_vault" : "vault");
     }
     
     @Override
@@ -55,24 +54,22 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         if (world.isRemote) return;
         if (world.getWorldTime() % 20 != 0) return;
         if (state == EnumVaultState.ACTIVE) {
-            if (world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3.5, false) == null) {
-                displayed_item = ItemStack.EMPTY;
-                markDirty();
+            if (world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    4.5, false) == null)
                 setState(EnumVaultState.INACTIVE);
-            } else {
+            else {
                 displayed_item = getRandomDisplayItem();
                 markDirty();
             }
         } else if (state == EnumVaultState.INACTIVE &&
-                world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, this::canReward) != null) {
-            displayed_item = getRandomDisplayItem();
+                world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        4, this::canReward) != null)
             setState(EnumVaultState.ACTIVE);
-        }
         if (state == EnumVaultState.UNLOCKING) setState(EnumVaultState.EJECTING);
         if (state == EnumVaultState.EJECTING) {
             if (stored_items.isEmpty()) setState(EnumVaultState.INACTIVE);
             else {
-                BehaviorDefaultDispenseItem.doDispense(world, stored_items.get(0), 2, EnumFacing.UP, new BlockSourceImpl(world, pos));
+                BehaviorDefaultDispenseItem.doDispense(world, stored_items.get(0), 3, EnumFacing.UP, new BlockSourceImpl(world, pos));
                 stored_items.remove(0);
             }
         }
@@ -84,9 +81,8 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             if (loot_table_loc == null) return;
             loot_table = world.getLootTableManager().getLootTableFromLocation(loot_table_loc);
         }
-        LootContext.Builder builder = new LootContext.Builder((WorldServer) world).withPlayer(player)
-                .withLuck(player.func_184817_da());
-        stored_items = loot_table.generateLootForPools(loot_table_seed == 0 ? new Random() : new Random(loot_table_seed), builder.build());
+        stored_items = loot_table.generateLootForPools(loot_table_seed == 0 ? new Random() : new Random(loot_table_seed),
+                new LootContext.Builder((WorldServer) world).withPlayer(player).withLuck(player.func_184817_da()).build());
         if (stored_items.isEmpty()) return;
         stack.shrink(1);
         rewarded_players.add(player.getUniqueID());
@@ -102,7 +98,8 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             if (loot_table_loc == null) return ItemStack.EMPTY;
             loot_table = world.getLootTableManager().getLootTableFromLocation(loot_table_loc);
         }
-        List<ItemStack> loot = loot_table.generateLootForPools(loot_table_seed == 0 ? new Random() : new Random(loot_table_seed), new LootContext.Builder((WorldServer) world).build());
+        List<ItemStack> loot = loot_table.generateLootForPools(loot_table_seed == 0 ? new Random() : new Random(loot_table_seed),
+                new LootContext.Builder((WorldServer) world).build());
         return loot.isEmpty() ? ItemStack.EMPTY : loot.get(world.rand.nextInt(loot.size()));
     }
     
@@ -130,14 +127,9 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     
     public void setState(EnumVaultState state) {
         this.state = state;
-        markDirty();
-    }
-    
-    @Override
-    public void setWorld(World world) {
-        super.setWorld(world);
-        if (loot_table == null) loot_table = world.getLootTableManager().getLootTableFromLocation(loot_table_loc);
         if (state == EnumVaultState.ACTIVE) displayed_item = getRandomDisplayItem();
+        else displayed_item = ItemStack.EMPTY;
+        markDirty();
     }
     
     public ItemStack getDisplayedItem() {
