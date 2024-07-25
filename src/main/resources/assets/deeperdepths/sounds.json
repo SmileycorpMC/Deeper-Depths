@@ -2693,7 +2693,7 @@
         "sounds": [
             "deeperdepths:item/mace/smash_ground_heavy"
         ],
-        "subtitle": "subtitles.deeperdepths.item.mace.smash_ground"
+        "subtitle": "subtitles.deeperdepths.item.mace.smash_ground_heavy"
     },
     "item.spyglass.stop_using": {
         "sounds": [
