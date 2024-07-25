@@ -1,5 +1,6 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -48,6 +49,11 @@ public class BlockDDStone extends BlockDeeperDepths {
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
         return state.getValue(VARIANT).getMapColor();
+    }
+    
+    @Override
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+        return state.getValue(VARIANT).getSoundType();
     }
     
     @Override

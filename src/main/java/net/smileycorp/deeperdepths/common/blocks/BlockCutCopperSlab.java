@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
 public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
@@ -29,6 +30,7 @@ public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
         setResistance(6);
         IBlockState base = blockState.getBaseState().withProperty(VARIANT, Variant.NORMAL);
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.BOTTOM);
+        setSoundType(DeeperDepthsSoundTypes.COPPER);
         setDefaultState(base);
     }
     

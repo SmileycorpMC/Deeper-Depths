@@ -6,11 +6,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
 public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperties, ICopperBlock {
@@ -28,6 +31,7 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
         setUnlocalizedName(Constants.name(name));
         setRegistryName(Constants.loc(name));
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
+        setSoundType(DeeperDepthsSoundTypes.COPPER);
         useNeighborBrightness = true;
     }
     
@@ -35,7 +39,9 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         state = state.cycleProperty(OPEN);
         world.setBlockState(pos, state, 2);
-        playSound(player, world, pos, state.getValue(OPEN));
+        world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                state.getValue(OPEN) ? DeeperDepthsSoundEvents.COPPER_TRAPDOOR_OPEN : DeeperDepthsSoundEvents.COPPER_TRAPDOOR_CLOSE,
+                SoundCategory.BLOCKS, 1, 1);
         return true;
     }
     

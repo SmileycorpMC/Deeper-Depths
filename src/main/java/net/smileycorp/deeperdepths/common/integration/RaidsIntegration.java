@@ -1,15 +1,6 @@
 package net.smileycorp.deeperdepths.common.integration;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.smileycorp.raids.common.RaidsContent;
-import net.smileycorp.raids.common.raid.Raid;
-import net.smileycorp.raids.common.raid.RaidOmenTracker;
-import net.smileycorp.raids.common.raid.WorldDataRaids;
-import net.smileycorp.raids.config.RaidConfig;
 
 public class RaidsIntegration {
     

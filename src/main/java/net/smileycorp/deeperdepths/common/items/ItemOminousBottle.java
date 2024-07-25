@@ -19,8 +19,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 
 import java.util.List;
 

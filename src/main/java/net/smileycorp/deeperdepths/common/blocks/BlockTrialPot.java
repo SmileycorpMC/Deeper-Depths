@@ -2,6 +2,7 @@ package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -26,6 +27,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialPot;
 
 import javax.annotation.Nullable;
@@ -53,13 +56,19 @@ public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvi
         if (player.isSneaking() |! (world.getTileEntity(pos) instanceof TileTrialPot || stack.isEmpty()))
             return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
         TileTrialPot tile = (TileTrialPot) world.getTileEntity(pos);
-        if (!tile.isItemValidForSlot(0, stack)) return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+        if (!tile.isItemValidForSlot(0, stack)) {
+            if (!world.isRemote) world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    DeeperDepthsSoundEvents.TRIAL_POT_INSERT_FAIL, SoundCategory.BLOCKS, 1, 1);
+            return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+        }
         if (!world.isRemote) {
             if (tile.isEmpty()) tile.setInventorySlotContents(0, stack.splitStack(1));
             else {
                 tile.getStackInSlot(0).grow(1);
                 stack.shrink(1);
             }
+            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    DeeperDepthsSoundEvents.TRIAL_POT_INSERT, SoundCategory.BLOCKS, 1, 1);
         }
         return true;
     }
@@ -72,6 +81,11 @@ public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvi
                 state = state.withProperty(CRACKED, true);
         }
         super.harvestBlock(world, player, pos, state, te, stack);
+    }
+    
+    @Override
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+        return state.getValue(CRACKED) ? DeeperDepthsSoundTypes.CRACKED_TRIAL_POT : DeeperDepthsSoundTypes.TRIAL_POT;
     }
     
     @Override

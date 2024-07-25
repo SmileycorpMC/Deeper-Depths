@@ -1,6 +1,7 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.state.IBlockState;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
 public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock {
@@ -10,6 +11,7 @@ public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock 
     
     public BlockCutCopperStairs(EnumWeatherStage stage, boolean waxed) {
         super(getName(stage, waxed), DeeperDepthsBlocks.CUT_COPPER.getDefaultState().withProperty(WEATHER_STAGE, stage));
+        setSoundType(DeeperDepthsSoundTypes.COPPER);
         this.stage = stage;
         this.waxed = waxed;
     }

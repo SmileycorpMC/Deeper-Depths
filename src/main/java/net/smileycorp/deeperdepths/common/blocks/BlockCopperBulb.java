@@ -12,9 +12,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
 public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  {
@@ -27,6 +30,7 @@ public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  
         super((waxed ? "Waxed_" : "") + "Copper_Bulb", Material.IRON, 3, 6, 1);
         setDefaultState(getBlockState().getBaseState().withProperty(WEATHER_STAGE, EnumWeatherStage.NORMAL)
                 .withProperty(LIT, false).withProperty(POWERED, false));
+        setSoundType(DeeperDepthsSoundTypes.COPPER_BULB);
         this.waxed = waxed;
     }
     
@@ -117,6 +121,9 @@ public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  
         if (state.getValue(POWERED)) world.setBlockState(pos, state.withProperty(POWERED, false), 3);
         else {
             world.setBlockState(pos, state.withProperty(LIT, !state.getValue(LIT)).withProperty(POWERED, true), 3);
+            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    state.getValue(LIT) ? DeeperDepthsSoundEvents.COPPER_BULB_TURN_ON: DeeperDepthsSoundEvents.COPPER_BULB_TURN_OFF,
+                    SoundCategory.BLOCKS, 1, 1);
         }
     }
     

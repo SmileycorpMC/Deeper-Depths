@@ -14,6 +14,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
 public class BlockCopper extends BlockDeeperDepths implements ICopperBlock {
@@ -23,6 +24,7 @@ public class BlockCopper extends BlockDeeperDepths implements ICopperBlock {
     public BlockCopper(String name) {
         super(name, Material.IRON, 3, 6, 1);
         setDefaultState(getBlockState().getBaseState().withProperty(WEATHER_STAGE, EnumWeatherStage.NORMAL).withProperty(WAXED, false));
+        setSoundType(DeeperDepthsSoundTypes.COPPER);
     }
     
     @Override

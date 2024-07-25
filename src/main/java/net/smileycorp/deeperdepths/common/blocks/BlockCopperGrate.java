@@ -2,11 +2,13 @@ package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 
 public class BlockCopperGrate extends BlockCopper {
     
     public BlockCopperGrate() {
         super("Copper_Grate");
+        setSoundType(DeeperDepthsSoundTypes.COPPER_GRATE);
     }
     
     @Override

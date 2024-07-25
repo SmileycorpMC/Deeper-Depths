@@ -13,6 +13,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 
@@ -23,6 +24,7 @@ public class BlockVault extends BlockTrial {
     public BlockVault() {
         super("Vault");
         setDefaultState(blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
+        setSoundType(DeeperDepthsSoundTypes.VAULT);
     }
     
     @Override

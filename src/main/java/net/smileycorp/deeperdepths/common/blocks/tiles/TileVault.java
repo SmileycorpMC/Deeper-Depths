@@ -1,10 +1,8 @@
 package net.smileycorp.deeperdepths.common.blocks.tiles;
 
 import com.google.common.collect.Lists;
-import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
-import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.PositionImpl;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -113,7 +111,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     
     private void playSound(SoundEvent event, float pitch) {
         world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                event, SoundCategory.BLOCKS, 1.0F, pitch);
+                event, SoundCategory.BLOCKS, 1, pitch);
     }
     
     private boolean canReward(Entity entity) {

@@ -1,6 +1,7 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.BlockWall;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -42,6 +43,11 @@ public class BlockDDStoneWall extends BlockWall implements IBlockProperties {
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
         return state.getValue(TYPE).getMapColor();
+    }
+    
+    @Override
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+        return state.getValue(TYPE).getSoundType();
     }
     
     @Override

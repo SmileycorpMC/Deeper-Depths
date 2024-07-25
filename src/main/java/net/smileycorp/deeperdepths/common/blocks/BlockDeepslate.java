@@ -5,6 +5,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 
 public class BlockDeepslate extends BlockRotatedPillar implements IBlockProperties {
     
@@ -16,6 +17,7 @@ public class BlockDeepslate extends BlockRotatedPillar implements IBlockProperti
         setHardness(3);
         setResistance(6);
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
+        setSoundType(DeeperDepthsSoundTypes.DEEPSLATE);
     }
     
 }

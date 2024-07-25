@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 
@@ -18,6 +19,7 @@ public class BlockTrialSpawner extends BlockTrial {
     
     public BlockTrialSpawner() {
         super("Trial_Spawner");
+        setSoundType(DeeperDepthsSoundTypes.TRIAL_SPAWNER);
     }
     
     @Override
