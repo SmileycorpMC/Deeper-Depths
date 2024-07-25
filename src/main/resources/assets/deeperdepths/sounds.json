@@ -2288,7 +2288,7 @@
     },
     "entity.bogged.shear": {
         "sounds": [
-            "deeperdepths:mob/sheep/shear"
+            "minecraft:mob/sheep/shear"
         ],
         "subtitle": "subtitles.deeperdepths.item.shears.shear"
     },
