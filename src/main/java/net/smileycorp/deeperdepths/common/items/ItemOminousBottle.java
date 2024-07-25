@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
-import net.smileycorp.deeperdepths.common.world.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class ItemOminousBottle extends ItemDeeperDepths {
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
         if (!world.isRemote) {
-            world.playSound(null, entity.getPosition(), DeeperDepthsSoundEvents.OMINOUS_BOTTLE_USE, entity.getSoundCategory(), 1, 1);
+            world.playSound(null, entity.getPosition(), DeeperDepthsSoundEvents.OMINOUS_BOTTLE_DISPOSE, entity.getSoundCategory(), 1, 1);
             entity.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
             entity.addPotionEffect(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000, getAmplifier(stack), false, false));
             if (entity instanceof EntityPlayerMP) CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entity, stack);
