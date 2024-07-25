@@ -21,6 +21,7 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.smileycorp.atlas.api.util.RecipeUtils;
 import net.smileycorp.deeperdepths.client.ClientProxy;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.BlockTrial;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
@@ -251,7 +252,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         
         private double activation_range = 4, deactivation_range = 4.5;
         private ItemStack key = new ItemStack(DeeperDepthsItems.TRIAL_KEY);
-        private ResourceLocation loot_table = Constants.loc("vault");
+        private ResourceLocation loot_table = DeeperDepthsLootTables.TRIAL_VAULT_LOOT;
         private long loot_table_seed = 0;
         
         public double getActivationRange() {

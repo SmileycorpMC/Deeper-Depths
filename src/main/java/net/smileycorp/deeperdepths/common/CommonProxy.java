@@ -15,10 +15,11 @@ public class CommonProxy {
     
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
-        LootTableList.register(Constants.loc("vault"));
-        LootTableList.register(Constants.loc("ominous_vault"));
-        LootTableList.register(Constants.loc("entities/bogged"));
+        //LootTableList.register(Constants.loc("vault"));
+        //LootTableList.register(Constants.loc("ominous_vault"));
+        //LootTableList.register(Constants.loc("entities/bogged"));
         DeeperDepthsEntities.registerEntities();
+        DeeperDepthsLootTables.registerLootTables();
     }
     
     public void init(FMLInitializationEvent event) {

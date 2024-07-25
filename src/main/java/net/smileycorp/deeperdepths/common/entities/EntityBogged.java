@@ -27,6 +27,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 
 import javax.annotation.Nullable;
@@ -134,7 +135,7 @@ public class EntityBogged extends AbstractSkeleton
 
     @Nullable
     protected ResourceLocation getLootTable() {
-        return Constants.BOGGED_DROPS;
+        return DeeperDepthsLootTables.BOGGED_DROPS;
     }
 
     protected SoundEvent getAmbientSound() {
