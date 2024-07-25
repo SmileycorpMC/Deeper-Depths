@@ -2,10 +2,11 @@ package net.smileycorp.deeperdepths.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -22,10 +23,11 @@ import net.smileycorp.deeperdepths.common.CommonProxy;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.IBlockProperties;
-import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 import net.smileycorp.deeperdepths.common.entities.EntityBogged;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
+
+import java.awt.*;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid= Constants.MODID)
 public class ClientProxy extends CommonProxy {
@@ -48,7 +50,7 @@ public class ClientProxy extends CommonProxy {
     
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TileEntityMobSpawnerRenderer());
+        //ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TileEntityMobSpawnerRenderer());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_WALL, new WallStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_BLOCK, new MetaStateMapper());
@@ -80,6 +82,11 @@ public class ClientProxy extends CommonProxy {
                     new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
         ClientRegistry.bindTileEntitySpecialRenderer(TileVault.class, new TESRVault());
         RenderingRegistry.registerEntityRenderingHandler(EntityBogged.class, RenderBogged::new);
+    }
+    
+    public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color colour) {
+        Particle particle = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(type.getParticleID(), x, y, z, 0, 0,0);
+        particle.setRBGColorF(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f);
     }
     
 }
