@@ -19,12 +19,15 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.smileycorp.atlas.api.util.RecipeUtils;
+import net.smileycorp.deeperdepths.client.ClientProxy;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.blocks.BlockTrial;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -48,7 +51,18 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     @Override
     public void update() {
         if (world == null) return;
-        if (world.isRemote) return;
+        if (world.isRemote) {
+            if (world.rand.nextFloat() < 0.5f) {
+                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, Color.WHITE);
+                if (state != EnumVaultState.INACTIVE) spawnParticle(EnumParticleTypes.FLAME, isOminous()
+                        ? Color.WHITE : new Color(0x65E7F0));
+            }
+            if (state != EnumVaultState.INACTIVE && world.rand.nextFloat() <= 0.02f)
+                world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        DeeperDepthsSoundEvents.VAULT_AMBIENT, SoundCategory.BLOCKS, world.rand.nextFloat() * 0.25f + 0.75f,
+                        world.rand.nextFloat() + 0.5f, false);
+            return;
+        }
         if (world.getWorldTime() % 20 != 0) return;
         if (state == EnumVaultState.INACTIVE) {
             if (world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
@@ -85,7 +99,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     }
     
     public void interact(EntityPlayer player, ItemStack stack) {
-        if (! isKey(stack)) {
+        if (!isKey(stack)) {
             playSound(DeeperDepthsSoundEvents.VAULT_INSERT_ITEM_FAIL, 1f);
             return;
         }
@@ -97,16 +111,24 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         stored_items = world.getLootTableManager().getLootTableFromLocation(config.loot_table)
                 .generateLootForPools(config.loot_table_seed == 0 ? new Random() : new Random(config.loot_table_seed),
                 new LootContext.Builder((WorldServer) world).withPlayer(player).withLuck(player.getLuck()).build());
-        if (stored_items.isEmpty()) return;
+        if (stored_items.isEmpty()) {
+            playSound(DeeperDepthsSoundEvents.VAULT_INSERT_ITEM_FAIL, 1f);
+            return;
+        }
+        playSound(DeeperDepthsSoundEvents.VAULT_INSERT_ITEM, 1f);
         stack.shrink(1);
         rewarded_players.add(player.getUniqueID());
         setState(EnumVaultState.UNLOCKING);
-        
     }
     
     private void playSound(SoundEvent event, float pitch) {
         world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
                 event, SoundCategory.BLOCKS, 1, pitch);
+    }
+    
+    private void spawnParticle(EnumParticleTypes particle, Color color) {
+        ClientProxy.addParticle(particle, pos.getX() + world.rand.nextFloat() * 0.8 + 0.1,
+                pos.getY() + world.rand.nextFloat() * 0.5 + 0.25, pos.getZ() + world.rand.nextFloat() * 0.8 + 0.1, color);
     }
     
     private boolean canReward(Entity entity) {
@@ -132,6 +154,10 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     
     public boolean isKey(ItemStack stack) {
         return RecipeUtils.compareItemStacks(stack, config.key, config.key.hasTagCompound());
+    }
+    
+    public boolean isOminous() {
+        return world.getBlockState(pos).getValue(BlockTrial.OMINOUS);
     }
     
     public EnumVaultState getState() {
@@ -232,40 +258,45 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             return activation_range;
         }
         
-        public void setActivationRange(double activation_range) {
+        public Config setActivationRange(double activation_range) {
             this.activation_range = activation_range;
+            return this;
         }
         
         public double getDeactivationRange() {
             return deactivation_range;
         }
         
-        public void setDeactivationRange(double deactivation_range) {
+        public Config setDeactivationRange(double deactivation_range) {
             this.deactivation_range = deactivation_range;
+            return this;
         }
         
         public ItemStack getKey() {
             return key;
         }
         
-        public void setKey(ItemStack key) {
+        public Config setKey(ItemStack key) {
             this.key = key;
+            return this;
         }
         
         public ResourceLocation getLootTable() {
             return loot_table;
         }
         
-        public void setLootTable(ResourceLocation loot_table) {
+        public Config setLootTable(ResourceLocation loot_table) {
             this.loot_table = loot_table;
+            return this;
         }
         
         public long getLootTableSeed() {
             return loot_table_seed;
         }
         
-        public void setLootTableSeed(long loot_table_seed) {
+        public Config setLootTableSeed(long loot_table_seed) {
             this.loot_table_seed = loot_table_seed;
+            return this;
         }
         
         public void readFromNBT(NBTTagCompound nbt) {
