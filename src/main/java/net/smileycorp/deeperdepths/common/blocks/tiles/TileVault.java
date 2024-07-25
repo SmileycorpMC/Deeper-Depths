@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.dispenser.IPosition;
+import net.minecraft.dispenser.PositionImpl;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,14 +16,13 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.BlockTrial;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
@@ -41,6 +42,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     private ItemStack displayed_item = ItemStack.EMPTY;
     private List<ItemStack> stored_items = Lists.newArrayList();
     private List<UUID> rewarded_players = Lists.newArrayList();
+    private int ejected_items = 0;
     
     public TileVault() {}
     
@@ -53,30 +55,49 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         if (world == null) return;
         if (world.isRemote) return;
         if (world.getWorldTime() % 20 != 0) return;
-        if (state == EnumVaultState.ACTIVE) {
+        if (state == EnumVaultState.INACTIVE) {
             if (world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                    4.5, false) == null)
+                    4, this::canReward) != null) {
+                setState(EnumVaultState.ACTIVE);
+                playSound(DeeperDepthsSoundEvents.VAULT_ACTIVATE, 1f);
+            }
+        } else if (state == EnumVaultState.ACTIVE) {
+            if (world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    4.5, false) == null) {
                 setState(EnumVaultState.INACTIVE);
-            else {
+                playSound(DeeperDepthsSoundEvents.VAULT_DEACTIVATE, 1f);
+            } else {
                 displayed_item = getRandomDisplayItem();
                 markDirty();
             }
-        } else if (state == EnumVaultState.INACTIVE &&
-                world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                        4, this::canReward) != null)
-            setState(EnumVaultState.ACTIVE);
-        if (state == EnumVaultState.UNLOCKING) setState(EnumVaultState.EJECTING);
-        if (state == EnumVaultState.EJECTING) {
-            if (stored_items.isEmpty()) setState(EnumVaultState.INACTIVE);
+        } else if (state == EnumVaultState.UNLOCKING) {
+            setState(EnumVaultState.EJECTING);
+            playSound(DeeperDepthsSoundEvents.VAULT_OPEN_SHUTTER, 1f);
+        } else if (state == EnumVaultState.EJECTING) {
+            if (stored_items.isEmpty()) {
+                setState(EnumVaultState.INACTIVE);
+                ejected_items = 0;
+                playSound( DeeperDepthsSoundEvents.VAULT_CLOSE_SHUTTER, 1f);
+            }
             else {
-                BehaviorDefaultDispenseItem.doDispense(world, stored_items.get(0), 3, EnumFacing.UP, new BlockSourceImpl(world, pos));
+                BehaviorDefaultDispenseItem.doDispense(world, stored_items.get(0),2, EnumFacing.UP,
+                        new PositionImpl(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
+                playSound(DeeperDepthsSoundEvents.VAULT_EJECT_ITEM, 0.8f + ejected_items * 0.4f);
+                ejected_items++;
                 stored_items.remove(0);
             }
         }
     }
     
     public void interact(EntityPlayer player, ItemStack stack) {
-        if (!canReward(player) |! isKey(stack)) return;
+        if (! isKey(stack)) {
+            playSound(DeeperDepthsSoundEvents.VAULT_INSERT_ITEM_FAIL, 1f);
+            return;
+        }
+        if (!canReward(player)) {
+            playSound(DeeperDepthsSoundEvents.VAULT_REJECT_REWARDED_PLAYER, 1f);
+            return;
+        }
         if (loot_table == null) {
             if (loot_table_loc == null) return;
             loot_table = world.getLootTableManager().getLootTableFromLocation(loot_table_loc);
@@ -87,6 +108,12 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         stack.shrink(1);
         rewarded_players.add(player.getUniqueID());
         setState(EnumVaultState.UNLOCKING);
+        
+    }
+    
+    private void playSound(SoundEvent event, float pitch) {
+        world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                event, SoundCategory.BLOCKS, 1.0F, pitch);
     }
     
     private boolean canReward(Entity entity) {
@@ -161,6 +188,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             rewarded_players.clear();
             for (NBTBase tag : nbt.getTagList("stored_items", 10)) rewarded_players.add(NBTUtil.getUUIDFromTag((NBTTagCompound) tag));
         }
+        if (nbt.hasKey("ejected_items")) ejected_items = nbt.getInteger("ejected_items");
     }
     
     @Override
@@ -176,6 +204,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             NBTTagList players = new NBTTagList();
             for (UUID uuid : rewarded_players) players.appendTag(NBTUtil.createUUIDTag(uuid));
         }
+        nbt.setInteger("ejected_items", ejected_items);
         return nbt;
     }
     
