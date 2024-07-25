@@ -50,16 +50,59 @@ public class TrialChambersTemplate extends DDStructureTemplate {
             }
         }
 
+        //Regular Vaults
+        if(function.startsWith("vault")) {
+            if(!generateVaultSpawn()) {
+                world.setBlockToAir(pos.down());
+                world.setBlockToAir(pos);
+                world.setBlockToAir(pos.add(1,0,0));
+                world.setBlockToAir(pos.add(-1, 0, 0));
+                world.setBlockToAir(pos.add(0, 0, 1));
+                world.setBlockToAir(pos.add(0, 0, -1));
+                world.setBlockToAir(pos.add(1, 0, 1));
+                world.setBlockToAir(pos.add(1, 0, -1));
+                world.setBlockToAir(pos.add(-1, 0, 1));
+                world.setBlockToAir(pos.add(-1, 0, -1));
+                //lower
+                world.setBlockToAir(pos.add(1,-1,0));
+                world.setBlockToAir(pos.add(-1, -1, 0));
+                world.setBlockToAir(pos.add(0, -1, 1));
+                world.setBlockToAir(pos.add(0, -1, -1));
+                world.setBlockToAir(pos.add(1, -1, 1));
+                world.setBlockToAir(pos.add(1, -1, -1));
+                world.setBlockToAir(pos.add(-1, -1, 1));
+                world.setBlockToAir(pos.add(-1, -1, -1));
+            } else {
+                world.setBlockToAir(pos);
+            }
+        }
+
+        //Omnious Vaults
+        if(function.startsWith("omni_vault")) {
+            if(!generateOminousVaultSpawn()) {
+                world.setBlockToAir(pos);
+                world.setBlockToAir(pos.down());
+            } else {
+                world.setBlockToAir(pos);
+            }
+        }
 
     }
 
 
-    public boolean generateChestSpawn() {
+    private boolean generateChestSpawn() {
         int randomNumberChestGenerator = ModRand.range(0, 5);
-        if(randomNumberChestGenerator >= 2) {
-            return false;
-        }
-        return true;
+        return randomNumberChestGenerator < 3;
+    }
+
+    private boolean generateVaultSpawn() {
+        int randomNumberVaultGenerator = ModRand.range(0, 11);
+        return randomNumberVaultGenerator < 6;
+    }
+
+    private boolean generateOminousVaultSpawn() {
+        int randomOmniGenerator = ModRand.range(0, 11);
+        return randomOmniGenerator < 8;
     }
 
 

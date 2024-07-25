@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.deeperdepths.animation.AnimationMessage;
+import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 
 public class CommonProxy {
     
@@ -16,6 +17,8 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
         LootTableList.register(Constants.loc("vault"));
         LootTableList.register(Constants.loc("ominous_vault"));
+        LootTableList.register(Constants.loc("entities/bogged"));
+        DeeperDepthsEntities.registerEntities();
     }
     
     public void init(FMLInitializationEvent event) {

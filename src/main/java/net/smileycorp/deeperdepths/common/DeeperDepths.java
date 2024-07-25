@@ -26,7 +26,10 @@ public class DeeperDepths {
     public static CommonProxy proxy;
     
     public static final CreativeTabs CREATIVE_TAB = new DeeperDepthsTab();
-    
+
+    @Mod.Instance
+    public static DeeperDepths instance;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
         proxy.preInit(event);
