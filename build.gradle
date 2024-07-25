@@ -110,6 +110,8 @@ jar {
     }
 }
 
+sourceSets { main { output.resourcesDir = output.getClassesDirs().getAsPath() } }
+
 shadowJar {
 	classifier = ''
 	exclude 'LICENSE.txt'
@@ -141,4 +143,6 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+
+
 }
