@@ -18,6 +18,7 @@ public class DeeperDepthsEntities
     public static void registerEntities()
     {
         registerEntity("bogged", EntityBogged.class, ++id, 80, 9084018, 3231003);
+        registerEntity("breeze", EntityBreeze.class, ++id, 81, 20451255, 1020204);
     }
 
     public static void registerEntitySpawns() {

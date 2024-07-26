@@ -25,6 +25,7 @@ import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.IBlockProperties;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 import net.smileycorp.deeperdepths.common.entities.EntityBogged;
+import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 
 import java.awt.*;
@@ -82,6 +83,7 @@ public class ClientProxy extends CommonProxy {
                     new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
         ClientRegistry.bindTileEntitySpecialRenderer(TileVault.class, new TESRVault());
         RenderingRegistry.registerEntityRenderingHandler(EntityBogged.class, RenderBogged::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
     }
     
     public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color colour) {
