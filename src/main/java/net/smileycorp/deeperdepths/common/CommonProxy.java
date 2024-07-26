@@ -19,6 +19,8 @@ public class CommonProxy {
         //LootTableList.register(Constants.loc("ominous_vault"));
         //LootTableList.register(Constants.loc("entities/bogged"));
         DeeperDepthsEntities.registerEntities();
+        //Registers Entity Spawns even though I think we'll only have one lmao
+        DeeperDepthsEntities.registerEntitySpawns();
         DeeperDepthsLootTables.registerLootTables();
     }
     
