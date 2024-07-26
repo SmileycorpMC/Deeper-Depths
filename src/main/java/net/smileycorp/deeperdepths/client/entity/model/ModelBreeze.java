@@ -23,7 +23,7 @@ public class ModelBreeze extends BasicModelEntity
     private final BasicModelPart stick1;
     private final BasicModelPart stick2;
     private final BasicModelPart stick3;
-    /** Empty  */
+    /** Public, as we need `ModelBreezeWind` to be able to become children of these groups.  */
     public BasicModelPart tornadoTop;
     public BasicModelPart tornadoMiddle;
     public BasicModelPart tornadoBottom;
@@ -66,13 +66,13 @@ public class ModelBreeze extends BasicModelEntity
         stick3.cubeList.add(new ModelBox(stick3, 0, 16, -1.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F, false));
 
         tornadoTop = new BasicModelPart(this);
-        tornadoTop.setRotationPoint(0.0F, 7.0F, 0.0F);
+        tornadoTop.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         tornadoMiddle = new BasicModelPart(this);
-        tornadoMiddle.setRotationPoint(0.0F, 7.0F, 0.0F);
+        tornadoMiddle.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         tornadoBottom = new BasicModelPart(this);
-        tornadoBottom.setRotationPoint(0.0F, 7.0F, 0.0F);
+        tornadoBottom.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         //ALWAYS include this in the bottom, first statement sets this as the default pose
         //that way the animator knows what default is and after each animation will go back to it's original pose
@@ -125,27 +125,25 @@ public class ModelBreeze extends BasicModelEntity
     }
 
     @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-
-        float wait = ageInTicks * (float)Math.PI * 0.15F;
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
+    {
+        float spinMeRightRound = ageInTicks * (float)Math.PI * 0.15F;
         this.head.rotationPointY = MathHelper.cos(((float)(ageInTicks/6) + ageInTicks) * 0.1F);
-        this.sticks.rotateAngleY = wait;
+        this.sticks.rotateAngleY = spinMeRightRound;
 
+        this.tornadoTop.rotationPointX = MathHelper.cos(spinMeRightRound) * 1.0F * 0.6F;
+        this.tornadoTop.rotationPointZ = MathHelper.sin(spinMeRightRound) * 1.0F * 0.6F;
 
-        this.tornadoTop.rotationPointY = MathHelper.cos(((float)(ageInTicks/6) + ageInTicks) * 0.1F);
+        this.tornadoMiddle.rotationPointX = MathHelper.sin(spinMeRightRound) * 0.8F * 0.5F;
+        this.tornadoMiddle.rotationPointZ = MathHelper.cos(spinMeRightRound) * 0.8F * 0.5F;
 
-        //this.tornadoTop.rotationPointX = wait * 2;
-        //this.tornadoTop.rotationPointZ = wait * 2;
+        this.tornadoBottom.rotationPointX = MathHelper.cos(spinMeRightRound) * 0.6F * 0.4F;
+        this.tornadoBottom.rotationPointZ = MathHelper.sin(spinMeRightRound) * 0.6F * 0.4F;
 
         //theres several methods that can be used for living animations that'll rotate different degrees
         //this one is just for head movement or any other parts that want to be individual from the model
         //even if using this function and calling it in the animations it'll still work
         this.faceTarget(netHeadYaw, headPitch, 1, head);
-
-
-
-
-
     }
 
     public void setRotationAngle(BasicModelPart BasicModelPart, float x, float y, float z)

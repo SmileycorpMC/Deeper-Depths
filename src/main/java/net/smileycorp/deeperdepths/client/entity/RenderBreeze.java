@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.client.entity.layers.LayerBoggedMoss;
 import net.smileycorp.deeperdepths.client.entity.layers.LayerBreezeWind;
 import net.smileycorp.deeperdepths.client.entity.model.ModelBreeze;
+import net.smileycorp.deeperdepths.client.entity.model.ModelBreezeWind;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 
@@ -18,12 +19,12 @@ import javax.annotation.Nullable;
 public class RenderBreeze extends RenderLiving<EntityBreeze> {
 
     private static final ResourceLocation BREEZE = new ResourceLocation(Constants.MODID + ":textures/entities/breeze/breeze.png");
-
+    private final ModelBreezeWind layerModel = new ModelBreezeWind();
 
     public RenderBreeze(RenderManager rendermanagerIn)
     {
         super(rendermanagerIn, new ModelBreeze(), 0.8F);
-        this.addLayer(new LayerBreezeWind(this));
+        this.addLayer(new LayerBreezeWind(this, layerModel));
     }
 
     @Nullable

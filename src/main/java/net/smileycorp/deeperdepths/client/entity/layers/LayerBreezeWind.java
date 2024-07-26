@@ -20,8 +20,10 @@ public class LayerBreezeWind implements LayerRenderer<EntityBreeze>
     private final RenderLivingBase<?> renderer;
     private final ModelBreezeWind layerModel = new ModelBreezeWind();
 
-    public LayerBreezeWind(RenderLivingBase<?> rendererIn)
-    { this.renderer = rendererIn; }
+    public LayerBreezeWind(RenderLivingBase<?> rendererIn, ModelBreezeWind layerModelIn)
+    {
+        this.renderer = rendererIn;
+    }
 
     public void doRenderLayer(EntityBreeze entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
