@@ -1,24 +1,34 @@
 {
     "forge_marker": 1,
-	"defaults": {
-		"model": "deeperdepths:trial_spawner",
-		"textures": {
-			"bottom": "deeperdepths:blocks/trial_spawner_bottom_ominous",
-			"side": "deeperdepths:blocks/trial_spawner_side_ominous",
-			"top": "deeperdepths:blocks/trial_spawner_top_ominous"
-		}
-	},
     "variants": {
-        "normal": {},
-        "state=inactive": {},
+        "normal": {
+			"model": "deeperdepths:trial_spawner",
+			"textures": {
+				"bottom": "deeperdepths:blocks/trial_spawner_bottom",
+				"side": "deeperdepths:blocks/trial_spawner_side_ominous",
+				"top": "deeperdepths:blocks/trial_spawner_top_ominous"
+			}
+		},
+        "state=inactive": {
+			"model": "deeperdepths:trial_spawner",
+			"textures": {
+				"bottom": "deeperdepths:blocks/trial_spawner_bottom",
+				"side": "deeperdepths:blocks/trial_spawner_side_ominous",
+				"top": "deeperdepths:blocks/trial_spawner_top_ominous"
+			}
+		},
         "state=active": {
-            "textures": {
+			"model": "deeperdepths:trial_spawner",
+			"textures": {
+				"bottom": "deeperdepths:blocks/trial_spawner_bottom",
 				"side": "deeperdepths:blocks/trial_spawner_side_active_ominous",
 				"top": "deeperdepths:blocks/trial_spawner_top_active_ominous"
 			}
         },
         "state=ejecting": {
-            "textures": {
+			"model": "deeperdepths:trial_spawner",
+			"textures": {
+				"bottom": "deeperdepths:blocks/trial_spawner_bottom",
 				"side": "deeperdepths:blocks/trial_spawner_side_active_ominous",
 				"top": "deeperdepths:blocks/trial_spawner_top_ejecting_ominous"
 			}

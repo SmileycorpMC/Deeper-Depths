@@ -1,12 +1,10 @@
 package net.smileycorp.deeperdepths.client.entity.layers;
 
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.deeperdepths.client.entity.RenderBogged;
 import net.smileycorp.deeperdepths.client.entity.model.ModelBoggedMushrooms;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.entities.EntityBogged;

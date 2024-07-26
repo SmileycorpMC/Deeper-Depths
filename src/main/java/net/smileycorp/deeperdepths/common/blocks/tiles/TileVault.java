@@ -54,9 +54,9 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         if (world == null) return;
         if (world.isRemote) {
             if (world.rand.nextFloat() < 0.5f) {
-                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, Color.WHITE);
+                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, Color.BLACK);
                 if (state != EnumVaultState.INACTIVE) spawnParticle(EnumParticleTypes.FLAME, isOminous()
-                        ? Color.WHITE : new Color(0x65E7F0));
+                        ? new Color(0x0000F0) : Color.WHITE);
             }
             if (state != EnumVaultState.INACTIVE && world.rand.nextFloat() <= 0.02f)
                 world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
@@ -199,6 +199,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             for (NBTBase tag : nbt.getTagList("stored_items", 10)) rewarded_players.add(NBTUtil.getUUIDFromTag((NBTTagCompound) tag));
         }
         if (nbt.hasKey("ejected_items")) ejected_items = nbt.getInteger("ejected_items");
+        markDirty();
     }
     
     @Override

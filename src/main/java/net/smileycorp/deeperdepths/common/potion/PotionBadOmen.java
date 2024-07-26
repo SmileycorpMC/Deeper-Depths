@@ -2,7 +2,6 @@ package net.smileycorp.deeperdepths.common.potion;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.fml.common.Loader;
 //import net.smileycorp.deeperdepths.common.integration.RaidsIntegration;
 
 public class PotionBadOmen extends PotionDeeperDepths {

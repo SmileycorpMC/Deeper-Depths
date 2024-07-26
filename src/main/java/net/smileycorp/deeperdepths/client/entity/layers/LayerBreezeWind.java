@@ -1,7 +1,6 @@
 package net.smileycorp.deeperdepths.client.entity.layers;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelSkeleton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -10,7 +9,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.client.entity.model.ModelBreezeWind;
 import net.smileycorp.deeperdepths.common.Constants;
-import net.smileycorp.deeperdepths.common.entities.EntityBogged;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 
 @SideOnly(Side.CLIENT)

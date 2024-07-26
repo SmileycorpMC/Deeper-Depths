@@ -17,7 +17,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.client.blocks.*;
-import net.smileycorp.deeperdepths.client.entity.*;
+import net.smileycorp.deeperdepths.client.entity.RenderBogged;
+import net.smileycorp.deeperdepths.client.entity.RenderBreeze;
 import net.smileycorp.deeperdepths.client.tesr.TESRVault;
 import net.smileycorp.deeperdepths.common.CommonProxy;
 import net.smileycorp.deeperdepths.common.Constants;
@@ -86,9 +87,9 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
     }
     
-    public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color colour) {
+    public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color color) {
         Particle particle = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(type.getParticleID(), x, y, z, 0, 0,0);
-        particle.setRBGColorF(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f);
+        particle.setRBGColorF((float) color.getRed() / 255f, (float) color.getGreen() / 255f, (float) color.getBlue() / 255f);
     }
     
 }
