@@ -82,6 +82,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 world.spawnEntity(entity);
                 world.playSound(null, entity.posX, entity.posY, entity.posZ,
                         DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_MOB, SoundCategory.BLOCKS, 1, 1);
+                cooldown = 20;
             }
         }
         if (state == EnumTrialSpawnerState.EJECTING) {
