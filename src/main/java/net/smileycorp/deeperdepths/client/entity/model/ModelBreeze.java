@@ -2,7 +2,9 @@ package net.smileycorp.deeperdepths.client.entity.model;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.model.ModelBox;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
@@ -12,13 +14,18 @@ import net.smileycorp.deeperdepths.animation.model.EZModelAnimator;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 
 @SideOnly(Side.CLIENT)
-public class ModelBreeze  extends BasicModelEntity
+public class ModelBreeze extends BasicModelEntity
 {
     private final BasicModelPart head;
     private final BasicModelPart headlayer;
+    private final BasicModelPart sticks;
     private final BasicModelPart stick1;
     private final BasicModelPart stick2;
     private final BasicModelPart stick3;
+    /** Public, as we need `ModelBreezeWind` to be able to become children of these groups.  */
+    public BasicModelPart tornadoTop;
+    public BasicModelPart tornadoMiddle;
+    public BasicModelPart tornadoBottom;
 
     //The Model Animator
     private final EZModelAnimator animator;
@@ -34,22 +41,37 @@ public class ModelBreeze  extends BasicModelEntity
         headlayer = new BasicModelPart(this);
         headlayer.setRotationPoint(0.0F, 0.0F, 0.0F);
         head.addChild(headlayer);
-        headlayer.cubeList.add(new ModelBox(headlayer, 32, 0, -4.0F, -4.0F, -4.0F, 8, 8, 8, 0.2F, false));
+        headlayer.cubeList.add(new ModelBox(headlayer, 32, 0, -4.0F, -4.0F, -4.0F, 8, 8, 8, 0.25F, false));
+
+        sticks = new BasicModelPart(this);
+        sticks.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         stick1 = new BasicModelPart(this);
         stick1.setRotationPoint(0.0F, 7.0F, -5.0F);
+        sticks.addChild(stick1);
         setRotationAngle(stick1, 0.3927F, 0.0F, 0.0F);
         stick1.cubeList.add(new ModelBox(stick1, 0, 16, -1.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F, false));
 
         stick2 = new BasicModelPart(this);
         stick2.setRotationPoint(-4.0F, 7.0F, 4.0F);
+        sticks.addChild(stick2);
         setRotationAngle(stick2, -2.7489F, 0.8727F, 3.1416F);
         stick2.cubeList.add(new ModelBox(stick2, 0, 16, -1.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F, false));
 
         stick3 = new BasicModelPart(this);
         stick3.setRotationPoint(4.0F, 7.0F, 4.0F);
+        sticks.addChild(stick3);
         setRotationAngle(stick3, -2.7489F, -0.6981F, 3.1416F);
         stick3.cubeList.add(new ModelBox(stick3, 0, 16, -1.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F, false));
+
+        tornadoTop = new BasicModelPart(this);
+        tornadoTop.setRotationPoint(0.0F, 0.0F, 0.0F);
+
+        tornadoMiddle = new BasicModelPart(this);
+        tornadoMiddle.setRotationPoint(0.0F, 0.0F, 0.0F);
+
+        tornadoBottom = new BasicModelPart(this);
+        tornadoBottom.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         //ALWAYS include this in the bottom, first statement sets this as the default pose
         //that way the animator knows what default is and after each animation will go back to it's original pose
@@ -61,16 +83,17 @@ public class ModelBreeze  extends BasicModelEntity
     /** Important to put all parts that you want animated, I'd just put everything tbh */
     @Override
     public Iterable<BasicModelPart> getAllParts() {
-        return ImmutableList.of(head, headlayer, stick1, stick2, stick3);
+        return ImmutableList.of(head, headlayer, stick1, stick2, stick3, tornadoTop, tornadoMiddle, tornadoBottom);
     }
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         head.render(f5);
-        stick1.render(f5);
-        stick2.render(f5);
-        stick3.render(f5);
+        sticks.render(f5);
+        tornadoTop.render(f5);
+        tornadoMiddle.render(f5);
+        tornadoBottom.render(f5);
     }
 
     //this is where you do set animations
@@ -101,7 +124,20 @@ public class ModelBreeze  extends BasicModelEntity
     }
 
     @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
+    {
+        float spinMeRightRound = ageInTicks * (float)Math.PI * 0.15F;
+        this.head.rotationPointY = MathHelper.cos(((float)(ageInTicks/6) + ageInTicks) * 0.1F);
+        this.sticks.rotateAngleY = spinMeRightRound;
+
+        this.tornadoTop.rotationPointX = MathHelper.cos(spinMeRightRound) * 1.0F * 0.6F;
+        this.tornadoTop.rotationPointZ = MathHelper.sin(spinMeRightRound) * 1.0F * 0.6F;
+
+        this.tornadoMiddle.rotationPointX = MathHelper.sin(spinMeRightRound) * 0.8F * 0.5F;
+        this.tornadoMiddle.rotationPointZ = MathHelper.cos(spinMeRightRound) * 0.8F * 0.5F;
+
+        this.tornadoBottom.rotationPointX = MathHelper.cos(spinMeRightRound) * 0.6F * 0.4F;
+        this.tornadoBottom.rotationPointZ = MathHelper.sin(spinMeRightRound) * 0.6F * 0.4F;
 
         //theres several methods that can be used for living animations that'll rotate different degrees
         //this one is just for head movement or any other parts that want to be individual from the model
