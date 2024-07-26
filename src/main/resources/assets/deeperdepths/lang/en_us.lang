@@ -145,8 +145,12 @@ tile.deeperdepths.TrialSpawner.name=Trial Spawner
 tile.deeperdepths.Vault.name=Vault
 tile.deeperdepths.OminousVault.name=Ominous Vault
 
-effect.deeperdepths.BadOmen.name=Bad Omen
-effect.deeperdepths.TrialOmen.name=Trial Omen
+effect.deeperdepths.bad_omen=Bad Omen
+effect.deeperdepths.trial_omen=Trial Omen
+effect.deeperdepths.oozing=Oozing
+effect.deeperdepths.infested=Infested
+effect.deeperdepths.weaving=Weaving
+effect.deeperdepths.wind_charged=Wind Charged
 
 entity.deeperdepths.Bogged.name=Bogged
 entity.deeperdepths.Breeze.name=Breeze
@@ -155,6 +159,26 @@ entity.deeperdepths.Warden.name=Warden
 
 potion.potency.3=IV
 potion.potency.4=V
+
+potion.effect.deeperdepths.oozing=Potion of Oozing
+potion.effect.deeperdepths.infested=Potion of Infested
+potion.effect.deeperdepths.weaving=Potion of Weaving
+potion.effect.deeperdepths.wind_charged=Potion of Wind Charged
+
+splash_potion.effect.deeperdepths.oozing=Splash Potion of Oozing
+splash_potion.effect.deeperdepths.infested=Splash Potion of Infested
+splash_potion.effect.deeperdepths.weaving=Splash Potion of Weaving
+splash_potion.effect.deeperdepths.wind_charged=Splash Potion of Wind Charged
+
+lingering_potion.effect.deeperdepths.oozing=Lingering Potion of Oozing
+lingering_potion.effect.deeperdepths.infested=Lingering Potion of Infested
+lingering_potion.effect.deeperdepths.weaving=Lingering Potion of Weaving
+lingering_potion.effect.deeperdepths.wind_charged=Lingering Potion of Wind Charged
+
+tipped_arrow.effect.deeperdepths.oozing=Arrow of Oozing
+tipped_arrow.effect.deeperdepths.infested=Arrow of Infested
+tipped_arrow.effect.deeperdepths.weaving=Arrow of Weaving
+tipped_arrow.effect.deeperdepths.wind_charged=Arrow of Wind Charged
 
 
 subtitles.deeperdepths.block.amethyst_block.chime=Amethyst chimes

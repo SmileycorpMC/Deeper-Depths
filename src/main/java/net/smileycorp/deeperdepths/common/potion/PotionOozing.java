@@ -14,7 +14,7 @@ import java.util.Objects;
  * A basic form of Oozing, still requires Particles, better spawning logic, better
  * removal logic, and polish.
  */
-public class PotionOozing extends Potion
+public class PotionOozing extends PotionDeeperDepths
 {
     /** The entity to spawn. */
     private final Class spawnEntity;
@@ -25,9 +25,7 @@ public class PotionOozing extends Potion
 
     protected PotionOozing(String nameIn, boolean isBadEffectIn, int liquidColorIn, Class spawnEntityIn, int spawnQuantityIn, boolean doInitialSpawnIn)
     {
-        super(isBadEffectIn, liquidColorIn);
-        this.setPotionName("effect." + Constants.MODID + "." + nameIn);
-        this.setRegistryName(nameIn);
+        super(nameIn, isBadEffectIn, liquidColorIn, 4);
         spawnEntity = spawnEntityIn;
         spawnQuantity = spawnQuantityIn;
         doInitialSpawn = doInitialSpawnIn;
@@ -75,9 +73,4 @@ public class PotionOozing extends Potion
         //this.experienceValue = size;
         slime.readEntityFromNBT(nbt);
     }
-
-    /* Required so the effect actually runs. */
-    @Override
-    public boolean isReady(int duration, int amplifier)
-    { return true; }
 }

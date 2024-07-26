@@ -20,7 +20,7 @@ import java.util.Objects;
  * Requires Particles.
  */
 @Mod.EventBusSubscriber
-public class PotionInfested extends Potion
+public class PotionInfested extends PotionDeeperDepths
 {
     /** The entity to spawn. */
     private static Class spawnEntity;
@@ -35,9 +35,7 @@ public class PotionInfested extends Potion
 
     protected PotionInfested(String nameIn, boolean isBadEffectIn, int liquidColorIn, Class spawnEntityIn, int chanceIn, int spawnQuantityMinIn, int spawnQuantityMaxIn, boolean doInitialSpawnIn)
     {
-        super(isBadEffectIn, liquidColorIn);
-        this.setPotionName("effect." + Constants.MODID + "." + nameIn);
-        this.setRegistryName(nameIn);
+        super(nameIn, isBadEffectIn, liquidColorIn, 3);
         spawnEntity = spawnEntityIn;
         chance = chanceIn;
         spawnQuantityMin = spawnQuantityMinIn;
@@ -75,9 +73,4 @@ public class PotionInfested extends Potion
             }
         }
     }
-
-    /** We are using Forge's LivingHurtEvent, so this isn't required at all. */
-    @Override
-    public boolean isReady(int duration, int amplifier)
-    { return false; }
 }

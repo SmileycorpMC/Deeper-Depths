@@ -18,7 +18,7 @@ import java.util.List;
  *
  * Mixin should hook to Entity.class, at about Line 569, altering the values of 569 and 571 to 0.5 if the entity has Weaving on them. Maybe goto different web movement if Weaving is detected?
  */
-public class PotionWeaving extends Potion
+public class PotionWeaving extends PotionDeeperDepths
 {
     /** The entity to spawn. */
     private final Block block;
@@ -31,9 +31,7 @@ public class PotionWeaving extends Potion
 
     protected PotionWeaving(String nameIn, boolean isBadEffectIn, int liquidColorIn, Block blockIn, int minPlaceIn, int maxPlaceIn, int blockSpreadIn)
     {
-        super(isBadEffectIn, liquidColorIn);
-        this.setPotionName("effect." + Constants.MODID + "." + nameIn);
-        this.setRegistryName(nameIn);
+        super(nameIn, isBadEffectIn, liquidColorIn, 5);
         block = blockIn;
         minPlace = minPlaceIn;
         maxPlace = maxPlaceIn;
@@ -74,9 +72,4 @@ public class PotionWeaving extends Potion
             }
         }
     }
-
-    /* Required so the effect actually runs. */
-    @Override
-    public boolean isReady(int duration, int amplifier)
-    { return true; }
 }
