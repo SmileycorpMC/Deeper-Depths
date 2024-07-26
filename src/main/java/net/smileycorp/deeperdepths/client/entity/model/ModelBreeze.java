@@ -9,7 +9,6 @@ import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.animation.model.BasicModelEntity;
 import net.smileycorp.deeperdepths.animation.model.BasicModelPart;
 import net.smileycorp.deeperdepths.animation.model.EZModelAnimator;
-import net.smileycorp.deeperdepths.common.entities.EntityBogged;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 
 @SideOnly(Side.CLIENT)
