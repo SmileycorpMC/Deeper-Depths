@@ -32,6 +32,10 @@ public class ModelBreezeWind extends ModelBreeze
         this.tornadoBottom.addChild(tornado3);
         tornado3.setRotationPoint(0.0F, 7.0F, 0.0F);
         tornado3.cubeList.add(new ModelBox(tornado3, 0, 55, -3.0F, 10.0F, -3.0F, 6, 7, 6, 0.0F, false));
+
+        super.updateDefaultPose();
+
+        //super.animator = EZModelAnimator.create();
     }
 
     /** Do not do `super.render(...)`, or the wind texture will be overlaid atop the Head and Rod parts! */

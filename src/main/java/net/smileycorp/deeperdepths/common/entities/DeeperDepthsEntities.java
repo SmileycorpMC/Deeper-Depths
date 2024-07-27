@@ -18,6 +18,7 @@ public class DeeperDepthsEntities
     {
         registerEntity("bogged", EntityBogged.class, ++id, 80, 9084018, 3231003);
         registerEntity("breeze", EntityBreeze.class, ++id, 81, 20451255, 1020204);
+        registerEntity("wind_charge", EntityWindCharge.class, ++id, 80);
     }
 
     public static void registerEntitySpawns() {
@@ -27,6 +28,8 @@ public class DeeperDepthsEntities
     private static void registerEntity(String name, Class<? extends Entity> entity, int id, int range, int color1, int color2)
     { EntityRegistry.registerModEntity(new ResourceLocation(Constants.MODID, name), entity, Constants.MODID + "." + name, id, DeeperDepths.instance, range, 1, true, color1, color2); }
 
+    private static void registerEntity(String name, Class<? extends Entity> entity, int id, int range)
+    { EntityRegistry.registerModEntity(new ResourceLocation(Constants.MODID, name), entity, Constants.MODID + "." + name, id, DeeperDepths.instance, range, 1, true); }
 
     private static void spawnRate(Class<? extends EntityLiving> entityClass, EnumCreatureType creatureType, int weight, int min, int max, BiomeDictionary.Type biomesAllowed) {
         for(Biome biome: BiomeDictionary.getBiomes(biomesAllowed)) {

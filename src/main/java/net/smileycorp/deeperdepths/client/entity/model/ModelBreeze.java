@@ -27,7 +27,7 @@ public class ModelBreeze extends BasicModelEntity
     public BasicModelPart tornadoBottom;
 
     //The Model Animator
-    private final EZModelAnimator animator;
+    public EZModelAnimator animator;
 
     public ModelBreeze() {
         textureWidth = 64;
@@ -107,17 +107,19 @@ public class ModelBreeze extends BasicModelEntity
         //Now the below code must equal to the duration set in the Entity class
         //EXAMPLE
         //when declaring a start keyfram put whatever you want to move within the given duration
-        animator.startKeyframe(10);
+        animator.startKeyframe(20);
 
-        animator.rotate(head, 0, (float) Math.toRadians(-30), 0);
-        animator.move(head, 0, -5, 0);
+        //animator.rotate(head, (float) Math.toRadians(-30), (float) Math.toRadians(-30), 0);
+        animator.move(head, 0, 2, -2);
+        /** Animating Tornado Parts isn't working? Might be due to funky inheriting in `ModelBreezeWind`, but `setRotationAngles` still works with it! */
+        animator.rotate(tornadoTop, (float) Math.toRadians(-30), 0, 0);
         //always declare an end key frame when you are done putting moving boxes
         animator.endKeyframe();
         // for static key frames, such as holding a pose for that time use the below method
-        animator.setStaticKeyframe(10);
+        animator.setStaticKeyframe(5);
         //lastly always best to end the animation with a reset key frame
         //this just gives it time to snap back to original pose without it being instant
-        animator.resetKeyframe(10);
+        animator.resetKeyframe(5);
         //our time equals 30 which is how lone the ANIMATION_SHOOT is in the entity file
 
     }
@@ -125,18 +127,23 @@ public class ModelBreeze extends BasicModelEntity
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
-        float spinMeRightRound = ageInTicks * (float)Math.PI * 0.15F;
-        this.head.rotationPointY = MathHelper.cos(((float)(ageInTicks/6) + ageInTicks) * 0.1F);
-        this.sticks.rotateAngleY = spinMeRightRound;
+        EntityBreeze entityBreeze = (EntityBreeze) entityIn;
+        if (!entityBreeze.isShootAttack() && true)
+        {
+            float spinMeRightRound = ageInTicks * (float)Math.PI * 0.15F;
+            this.head.rotationPointY = MathHelper.cos(((float)(ageInTicks/6) + ageInTicks) * 0.1F);
+            this.sticks.rotateAngleY = spinMeRightRound;
 
-        this.tornadoTop.rotationPointX = MathHelper.cos(spinMeRightRound) * 1.0F * 0.6F;
-        this.tornadoTop.rotationPointZ = MathHelper.sin(spinMeRightRound) * 1.0F * 0.6F;
+            this.tornadoTop.rotationPointX = MathHelper.cos(spinMeRightRound) * 1.0F * 0.6F;
+            this.tornadoTop.rotationPointZ = MathHelper.sin(spinMeRightRound) * 1.0F * 0.6F;
 
-        this.tornadoMiddle.rotationPointX = MathHelper.sin(spinMeRightRound) * 0.8F * 0.5F;
-        this.tornadoMiddle.rotationPointZ = MathHelper.cos(spinMeRightRound) * 0.8F * 0.5F;
+            this.tornadoMiddle.rotationPointX = MathHelper.sin(spinMeRightRound) * 0.8F * 0.5F;
+            this.tornadoMiddle.rotationPointZ = MathHelper.cos(spinMeRightRound) * 0.8F * 0.5F;
 
-        this.tornadoBottom.rotationPointX = MathHelper.cos(spinMeRightRound) * 0.6F * 0.4F;
-        this.tornadoBottom.rotationPointZ = MathHelper.sin(spinMeRightRound) * 0.6F * 0.4F;
+            this.tornadoBottom.rotationPointX = MathHelper.cos(spinMeRightRound) * 0.6F * 0.4F;
+            this.tornadoBottom.rotationPointZ = MathHelper.sin(spinMeRightRound) * 0.6F * 0.4F;
+        }
+
 
         //theres several methods that can be used for living animations that'll rotate different degrees
         //this one is just for head movement or any other parts that want to be individual from the model
