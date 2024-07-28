@@ -22,6 +22,7 @@ public abstract class BlockTrial extends BlockDeeperDepths implements ITileEntit
     
     public BlockTrial(String name) {
         super(name, Material.ROCK, 50, 50, 0);
+        useNeighborBrightness = true;
     }
     
     @Override
