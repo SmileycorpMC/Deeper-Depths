@@ -55,6 +55,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     private int spawned_mobs = 0;
     private int ejected_items = 0;
     private ResourceLocation loot_table;
+    private Entity cached_entity;
     
     public TileTrialSpawner() {
         config = new Config();
@@ -181,6 +182,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     
     public void setState(EnumTrialSpawnerState state) {
         this.state = state;
+        rebuildCachedEntity();
         markDirty();
     }
     
@@ -191,6 +193,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public void setOminous(boolean isOminous) {
         this.isOminous = isOminous;
         if (state != EnumTrialSpawnerState.INACTIVE) reset();
+        rebuildCachedEntity();
         markDirty();
     }
     
@@ -253,6 +256,8 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setInteger("state", state.ordinal());
         nbt.setBoolean("ominous", isOminous);
+        Entity entity = getCachedEntity();
+        if (entity != null) nbt.setTag("cached_entity", entity.serializeNBT());
         return nbt;
     }
     
@@ -260,6 +265,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public void handleUpdateTag(NBTTagCompound nbt) {
         if (nbt.hasKey("state")) state = EnumTrialSpawnerState.values()[nbt.getInteger("state")];
         if (nbt.hasKey("ominous")) isOminous = nbt.getBoolean("ominous");
+        if (nbt.hasKey("cached_entity")) cached_entity = AnvilChunkLoader.readWorldEntity(nbt.getCompoundTag("cached_entity"), world, false);
     }
     
     @Override
@@ -279,24 +285,34 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public void modifyConfigs(Consumer<Config> action) {
        action.accept(config);
        action.accept(ominous_config);
+       rebuildCachedEntity();
+    }
+    
+    public Entity getCachedEntity() {
+        return cached_entity;
+    }
+    
+    public void setCachedEntity(Entity cached_entity) {
+        this.cached_entity = cached_entity;
+    }
+    
+    public void rebuildCachedEntity() {
+        NBTTagCompound nbt = getActiveConfig().getEntities().getResult(world.rand);
+        if (nbt != null) {
+            cached_entity = AnvilChunkLoader.readWorldEntity(nbt, world, false);
+            if (cached_entity instanceof EntityLiving) ((EntityLiving) cached_entity).onInitialSpawn(world.getDifficultyForLocation(pos), null);
+        }
+        
     }
     
     public static class Config {
     
         private int spawn_range = 4, total_entities = 6, simultaneous_entities = 2, total_entities_per_player = 2,
                 simultaneous_entities_per_player = 1, ticks_between_spawn = 40;
-        private WeightedOutputs<NBTTagCompound> entities;
+        private WeightedOutputs<NBTTagCompound> entities = new WeightedOutputs<>(ImmutableMap.of());
         private WeightedOutputs<ResourceLocation> loot_tables = new WeightedOutputs<>(ImmutableMap.of(DeeperDepthsLootTables.TRIAL_SPAWNER_KEY, 1,
                 DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT, 1));
         private long loot_table_seed;
-        
-        public Config() {
-            try {
-                entities = new WeightedOutputs<>(ImmutableMap.of(JsonToNBT.getTagFromJson("{id:minecraft:zombie}"), 1));
-            } catch (Exception e) {
-                DeeperDepths.error("Failed instancing config " + this, e);
-            }
-        }
         
         public int getSpawnRange() {
             return spawn_range;

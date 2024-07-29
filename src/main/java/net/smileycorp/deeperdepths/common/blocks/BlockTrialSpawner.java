@@ -1,9 +1,16 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -28,6 +35,20 @@ public class BlockTrialSpawner extends BlockTrial {
         if (!(te instanceof TileTrialSpawner)) return state;
         TileTrialSpawner spawner = (TileTrialSpawner) te;
         return state.withProperty(STATE, spawner.getState()).withProperty(OMINOUS, spawner.isOminous());
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+        TileEntity tile = world.getTileEntity(pos);
+        if (player.isSneaking() |! (tile instanceof TileTrialSpawner |! (stack.getItem() instanceof ItemMonsterPlacer)))
+            return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+        if (!world.isRemote) {
+            NBTTagCompound nbt = stack.getTagCompound();
+            if (nbt.hasKey("EntityTag")) ((TileTrialSpawner)tile).modifyConfigs(cfg ->
+                    cfg.setEntities(ImmutableMap.of(nbt.getCompoundTag("EntityTag"), 1)));
+        }
+        return true;
     }
     
     @Override
