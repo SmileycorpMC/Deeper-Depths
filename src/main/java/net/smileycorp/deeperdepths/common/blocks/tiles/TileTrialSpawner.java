@@ -20,6 +20,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.storage.loot.LootContext;
@@ -95,12 +96,12 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                     setState(EnumTrialSpawnerState.INACTIVE);
                     return;
                 }
+                if (!((EntityLiving) entity).getCanSpawnHere() |! ((EntityLiving) entity).isNotColliding()) return;
+                entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360, 0);
                 spawned_mobs++;
                 current_mobs.add(new WeakReference<>(entity));
-                entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360, 0);
                 ((EntityLiving)entity).onInitialSpawn(world.getDifficultyForLocation(entity.getPosition()), null);
                 AnvilChunkLoader.spawnEntity(entity, world);
-                DeeperDepths.info("spawned " + entity + " at " + entity.getPositionVector());
                 world.playSound(null, entity.posX, entity.posY, entity.posZ,
                         DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_MOB, SoundCategory.BLOCKS, 1, 1);
                 cooldown = 20;
@@ -176,7 +177,6 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public boolean canActivate(EntityPlayer player) {
-        DeeperDepths.info(player.isSpectator() + ", " + player.isCreative() + ", " + player.getDistanceSq(pos));
         return !player.isSpectator() &! player.isCreative() && player.getDistanceSq(pos) <= required_range * required_range;
     }
     
@@ -227,6 +227,12 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         world.notifyBlockUpdate(pos, state, state, 3);
         world.scheduleBlockUpdate(pos, getBlockType(), 0, 0);
         super.markDirty();
+    }
+    
+    @Override
+    public void setWorld(World world) {
+        super.setWorld(world);
+        markDirty();
     }
     
     @Override
@@ -283,9 +289,10 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     
     
     public void modifyConfigs(Consumer<Config> action) {
-       action.accept(config);
-       action.accept(ominous_config);
-       rebuildCachedEntity();
+        action.accept(config);
+        action.accept(ominous_config);
+        rebuildCachedEntity();
+        markDirty();
     }
     
     public Entity getCachedEntity() {
