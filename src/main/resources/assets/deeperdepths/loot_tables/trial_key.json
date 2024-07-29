@@ -1,0 +1,16 @@
+{
+    "pools": [
+        {
+            "name": "deeperdepths:trial_key",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "deeperdepths:trial_key",
+                    "functions": [],
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}
