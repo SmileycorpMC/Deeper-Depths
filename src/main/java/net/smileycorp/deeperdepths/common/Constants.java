@@ -1,5 +1,6 @@
 package net.smileycorp.deeperdepths.common;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 public class Constants {
@@ -22,6 +23,12 @@ public class Constants {
 	
 	public static String locStr(String name) {
 		return loc(name).toString();
+	}
+	
+	public static NBTTagCompound getEntityTag(ResourceLocation id) {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setString("id", id.toString());
+		return tag;
 	}
 	
 }

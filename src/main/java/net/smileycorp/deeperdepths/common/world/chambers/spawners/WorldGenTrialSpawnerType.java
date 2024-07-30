@@ -1,13 +1,17 @@
 package net.smileycorp.deeperdepths.common.world.chambers.spawners;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.monster.*;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityStray;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
-import net.smileycorp.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.entities.EntityBogged;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
@@ -42,56 +46,51 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             // the data for the spawner?
             if(tileEntity instanceof TileTrialSpawner) {
-                EntitySkeleton skeleton = new EntitySkeleton(worldIn);
-                ((TileTrialSpawner)tileEntity).setCachedEntity(skeleton);
                 //there gotta be something I'm doing wrong here
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(3).setTotalEntities(7).setSpawnRange(4).setTicksBetweenSpawn(40)
-                        .setEntities(ImmutableMap.of(skeleton.getEntityData().getCompoundTag("id"), 1)));
-
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
-
+                        .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("skeleton")), 1)));
             }
         } else if (function.startsWith("zombie")) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof TileTrialSpawner) {
                 ((TileTrialSpawner)tileEntity).setCachedEntity(new EntityZombie(worldIn));
-            //    ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                //    ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
             }
         } else if (function.startsWith("stray")) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof TileTrialSpawner) {
                 ((TileTrialSpawner)tileEntity).setCachedEntity(new EntityStray(worldIn));
-              //  ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                //  ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
             }
         } else if (function.startsWith("bogged")) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof TileTrialSpawner) {
                 ((TileTrialSpawner)tileEntity).setCachedEntity(new EntityBogged(worldIn));
-              //  ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                //  ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
             }
         }  else if ((function.startsWith("silver_fish"))) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof TileTrialSpawner) {
                 ((TileTrialSpawner)tileEntity).setCachedEntity(new EntitySilverfish(worldIn));
-             //   ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                //   ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
             }
         } else if (function.startsWith("spider")) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof TileTrialSpawner) {
                 ((TileTrialSpawner)tileEntity).setCachedEntity(new EntitySpider(worldIn));
-           //     ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                //     ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
             }
         }else if (function.startsWith("breeze")) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof TileTrialSpawner) {
                 ((TileTrialSpawner)tileEntity).setCachedEntity(new EntityBreeze(worldIn));
-             //   ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                //   ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
             }
         }
     }
