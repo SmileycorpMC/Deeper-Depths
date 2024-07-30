@@ -242,7 +242,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     @Override
     public void setWorld(World world) {
         super.setWorld(world);
-        markDirty();
+        world.markBlockRangeForRenderUpdate(pos, pos);
     }
     
     @Override
@@ -254,8 +254,6 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         if (nbt.hasKey("ominous_config")) ominous_config.readFromNBT(nbt.getCompoundTag("ominous_config"));
         if (nbt.hasKey("loot_table")) loot_table = new ResourceLocation(nbt.getString("loot_table"));
         if (nbt.hasKey("cooldown")) cooldown = nbt.getInteger("cooldown");
-        rebuildCachedEntity();
-        markDirty();
     }
     
     @Override
@@ -489,6 +487,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 NBTTagCompound compound = new NBTTagCompound();
                 compound.setString("table", entry.getKey().toString());
                 compound.setInteger("weight", entry.getValue());
+                loot_tables.appendTag(compound);
             }
             nbt.setTag("loot_tables", loot_tables);
             nbt.setLong("loot_table_seed", loot_table_seed);
@@ -497,6 +496,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 NBTTagCompound compound = new NBTTagCompound();
                 compound.setTag("entity", entry.getKey());
                 compound.setInteger("weight", entry.getValue());
+                entities.appendTag(compound);
             }
             nbt.setTag("entities", entities);
             return nbt;

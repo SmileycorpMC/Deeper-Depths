@@ -15,6 +15,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraft.world.storage.loot.LootContext;
@@ -186,6 +187,12 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     }
     
     @Override
+    public void setWorld(World world) {
+        super.setWorld(world);
+        world.markBlockRangeForRenderUpdate(pos, pos);
+    }
+    
+    @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         if (nbt.hasKey("state")) state = EnumVaultState.values()[nbt.getInteger("state")];
@@ -199,7 +206,6 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             for (NBTBase tag : nbt.getTagList("stored_items", 10)) rewarded_players.add(NBTUtil.getUUIDFromTag((NBTTagCompound) tag));
         }
         if (nbt.hasKey("ejected_items")) ejected_items = nbt.getInteger("ejected_items");
-        markDirty();
     }
     
     @Override
