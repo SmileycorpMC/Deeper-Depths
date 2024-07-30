@@ -47,6 +47,7 @@
                     "weight": 2
                 },
                 {
+					"entryName": "regen_potion",
                     "type": "item",
                     "name": "minecraft:potion",
                     "functions": [
@@ -58,6 +59,7 @@
                     "weight": 1
                 },
                 {
+					"entryName": "strength_potion",
                     "type": "item",
                     "name": "minecraft:potion",
                     "functions": [
