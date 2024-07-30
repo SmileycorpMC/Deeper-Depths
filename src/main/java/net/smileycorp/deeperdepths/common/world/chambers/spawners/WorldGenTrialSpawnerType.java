@@ -1,20 +1,18 @@
 package net.smileycorp.deeperdepths.common.world.chambers.spawners;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.*;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityStray;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
-import net.smileycorp.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
-import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 import net.smileycorp.deeperdepths.common.entities.EntityBogged;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 import net.smileycorp.deeperdepths.common.world.base.WorldGenCustomStructure;
@@ -48,14 +46,9 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             // the data for the spawner?
             if(tileEntity instanceof TileTrialSpawner) {
-                EntitySkeleton skeleton = new EntitySkeleton(worldIn);
-                ((TileTrialSpawner)tileEntity).setCachedEntity(skeleton);
                 //there gotta be something I'm doing wrong here
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(3).setTotalEntities(7).setSpawnRange(4).setTicksBetweenSpawn(40)
-                        .setEntities(ImmutableMap.of(skeleton.getEntityData().getCompoundTag("id"), 1)));
-
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
-
+                        .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("skeleton")), 1)));
             }
         } else if (function.startsWith("zombie")) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());

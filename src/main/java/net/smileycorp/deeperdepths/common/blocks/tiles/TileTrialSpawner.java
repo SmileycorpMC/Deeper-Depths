@@ -10,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -28,11 +27,10 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.deeperdepths.client.ClientProxy;
-import net.smileycorp.deeperdepths.common.DeeperDepths;
+import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
-import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
 import net.smileycorp.deeperdepths.common.integration.RaidsIntegration;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 
@@ -443,21 +441,11 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         }
         
         public Config addEntity(ResourceLocation entity, int weight) {
-            try {
-                entities.addEntry(JsonToNBT.getTagFromJson("{id:" + entity +"}"), weight);
-            } catch (Exception e) {
-                DeeperDepths.error("Error adding entry " + entity, e);
-            }
-            return this;
+            return addEntity(Constants.getEntityTag(entity), weight);
         }
         
         public Config addEntity(EntityEntry entity, int weight) {
-            try {
-                entities.addEntry(JsonToNBT.getTagFromJson("{id:" + entity.getRegistryName() +"}"), weight);
-            } catch (Exception e) {
-                DeeperDepths.error("Error adding entry " + entity, e);
-            }
-            return this;
+            return addEntity(entity.getRegistryName(), weight);
         }
         
         public Config addEntity(NBTTagCompound nbt, int weight) {
