@@ -85,7 +85,7 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     }
 
     //used for animation system
-    private int animationTick;
+    public int animationTick;
     //just a variable that holds what the current animation is
     private EZAnimation currentAnimation;
 
@@ -109,13 +109,8 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
             }
         }
 
-        //just testing to see if the animation system is working
-        if(exampleTimerOnly < 0) {
-            // I wouldn't reccomend using timers as calling animations, I'd just use dataparamater booleans
-            //this.setAnimation(ANIMATION_SHOOT);
-            exampleTimerOnly = 40;
-        } else {
-            exampleTimerOnly--;
+        if(this.isShootAttack() && this.currentAnimation == NO_ANIMATION) {
+            this.setAnimation(ANIMATION_SHOOT);
         }
 
 
@@ -193,7 +188,8 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
         public void resetTask()
         {
             breeze.setShootAttack(false);
-            EZAnimationHandler.INSTANCE.updateAnimations(breeze);
+            //this is used in the onUpdate
+           // EZAnimationHandler.INSTANCE.updateAnimations(breeze);
         }
 
         public void updateTask()
@@ -208,11 +204,8 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
                 {
                     if (this.attackStep == 1)
                     {
-                        /** Animations aren't playing, what am I doing wrong here?? */
                         this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_INHALE, 1, 1);
-                        breeze.setAnimation(ANIMATION_SHOOT);
                         breeze.setShootAttack(true);
-                        EZAnimationHandler.INSTANCE.updateAnimations(breeze);
                     }
 
 

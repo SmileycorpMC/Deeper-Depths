@@ -15,12 +15,12 @@ import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 @SideOnly(Side.CLIENT)
 public class ModelBreeze extends BasicModelEntity
 {
-    private final BasicModelPart head;
-    private final BasicModelPart headlayer;
-    private final BasicModelPart sticks;
-    private final BasicModelPart stick1;
-    private final BasicModelPart stick2;
-    private final BasicModelPart stick3;
+    public final BasicModelPart head;
+    public final BasicModelPart headlayer;
+    public final BasicModelPart sticks;
+    public final BasicModelPart stick1;
+    public final BasicModelPart stick2;
+    public final BasicModelPart stick3;
     /** Public, as we need `ModelBreezeWind` to be able to become children of these groups.  */
     public BasicModelPart tornadoTop;
     public BasicModelPart tornadoMiddle;
@@ -111,7 +111,6 @@ public class ModelBreeze extends BasicModelEntity
 
         //animator.rotate(head, (float) Math.toRadians(-30), (float) Math.toRadians(-30), 0);
         animator.move(head, 0, 2, -2);
-        /** Animating Tornado Parts isn't working? Might be due to funky inheriting in `ModelBreezeWind`, but `setRotationAngles` still works with it! */
         animator.rotate(tornadoTop, (float) Math.toRadians(-30), 0, 0);
         //always declare an end key frame when you are done putting moving boxes
         animator.endKeyframe();
@@ -128,11 +127,13 @@ public class ModelBreeze extends BasicModelEntity
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
         EntityBreeze entityBreeze = (EntityBreeze) entityIn;
-        if (!entityBreeze.isShootAttack() && true)
+
+        if (!entityBreeze.isShootAttack())
         {
             float spinMeRightRound = ageInTicks * (float)Math.PI * 0.15F;
             this.head.rotationPointY = MathHelper.cos(((float)(ageInTicks/6) + ageInTicks) * 0.1F);
             this.sticks.rotateAngleY = spinMeRightRound;
+
 
             this.tornadoTop.rotationPointX = MathHelper.cos(spinMeRightRound) * 1.0F * 0.6F;
             this.tornadoTop.rotationPointZ = MathHelper.sin(spinMeRightRound) * 1.0F * 0.6F;
@@ -142,8 +143,14 @@ public class ModelBreeze extends BasicModelEntity
 
             this.tornadoBottom.rotationPointX = MathHelper.cos(spinMeRightRound) * 0.6F * 0.4F;
             this.tornadoBottom.rotationPointZ = MathHelper.sin(spinMeRightRound) * 0.6F * 0.4F;
+
         }
 
+        if(entityBreeze.isShootAttack()) {
+            if(animator.setAnimation(EntityBreeze.ANIMATION_SHOOT)) {
+                animator.rotate(tornadoTop, (float) Math.toRadians(-30), 0, 0);
+            }
+        }
 
         //theres several methods that can be used for living animations that'll rotate different degrees
         //this one is just for head movement or any other parts that want to be individual from the model
