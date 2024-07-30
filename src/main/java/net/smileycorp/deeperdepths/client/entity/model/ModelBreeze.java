@@ -146,11 +146,11 @@ public class ModelBreeze extends BasicModelEntity
 
         }
 
-        if(entityBreeze.isShootAttack()) {
-            if(animator.setAnimation(EntityBreeze.ANIMATION_SHOOT)) {
-                animator.rotate(tornadoTop, (float) Math.toRadians(-30), 0, 0);
-            }
-        }
+    //    if(entityBreeze.isShootAttack()) {
+       //     if(animator.setAnimation(EntityBreeze.ANIMATION_SHOOT)) {
+         //       animator.rotate(tornadoTop, (float) Math.toRadians(-30), 0, 0);
+      //      }
+      //  }
 
         //theres several methods that can be used for living animations that'll rotate different degrees
         //this one is just for head movement or any other parts that want to be individual from the model

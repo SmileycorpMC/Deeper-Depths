@@ -1,5 +1,11 @@
 package net.smileycorp.deeperdepths.common.world.chambers;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityStray;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -12,11 +18,26 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.world.base.DDStructureTemplate;
 import net.smileycorp.deeperdepths.common.world.base.ModRand;
+import net.smileycorp.deeperdepths.common.world.base.WorldGenCustomStructure;
+import net.smileycorp.deeperdepths.common.world.chambers.spawners.WorldGenTrialSpawnerType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TrialChambersTemplate extends DDStructureTemplate {
 
+    //gaurentees a random melee spawn
+    protected WorldGenCustomStructure[] randomMeleeSpawner = {new WorldGenTrialSpawnerType("spawner_zombie"), new WorldGenTrialSpawnerType("spawner_silver_fish"),
+    new WorldGenTrialSpawnerType("spawner_spider")};
+    //gaurentees a random ranged spawn
+    protected WorldGenCustomStructure[] randomRangedSpawner = {new WorldGenTrialSpawnerType("spawner_skeleton"), new WorldGenTrialSpawnerType("spawner_stray"),
+    new WorldGenTrialSpawnerType("spawner_bogged")};
+
+    //This one has a chance of spawning and is not gaurenteed
+    protected WorldGenCustomStructure[] randomSpawnerOverall = {new WorldGenTrialSpawnerType("spawner_skeleton"),
+            new WorldGenTrialSpawnerType("spawner_bogged"),new WorldGenTrialSpawnerType("spawner_zombie"), new WorldGenTrialSpawnerType("spawner_silver_fish"),
+            new WorldGenTrialSpawnerType("spawner_spider") };
 
     private static final ResourceLocation LOOT = new ResourceLocation(Constants.MODID, "chamber_chest_loot");
 
@@ -49,6 +70,33 @@ public class TrialChambersTemplate extends DDStructureTemplate {
                 world.setBlockToAir(pos.down());
             }
         }
+
+        //Random Spawner by chance
+        if(function.startsWith("r_spawner")) {
+            if(generateRandomSpawner()) {
+                world.setBlockToAir(pos);
+                WorldGenCustomStructure piece = ModRand.choice(randomSpawnerOverall);
+                piece.generate(world, rand, pos);
+            } else  {
+                world.setBlockToAir(pos);
+            }
+            //Random Melee Spawner
+        } else if (function.startsWith("r_melee")) {
+            world.setBlockToAir(pos);
+            WorldGenCustomStructure piece = ModRand.choice(randomMeleeSpawner);
+            piece.generate(world, rand, pos);
+            //Random Ranged Spawner
+        } else if (function.startsWith("r_range")) {
+            world.setBlockToAir(pos);
+            WorldGenCustomStructure piece = ModRand.choice(randomRangedSpawner);
+            piece.generate(world, rand, pos);
+            //Breeze Spawner
+        } else if (function.startsWith("breeze")) {
+            world.setBlockToAir(pos);
+            WorldGenCustomStructure breeze_spawner = new WorldGenTrialSpawnerType("spawner_breeze");
+            breeze_spawner.generate(world, rand, pos);
+        }
+
 
         //Regular Vaults
         if(function.startsWith("vault")) {
@@ -90,6 +138,10 @@ public class TrialChambersTemplate extends DDStructureTemplate {
     }
 
 
+    private boolean generateRandomSpawner() {
+        int randomNumberSpawnerGenerator = ModRand.range(0, 8);
+        return randomNumberSpawnerGenerator <= 5;
+    }
     private boolean generateChestSpawn() {
         int randomNumberChestGenerator = ModRand.range(0, 5);
         return randomNumberChestGenerator < 3;
