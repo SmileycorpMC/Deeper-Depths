@@ -19,11 +19,13 @@ import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.client.blocks.*;
 import net.smileycorp.deeperdepths.client.entity.RenderBogged;
 import net.smileycorp.deeperdepths.client.entity.RenderBreeze;
+import net.smileycorp.deeperdepths.client.tesr.TESRTrialSpawner;
 import net.smileycorp.deeperdepths.client.tesr.TESRVault;
 import net.smileycorp.deeperdepths.common.CommonProxy;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.IBlockProperties;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 import net.smileycorp.deeperdepths.common.entities.EntityBogged;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
@@ -52,7 +54,6 @@ public class ClientProxy extends CommonProxy {
     
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        //ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TileEntityMobSpawnerRenderer());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_WALL, new WallStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_BLOCK, new MetaStateMapper());
@@ -83,6 +84,7 @@ public class ClientProxy extends CommonProxy {
         for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
                     new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
         ClientRegistry.bindTileEntitySpecialRenderer(TileVault.class, new TESRVault());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TESRTrialSpawner());
         RenderingRegistry.registerEntityRenderingHandler(EntityBogged.class, RenderBogged::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
     }

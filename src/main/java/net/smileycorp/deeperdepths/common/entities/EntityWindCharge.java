@@ -68,6 +68,10 @@ public class EntityWindCharge extends EntityThrowable
         }
     }
 
+    /** Forces it to Impact. This is used so it can explode instantly. 'null' is supported.  */
+    public void forceExplode(RayTraceResult result)
+    { this.onImpact(result); }
+
     protected void onImpact(RayTraceResult result)
     {
         SoundEvent burstSound = knockbackImmune instanceof EntityBreeze ? DeeperDepthsSoundEvents.BREEZE_WIND_BURST : DeeperDepthsSoundEvents.WIND_CHARGE_WIND_BURST;
@@ -75,7 +79,7 @@ public class EntityWindCharge extends EntityThrowable
         this.playSound(burstSound, 1, 1);
         if (!this.world.isRemote)
         {
-            if (result.entityHit != null)
+            if (result != null && result.entityHit != null)
             {
                 result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)1);
             }

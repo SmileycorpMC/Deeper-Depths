@@ -1,8 +1,13 @@
 package net.smileycorp.deeperdepths.common;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -12,6 +17,7 @@ import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
+import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class DeeperDepthsRecipes {
@@ -21,6 +27,7 @@ public class DeeperDepthsRecipes {
         registerOreDictionary();
         registerFurnaceRecipes();
         registerCraftingRecipes();
+        registerBrewingRecipes();
     }
     
     private static void registerOreDictionary() {
@@ -139,5 +146,12 @@ public class DeeperDepthsRecipes {
                 new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(EnumWeatherStage.NORMAL), 2, 0), "MMM", "MMM", 'M',
                 "ingotCopper");
     }
-    
+
+    private static void registerBrewingRecipes()
+    {
+        PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.STONE), DeeperDepthsPotions.INFESTED_POTION);
+        PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.SLIME_BLOCK), DeeperDepthsPotions.OOZING_POTION);
+        PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.WEB), DeeperDepthsPotions.WEAVING_POTION);
+        PotionHelper.addMix(PotionTypes.AWKWARD, Ingredient.fromStacks(new ItemStack[]{new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)}), DeeperDepthsPotions.WIND_CHARGED_POTION);
+    }
 }

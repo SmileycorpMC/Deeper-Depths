@@ -1,25 +1,32 @@
 package net.smileycorp.deeperdepths.common.blocks.tiles;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.PositionImpl;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
@@ -30,13 +37,16 @@ import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class TileTrialSpawner extends TileEntity implements ITickable {
     
     private EnumTrialSpawnerState state = EnumTrialSpawnerState.INACTIVE;
-    private boolean isOminous;
+    private boolean ominous;
     private final Config config;
     private final Config ominous_config;
     private float required_range = 14;
@@ -45,41 +55,56 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     private List<WeakReference<Entity>> current_mobs = Lists.newArrayList();
     private int spawned_mobs = 0;
     private int ejected_items = 0;
+    private ResourceLocation loot_table;
+    private Entity cached_entity;
+    private boolean is_spawning;
     
     public TileTrialSpawner() {
         config = new Config();
-        ominous_config = new Config().setLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT_OMINOUS);
+        ominous_config = new Config().clearLootTables().addLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_KEY_OMINOUS, 3)
+                .addLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT_OMINOUS, 7);
     }
     
     @Override
     public void update() {
         if (world == null) return;
-        if (world.getDifficulty() == EnumDifficulty.PEACEFUL |! world.getGameRules().getBoolean("doMobSpawning")) return;
         if (world.isRemote) return;
+        if (world.getDifficulty() == EnumDifficulty.PEACEFUL |! world.getGameRules().getBoolean("doMobSpawning")) return;
+        if (getActiveConfig().entities.isEmpty()) return;
         if (cooldown > 0) {
             cooldown--;
             return;
         }
-        if (world.getWorldTime() % 20 == 0 && state != EnumTrialSpawnerState.EJECTING) detectPlayers();
+        if (state == EnumTrialSpawnerState.INACTIVE) setState(EnumTrialSpawnerState.ACTIVE);
         if (state == EnumTrialSpawnerState.ACTIVE) {
+            if (world.getWorldTime() % 20 == 0) detectPlayers();
+            if (!is_spawning) return;
             clearInvalidEntities();
             int total = getTotalMobs();
             if (current_mobs.isEmpty() && spawned_mobs >= total) {
                 cooldown = 20;
                 setState(EnumTrialSpawnerState.EJECTING);
                 playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_OPEN_SHUTTER, 1);
+                loot_table = getActiveConfig().loot_tables.getResult(world.rand);
             }
             int simultaneous = getSimultaneousMobs();
             if (current_mobs.size() < simultaneous && spawned_mobs < total) {
                 Config config = getActiveConfig();
-                EntityLivingBase entity = (EntityLivingBase) config.entity.newInstance(world);
-                entity.posX = pos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
-                entity.posY = pos.getY() + world.rand.nextInt(3) - 1;
-                entity.posZ = pos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
-                entity.readFromNBT(config.spawn_nbt);
+                NBTTagCompound nbt = config.entities.getResult(world.rand);
+                double x = pos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
+                double y = pos.getY() + world.rand.nextInt(3) - 1;
+                double z = pos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
+                Entity entity = AnvilChunkLoader.readWorldEntityPos(nbt, world, x, y, z, false);
+                if (!(entity instanceof EntityLiving)) {
+                    setState(EnumTrialSpawnerState.INACTIVE);
+                    return;
+                }
+                if (!((EntityLiving) entity).getCanSpawnHere() |! ((EntityLiving) entity).isNotColliding()) return;
+                entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360, 0);
                 spawned_mobs++;
                 current_mobs.add(new WeakReference<>(entity));
-                world.spawnEntity(entity);
+                ((EntityLiving)entity).onInitialSpawn(world.getDifficultyForLocation(entity.getPosition()), null);
+                AnvilChunkLoader.spawnEntity(entity, world);
                 world.playSound(null, entity.posX, entity.posY, entity.posZ,
                         DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_MOB, SoundCategory.BLOCKS, 1, 1);
                 cooldown = 20;
@@ -90,14 +115,18 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 setState(EnumTrialSpawnerState.INACTIVE);
                 ejected_items = 0;
                 playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_CLOSE_SHUTTER, 1f);
+                cooldown = 36000;
             }
             else {
                 Config config = getActiveConfig();
-                if (config.loot_table == null) return;
-                List<ItemStack> loot = world.getLootTableManager().getLootTableFromLocation(config.loot_table)
+                if (loot_table == null) return;
+                List<ItemStack> loot = world.getLootTableManager().getLootTableFromLocation(loot_table)
                         .generateLootForPools(config.loot_table_seed == 0 ? new Random() : new Random(config.loot_table_seed),
                                 new LootContext.Builder((WorldServer) world).build());
-                if (loot.isEmpty()) return;
+                if (loot.isEmpty()) {
+                    active_players.clear();
+                    return;
+                }
                 BehaviorDefaultDispenseItem.doDispense(world, loot.get(0),2, EnumFacing.UP,
                         new PositionImpl(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
                 playSound(DeeperDepthsSoundEvents.VAULT_EJECT_ITEM, 0.8f + ejected_items * 0.4f);
@@ -109,28 +138,28 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     private void clearInvalidEntities() {
-        for (WeakReference<Entity> ref : current_mobs) {
-            if (ref.get() == null) current_mobs.remove(ref);
-            else if (!ref.get().isEntityAlive()) current_mobs.remove(ref);
-        }
+        current_mobs = current_mobs.stream().filter(ref -> ref.get() != null && ref.get().isEntityAlive()).collect(Collectors.toList());
     }
     
     private void detectPlayers() {
         for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::canActivate)) {
+            if (!is_spawning) {
+                is_spawning = true;
+                markDirty();
+            }
             if (player.isPotionActive(DeeperDepthsPotions.BAD_OMEN)) {
                 addTrialOmen(player, player.getActivePotionEffect(DeeperDepthsPotions.BAD_OMEN).getAmplifier());
                 player.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
-                if (!isOminous) setOminous(true);
+                if (!ominous) setOminous(true);
             } else if (Loader.isModLoaded("raids") && RaidsIntegration.hasBadOmen(player)) {
                 addTrialOmen(player, RaidsIntegration.getBadOmenLevel(player));
-                if (!isOminous) setOminous(true);
-            } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &!isOminous) setOminous(true);
-            if (active_players.isEmpty() && state == EnumTrialSpawnerState.INACTIVE) setState(EnumTrialSpawnerState.ACTIVE);
-           if (!active_players.contains(player.getUniqueID())) {
+                if (!ominous) setOminous(true);
+            } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &!ominous) setOminous(true);
+            if (!active_players.contains(player.getUniqueID())) {
                active_players.add(player.getUniqueID());
                world.playSound(null, player.posX, player.posY, player.posZ,
                        DeeperDepthsSoundEvents.TRIAL_SPAWNER_DETECT_PLAYER, SoundCategory.BLOCKS, 1, 1);
-           }
+            }
         }
     }
     
@@ -154,12 +183,12 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public boolean canActivate(EntityPlayer player) {
-        DeeperDepths.info(player.isSpectator() + ", " + player.isCreative() + ", " + player.getDistanceSq(pos));
         return !player.isSpectator() &! player.isCreative() && player.getDistanceSq(pos) <= required_range * required_range;
     }
     
     public void setState(EnumTrialSpawnerState state) {
         this.state = state;
+        rebuildCachedEntity();
         markDirty();
     }
     
@@ -167,9 +196,14 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         return state;
     }
     
+    public boolean isSpawning() {
+        return is_spawning;
+    }
+    
     public void setOminous(boolean isOminous) {
-        this.isOminous = isOminous;
+        this.ominous = isOminous;
         if (state != EnumTrialSpawnerState.INACTIVE) reset();
+        rebuildCachedEntity();
         markDirty();
     }
     
@@ -182,7 +216,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public Config getActiveConfig() {
-        return isOminous ? ominous_config : config;
+        return ominous ? ominous_config : config;
     }
     
     private void reset() {
@@ -193,7 +227,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public boolean isOminous() {
-        return isOminous;
+        return ominous;
     }
     
     @Override
@@ -206,22 +240,31 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     @Override
+    public void setWorld(World world) {
+        super.setWorld(world);
+        world.markBlockRangeForRenderUpdate(pos, pos);
+    }
+    
+    @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         if (nbt.hasKey("state")) state = EnumTrialSpawnerState.values()[nbt.getInteger("state")];
-        if (nbt.hasKey("ominous")) isOminous = nbt.getBoolean("ominous");
+        if (nbt.hasKey("ominous")) ominous = nbt.getBoolean("ominous");
         if (nbt.hasKey("config")) config.readFromNBT(nbt.getCompoundTag("config"));
         if (nbt.hasKey("ominous_config")) ominous_config.readFromNBT(nbt.getCompoundTag("ominous_config"));
-        markDirty();
+        if (nbt.hasKey("loot_table")) loot_table = new ResourceLocation(nbt.getString("loot_table"));
+        if (nbt.hasKey("cooldown")) cooldown = nbt.getInteger("cooldown");
     }
     
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setInteger("state", state.ordinal());
-        nbt.setBoolean("ominous", isOminous);
+        nbt.setBoolean("ominous", ominous);
         if (config != null) nbt.setTag("config", config.writeToNBT());
         if (ominous_config != null) nbt.setTag("ominous_config", ominous_config.writeToNBT());
+        if (loot_table != null) nbt.setString("loot_table", loot_table.toString());
+        nbt.setInteger("cooldown", cooldown);
         return nbt;
     }
     
@@ -229,14 +272,19 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public NBTTagCompound getUpdateTag() {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setInteger("state", state.ordinal());
-        nbt.setBoolean("ominous", isOminous);
+        nbt.setBoolean("ominous", ominous);
+        nbt.setBoolean("is_spawning", is_spawning);
+        Entity entity = getCachedEntity();
+        if (entity != null) nbt.setTag("cached_entity", entity.serializeNBT());
         return nbt;
     }
     
     @Override
     public void handleUpdateTag(NBTTagCompound nbt) {
         if (nbt.hasKey("state")) state = EnumTrialSpawnerState.values()[nbt.getInteger("state")];
-        if (nbt.hasKey("ominous")) isOminous = nbt.getBoolean("ominous");
+        if (nbt.hasKey("ominous")) ominous = nbt.getBoolean("ominous");
+        if (nbt.hasKey("is_spawning")) is_spawning = nbt.getBoolean("is_spawning");
+        if (nbt.hasKey("cached_entity")) cached_entity = AnvilChunkLoader.readWorldEntity(nbt.getCompoundTag("cached_entity"), world, false);
     }
     
     @Override
@@ -252,21 +300,37 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         world.markBlockRangeForRenderUpdate(pos, pos);
     }
     
+    public void modifyConfigs(Consumer<Config> action) {
+        action.accept(config);
+        action.accept(ominous_config);
+        rebuildCachedEntity();
+        markDirty();
+    }
     
-    public void setEntityType(EntityEntry entity, @Nullable NBTTagCompound spawn_nbt) {
-        config.entity = entity;
-        ominous_config.entity = entity;
-        if (spawn_nbt != null) {
-            config.spawn_nbt = spawn_nbt;
-            ominous_config.spawn_nbt = spawn_nbt;
+    public Entity getCachedEntity() {
+        return cached_entity;
+    }
+    
+    public void setCachedEntity(Entity cached_entity) {
+        this.cached_entity = cached_entity;
+    }
+    
+    public void rebuildCachedEntity() {
+        NBTTagCompound nbt = getActiveConfig().getEntities().getResult(world.rand);
+        if (nbt != null) {
+            cached_entity = AnvilChunkLoader.readWorldEntity(nbt, world, false);
+            if (cached_entity instanceof EntityLiving) ((EntityLiving) cached_entity).onInitialSpawn(world.getDifficultyForLocation(pos), null);
         }
+        
     }
     
     public static class Config {
     
         private int spawn_range = 4, total_entities = 6, simultaneous_entities = 2, total_entities_per_player = 2,
                 simultaneous_entities_per_player = 1, ticks_between_spawn = 40;
-        private ResourceLocation loot_table = DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT;
+        private WeightedOutputs<NBTTagCompound> entities = new WeightedOutputs<>(ImmutableMap.of());
+        private WeightedOutputs<ResourceLocation> loot_tables = new WeightedOutputs<>(ImmutableMap.of(DeeperDepthsLootTables.TRIAL_SPAWNER_KEY, 1,
+                DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT, 1));
         private long loot_table_seed;
         
         public int getSpawnRange() {
@@ -323,12 +387,22 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             return this;
         }
         
-        public ResourceLocation getLootTable() {
-            return loot_table;
+        public WeightedOutputs<ResourceLocation> getLootTables() {
+            return loot_tables;
         }
         
-        public Config setLootTable(ResourceLocation loot_table) {
-            this.loot_table = loot_table;
+        public Config addLootTable(ResourceLocation table, int weight) {
+            loot_tables.addEntry(table, weight);
+            return this;
+        }
+        
+        public Config clearLootTables() {
+            loot_tables.clear();
+            return this;
+        }
+        
+        public Config setLootTables(Map<ResourceLocation, Integer> entries) {
+            loot_tables = new WeightedOutputs<>(entries);
             return this;
         }
         
@@ -341,26 +415,42 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             return this;
         }
         
-        public EntityEntry getEntity() {
-            return entity;
+        public WeightedOutputs<NBTTagCompound> getEntities() {
+            return entities;
         }
         
-        public Config setEntity(EntityEntry entity) {
-            this.entity = entity;
+        public Config addEntity(ResourceLocation entity, int weight) {
+            try {
+                entities.addEntry(JsonToNBT.getTagFromJson("{id:" + entity +"}"), weight);
+            } catch (Exception e) {
+                DeeperDepths.error("Error adding entry " + entity, e);
+            }
             return this;
         }
         
-        public NBTTagCompound getSpawnNbt() {
-            return spawn_nbt;
-        }
-        
-        public Config setSpawnNbt(NBTTagCompound spawn_nbt) {
-            this.spawn_nbt = spawn_nbt;
+        public Config addEntity(EntityEntry entity, int weight) {
+            try {
+                entities.addEntry(JsonToNBT.getTagFromJson("{id:" + entity.getRegistryName() +"}"), weight);
+            } catch (Exception e) {
+                DeeperDepths.error("Error adding entry " + entity, e);
+            }
             return this;
         }
         
-        private EntityEntry entity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation("minecraft:zombie"));
-        private NBTTagCompound spawn_nbt = new NBTTagCompound();
+        public Config addEntity(NBTTagCompound nbt, int weight) {
+            entities.addEntry(nbt, weight);
+            return this;
+        }
+        
+        public Config clearEntities() {
+            entities.clear();
+            return this;
+        }
+        
+        public Config setEntities(Map<NBTTagCompound, Integer> entries) {
+            entities = new WeightedOutputs<>(entries);
+            return this;
+        }
         
         public void readFromNBT(NBTTagCompound nbt) {
             spawn_range = nbt.getInteger("spawn_range");
@@ -369,8 +459,19 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             total_entities_per_player = nbt.getInteger("total_entities_per_player");
             simultaneous_entities_per_player = nbt.getInteger("simultaneous_entities_per_player");
             ticks_between_spawn = nbt.getInteger("ticks_between_spawn");
-            loot_table = new ResourceLocation(nbt.getString("loot_table"));
+            Map<ResourceLocation, Integer> loot_tables = Maps.newHashMap();
+            for (NBTBase entry : nbt.getTagList("loot_tables", 10)) {
+                NBTTagCompound compound = (NBTTagCompound) entry;
+                loot_tables.put(new ResourceLocation(compound.getString("table")), compound.getInteger("weight"));
+            }
+            this.loot_tables = new WeightedOutputs<>(loot_tables);
             loot_table_seed = nbt.getLong("loot_table_seed");
+            Map<NBTTagCompound, Integer> entities = Maps.newHashMap();
+            for (NBTBase entry : nbt.getTagList("entities", 10)) {
+                NBTTagCompound compound = (NBTTagCompound) entry;
+                entities.put(compound.getCompoundTag("entity"), compound.getInteger("weight"));
+            }
+            this.entities = new WeightedOutputs<>(entities);
         }
         
         public NBTTagCompound writeToNBT() {
@@ -381,7 +482,23 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             nbt.setInteger("total_entities_per_player", total_entities_per_player);
             nbt.setInteger("simultaneous_entities_per_player", simultaneous_entities_per_player);
             nbt.setInteger("ticks_between_spawn",  ticks_between_spawn);
+            NBTTagList loot_tables = new NBTTagList();
+            for (Map.Entry<ResourceLocation, Integer> entry : this.loot_tables.getTable()) {
+                NBTTagCompound compound = new NBTTagCompound();
+                compound.setString("table", entry.getKey().toString());
+                compound.setInteger("weight", entry.getValue());
+                loot_tables.appendTag(compound);
+            }
+            nbt.setTag("loot_tables", loot_tables);
             nbt.setLong("loot_table_seed", loot_table_seed);
+            NBTTagList entities = new NBTTagList();
+            for (Map.Entry<NBTTagCompound, Integer> entry : this.entities.getTable()) {
+                NBTTagCompound compound = new NBTTagCompound();
+                compound.setTag("entity", entry.getKey());
+                compound.setInteger("weight", entry.getValue());
+                entities.appendTag(compound);
+            }
+            nbt.setTag("entities", entities);
             return nbt;
         }
         
