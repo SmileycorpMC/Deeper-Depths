@@ -27,14 +27,17 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
+import net.smileycorp.deeperdepths.client.ClientProxy;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
+import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
 import net.smileycorp.deeperdepths.common.integration.RaidsIntegration;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Map;
@@ -68,9 +71,22 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     @Override
     public void update() {
         if (world == null) return;
-        if (world.isRemote) return;
+        if (world.isRemote) {
+            if (world.rand.nextFloat() < 0.5f) {
+                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, Color.BLACK);
+                if (state == EnumTrialSpawnerState.ACTIVE) spawnParticle(EnumParticleTypes.FLAME, isOminous()
+                        ? new Color(0x0000F0) : Color.WHITE);
+            }
+            if (state != EnumTrialSpawnerState.ACTIVE && world.rand.nextFloat() <= 0.02f)
+                world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        ominous ? DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT_OMINOUS : DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT,
+                    SoundCategory.BLOCKS, world.rand.nextFloat() * 0.25f + 0.75f,
+                        world.rand.nextFloat() + 0.5f, false);
+        }
         if (world.getDifficulty() == EnumDifficulty.PEACEFUL |! world.getGameRules().getBoolean("doMobSpawning")) return;
         if (getActiveConfig().entities.isEmpty()) return;
+        if (cooldown == 10 && state == EnumTrialSpawnerState.EJECTING &! active_players.isEmpty())
+            playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_ABOUT_TO_SPAWN_ITEM, 0.8f + ejected_items * 0.4f);
         if (cooldown > 0) {
             cooldown--;
             return;
@@ -129,7 +145,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 }
                 BehaviorDefaultDispenseItem.doDispense(world, loot.get(0),2, EnumFacing.UP,
                         new PositionImpl(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
-                playSound(DeeperDepthsSoundEvents.VAULT_EJECT_ITEM, 0.8f + ejected_items * 0.4f);
+                playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_ITEM, 0.8f + ejected_items * 0.4f);
                 ejected_items++;
                 active_players.remove(0);
                 cooldown = 20;
@@ -144,6 +160,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     private void detectPlayers() {
         for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::canActivate)) {
             if (!is_spawning) {
+                playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_DETECT_PLAYER, 1f);
                 is_spawning = true;
                 markDirty();
             }
@@ -166,6 +183,11 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     private void playSound(SoundEvent event, float pitch) {
         world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
                 event, SoundCategory.BLOCKS, 1, pitch);
+    }
+    
+    private void spawnParticle(EnumParticleTypes particle, Color color) {
+        ClientProxy.addParticle(particle, pos.getX() + world.rand.nextFloat() * 0.8 + 0.1,
+                pos.getY() + world.rand.nextFloat() * 0.8 + 0.1, pos.getZ() + world.rand.nextFloat() * 0.8 + 0.1, color);
     }
     
     private int getTotalMobs() {
@@ -201,6 +223,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public void setOminous(boolean isOminous) {
+        if (!ominous && isOminous) playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1f);
         this.ominous = isOminous;
         if (state != EnumTrialSpawnerState.INACTIVE) reset();
         rebuildCachedEntity();
