@@ -8,6 +8,7 @@ import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.PositionImpl;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -18,6 +19,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -78,7 +80,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             if (state != EnumTrialSpawnerState.ACTIVE && world.rand.nextFloat() <= 0.02f)
                 world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         ominous ? DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT_OMINOUS : DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT,
-                    SoundCategory.BLOCKS, world.rand.nextFloat() * 0.25f + 0.75f,
+                        SoundCategory.BLOCKS, world.rand.nextFloat() * 0.25f + 0.75f,
                         world.rand.nextFloat() + 0.5f, false);
         }
         if (world.getDifficulty() == EnumDifficulty.PEACEFUL |! world.getGameRules().getBoolean("doMobSpawning")) return;
@@ -113,7 +115,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                     setState(EnumTrialSpawnerState.INACTIVE);
                     return;
                 }
-                if (!((EntityLiving) entity).getCanSpawnHere() |! ((EntityLiving) entity).isNotColliding()) return;
+                if (!canSpawn(entity)) return;
                 entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360, 0);
                 spawned_mobs++;
                 current_mobs.add(new WeakReference<>(entity));
@@ -151,6 +153,14 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         }
     }
     
+    private boolean canSpawn(Entity entity) {
+        if (world.collidesWithAnyBlock(entity.getEntityBoundingBox())) return false;
+        if (!pos.equals(world.rayTraceBlocks(entity.getPositionVector(),
+                new Vec3d(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f),
+                false, true, false).getBlockPos())) return false;
+        return EntitySpawnPlacementRegistry.getPlacementForEntity(entity.getClass()).canSpawnAt(world, entity.getPosition());
+    }
+    
     private void clearInvalidEntities() {
         current_mobs = current_mobs.stream().filter(ref -> ref.get() != null && ref.get().isEntityAlive()).collect(Collectors.toList());
     }
@@ -171,9 +181,9 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 if (!ominous) setOminous(true);
             } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &!ominous) setOminous(true);
             if (!active_players.contains(player.getUniqueID())) {
-               active_players.add(player.getUniqueID());
-               world.playSound(null, player.posX, player.posY, player.posZ,
-                       DeeperDepthsSoundEvents.TRIAL_SPAWNER_DETECT_PLAYER, SoundCategory.BLOCKS, 1, 1);
+                active_players.add(player.getUniqueID());
+                world.playSound(null, player.posX, player.posY, player.posZ,
+                        DeeperDepthsSoundEvents.TRIAL_SPAWNER_DETECT_PLAYER, SoundCategory.BLOCKS, 1, 1);
             }
         }
     }
@@ -263,7 +273,9 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     @Override
     public void setWorld(World world) {
         super.setWorld(world);
+        world.getBlockState(pos);
         world.markBlockRangeForRenderUpdate(pos, pos);
+        rebuildCachedEntity();
     }
     
     @Override
@@ -337,16 +349,17 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public void rebuildCachedEntity() {
-        NBTTagCompound nbt = getActiveConfig().getEntities().getResult(world.rand);
+        WeightedOutputs<NBTTagCompound> outputs = getActiveConfig().getEntities();
+        if (outputs.isEmpty()) return;
+        NBTTagCompound nbt = outputs.getResult(world.rand);
         if (nbt != null) {
             cached_entity = AnvilChunkLoader.readWorldEntity(nbt, world, false);
             if (cached_entity instanceof EntityLiving) ((EntityLiving) cached_entity).onInitialSpawn(world.getDifficultyForLocation(pos), null);
         }
-        
     }
     
     public static class Config {
-    
+        
         private int spawn_range = 4, total_entities = 6, simultaneous_entities = 2, total_entities_per_player = 2,
                 simultaneous_entities_per_player = 1, ticks_between_spawn = 40;
         private WeightedOutputs<NBTTagCompound> entities = new WeightedOutputs<>(ImmutableMap.of());
