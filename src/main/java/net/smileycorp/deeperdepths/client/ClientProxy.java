@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -17,7 +18,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.client.blocks.*;
-import net.smileycorp.deeperdepths.client.entity.*;
+import net.smileycorp.deeperdepths.client.entity.RenderBogged;
+import net.smileycorp.deeperdepths.client.entity.RenderBreeze;
+import net.smileycorp.deeperdepths.client.entity.RenderOminousItemSpawner;
+import net.smileycorp.deeperdepths.client.entity.RenderWindCharge;
 import net.smileycorp.deeperdepths.client.tesr.TESRTrialSpawner;
 import net.smileycorp.deeperdepths.client.tesr.TESRVault;
 import net.smileycorp.deeperdepths.common.CommonProxy;
@@ -28,6 +32,7 @@ import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 import net.smileycorp.deeperdepths.common.entities.EntityBogged;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
+import net.smileycorp.deeperdepths.common.entities.EntityOminousItemSpawner;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 
@@ -87,12 +92,20 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TESRTrialSpawner());
         RenderingRegistry.registerEntityRenderingHandler(EntityBogged.class, RenderBogged::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
-
         RenderingRegistry.registerEntityRenderingHandler(EntityWindCharge.class, RenderWindCharge::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityOminousItemSpawner.class, RenderOminousItemSpawner::new);
     }
     
     public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color color) {
-        Particle particle = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(type.getParticleID(), x, y, z, 0, 0,0);
+        addParticle(type, x, y, z, color, 0, 0, 0);
+    }
+    
+    public static void addParticle(EnumParticleTypes type, Vec3d pos, Color color, double vel_x, double vel_y, double vel_z) {
+        addParticle(type, pos.x, pos.y, pos.z, color, vel_x, vel_y, vel_z);
+    }
+    
+    public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color color, double vel_x, double vel_y, double vel_z) {
+        Particle particle = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(type.getParticleID(), x, y, z, vel_x, vel_y, vel_z);
         particle.setRBGColorF((float) color.getRed() / 255f, (float) color.getGreen() / 255f, (float) color.getBlue() / 255f);
     }
     

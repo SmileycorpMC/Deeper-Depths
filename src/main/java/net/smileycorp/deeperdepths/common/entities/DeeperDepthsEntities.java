@@ -19,6 +19,7 @@ public class DeeperDepthsEntities
         registerEntity("bogged", EntityBogged.class, ++id, 80, 9084018, 3231003);
         registerEntity("breeze", EntityBreeze.class, ++id, 81, 20451255, 1020204);
         registerEntity("wind_charge", EntityWindCharge.class, ++id, 80);
+        registerEntity("ominous_item_spawner", EntityOminousItemSpawner.class, ++id, 8);
     }
 
     public static void registerEntitySpawns() {

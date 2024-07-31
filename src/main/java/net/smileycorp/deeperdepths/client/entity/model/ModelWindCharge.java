@@ -4,10 +4,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 
 @SideOnly(Side.CLIENT)
 public class ModelWindCharge extends ModelBase

@@ -1,0 +1,118 @@
+{
+    "pools": [
+        {
+            "name": "deeperdepths:trial_spawner",
+            "rolls": 1,
+            "entries": [             
+				{
+					"entryName": "wind_charged",
+                    "type": "item",
+                    "name": "minecraft:lingering_potion",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"deeperdepths:wind_charged\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+					"entryName": "oozing",
+                    "type": "item",
+                    "name": "minecraft:lingering_potion",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"deeperdepths:oozing\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+					"entryName": "weaving",
+                    "type": "item",
+                    "name": "minecraft:lingering_potion",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"deeperdepths:weaving\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+					"entryName": "infested",
+                    "type": "item",
+                    "name": "minecraft:lingering_potion",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"deeperdepths:infested\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+					"entryName": "strength",
+                    "type": "item",
+                    "name": "minecraft:lingering_potion",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"minecraft:strength\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+					"entryName": "swiftness",
+                    "type": "item",
+                    "name": "minecraft:lingering_potion",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"minecraft:swiftness\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+					"entryName": "poison_arrow",
+                    "type": "item",
+                    "name": "minecraft:tipped_arrow",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"minecraft:poison\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+					"entryName": "slowness_arrow",
+                    "type": "item",
+                    "name": "minecraft:tipped_arrow",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Potion:\"minecraft:strong_slowness\"}"
+                        }
+                    ],
+                    "weight": 1
+                },
+				{
+                    "type": "item",
+                    "name": "minecraft:fire_charge",
+                    "functions": [],
+                    "weight": 1
+                },
+				{
+                    "type": "item",
+                    "name": "deeperdepths:wind_charge",
+                    "functions": [],
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

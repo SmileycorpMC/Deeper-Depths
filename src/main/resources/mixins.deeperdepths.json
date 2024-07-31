@@ -3,6 +3,9 @@
   "package": "net.smileycorp.deeperdepths.mixin",
   "refmap": "mixins.deeperdepths.refmap.json",
   "mixins": [
+      "MixinBehaviorDefaultDispenseItem",
+      "MixinBehaviourProjectileDispense",
+      "MixinBlockDispenser"
   ],
   "client": [],
   "server": []

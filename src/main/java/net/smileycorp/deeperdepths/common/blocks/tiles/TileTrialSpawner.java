@@ -19,6 +19,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -33,6 +34,7 @@ import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
+import net.smileycorp.deeperdepths.common.entities.EntityOminousItemSpawner;
 import net.smileycorp.deeperdepths.common.integration.RaidsIntegration;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 
@@ -103,6 +105,10 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         if (state.isActive() && world.getWorldTime() % 20 == 0) detectPlayers();
         if (state == EnumTrialSpawnerState.ACTIVE) {
             clearInvalidEntities();
+            if (ominous) {
+                if (ominous_cooldown <= 0) spawnOminousProjectiles();
+                if (ominous_cooldown > 0) ominous_cooldown--;
+            }
             int total = getTotalMobs();
             if (current_mobs.isEmpty() && spawned_mobs >= total) {
                 cooldown = 20;
@@ -186,7 +192,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 addTrialOmen(player, RaidsIntegration.getBadOmenLevel(player));
                 if (!ominous) setOminous(true);
             } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &!ominous) setOminous(true);
-            if (!active_players.contains(player.getUniqueID()) && state == EnumTrialSpawnerState.ACTIVE) {
+            if (!active_players.contains(player.getUniqueID()) && state.isActive()) {
                 active_players.add(player.getUniqueID());
                 world.playSound(null, player.posX, player.posY, player.posZ,
                         DeeperDepthsSoundEvents.TRIAL_SPAWNER_DETECT_PLAYER, SoundCategory.BLOCKS, 1, 1);
@@ -221,6 +227,20 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     
     public boolean canActivate(EntityPlayer player) {
         return !player.isSpectator() &! player.isCreative() && player.getDistanceSq(pos) <= required_range * required_range;
+    }
+    
+    public void spawnOminousProjectiles() {
+        List<ItemStack> items = world.getLootTableManager().getLootTableFromLocation(DeeperDepthsLootTables.TRIAL_SPAWNER_OMINOUS_PROJECTILES)
+                .generateLootForPools(world.rand, new LootContext.Builder((WorldServer) world).build());
+        if (items.isEmpty()) return;
+        if (current_mobs.isEmpty()) return;
+        for (ItemStack stack : items) {
+            BlockPos pos = current_mobs.get(world.rand.nextInt(current_mobs.size())).get().getPosition().up(2);
+            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, SoundCategory.BLOCKS, 1, 1);
+            world.spawnEntity(new EntityOminousItemSpawner(world, pos, stack));
+        }
+        ominous_cooldown = 160;
     }
     
     public void setState(EnumTrialSpawnerState state) {
