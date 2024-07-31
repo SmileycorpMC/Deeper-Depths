@@ -28,7 +28,8 @@ public class ItemWindCharge extends ItemDeeperDepths
             EntityWindCharge entitywindcharge = new EntityWindCharge(worldIn, playerIn);
             entitywindcharge.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
             entitywindcharge.setBurstPower(1.1F);
-            entitywindcharge.setBurstRange(3F);
+            entitywindcharge.setBurstRange(2.5F);
+            entitywindcharge.setBurstInteractRange(2.5F);
             worldIn.spawnEntity(entitywindcharge);
         }
 
