@@ -19,10 +19,13 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.minecraft.block.BlockDoor.HALF;
+
 public class EntityWindCharge extends EntityThrowable
 {
     private static final DataParameter<Float> BURST_RANGE = EntityDataManager.createKey(EntityWindCharge.class, DataSerializers.FLOAT);
     private static final DataParameter<Float> BURST_INTENSITY = EntityDataManager.createKey(EntityWindCharge.class, DataSerializers.FLOAT);
+    private static final DataParameter<Float> BURST_INTERACT_RANGE = EntityDataManager.createKey(EntityWindCharge.class, DataSerializers.FLOAT);
     private static final DataParameter<Boolean> DO_FALL_REDUCTION = EntityDataManager.createKey(EntityWindCharge.class, DataSerializers.BOOLEAN);
     /** Multiplies the movement speed by this when reflected. Yes, this WILL stack */
     int reflectSpeedMult = 3;
@@ -64,6 +67,7 @@ public class EntityWindCharge extends EntityThrowable
         super.entityInit();
 
         this.dataManager.register(BURST_RANGE, 10F);
+        this.dataManager.register(BURST_INTERACT_RANGE, 5F);
         this.dataManager.register(BURST_INTENSITY, 0.9F);
         this.dataManager.register(DO_FALL_REDUCTION, Boolean.FALSE);
     }
@@ -150,11 +154,11 @@ public class EntityWindCharge extends EntityThrowable
         double knockbackStrength = getBurstPower();
         float k = MathHelper.floor(this.posX - (double) scale - 1.0);
         float l = MathHelper.floor(this.posX + (double) scale + 1.0);
-        int i2 = MathHelper.floor(this.posY - (double) scale - 1.0);
-        int i1 = MathHelper.floor(this.posY + (double) scale + 1.0);
-        int j2 = MathHelper.floor(this.posZ - (double) scale - 1.0);
-        int j1 = MathHelper.floor(this.posZ + (double) scale + 1.0);
-        List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, new AxisAlignedBB((double) k, (double) i2, (double) j2, (double) l, (double) i1, (double) j1));
+        double i2 = MathHelper.floor(this.posY - (double) scale - 1.0);
+        double i1 = MathHelper.floor(this.posY + (double) scale + 1.0);
+        double j2 = MathHelper.floor(this.posZ - (double) scale - 1.0);
+        double j1 = MathHelper.floor(this.posZ + (double) scale + 1.0);
+        List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, new AxisAlignedBB((double) k, i2, j2, (double) l, i1, j1));
         Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 
         for (Entity entity : list)
@@ -223,23 +227,38 @@ public class EntityWindCharge extends EntityThrowable
     /** Ray-trace checks surrounding blocks within range. */
     private void checkBlockInteraction(BlockPos pos)
     {
-        int radius = (int)this.getBurstRange();
+        double radius = (double) getBurstInteractRange();
         /* Uses a list, so the same block isn't interacted with multiple times. */
         List<BlockPos> processedBlocks = new ArrayList<>();
 
-        for (int h1 = -radius; h1 <= radius; h1++)
+        for (double h1 = -radius; h1 <= radius; h1++)
         {
-            for (int i1 = -radius; i1 <= radius; i1++)
+            for (double i1 = -radius; i1 <= radius; i1++)
             {
-                for (int j1 = -radius; j1 <= radius; j1++)
+                for (double j1 = -radius; j1 <= radius; j1++)
                 {
                     BlockPos tPos = pos.add(h1, i1, j1);
-                    RayTraceResult result = this.world.rayTraceBlocks(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), new Vec3d(tPos.getX(), tPos.getY(), tPos.getZ()));
-                    if (result != null && result.typeOfHit == RayTraceResult.Type.BLOCK)
+
+                    /* Curves the interaction radius. */
+                    if (pos.distanceSq(tPos) > radius * radius)
+                    { continue; }
+
+                    /* Toggles between Raytraced interaction, or just anything within this radius. Raytraced has lots of issues currently, likely remove later. */
+                    if (false)
                     {
-                        if (processedBlocks.contains(result.getBlockPos())) { continue; }
-                        activateBlocks(result.getBlockPos());
-                        processedBlocks.add(result.getBlockPos());
+                        RayTraceResult result = this.world.rayTraceBlocks(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), new Vec3d(tPos.getX(), tPos.getY(), tPos.getZ()));
+                        if (result != null && result.typeOfHit == RayTraceResult.Type.BLOCK)
+                        {
+                            if (processedBlocks.contains(result.getBlockPos())) { continue; }
+                            activateBlocks(result.getBlockPos());
+                            processedBlocks.add(result.getBlockPos());
+                        }
+                    }
+                    else
+                    {
+                        if (processedBlocks.contains(tPos)) { continue; }
+                        activateBlocks(tPos);
+                        processedBlocks.add(tPos);
                     }
                 }
             }
@@ -251,7 +270,7 @@ public class EntityWindCharge extends EntityThrowable
     {
         Block block = this.world.getBlockState(pos).getBlock();
 
-        if (block instanceof BlockButton || block instanceof BlockTrapDoor || block instanceof BlockDoor || block instanceof BlockLever)
+        if (block instanceof BlockButton || block instanceof BlockTrapDoor || block instanceof BlockDoor && this.world.getBlockState(pos).getValue(HALF) == BlockDoor.EnumDoorHalf.LOWER || block instanceof BlockLever)
         { block.onBlockActivated(this.world, pos, this.world.getBlockState(pos), null, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 0.5F, 0.5F); }
         /* Using `onBlockActived` causes Fence Gates to crash? Investigate later. */
         else if (block instanceof BlockFenceGate) {}
@@ -391,6 +410,12 @@ public class EntityWindCharge extends EntityThrowable
     public float getBurstRange()
     { return ((Float)this.dataManager.get(BURST_RANGE)).floatValue(); }
 
+    public void setBurstInteractRange(float size)
+    { this.dataManager.set(BURST_INTERACT_RANGE, Float.valueOf(size)); }
+
+    public float getBurstInteractRange()
+    { return ((Float)this.dataManager.get(BURST_INTERACT_RANGE)).floatValue(); }
+
     public void setBurstPower(float size)
     { this.dataManager.set(BURST_INTENSITY, Float.valueOf(size)); }
 
@@ -403,6 +428,7 @@ public class EntityWindCharge extends EntityThrowable
         super.readEntityFromNBT(compound);
 
         this.dataManager.set(BURST_RANGE, Float.valueOf(compound.getFloat("BurstRange")));
+        this.dataManager.set(BURST_INTERACT_RANGE, Float.valueOf(compound.getFloat("BurstInteractRange")));
         this.dataManager.set(BURST_INTENSITY, Float.valueOf(compound.getFloat("BurstPower")));
     }
 
@@ -412,6 +438,7 @@ public class EntityWindCharge extends EntityThrowable
         super.writeEntityToNBT(compound);
 
         compound.setFloat("BurstRange", getBurstRange());
+        compound.setFloat("BurstInteractRange", getBurstInteractRange());
         compound.setFloat("BurstPower", getBurstPower());
     }
 }
