@@ -36,8 +36,7 @@ public class LayerBreezeWind implements LayerRenderer<EntityBreeze>
         GlStateManager.enableBlend();
         float f1 = 0.5F;
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        //GlStateManager.disableLighting();
-        //GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+        GlStateManager.disableCull();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         this.layerModel.setModelAttributes(this.renderer.getMainModel());
         Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
@@ -46,11 +45,10 @@ public class LayerBreezeWind implements LayerRenderer<EntityBreeze>
         GlStateManager.matrixMode(5890);
         GlStateManager.loadIdentity();
         GlStateManager.matrixMode(5888);
+        GlStateManager.enableCull();
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
-        GlStateManager.depthMask(flag);
-
-
+        GlStateManager.depthMask(!flag);
     }
 
     public boolean shouldCombineTextures() {
