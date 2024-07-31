@@ -28,8 +28,12 @@ import java.util.Random;
 public class TrialChambersTemplate extends DDStructureTemplate {
 
     //gaurentees a random melee spawn
-    protected WorldGenCustomStructure[] randomMeleeSpawner = {new WorldGenTrialSpawnerType("spawner_zombie"), new WorldGenTrialSpawnerType("spawner_silver_fish"),
+    protected WorldGenCustomStructure[] randomMeleeSpawner = {new WorldGenTrialSpawnerType("spawner_zombie"), new WorldGenTrialSpawnerType("spawner_husk"),
     new WorldGenTrialSpawnerType("spawner_spider")};
+
+    //gaurentees a small melee spawn
+    protected WorldGenCustomStructure[] randomSmallMeleeSpawner = {new WorldGenTrialSpawnerType("spawner_baby_zombie"), new WorldGenTrialSpawnerType("spawner_silver_fish"), new
+            WorldGenTrialSpawnerType("spawner_slime"), new WorldGenTrialSpawnerType("spawner_cave_spider")};
     //gaurentees a random ranged spawn
     protected WorldGenCustomStructure[] randomRangedSpawner = {new WorldGenTrialSpawnerType("spawner_skeleton"), new WorldGenTrialSpawnerType("spawner_stray"),
     new WorldGenTrialSpawnerType("spawner_bogged")};
@@ -37,7 +41,7 @@ public class TrialChambersTemplate extends DDStructureTemplate {
     //This one has a chance of spawning and is not gaurenteed
     protected WorldGenCustomStructure[] randomSpawnerOverall = {new WorldGenTrialSpawnerType("spawner_skeleton"),
             new WorldGenTrialSpawnerType("spawner_bogged"),new WorldGenTrialSpawnerType("spawner_zombie"), new WorldGenTrialSpawnerType("spawner_silver_fish"),
-            new WorldGenTrialSpawnerType("spawner_spider") };
+            new WorldGenTrialSpawnerType("spawner_spider"), new WorldGenTrialSpawnerType("spawner_husk"), new WorldGenTrialSpawnerType("spawner_slime") };
 
     private static final ResourceLocation LOOT = new ResourceLocation(Constants.MODID, "chamber_chest_loot");
 
@@ -84,6 +88,11 @@ public class TrialChambersTemplate extends DDStructureTemplate {
         } else if (function.startsWith("r_melee")) {
             world.setBlockToAir(pos);
             WorldGenCustomStructure piece = ModRand.choice(randomMeleeSpawner);
+            piece.generate(world, rand, pos);
+            //Random Small Melee Spawner
+        } else if (function.startsWith("rs_melee")) {
+            world.setBlockToAir(pos);
+            WorldGenCustomStructure piece = ModRand.choice(randomSmallMeleeSpawner);
             piece.generate(world, rand, pos);
             //Random Ranged Spawner
         } else if (function.startsWith("r_range")) {

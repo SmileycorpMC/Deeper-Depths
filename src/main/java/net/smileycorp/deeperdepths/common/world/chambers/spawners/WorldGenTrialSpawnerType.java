@@ -1,9 +1,6 @@
 package net.smileycorp.deeperdepths.common.world.chambers.spawners;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.monster.EntitySilverfish;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityStray;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -13,8 +10,6 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
-import net.smileycorp.deeperdepths.common.entities.EntityBogged;
-import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 import net.smileycorp.deeperdepths.common.world.base.WorldGenCustomStructure;
 
 import java.util.Random;
@@ -93,6 +88,36 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(1).setTotalEntities(2).setSpawnRange(4).setTicksBetweenSpawn(60).setSimultaneousEntitiesPerPlayer(0)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("deeperDepths:breeze")), 1)));
             }
+        } else if (function.startsWith("cave_spider")) {
+            worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if(tileEntity instanceof TileTrialSpawner) {
+                ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
+                        .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("cave_spider")), 1)));
+            }
+        } else if (function.startsWith("slime")) {
+            worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if(tileEntity instanceof TileTrialSpawner) {
+                ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
+                        .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("slime")), 1)));
+            }
+        } else if (function.startsWith("husk")) {
+            worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if(tileEntity instanceof TileTrialSpawner) {
+                ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
+                        .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("husk")), 1)));
+            }
+        } else if (function.startsWith("baby_zombie")) {
+            worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if(tileEntity instanceof TileTrialSpawner) {
+                ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
+                        .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("zombie")), 1)).writeToNBT().setBoolean("IsBaby", true));
+            }
+
+
         }
     }
 }
