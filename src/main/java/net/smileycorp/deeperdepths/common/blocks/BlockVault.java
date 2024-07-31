@@ -54,7 +54,9 @@ public class BlockVault extends BlockTrial {
     
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (player == null) return false;
         ItemStack stack = player.getHeldItem(hand);
+        if (world.getTileEntity(pos) == null) return false;
         if (player.isSneaking() |! (world.getTileEntity(pos) instanceof TileVault || stack.isEmpty()))
             return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
         if (!world.isRemote) ((TileVault) world.getTileEntity(pos)).interact(player, stack);

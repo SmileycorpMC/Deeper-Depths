@@ -41,7 +41,7 @@ public class BlockTrialSpawner extends BlockTrial {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
-        if (player.isSneaking() |! (tile instanceof TileTrialSpawner |! (stack.getItem() instanceof ItemMonsterPlacer)))
+        if (player.isSneaking() |! (tile instanceof TileTrialSpawner) |! (stack.getItem() instanceof ItemMonsterPlacer))
             return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
         if (!world.isRemote) {
             NBTTagCompound nbt = stack.getTagCompound();
