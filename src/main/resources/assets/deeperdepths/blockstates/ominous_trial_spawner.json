@@ -17,6 +17,14 @@
 				"top": "deeperdepths:blocks/trial_spawner_top_ominous"
 			}
 		},
+		"state=waiting": {
+			"model": "deeperdepths:trial_spawner",
+			"textures": {
+				"bottom": "deeperdepths:blocks/trial_spawner_bottom",
+				"side": "deeperdepths:blocks/trial_spawner_side_active_ominous",
+				"top": "deeperdepths:blocks/trial_spawner_top_active_ominous"
+			}
+        },
         "state=active": {
 			"model": "deeperdepths:trial_spawner",
 			"textures": {

@@ -5,7 +5,7 @@ import net.minecraft.util.IStringSerializable;
 public enum EnumTrialSpawnerState implements IStringSerializable {
     
     INACTIVE("inactive", 0, false),
-    WAITING("inactive", 4, true),
+    WAITING("waiting", 4, true),
     ACTIVE("active", 8, true),
     EJECTING("ejecting", 8, false);
     
