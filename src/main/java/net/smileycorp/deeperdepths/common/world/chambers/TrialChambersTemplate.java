@@ -1,11 +1,5 @@
 package net.smileycorp.deeperdepths.common.world.chambers;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntitySilverfish;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityStray;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -21,8 +15,6 @@ import net.smileycorp.deeperdepths.common.world.base.ModRand;
 import net.smileycorp.deeperdepths.common.world.base.WorldGenCustomStructure;
 import net.smileycorp.deeperdepths.common.world.chambers.spawners.WorldGenTrialSpawnerType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class TrialChambersTemplate extends DDStructureTemplate {

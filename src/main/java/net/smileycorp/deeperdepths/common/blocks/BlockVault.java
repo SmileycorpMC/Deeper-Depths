@@ -64,6 +64,11 @@ public class BlockVault extends BlockTrial {
     }
     
     @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getValue(STATE).getLightLevel();
+    }
+    
+    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity te = world.getTileEntity(pos);
         return (te instanceof TileVault) ? state.withProperty(STATE, ((TileVault)te).getState()) : state;

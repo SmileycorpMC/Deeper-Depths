@@ -1,7 +1,6 @@
 package net.smileycorp.deeperdepths.common.world.chambers.spawners;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -45,6 +44,9 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 //there gotta be something I'm doing wrong here
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("skeleton")), 1)));
+                tileEntity.setWorld(worldIn);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
+                tileEntity.setPos(pos);
             }
         } else if (function.startsWith("zombie")) {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
@@ -53,7 +55,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("zombie")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         } else if (function.startsWith("stray")) {
@@ -63,7 +65,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("stray")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
 
@@ -74,7 +76,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation( "deeperDepths:bogged")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         }  else if ((function.startsWith("silver_fish"))) {
@@ -84,7 +86,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("silverfish")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         } else if (function.startsWith("spider")) {
@@ -94,7 +96,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("spider")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         }else if (function.startsWith("breeze")) {
@@ -104,7 +106,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(1).setTotalEntities(2).setSpawnRange(4).setTicksBetweenSpawn(60).setSimultaneousEntitiesPerPlayer(0)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("deeperDepths:breeze")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         } else if (function.startsWith("cave_spider")) {
@@ -114,7 +116,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("cave_spider")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         } else if (function.startsWith("slime")) {
@@ -124,7 +126,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("slime")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         } else if (function.startsWith("husk")) {
@@ -134,7 +136,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("husk")), 1)));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
         } else if (function.startsWith("baby_zombie")) {
@@ -144,7 +146,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
                 ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(2).setTotalEntities(6).setSpawnRange(4).setTicksBetweenSpawn(40).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(Constants.getEntityTag(new ResourceLocation("zombie")), 1)).writeToNBT().setBoolean("IsBaby", true));
                 tileEntity.setWorld(worldIn);
-                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.ACTIVE);
+                ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
                 tileEntity.setPos(pos);
             }
 

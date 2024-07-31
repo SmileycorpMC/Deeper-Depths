@@ -55,7 +55,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         if (world == null) return;
         if (world.isRemote) {
             if (world.rand.nextFloat() < 0.5f) {
-                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, Color.BLACK);
+                spawnParticle(EnumParticleTypes.SMOKE_NORMAL, Color.DARK_GRAY);
                 if (state != EnumVaultState.INACTIVE) spawnParticle(EnumParticleTypes.FLAME, isOminous()
                         ? new Color(0x0000F0) : Color.WHITE);
             }
@@ -195,7 +195,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        if (nbt.hasKey("state")) state = EnumVaultState.values()[nbt.getInteger("state")];
+        if (nbt.hasKey("state", 1)) state = EnumVaultState.values()[nbt.getByte("state")];
         if (nbt.hasKey("config")) config.readFromNBT(nbt.getCompoundTag("config"));
         if (nbt.hasKey("stored_items")) {
             stored_items.clear();
@@ -211,7 +211,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setInteger("state", state.ordinal());
+        nbt.setByte("state", (byte) state.ordinal());
         if (config != null) nbt.setTag("config", config.writeToNBT());
         if (!stored_items.isEmpty()) {
             NBTTagList items = new NBTTagList();

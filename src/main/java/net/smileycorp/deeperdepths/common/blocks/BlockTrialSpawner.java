@@ -56,6 +56,11 @@ public class BlockTrialSpawner extends BlockTrial {
         return new BlockStateContainer(this, OMINOUS, STATE);
     }
     
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getValue(STATE).getLightLevel();
+    }
+    
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World world, int i) {
