@@ -13,9 +13,11 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.smileycorp.deeperdepths.client.ClientProxy;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +92,9 @@ public class EntityWindCharge extends EntityThrowable
             this.markVelocityChanged();
             if (source.getTrueSource() != null)
             {
+                this.playSound(DeeperDepthsSoundEvents.BREEZE_JUMP, 1, 4);
+                this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY, this.posZ, 0, 0,0);
+
                 Vec3d vec3d = source.getTrueSource().getLookVec();
                 if (vec3d != null)
                 {
@@ -132,12 +137,18 @@ public class EntityWindCharge extends EntityThrowable
 
             this.world.setEntityState(this, (byte)3);
             this.setDead();
-        }
-        else
-        {
-            for (int i = 0; i < 20; i++)
+
+
+
+            for (int i = 0; i < this.getBurstRange() * 10; i++)
             {
-                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, this.posX, this.posY, this.posZ, 0, 0,0,0);
+                EnumParticleTypes type = i < this.getBurstRange() * 10 / 10 ? EnumParticleTypes.EXPLOSION_LARGE : EnumParticleTypes.CLOUD;
+                float range = this.getBurstRange()/2;
+                double x = this.posX + world.rand.nextFloat() * range - world.rand.nextFloat() * range;
+                double y = this.posY + (world.rand.nextFloat() * range - world.rand.nextFloat() * range)/2;
+                double z = this.posZ + world.rand.nextFloat() * range - world.rand.nextFloat() * range;
+
+                ClientProxy.addParticle(type, x, y, z, Color.WHITE);
             }
         }
     }

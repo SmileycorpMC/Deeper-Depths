@@ -2,6 +2,7 @@ package net.smileycorp.deeperdepths.common.items;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -19,6 +20,7 @@ public class ItemWindCharge extends ItemDeeperDepths
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
+        NBTTagCompound nbttagcompound = itemstack.getTagCompound();
         if (!playerIn.capabilities.isCreativeMode)
         { itemstack.shrink(1); }
 
@@ -27,9 +29,9 @@ public class ItemWindCharge extends ItemDeeperDepths
         {
             EntityWindCharge entitywindcharge = new EntityWindCharge(worldIn, playerIn);
             entitywindcharge.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-            entitywindcharge.setBurstPower(1.1F);
-            entitywindcharge.setBurstRange(2.5F);
-            entitywindcharge.setBurstInteractRange(2.5F);
+            entitywindcharge.setBurstPower(nbttagcompound != null && nbttagcompound.hasKey("BurstPower") ? nbttagcompound.getFloat("BurstPower") : 1.1F);
+            entitywindcharge.setBurstRange(nbttagcompound != null && nbttagcompound.hasKey("BurstRange") ? nbttagcompound.getFloat("BurstRange") : 2.5F);
+            entitywindcharge.setBurstInteractRange(nbttagcompound != null && nbttagcompound.hasKey("BurstInteractRange") ? nbttagcompound.getFloat("BurstInteractRange") : 2.5F);
             worldIn.spawnEntity(entitywindcharge);
         }
 
