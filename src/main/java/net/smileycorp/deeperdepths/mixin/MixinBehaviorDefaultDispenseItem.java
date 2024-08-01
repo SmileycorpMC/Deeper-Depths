@@ -19,7 +19,7 @@ public class MixinBehaviorDefaultDispenseItem {
         return state.getValue(property);
     }
     
-    //4 mixin injects (ㅠ﹏ㅠ)
+    //4 mixin injects -_-
     //surely there's gotta be an easier way to do this without the hardcoding
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getValue(Lnet/minecraft/block/properties/IProperty;)Ljava/lang/Comparable;"), method = "dispense")
     public Comparable dispense(IBlockState state, IProperty property) {
