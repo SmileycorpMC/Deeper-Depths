@@ -75,4 +75,9 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
         return waxed || stage == EnumWeatherStage.OXIDIZED ? state : copyProperties(state, DeeperDepthsBlocks.COPPER_TRAPDOORS.get(stage.next()).getDefaultState());
     }
     
+    @Override
+    public boolean interactRequiresSneak() {
+        return true;
+    }
+    
 }

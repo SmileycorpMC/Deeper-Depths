@@ -18,4 +18,8 @@ public interface ICopperBlock {
     
     IBlockState getWeathered(IBlockState state);
     
+    default boolean interactRequiresSneak() {
+        return false;
+    }
+    
 }
