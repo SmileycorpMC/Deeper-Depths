@@ -28,7 +28,8 @@ public class DeeperDepthsItems {
     public static final Item WIND_CHARGE = new ItemWindCharge();
     public static final Item OMINOUS_BOTTLE = new ItemOminousBottle();
     public static final Item TRIAL_KEY = new ItemTrialKey();
-    
+    public static final Item MACE = new ItemMace();
+
     //tools
     /*public static final Item SPYGLASS = null;
     public static final Item RECOVERY_COMPASS = null;*/

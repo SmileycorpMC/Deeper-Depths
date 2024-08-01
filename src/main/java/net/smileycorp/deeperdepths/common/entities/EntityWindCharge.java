@@ -3,6 +3,7 @@ package net.smileycorp.deeperdepths.common.entities;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -126,7 +127,7 @@ public class EntityWindCharge extends EntityThrowable
 
         if (!this.world.isRemote)
         {
-            if (result != null && result.entityHit != null)
+            if (result != null && result.entityHit != null && !(result.entityHit instanceof EntityEnderCrystal))
             {
                 result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)1);
                 if(this.isBurning()) result.entityHit.setFire(5);
@@ -179,11 +180,15 @@ public class EntityWindCharge extends EntityThrowable
                 double d12 = entity.getDistance(this.posX, this.posY, this.posZ) / (double) scale;
                 if (d12 <= 1.0)
                 {
+                    /* The distance to power calculation breaks down if the Wind Charge is spawned within an entity... so we do a little trick called lying >B) */
+                    if (d12 == 0) d12 = 1.85F;
+
                     double dx = entity.posX - this.posX;
                     double dy = entity.posY + (double) entity.getEyeHeight() - this.posY;
                     double dz = entity.posZ - this.posZ;
                     double distance = (double) MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
-                    if (distance != 0.0) {
+                    if (distance != 0.0)
+                    {
                         dx /= distance;
                         dy /= distance;
                         dz /= distance;
