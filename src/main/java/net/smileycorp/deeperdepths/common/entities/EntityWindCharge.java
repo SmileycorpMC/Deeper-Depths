@@ -14,6 +14,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.smileycorp.deeperdepths.client.ClientProxy;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
@@ -150,7 +151,10 @@ public class EntityWindCharge extends EntityThrowable
                 double y = this.posY + (world.rand.nextFloat() * range - world.rand.nextFloat() * range)/2;
                 double z = this.posZ + world.rand.nextFloat() * range - world.rand.nextFloat() * range;
 
-                ClientProxy.addParticle(type, x, y, z, Color.WHITE);
+                ((WorldServer)this.world).spawnParticle(type, x, y, z, 1, 0, 0, 0, 0.0);
+
+                /** Client Proxy Particle causes a Crash!!! */
+                //ClientProxy.addParticle(type, x, y, z, Color.WHITE);
             }
         }
     }
