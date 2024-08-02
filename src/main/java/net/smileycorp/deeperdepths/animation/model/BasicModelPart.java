@@ -121,4 +121,7 @@ public class BasicModelPart extends ModelRenderer {
         float rotation = (float) Math.cos(f * speed * movementScale + offset) * degree * movementScale * f1 + weight * f1;
         return invert ? -rotation : rotation;
     }
+
+
+
 }

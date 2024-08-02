@@ -1,11 +1,15 @@
 package net.smileycorp.deeperdepths.client.entity.model;
 
 import com.google.common.collect.ImmutableList;
+import com.ibm.icu.text.Normalizer;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
+import net.smileycorp.deeperdepths.animation.model.BasicModelEntity;
 import net.smileycorp.deeperdepths.animation.model.BasicModelPart;
 import net.smileycorp.deeperdepths.animation.model.EZModelAnimator;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
@@ -13,80 +17,53 @@ import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 @SideOnly(Side.CLIENT)
 public class ModelBreezeWind extends ModelBreeze
 {
+    /**
+     * We're going to make this extend the animation core
+     */
 
-    public EZModelAnimator animator_2;
+    public final BasicModelPart tornadoTopConnect;
+    public final BasicModelPart tornadoMiddleConnect;
+    public final BasicModelPart tornadoBottomConnect;
 
     public ModelBreezeWind()
     {
         textureWidth = 128;
         textureHeight = 128;
 
-        BasicModelPart tornado1 = new BasicModelPart(this);
-        tornado1.setRotationPoint(0.0F, 7.0F, 0.0F);
-        this.tornadoTop.addChild(tornado1);
-        tornado1.cubeList.add(new ModelBox(tornado1, 0, 0, -8.0F, -4.0F, -8.0F, 16, 8, 16, 0.0F, false));
-        tornado1.cubeList.add(new ModelBox(tornado1, 78, 6, -5.0F, -4.0F, -5.0F, 10, 8, 10, 0.0F, false));
-        tornado1.cubeList.add(new ModelBox(tornado1, 48, 10, -3.0F, -4.0F, -3.0F, 6, 8, 6, 0.0F, false));
 
-        BasicModelPart tornado2 = new BasicModelPart(this);
-        tornado2.setRotationPoint(0.0F, 7.0F, 0.0F);
-        this.tornadoMiddle.addChild(tornado2);
-        tornado2.cubeList.add(new ModelBox(tornado2, 0, 24, -5.0F, 4.0F, -5.0F, 10, 6, 10, 0.0F, false));
-        tornado2.cubeList.add(new ModelBox(tornado2, 19, 28, -3.0F, 4.0F, -3.0F, 6, 6, 6, 0.0F, false));
+        tornadoTopConnect = new BasicModelPart(this);
+        tornadoTopConnect.setRotationPoint(0.0F, 7.0F, 0.0F);
+       this.tornadoTop.addChild(tornadoTopConnect);
+        tornadoTopConnect.cubeList.add(new ModelBox(tornadoTopConnect, 0, 0, -8.0F, -4.0F, -8.0F, 16, 8, 16, 0.0F, false));
+        tornadoTopConnect.cubeList.add(new ModelBox(tornadoTopConnect, 78, 6, -5.0F, -4.0F, -5.0F, 10, 8, 10, 0.0F, false));
+        tornadoTopConnect.cubeList.add(new ModelBox(tornadoTopConnect, 48, 10, -3.0F, -4.0F, -3.0F, 6, 8, 6, 0.0F, false));
 
-        BasicModelPart tornado3 = new BasicModelPart(this);
-        this.tornadoBottom.addChild(tornado3);
-        tornado3.setRotationPoint(0.0F, 7.0F, 0.0F);
-        tornado3.cubeList.add(new ModelBox(tornado3, 0, 55, -3.0F, 10.0F, -3.0F, 6, 7, 6, 0.0F, false));
+        tornadoMiddleConnect = new BasicModelPart(this);
+        tornadoMiddleConnect.setRotationPoint(0.0F, 7.0F, 0.0F);
+        this.tornadoMiddle.addChild(tornadoMiddleConnect);
+        tornadoMiddleConnect.cubeList.add(new ModelBox(tornadoMiddleConnect, 0, 24, -5.0F, 4.0F, -5.0F, 10, 6, 10, 0.0F, false));
+       tornadoMiddleConnect.cubeList.add(new ModelBox(tornadoMiddleConnect, 19, 28, -3.0F, 4.0F, -3.0F, 6, 6, 6, 0.0F, false));
 
-        this.animator_2 = EZModelAnimator.create();
-        super.updateDefaultPose();
+        tornadoBottomConnect = new BasicModelPart(this);
+       this.tornadoBottom.addChild(tornadoBottomConnect);
+        tornadoBottomConnect.setRotationPoint(0.0F, 7.0F, 0.0F);
+        tornadoBottomConnect.cubeList.add(new ModelBox(tornadoBottomConnect, 0, 55, -3.0F, 10.0F, -3.0F, 6, 7, 6, 0.0F, false));
 
-    }
-
-    @Override
-    public Iterable<BasicModelPart> getAllParts() {
-        return ImmutableList.of(tornadoTop, tornadoMiddle, tornadoBottom);
     }
 
 
     @Override
-    public void animate(IAnimatedEntity entity) {
-        //Always include
-        animator_2.update(entity);
-
-        //when wanting to declare an animation, start with this
-        animator_2.setAnimation(EntityBreeze.ANIMATION_SHOOT);
-        //Now the below code must equal to the duration set in the Entity class
-        //EXAMPLE
-        //when declaring a start keyfram put whatever you want to move within the given duration
-        animator_2.startKeyframe(20);
-
-        //animator.rotate(head, (float) Math.toRadians(-30), (float) Math.toRadians(-30), 0);
-        /** Animating Tornado Parts isn't working? Might be due to funky inheriting in `ModelBreezeWind`, but `setRotationAngles` still works with it! */
-        animator_2.rotate(tornadoTop, (float) Math.toRadians(-30), 0, 0);
-        //always declare an end key frame when you are done putting moving boxes
-        animator_2.endKeyframe();
-        // for static key frames, such as holding a pose for that time use the below method
-        animator_2.setStaticKeyframe(5);
-        //lastly always best to end the animation with a reset key frame
-        //this just gives it time to snap back to original pose without it being instant
-        animator_2.resetKeyframe(5);
-        //our time equals 30 which is how lone the ANIMATION_SHOOT is in the entity file
-        System.out.println("We're playing animations here! But it's not Rotating!");
-
-        super.animate(entity);
+    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime)
+    {
     }
-
-
 
     /** Do not do `super.render(...)`, or the wind texture will be overlaid atop the Head and Rod parts! */
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        tornadoTop.render(scale);
-        tornadoMiddle.render(scale);
-        tornadoBottom.render(scale);
+        tornadoTopConnect.render(scale);
+        tornadoMiddleConnect.render(scale);
+        tornadoBottomConnect.render(scale);
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
     }
 
@@ -94,7 +71,19 @@ public class ModelBreezeWind extends ModelBreeze
     /** Makes `ModelBreeze` handle all animations. */
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
-    { super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn); }
+    {
+        float spinMeRightRound = ageInTicks * (float)Math.PI * 0.15F;
+        this.tornadoTop.rotationPointX = MathHelper.cos(spinMeRightRound) * 1.0F * 0.6F;
+        this.tornadoTop.rotationPointZ = MathHelper.sin(spinMeRightRound) * 1.0F * 0.6F;
+
+        this.tornadoMiddle.rotationPointX = MathHelper.sin(spinMeRightRound) * 0.8F * 0.5F;
+        this.tornadoMiddle.rotationPointZ = MathHelper.cos(spinMeRightRound) * 0.8F * 0.5F;
+
+        this.tornadoBottom.rotationPointX = MathHelper.cos(spinMeRightRound) * 0.6F * 0.4F;
+        this.tornadoBottom.rotationPointZ = MathHelper.sin(spinMeRightRound) * 0.6F * 0.4F;
+        super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+
+    }
 
     /** Used by Blockbench. */
     public void setRotationAngle(BasicModelPart modelRenderer, float x, float y, float z)

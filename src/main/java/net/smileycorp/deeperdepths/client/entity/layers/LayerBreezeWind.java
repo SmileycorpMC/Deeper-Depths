@@ -25,6 +25,7 @@ public class LayerBreezeWind implements LayerRenderer<EntityBreeze>
 
     public void doRenderLayer(EntityBreeze entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
+
         boolean flag = entitylivingbaseIn.isInvisible();
         GlStateManager.depthMask(!flag);
         this.renderer.bindTexture(BREEZE_WIND_TEXTURE);
