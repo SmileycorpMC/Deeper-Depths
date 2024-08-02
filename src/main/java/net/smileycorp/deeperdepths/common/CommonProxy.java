@@ -23,9 +23,6 @@ public class CommonProxy {
     
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
-        //LootTableList.register(Constants.loc("vault"));
-        //LootTableList.register(Constants.loc("ominous_vault"));
-        //LootTableList.register(Constants.loc("entities/bogged"));
         DeeperDepthsEntities.registerEntities();
         //Registers Entity Spawns even though I think we'll only have one lmao
         DeeperDepthsEntities.registerEntitySpawns();
