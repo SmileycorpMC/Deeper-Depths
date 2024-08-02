@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -285,11 +286,19 @@ public class EntityWindCharge extends EntityThrowable
     private void activateBlocks(BlockPos pos)
     {
         Block block = this.world.getBlockState(pos).getBlock();
+        EntityPlayer countedInteract = thrower instanceof EntityPlayer ? (EntityPlayer) thrower : null;
 
         if (block instanceof BlockButton || block instanceof BlockTrapDoor || block instanceof BlockDoor && this.world.getBlockState(pos).getValue(HALF) == BlockDoor.EnumDoorHalf.LOWER || block instanceof BlockLever)
-        { block.onBlockActivated(this.world, pos, this.world.getBlockState(pos), null, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 0.5F, 0.5F); }
-        /* Using `onBlockActived` causes Fence Gates to crash? Investigate later. */
-        else if (block instanceof BlockFenceGate) {}
+        { block.onBlockActivated(this.world, pos, this.world.getBlockState(pos), countedInteract, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5F, 0.5F, 0.5F); }
+        /* AAAAAAAHHHHH WHY DOES BlockFenceGate REQUIRE A PLAYER FOR `onBlockActivated`, IT COULD JUST USE THE HIT POS! */
+        else if (block instanceof BlockFenceGate)
+        {
+            boolean isOpen = this.world.getBlockState(pos).getValue(BlockFenceGate.OPEN);
+            EnumFacing getFacing = this.world.getBlockState(pos).getValue(BlockFenceGate.FACING);
+
+            world.setBlockState(pos, this.world.getBlockState(pos).withProperty(BlockFenceGate.OPEN, !isOpen).withProperty(BlockFenceGate.FACING, this.rand.nextBoolean() ? getFacing.getOpposite() : getFacing));
+            world.playEvent(null, isOpen ? 1014 : 1008, pos, 0);
+        }
     }
 
     /** onUpdate needs to be overridden to handle complex changes. */

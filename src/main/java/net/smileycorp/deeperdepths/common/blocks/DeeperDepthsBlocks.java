@@ -50,7 +50,8 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockDDStairs> WAXED_CUT_COPPER_STAIRS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperTrapdoor> COPPER_TRAPDOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperTrapdoor> WAXED_COPPER_TRAPDOORS = Maps.newEnumMap(EnumWeatherStage.class);
-    
+
+    public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
     //public static final Block LIGHTNING_ROD = null;
     
    /*
