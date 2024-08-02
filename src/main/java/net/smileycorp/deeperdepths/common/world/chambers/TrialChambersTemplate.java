@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialPot;
 import net.smileycorp.deeperdepths.common.world.base.DDStructureTemplate;
 import net.smileycorp.deeperdepths.common.world.base.ModRand;
 import net.smileycorp.deeperdepths.common.world.base.WorldGenCustomStructure;
@@ -60,6 +61,20 @@ public class TrialChambersTemplate extends DDStructureTemplate {
                 if (tileEntity instanceof TileEntityChest) {
                     TileEntityChest chest = (TileEntityChest) tileEntity;
                     chest.setLootTable(LOOT, rand.nextLong());
+                }
+            } else {
+                world.setBlockToAir(pos);
+                world.setBlockToAir(pos.down());
+            }
+        } else if (function.startsWith("pot")) {
+            BlockPos blockPos = pos.down();
+            if(sbb.isVecInside(blockPos) && generatePotSpawn()) {
+
+                TileEntity tileEntity = world.getTileEntity(blockPos);
+                world.setBlockState( pos, Blocks.AIR.getDefaultState(), 3);
+                if(tileEntity instanceof TileTrialPot) {
+                    TileTrialPot pot = (TileTrialPot) tileEntity;
+                    //LOOT
                 }
             } else {
                 world.setBlockToAir(pos);
@@ -127,7 +142,7 @@ public class TrialChambersTemplate extends DDStructureTemplate {
         }
 
         //Omnious Vaults
-        if(function.startsWith("omni_vault")) {
+         else if(function.startsWith("omni_vault")) {
             if(!generateOminousVaultSpawn()) {
                 world.setBlockToAir(pos);
                 world.setBlockToAir(pos.down());
@@ -135,6 +150,8 @@ public class TrialChambersTemplate extends DDStructureTemplate {
                 world.setBlockToAir(pos);
             }
         }
+
+
 
     }
 
@@ -156,6 +173,11 @@ public class TrialChambersTemplate extends DDStructureTemplate {
     private boolean generateOminousVaultSpawn() {
         int randomOmniGenerator = ModRand.range(0, 11);
         return randomOmniGenerator < 8;
+    }
+
+    private boolean generatePotSpawn() {
+        int randomPotGenerator = ModRand.range(0, 10);
+        return randomPotGenerator < 6;
     }
 
 
