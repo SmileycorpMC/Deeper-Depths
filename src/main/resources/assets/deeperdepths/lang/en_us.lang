@@ -121,6 +121,14 @@ tile.deeperdepths.WaxedCopperDoor.name=Waxed Copper Door
 tile.deeperdepths.WaxedExposedCopperDoor.name=Waxed Exposed Copper Door
 tile.deeperdepths.WaxedWeatheredCopperDoor.name=Waxed Weathered Copper Door
 tile.deeperdepths.WaxedOxidizedCopperDoor.name=Waxed Oxidized Copper Door
+item.deeperdepths.CopperDoor.name=Copper Door
+item.deeperdepths.ExposedCopperDoor.name=Exposed Copper Door
+item.deeperdepths.WeatheredCopperDoor.name=Weathered Copper Door
+item.deeperdepths.OxidizedCopperDoor.name=Oxidized Copper Door
+item.deeperdepths.WaxedCopperDoor.name=Waxed Copper Door
+item.deeperdepths.WaxedExposedCopperDoor.name=Waxed Exposed Copper Door
+item.deeperdepths.WaxedWeatheredCopperDoor.name=Waxed Weathered Copper Door
+item.deeperdepths.WaxedOxidizedCopperDoor.name=Waxed Oxidized Copper Door
 
 tile.deeperdepths.CopperTrapdoor.name=Copper Trapdoor
 tile.deeperdepths.ExposedCopperTrapdoor.name=Exposed Copper Trapdoor

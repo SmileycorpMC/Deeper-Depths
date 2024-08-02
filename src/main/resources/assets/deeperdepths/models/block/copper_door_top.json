@@ -1,0 +1,7 @@
+{
+  "parent": "block/door_top",
+  "textures": {
+    "bottom": "deeperdepths:blocks/copper_door_bottom",
+    "top": "deeperdepths:blocks/copper_door_top"
+  }
+}

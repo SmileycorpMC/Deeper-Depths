@@ -1,5 +1,6 @@
 package net.smileycorp.deeperdepths.client;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.particle.Particle;
@@ -74,6 +75,8 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.TRIAL_POT, new DirectionalStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.VAULT, new VaultStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.TRIAL_SPAWNER, new TrialSpawnerStateMapper());
+        for (Block block : DeeperDepthsBlocks.COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new CopperDoorStateMapper());
+        for (Block block : DeeperDepthsBlocks.WAXED_COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new CopperDoorStateMapper());
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
                 ((IBlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {

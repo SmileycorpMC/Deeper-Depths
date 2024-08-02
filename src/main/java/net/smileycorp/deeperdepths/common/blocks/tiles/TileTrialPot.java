@@ -5,12 +5,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -18,6 +22,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.smileycorp.atlas.api.util.RecipeUtils;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 public class TileTrialPot extends TileEntity implements ILootContainer, IInventory {
     
@@ -70,10 +76,25 @@ public class TileTrialPot extends TileEntity implements ILootContainer, IInvento
         return lootTable;
     }
     
+    protected ItemStack getStack() {
+        if (stack.isEmpty() && lootTable != null &! world.isRemote) {
+            Random rand = lootTableSeed == 0 ? new Random() : new Random(lootTableSeed);
+            List<ItemStack> items = world.getLootTableManager().getLootTableFromLocation(lootTable).generateLootForPools(rand,
+                    new LootContext.Builder((WorldServer) world).build());
+            if (!items.isEmpty()) {
+                stack = items.get(rand.nextInt(items.size()));
+                lootTable = null;
+                lootTableSeed = 0;
+            }
+        }
+        return stack;
+    }
+    
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
         if (slot != 0) return false;
-        if (this.stack.isEmpty()) return true;
+        if (lootTable != null) return false;
+        if (getStack().isEmpty()) return true;
         if (!RecipeUtils.compareItemStacks(stack, this.stack, true)) return false;
         return this.stack.getCount() < this.stack.getMaxStackSize();
     }
@@ -81,7 +102,7 @@ public class TileTrialPot extends TileEntity implements ILootContainer, IInvento
     @Override
     public ItemStack decrStackSize(int slot, int count) {
         if (slot != 0) return ItemStack.EMPTY;
-        int amount = Math.min(count, stack.getCount());
+        int amount = Math.min(count, getStack().getCount());
         ItemStack result = stack.copy();
         result.setCount(amount);
         stack.shrink(amount);
@@ -92,7 +113,7 @@ public class TileTrialPot extends TileEntity implements ILootContainer, IInvento
     public ItemStack removeStackFromSlot(int slot) {
         ItemStack result = ItemStack.EMPTY;
         if (slot == 0) {
-            result = stack;
+            result = getStack();
             stack = ItemStack.EMPTY;
         }
         return result;
@@ -100,22 +121,28 @@ public class TileTrialPot extends TileEntity implements ILootContainer, IInvento
     
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack) {
-        if (slot == 0) this.stack = stack;
+        if (slot == 0) {
+            this.stack = stack;
+            lootTable = null;
+            lootTableSeed = 0;
+        }
     }
     
     @Override
     public ItemStack getStackInSlot(int slot) {
-        return slot == 0 ? stack : ItemStack.EMPTY;
+        return slot == 0 ? getStack() : ItemStack.EMPTY;
     }
     
     @Override
     public void clear() {
         stack = ItemStack.EMPTY;
+        lootTable = null;
+        lootTableSeed = 0;
     }
     
     @Override
     public boolean isEmpty() {
-        return stack.isEmpty();
+        return lootTable == null && stack.isEmpty();
     }
     
     @Override

@@ -3,6 +3,7 @@ package net.smileycorp.deeperdepths.common.entities;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
@@ -10,21 +11,25 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityFireball;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.smileycorp.deeperdepths.animation.EZAnimation;
 import net.smileycorp.deeperdepths.animation.EZAnimationHandler;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 
+@Mod.EventBusSubscriber
 public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     //the number in the animation only states the duration of the animation
     public static final EZAnimation ANIMATION_SHOOT = EZAnimation.create(30);
@@ -88,8 +93,6 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     public int animationTick;
     //just a variable that holds what the current animation is
     private EZAnimation currentAnimation;
-
-
 
     int exampleTimerOnly = 40;
 
@@ -268,6 +271,74 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
         private double getFollowDistance() {
             IAttributeInstance iattributeinstance = this.breeze.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
             return iattributeinstance == null ? 16.0 : iattributeinstance.getAttributeValue();
+        }
+    }
+
+    /** Basic, reusable reflecting code, also handles the sound. */
+    private static void deflectProjectile(Entity projectile)
+    {
+        double bounceStrength = -1.0D;
+        projectile.motionX *= bounceStrength;
+        projectile.motionY *= bounceStrength;
+        projectile.motionZ *= bounceStrength;
+        projectile.velocityChanged = true;
+
+        projectile.world.playSound(null, projectile.getPosition(), DeeperDepthsSoundEvents.BREEZE_DEFLECT, SoundCategory.HOSTILE, 1, 1);
+    }
+
+    /** Events have to be used for Projectile Reflection, as `attackEntityFrom` is called within onImpact for most projectiles, which breaks this behavior! */
+    @SubscribeEvent
+    public static void reflectArrowEvent(ProjectileImpactEvent.Arrow event)
+    {
+        final EntityArrow projectile = event.getArrow();
+
+        if (projectile.getEntityWorld().isRemote) return;
+        Entity entity = event.getRayTraceResult().entityHit;
+
+        if (event.getEntity() != null && entity instanceof EntityBreeze)
+        {
+            deflectProjectile(projectile);
+            projectile.shootingEntity = entity;
+
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void reflectFireballEvent(ProjectileImpactEvent.Fireball event)
+    {
+        final EntityFireball projectile = event.getFireball();
+
+        if (projectile.getEntityWorld().isRemote) return;
+        Entity entity = event.getRayTraceResult().entityHit;
+
+        if (event.getEntity() != null && entity instanceof EntityBreeze)
+        {
+            deflectProjectile(projectile);
+            double bounceStrength = -1.0D;
+            projectile.accelerationX *= bounceStrength;
+            projectile.accelerationY *= bounceStrength;
+            projectile.accelerationZ *= bounceStrength;
+            projectile.shootingEntity = (EntityLivingBase) entity;
+
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void reflectThrowableEvent(ProjectileImpactEvent.Throwable event)
+    {
+        final EntityThrowable projectile = event.getThrowable();
+        if (projectile instanceof EntityWindCharge) return;
+
+        if (projectile.getEntityWorld().isRemote) return;
+        Entity entity = event.getRayTraceResult().entityHit;
+
+        if (event.getEntity() != null && entity instanceof EntityBreeze)
+        {
+            deflectProjectile(projectile);
+            //projectile.thrower = entityBlocking;
+            event.setCanceled(true);
         }
     }
 }

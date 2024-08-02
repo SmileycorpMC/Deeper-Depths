@@ -9,8 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
-import net.smileycorp.deeperdepths.common.blocks.BlockDDSlab;
-import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
+import net.smileycorp.deeperdepths.common.blocks.*;
 
 import java.lang.reflect.Field;
 import java.util.Set;
@@ -39,8 +38,11 @@ public class DeeperDepthsItems {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DeeperDepthsBlocks.BLOCKS) {
-            if (!(block instanceof BlockDDSlab)) register(registry, new ItemDDBlock(block));
-            else if (!((BlockDDSlab) block).isDouble()) register(registry, new ItemDDSlab<>((BlockDDSlab)block));
+            if (block instanceof BlockCopperDoor) register(registry, ((BlockCopperDoor) block).getItem());
+            else if (!(block instanceof BlockDDSlab)) register(registry, (block instanceof BlockCopper || block instanceof BlockCopperBulb) &&
+                    Constants.IS_COPPER_TASTY ? new ItemTastyCopper(block) : new ItemDDBlock(block));
+            else if (!((BlockDDSlab) block).isDouble()) register(registry, block instanceof BlockCutCopperSlab &&
+                    Constants.IS_COPPER_TASTY ? new ItemTastyCopperSlab((BlockCutCopperSlab) block) : new ItemDDSlab((BlockDDSlab)block));
         }
         for (Field field : DeeperDepthsItems.class.getDeclaredFields()) {
             try {

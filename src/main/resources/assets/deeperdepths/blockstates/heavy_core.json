@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "variants":
+    {
+        "normal":
+        {
+            "model": "deeperdepths:heavy_core"
+        }
+    }
+}
