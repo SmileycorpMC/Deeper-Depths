@@ -141,6 +141,39 @@ public class DeeperDepthsRecipes {
             GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "copper_bulb"), Constants.loc("copper"),
                     new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 4, stage.ordinal()), " M ", "MBM", " R ", 'M',
                     new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4), 'B', Items.BLAZE_ROD, 'R', "dustRedstone");
+            //waxing
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_copper"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal())),
+                    Ingredient.fromItem(Items.SLIME_BALL));
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_cut_copper"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal() + 4),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal())),
+                    Ingredient.fromItem(Items.SLIME_BALL));
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_cut_copper_slab"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, stage.ordinal() + 4),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, stage.ordinal())),
+                    Ingredient.fromItem(Items.SLIME_BALL));
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_chiseled_copper"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal() + 4),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal())),
+                    Ingredient.fromItem(Items.SLIME_BALL));
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_copper_grate"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 1, stage.ordinal() + 4),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 1, stage.ordinal())),
+                    Ingredient.fromItem(Items.SLIME_BALL));
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_copper_bulb"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 1, stage.ordinal()),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BULB, 1, stage.ordinal())),
+                    Ingredient.fromItem(Items.SLIME_BALL));
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_cut_copper_stairs"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.WAXED_CUT_COPPER_STAIRS.get(stage)),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(stage))),
+                    Ingredient.fromItem(Items.SLIME_BALL));
+            GameRegistry.addShapelessRecipe(Constants.loc(name + "waxed_copper_trapdoors"), Constants.loc("copper"),
+                    new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage)),
+                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(stage))),
+                    Ingredient.fromItem(Items.SLIME_BALL));
         }
         GameRegistry.addShapedRecipe(Constants.loc("copper_trapdoor"), Constants.loc("copper"),
                 new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(EnumWeatherStage.NORMAL), 2, 0), "MMM", "MMM", 'M',

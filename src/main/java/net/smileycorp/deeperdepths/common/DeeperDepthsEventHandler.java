@@ -3,6 +3,7 @@ package net.smileycorp.deeperdepths.common;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -37,19 +38,32 @@ public class DeeperDepthsEventHandler {
         if (world.isRemote) return;
         ItemStack stack = event.getItemStack();
         IBlockState state = world.getBlockState(pos);
-        if (!(stack.getItem() instanceof ItemAxe)) return;
         if (!(state.getBlock() instanceof ICopperBlock)) return;
         ICopperBlock copper = (ICopperBlock) state.getBlock();
         EntityLivingBase entity = event.getEntityLiving();
         if (copper.interactRequiresSneak() &! entity.isSneaking()) return;
-        IBlockState scraped = copper.getScraped(state);
-        if (state.equals(scraped)) return;
-        world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                copper.isWaxed(state) ? DeeperDepthsSoundEvents.COPPER_WAX_OFF : DeeperDepthsSoundEvents.COPPER_SCRAPE,
-                SoundCategory.BLOCKS, 1, 1);
-        world.setBlockState(pos, scraped, 3);
-        if (!(entity instanceof EntityPlayer && ((EntityPlayer)entity).isCreative()))
-            stack.damageItem(1, entity);
+        //scraping
+        if (stack.getItem() instanceof ItemAxe) {
+            IBlockState scraped = copper.getScraped(state);
+            if (state.equals(scraped)) return;
+            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    copper.isWaxed(state) ? DeeperDepthsSoundEvents.COPPER_WAX_OFF : DeeperDepthsSoundEvents.COPPER_SCRAPE,
+                    SoundCategory.BLOCKS, 1, 1);
+            world.setBlockState(pos, scraped, 3);
+            //needs particle spawning once we have a particle system
+            if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
+                stack.damageItem(1, entity);
+        }
+        //waxing
+        if (stack.getItem() == Items.SLIME_BALL &! copper.isWaxed(state)) {
+            IBlockState waxed = copper.getWaxed(state);
+            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    DeeperDepthsSoundEvents.COPPER_WAX_ON, SoundCategory.BLOCKS, 1, 1);
+            world.setBlockState(pos,waxed, 3);
+            //needs particle spawning once we have a particle system
+            if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
+                stack.shrink(1);
+        }
     }
     
 }
