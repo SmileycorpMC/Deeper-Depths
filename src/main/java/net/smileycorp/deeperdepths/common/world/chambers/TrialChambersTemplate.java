@@ -38,6 +38,8 @@ public class TrialChambersTemplate extends DDStructureTemplate {
 
     private static final ResourceLocation LOOT = new ResourceLocation(Constants.MODID, "chamber_chest_loot");
 
+    private static final ResourceLocation LOOT_POT = new ResourceLocation(Constants.MODID, "chamber_pot_loot");
+
     public TrialChambersTemplate() {
 
     }
@@ -75,6 +77,7 @@ public class TrialChambersTemplate extends DDStructureTemplate {
                 if(tileEntity instanceof TileTrialPot) {
                     TileTrialPot pot = (TileTrialPot) tileEntity;
                     //LOOT
+                    pot.setLootTable(LOOT_POT, rand.nextLong());
                 }
             } else {
                 world.setBlockToAir(pos);

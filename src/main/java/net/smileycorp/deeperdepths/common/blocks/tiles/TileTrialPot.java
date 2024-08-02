@@ -5,7 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +13,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -74,6 +72,12 @@ public class TileTrialPot extends TileEntity implements ILootContainer, IInvento
     @Override
     public ResourceLocation getLootTable() {
         return lootTable;
+    }
+
+
+    public void setLootTable(ResourceLocation location, Long lootTableSeed) {
+        this.lootTable = location;
+        this.lootTableSeed = lootTableSeed;
     }
     
     protected ItemStack getStack() {
