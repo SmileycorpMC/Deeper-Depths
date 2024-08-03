@@ -20,6 +20,8 @@ import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
+import java.util.Random;
+
 public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  {
     
     public static final PropertyBool LIT = PropertyBool.create("lit");
@@ -32,6 +34,7 @@ public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  
                 .withProperty(LIT, false).withProperty(POWERED, false));
         setSoundType(DeeperDepthsSoundTypes.COPPER_BULB);
         this.waxed = waxed;
+        needsRandomTick = !waxed;
     }
     
     @Override
@@ -42,6 +45,11 @@ public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         return getStateFromMeta(placer.getHeldItem(hand).getMetadata());
+    }
+    
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
     
     @Override

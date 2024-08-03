@@ -12,6 +12,8 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
+import java.util.Random;
+
 public interface ICopperBlock {
     
     PropertyEnum<EnumWeatherStage> WEATHER_STAGE = PropertyEnum.create("weather_stage", EnumWeatherStage.class);
@@ -64,6 +66,32 @@ public interface ICopperBlock {
         if (isWaxed(state)) return false;
         if (!world.isRemote) world.setBlockState(pos, getWaxed(state), 3);
         return true;
+    }
+    
+    default void tryWeather(World world, BlockPos pos, IBlockState state, Random rand) {
+        EnumWeatherStage stage = getStage(state);
+        int same = 0;
+        int moreWeathered = 0;
+        if (isWaxed(state) || getStage(state) == EnumWeatherStage.OXIDIZED) return;
+        if (rand.nextFloat() < 0.055555f) return;
+        BlockPos.MutableBlockPos pos1 = new BlockPos.MutableBlockPos(pos);
+        for (int i = -4; i <= 4; i++) {
+            for (int j = -4; j <= 4; j++) {
+                for (int k = -4; k <= 4; k++) {
+                    if (i + j + k > 4 || (i == 0 && j == 0 && k == 0)) continue;
+                    pos1.setPos(pos.add(i, j, k));
+                    IBlockState state1 = world.getBlockState(pos1);
+                    if (!(state1.getBlock() instanceof ICopperBlock)) continue;
+                    EnumWeatherStage other = ((ICopperBlock) state1.getBlock()).getStage(state1);
+                    if (other.ordinal() < stage.ordinal()) return;
+                    if (other.ordinal() > stage.ordinal()) moreWeathered++;
+                    else same++;
+                }
+            }
+        }
+        float chance = (moreWeathered + 1f) / (moreWeathered + same + 1f);
+        if (rand.nextFloat() >= chance * chance * stage.getAgeModifier()) return;
+        weather(world, state, pos);
     }
     
     default boolean weather(World world, IBlockState state, BlockPos pos) {

@@ -19,6 +19,8 @@ import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
+import java.util.Random;
+
 public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
     
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
@@ -32,6 +34,12 @@ public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.BOTTOM);
         setSoundType(DeeperDepthsSoundTypes.COPPER);
         setDefaultState(base);
+        needsRandomTick = true;
+    }
+    
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
     
     @Override

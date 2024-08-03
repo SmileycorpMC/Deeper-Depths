@@ -4,21 +4,24 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;
+import java.util.Random;
 
 public enum EnumWeatherStage implements IStringSerializable {
    
-    NORMAL("Normal", MapColor.ADOBE),
-    EXPOSED("Exposed", MapColor.SILVER_STAINED_HARDENED_CLAY),
-    WEATHERED("Weathered", MapColor.CYAN),
-    OXIDIZED("Oxidized", MapColor.DIAMOND);
+    NORMAL("Normal", MapColor.ADOBE, 0.75f),
+    EXPOSED("Exposed", MapColor.SILVER_STAINED_HARDENED_CLAY, 1f),
+    WEATHERED("Weathered", MapColor.CYAN, 1f),
+    OXIDIZED("Oxidized", MapColor.DIAMOND, 0);
     
     private final String name, unlocalizedName;
     private final MapColor color;
+    private final float ageModifier;
     
-    EnumWeatherStage(String name, MapColor color) {
+    EnumWeatherStage(String name, MapColor color, float ageModifier) {
         this.name = name.toLowerCase(Locale.US);
         this.unlocalizedName = name.replace("_", "");
         this.color = color;
+        this.ageModifier = ageModifier;
     }
     
     @Override
@@ -40,6 +43,10 @@ public enum EnumWeatherStage implements IStringSerializable {
     
     public EnumWeatherStage next() {
         return this == WEATHERED ? WEATHERED : values()[ordinal() + 1];
+    }
+    
+    public float getAgeModifier() {
+        return ageModifier;
     }
     
     public static EnumWeatherStage fromName(String name) {

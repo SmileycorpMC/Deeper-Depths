@@ -19,6 +19,8 @@ import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.items.ItemCopperDoor;
 
+import java.util.Random;
+
 public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICopperBlock  {
     
     private final EnumWeatherStage stage;
@@ -38,6 +40,12 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
         setSoundType(DeeperDepthsSoundTypes.COPPER);
         useNeighborBrightness = true;
         item = new ItemCopperDoor(this);
+        needsRandomTick = !waxed && stage != EnumWeatherStage.OXIDIZED;
+    }
+    
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
     
     @Override

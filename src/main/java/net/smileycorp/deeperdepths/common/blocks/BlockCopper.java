@@ -17,6 +17,8 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
+import java.util.Random;
+
 public class BlockCopper extends BlockDeeperDepths implements ICopperBlock {
     
     public static final PropertyBool WAXED = PropertyBool.create("waxed");
@@ -25,6 +27,12 @@ public class BlockCopper extends BlockDeeperDepths implements ICopperBlock {
         super(name, Material.IRON, 3, 6, 1);
         setDefaultState(getBlockState().getBaseState().withProperty(WEATHER_STAGE, EnumWeatherStage.NORMAL).withProperty(WAXED, false));
         setSoundType(DeeperDepthsSoundTypes.COPPER);
+        needsRandomTick = true;
+    }
+    
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, WEATHER_STAGE, WAXED);
     }
     
     @Override
@@ -34,8 +42,8 @@ public class BlockCopper extends BlockDeeperDepths implements ICopperBlock {
     }
     
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, WEATHER_STAGE, WAXED);
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
     
     @Override

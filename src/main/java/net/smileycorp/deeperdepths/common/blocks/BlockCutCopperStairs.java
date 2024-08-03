@@ -1,8 +1,12 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
+
+import java.util.Random;
 
 public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock {
     
@@ -14,6 +18,12 @@ public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock 
         setSoundType(DeeperDepthsSoundTypes.COPPER);
         this.stage = stage;
         this.waxed = waxed;
+        needsRandomTick = !waxed && stage != EnumWeatherStage.OXIDIZED;
+    }
+    
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
     
     private static String getName(EnumWeatherStage stage, boolean waxed) {
