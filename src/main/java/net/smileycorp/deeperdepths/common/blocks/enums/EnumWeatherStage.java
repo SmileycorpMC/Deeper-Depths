@@ -4,7 +4,6 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;
-import java.util.Random;
 
 public enum EnumWeatherStage implements IStringSerializable {
    
@@ -42,7 +41,7 @@ public enum EnumWeatherStage implements IStringSerializable {
     }
     
     public EnumWeatherStage next() {
-        return this == WEATHERED ? WEATHERED : values()[ordinal() + 1];
+        return this == OXIDIZED ? OXIDIZED : values()[ordinal() + 1];
     }
     
     public float getAgeModifier() {
