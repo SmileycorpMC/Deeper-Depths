@@ -153,6 +153,9 @@ public class ItemMace extends ItemDeeperDepths
         {
             if (entity != ignored)
             {
+                Double knockbackResist = 1D;
+                if (entity instanceof EntityLivingBase) knockbackResist -= ((EntityLivingBase)entity).getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue();
+
                 double d12 = entity.getDistance(entity.posX, entity.posY, entity.posZ) / (double) distance;
                 if (d12 <= 1.0)
                 {
@@ -166,9 +169,9 @@ public class ItemMace extends ItemDeeperDepths
                         dz /= reCheckDistance;
                         double kmult = (0.9 - d12);
 
-                        entity.motionX += dx * kmult;
-                        entity.motionY += dy * kmult;
-                        entity.motionZ += dz * kmult;
+                        entity.motionX += dx * kmult * knockbackResist;
+                        entity.motionY += dy * kmult * knockbackResist;
+                        entity.motionZ += dz * kmult * knockbackResist;
                         entity.velocityChanged = true;
                     }
                 }
@@ -181,9 +184,9 @@ public class ItemMace extends ItemDeeperDepths
     {
         EntityWindCharge entitywindcharge = new EntityWindCharge(spawnPoint.world, spawnPoint, immune);
         entitywindcharge.posY = spawnPoint.posY;
-        entitywindcharge.setBurstPower(0.55F * (enchantmentLevel + 1));
-        entitywindcharge.setBurstRange(2.5F);
-        entitywindcharge.setBurstInteractRange(2.5F);
+        entitywindcharge.setBurstPower(0.5F * (enchantmentLevel + 1));
+        entitywindcharge.setBurstRange(10F);
+        entitywindcharge.setBurstInteractRange(5F);
         entitywindcharge.forceSpawn = true;
         entitywindcharge.forceExplode(null);
         spawnPoint.world.spawnEntity(entitywindcharge);

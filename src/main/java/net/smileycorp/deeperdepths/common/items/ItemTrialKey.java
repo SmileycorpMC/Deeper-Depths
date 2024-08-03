@@ -31,7 +31,7 @@ public class ItemTrialKey extends ItemDeeperDepths {
     
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "item." + Constants.name(TextUtils.toProperCase(byMeta(stack.getMetadata())));
+        return "item." + Constants.name(byMeta(stack.getMetadata()));
     }
     
     public static boolean isOminous(ItemStack stack) {

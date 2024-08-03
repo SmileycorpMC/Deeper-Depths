@@ -1,18 +1,18 @@
 itemGroup.deeperdepths.tab=§3Deeper Depths
 
-item.deeperdepths.CopperIngot.name=Copper Ingot
-item.deeperdepths.AmethystShard.name=Amethyst Shard
-item.deeperdepths.EchoShard.name=Echo Shard
-item.deeperdepths.BreezeRod.name=Breeze Rod
-item.deeperdepths.Tallow.name=Tallow
+item.deeperdepths.copperingot.name=Copper Ingot
+item.deeperdepths.amethystshard.name=Amethyst Shard
+item.deeperdepths.echoshard.name=Echo Shard
+item.deeperdepths.breezerod.name=Breeze Rod
+item.deeperdepths.tallow.name=Tallow
 
-item.deeperdepths.WindCharge.name=Wind Charge
-item.deeperdepths.OminousBottle.name=Ominous Bottle
-item.deeperdepths.TrialKey.name=Trial Key
-item.deeperdepths.OminousKey.name=Ominous Trial Key
-item.deeperdepths.Spyglass.name=Spyglass
-item.deeperdepths.RecoveryCompass.name=Recovery Compass
-item.deeperdepths.Mace.name=Mace
+item.deeperdepths.windcharge.name=Wind Charge
+item.deeperdepths.ominousbottle.name=Ominous Bottle
+item.deeperdepths.trialkey.name=Trial Key
+item.deeperdepths.ominouskey.name=Ominous Trial Key
+item.deeperdepths.spyglass.name=Spyglass
+item.deeperdepths.recoverycompass.name=Recovery Compass
+item.deeperdepths.mace.name=Mace
 
 tile.deeperdepths.Tuff.name=Tuff
 tile.deeperdepths.TuffSlab.name=Tuff Slab
@@ -148,6 +148,7 @@ tile.deeperdepths.WaxedExposedCopperBulb.name=Waxed Exposed Copper Bulb
 tile.deeperdepths.WaxedWeatheredCopperBulb.name=Waxed Weathered Copper Bulb
 tile.deeperdepths.WaxedOxidizedCopperBulb.name=Waxed Oxidized Copper Bulb
 
+tile.deeperdepths.heavycore.name=Heavy Core
 tile.deeperdepths.TrialPot.name=Trial Pot
 tile.deeperdepths.TrialSpawner.name=Trial Spawner
 tile.deeperdepths.Vault.name=Vault
@@ -160,10 +161,10 @@ effect.deeperdepths.infested=Infested
 effect.deeperdepths.weaving=Weaving
 effect.deeperdepths.wind_charged=Wind Charged
 
-entity.deeperdepths.Bogged.name=Bogged
-entity.deeperdepths.Breeze.name=Breeze
-entity.deeperdepths.Bleeze.name=Bleeze
-entity.deeperdepths.Warden.name=Warden
+entity.deeperdepths.bogged.name=Bogged
+entity.deeperdepths.breeze.name=Breeze
+entity.deeperdepths.bleeze.name=Bleeze
+entity.deeperdepths.warden.name=Warden
 
 potion.potency.3=IV
 potion.potency.4=V

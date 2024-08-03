@@ -3,6 +3,7 @@ package net.smileycorp.deeperdepths.common.entities;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -73,7 +74,7 @@ public class EntityWindCharge extends EntityThrowable
 
         this.dataManager.register(BURST_RANGE, 10F);
         this.dataManager.register(BURST_INTERACT_RANGE, 5F);
-        this.dataManager.register(BURST_INTENSITY, 0.9F);
+        this.dataManager.register(BURST_INTENSITY, 1.2F);
         this.dataManager.register(DO_FALL_REDUCTION, Boolean.FALSE);
     }
 
@@ -168,7 +169,7 @@ public class EntityWindCharge extends EntityThrowable
     public void preformKnockbackEffects()
     {
         float scale = getBurstRange();
-        double knockbackStrength = getBurstPower();
+        double knockbackStrength = getBurstPower() + 0.2;
         float k = MathHelper.floor(this.posX - (double) scale - 1.0);
         float l = MathHelper.floor(this.posX + (double) scale + 1.0);
         double i2 = MathHelper.floor(this.posY - (double) scale - 1.0);
@@ -180,6 +181,10 @@ public class EntityWindCharge extends EntityThrowable
 
         for (Entity entity : list)
         {
+            Double knockbackResist = 1D;
+
+            if (entity instanceof EntityLivingBase) knockbackResist = knockbackResist - ((EntityLivingBase)entity).getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue();
+
             if (!entity.isImmuneToExplosions() && entity != this.knockbackImmune)
             {
                 double d12 = entity.getDistance(this.posX, this.posY, this.posZ) / (double) scale;
@@ -200,9 +205,9 @@ public class EntityWindCharge extends EntityThrowable
                         double blockStoppage = (double) this.checkBlockBlocking(vec3d, entity.getEntityBoundingBox());
                         double kmult = (knockbackStrength - d12) * blockStoppage;
 
-                        entity.motionX += dx * kmult;
-                        entity.motionY += dy * kmult;
-                        entity.motionZ += dz * kmult;
+                        entity.motionX += (dx * kmult);
+                        entity.motionY += (dy * kmult);
+                        entity.motionZ += (dz * kmult);
                         entity.velocityChanged = true;
                     }
                 }
@@ -231,7 +236,6 @@ public class EntityWindCharge extends EntityThrowable
                         double d5 = bb.minX + (bb.maxX - bb.minX) * (double)fx;
                         double d6 = bb.minY + (bb.maxY - bb.minY) * (double)fy;
                         double d7 = bb.minZ + (bb.maxZ - bb.minZ) * (double)fz;
-                        /* Might be a good idea to fork this logic, to detect and activate blocks later on. */
                         RayTraceResult result = this.world.rayTraceBlocks(new Vec3d(d5 + d3, d6, d7 + d4), vec, false, true, false);
 
                         if (result == null)
