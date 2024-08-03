@@ -33,7 +33,7 @@ public class ItemDeeperDepthsMaterial extends ItemDeeperDepths {
     
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "item." + Constants.name(TextUtils.toProperCase(byMeta(stack.getMetadata())));
+        return "item." + Constants.name(byMeta(stack.getMetadata()));
     }
     
 }

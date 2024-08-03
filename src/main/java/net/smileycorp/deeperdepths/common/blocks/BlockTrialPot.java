@@ -90,13 +90,13 @@ public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvi
     
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-       if (state.getValue(CRACKED)) {
-           TileEntity te = world.getTileEntity(pos);
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof TileTrialPot &! ((TileTrialPot)te).isEmpty()) drops.add(((TileTrialPot) te).getStackInSlot(0));
+        if (state.getValue(CRACKED)) {
            drops.add(new ItemStack(Items.BRICK, 4));
-           if (te instanceof TileTrialPot &! ((TileTrialPot)te).isEmpty()) drops.add(((TileTrialPot) te).getStackInSlot(0));
            return;
-       }
-       super.getDrops(drops, world, pos, state, fortune);
+        }
+        super.getDrops(drops, world, pos, state, fortune);
     }
     
     @Override

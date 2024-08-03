@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -53,42 +54,121 @@ public class ItemMace extends ItemDeeperDepths
     {
         stack.damageItem(1, attacker);
 
-        boolean heavyLand = false;
-
-        int breach_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.BREACH, attacker.getHeldItemMainhand());
-        int density_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.DENSITY, attacker.getHeldItemMainhand());
-        int wind_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.WIND_BURST, attacker.getHeldItemMainhand());
-
-        float fallDamage = calculateDamage(attacker);
-        float breachArmorIgnorePercent = breach_level * 0.15F;
-        float breachDamage = fallDamage * breachArmorIgnorePercent;
-        float densityAdditionalDamage = attacker.fallDistance * density_level * 0.5F;
-
-        target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker), (fallDamage - breachDamage) + densityAdditionalDamage);
-        target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker).setDamageBypassesArmor(), breachDamage + densityAdditionalDamage);
-
-        if (attacker.fallDistance > 3) heavyLand = true;
-        attacker.motionY = 2;
-        attacker.velocityChanged = true;
-        attacker.fallDistance = 0;
-
-        if (wind_level > 0) doWindBurst(attacker, wind_level, target);
-        else
+        if (attacker.fallDistance > 1.5)
         {
-            attacker.motionY = 0;
+            boolean heavyLand = false;
+
+            int breach_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.BREACH, attacker.getHeldItemMainhand());
+            int density_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.DENSITY, attacker.getHeldItemMainhand());
+            int wind_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.WIND_BURST, attacker.getHeldItemMainhand());
+
+            float fallDamage = calculateDamage(attacker);
+            float breachArmorIgnorePercent = breach_level * 0.15F;
+            float breachDamage = fallDamage * breachArmorIgnorePercent;
+            float densityAdditionalDamage = attacker.fallDistance * density_level * 0.5F;
+
+            target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker), (fallDamage - breachDamage) + densityAdditionalDamage);
+            target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker).setDamageBypassesArmor(), breachDamage + densityAdditionalDamage);
+
+            if (attacker.fallDistance > 3) heavyLand = true;
+            attacker.motionY = 2;
             attacker.velocityChanged = true;
+            attacker.fallDistance = 0;
+
+            if (wind_level > 0) doWindBurst(attacker, wind_level, target);
+            else
+            {
+                attacker.motionY = 0;
+                attacker.velocityChanged = true;
+            }
+
+            attacker.world.playSound(null, attacker.getPosition(), target.onGround ? heavyLand ? DeeperDepthsSoundEvents.MACE_SMASH_GROUND_HEAVY : DeeperDepthsSoundEvents.MACE_SMASH_GROUND : DeeperDepthsSoundEvents.MACE_SMASH_AIR, SoundCategory.PLAYERS, 1, 1);
+
+            pushFromTarget(target, attacker);
+            if (target.onGround) spawnSmashParticles(target);
         }
-
-        attacker.world.playSound(null, attacker.getPosition(), target.onGround ? heavyLand ? DeeperDepthsSoundEvents.MACE_SMASH_GROUND_HEAVY : DeeperDepthsSoundEvents.MACE_SMASH_GROUND : DeeperDepthsSoundEvents.MACE_SMASH_AIR, SoundCategory.PLAYERS, 1, 1);
-
-
-        pushFromTarget(target, attacker);
-
-
-        if (target.onGround) spawnSmashParticles(target);
         return true;
     }
 
+    /** Calculates the additional Damage for the Mace attack, before any enchantments. */
+    private static float calculateDamage(EntityLivingBase entity)
+    {
+        float fall = entity.fallDistance;
+        float damageResult = 0;
+
+        for (int i = 1; i <= fall; i++)
+        {
+            /* First 3 adds 4 damage */
+            if (i <= 3) damageResult += 4;
+            /* Next 5 adds 2 damage */
+            else if (i <= 3 + 5) damageResult += 2;
+            /* Dump the rest of Fall directly into Damage after, as each 1 deals 1 damage. */
+            else
+            {
+                damageResult += (fall - i + 1);
+                break;
+            }
+        }
+        return damageResult;
+    }
+
+    /** Spawns a Wind Charge directly inside the Mace Wielder, for the Wind Charged enchantment. */
+    private static void doWindBurst(EntityLivingBase spawnPoint, int enchantmentLevel, EntityLivingBase immune)
+    {
+        EntityWindCharge entitywindcharge = new EntityWindCharge(spawnPoint.world, spawnPoint, immune);
+        entitywindcharge.posY = spawnPoint.posY;
+        entitywindcharge.setBurstPower(0.5F * (enchantmentLevel + 1));
+        entitywindcharge.setBurstRange(10F);
+        entitywindcharge.setBurstInteractRange(5F);
+        entitywindcharge.forceSpawn = true;
+        entitywindcharge.forceExplode(null);
+        spawnPoint.world.spawnEntity(entitywindcharge);
+    }
+
+    /** Pushes entities away from the struck target. */
+    private static void pushFromTarget(Entity centerTarget, Entity ignored)
+    {
+        float distance = 2.5F;
+        float k = MathHelper.floor(centerTarget.posX - (double) distance - 1.0);
+        float l = MathHelper.floor(centerTarget.posX + (double) distance + 1.0);
+        double i2 = MathHelper.floor(centerTarget.posY - (double) distance - 1.0);
+        double i1 = MathHelper.floor(centerTarget.posY + (double) distance + 1.0);
+        double j2 = MathHelper.floor(centerTarget.posZ - (double) distance - 1.0);
+        double j1 = MathHelper.floor(centerTarget.posZ + (double) distance + 1.0);
+        List<Entity> list = centerTarget.world.getEntitiesWithinAABBExcludingEntity(centerTarget, new AxisAlignedBB((double) k, i2, j2, (double) l, i1, j1));
+
+        for (Entity entity : list)
+        {
+            if (entity != ignored)
+            {
+                double knockbackResist = 1.0D;
+                if (entity instanceof EntityLivingBase) knockbackResist -= ((EntityLivingBase)entity).getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue();
+
+                double d12 = entity.getDistance(entity.posX, entity.posY, entity.posZ) / (double) distance;
+                if (d12 <= 1.0)
+                {
+                    double dx = entity.posX - centerTarget.posX;
+                    double dy = entity.posY + (double) entity.getEyeHeight() - centerTarget.posY;
+                    double dz = entity.posZ - centerTarget.posZ;
+                    double reCheckDistance = (double) MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
+                    if (reCheckDistance != 0.0)
+                    {
+                        dx /= reCheckDistance;
+                        dy /= reCheckDistance;
+                        dz /= reCheckDistance;
+                        double kmult = (0.9 - d12);
+
+                        entity.motionX += dx * kmult * knockbackResist;
+                        entity.motionY += dy * kmult * knockbackResist;
+                        entity.motionZ += dz * kmult * knockbackResist;
+                        entity.velocityChanged = true;
+                    }
+                }
+            }
+        }
+    }
+
+    /** Spawns a ring of BlockDust Particles around the given entity. */
     private static void spawnSmashParticles(EntityLivingBase target)
     {
         /* Whole particle radius uses the block directly below the Target. */
@@ -114,104 +194,25 @@ public class ItemMace extends ItemDeeperDepths
         }
     }
 
-    /** Calculates the additional Damage for the Mace attack. */
-    private static float calculateDamage(EntityLivingBase entity)
-    {
-        float fall = entity.fallDistance;
-        float damageResult = 0;
-
-        for (int i = 1; i <= fall; i++)
-        {
-            /* First 3 adds 4 damage */
-            if (i <= 3) damageResult += 4;
-            /* Next 5 adds 2 damage */
-            else if (i <= 3 + 5) damageResult += 2;
-            /* Dump the rest of Fall directly into Damage after, as each 1 deals 1 damage. */
-            else
-            {
-                damageResult += (fall - i + 1);
-                break;
-            }
-        }
-
-        return damageResult;
-    }
-
-    /** Pushes entities away from the struck target. */
-    private static void pushFromTarget(Entity centerTarget, Entity ignored)
-    {
-        float distance = 2.5F;
-        float k = MathHelper.floor(centerTarget.posX - (double) distance - 1.0);
-        float l = MathHelper.floor(centerTarget.posX + (double) distance + 1.0);
-        double i2 = MathHelper.floor(centerTarget.posY - (double) distance - 1.0);
-        double i1 = MathHelper.floor(centerTarget.posY + (double) distance + 1.0);
-        double j2 = MathHelper.floor(centerTarget.posZ - (double) distance - 1.0);
-        double j1 = MathHelper.floor(centerTarget.posZ + (double) distance + 1.0);
-        List<Entity> list = centerTarget.world.getEntitiesWithinAABBExcludingEntity(centerTarget, new AxisAlignedBB((double) k, i2, j2, (double) l, i1, j1));
-
-        for (Entity entity : list)
-        {
-            if (entity != ignored)
-            {
-                double d12 = entity.getDistance(entity.posX, entity.posY, entity.posZ) / (double) distance;
-                if (d12 <= 1.0)
-                {
-                    double dx = entity.posX - centerTarget.posX;
-                    double dy = entity.posY + (double) entity.getEyeHeight() - centerTarget.posY;
-                    double dz = entity.posZ - centerTarget.posZ;
-                    double reCheckDistance = (double) MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
-                    if (distance != 0.0) {
-                        dx /= reCheckDistance;
-                        dy /= reCheckDistance;
-                        dz /= reCheckDistance;
-                        double kmult = (0.9 - d12);
-
-                        entity.motionX += dx * kmult;
-                        entity.motionY += dy * kmult;
-                        entity.motionZ += dz * kmult;
-                        entity.velocityChanged = true;
-                    }
-                }
-            }
-        }
-    }
-
-    /** Spawns a Wind Charge directly inside the Mace Wielder, for the Wind Charged enchantment. */
-    private static void doWindBurst(EntityLivingBase spawnPoint, int enchantmentLevel, EntityLivingBase immune)
-    {
-        EntityWindCharge entitywindcharge = new EntityWindCharge(spawnPoint.world, spawnPoint, immune);
-        entitywindcharge.posY = spawnPoint.posY;
-        entitywindcharge.setBurstPower(0.55F * (enchantmentLevel + 1));
-        entitywindcharge.setBurstRange(2.5F);
-        entitywindcharge.setBurstInteractRange(2.5F);
-        entitywindcharge.forceSpawn = true;
-        entitywindcharge.forceExplode(null);
-        spawnPoint.world.spawnEntity(entitywindcharge);
-    }
-
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
     {
-        if ((double)state.getBlockHardness(worldIn, pos) != 0.0) {
-            stack.damageItem(2, entityLiving);
-        }
-
+        if ((double)state.getBlockHardness(worldIn, pos) != 0.0) { stack.damageItem(2, entityLiving); }
         return true;
     }
+
+    public boolean canDestroyBlockInCreative(World world, BlockPos pos, ItemStack stack, EntityPlayer player)
+    { return false; }
 
     @SideOnly(Side.CLIENT)
-    public boolean isFull3D() {
-        return true;
-    }
+    public boolean isFull3D()
+    { return true; }
 
-    public int getItemEnchantability() {
-        return 15;
-    }
+    public int getItemEnchantability()
+    { return 15; }
 
-//    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-//    {
-//        ItemStack mat = this.material.getRepairItemStack();
-//        return !mat.isEmpty() && OreDictionary.itemMatches(mat, repair, false) ? true : super.getIsRepairable(toRepair, repair);
-//    }
+    /** Repaired using the Breeze Rod. */
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+    { return repair.getItem() == DeeperDepthsItems.MATERIALS && repair.getMetadata() == 3; }
 
     public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot)
     {

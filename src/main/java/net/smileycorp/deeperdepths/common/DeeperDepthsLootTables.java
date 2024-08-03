@@ -14,6 +14,7 @@ public class DeeperDepthsLootTables
     public static final ResourceLocation TRIAL_SPAWNER_KEY_OMINOUS = Constants.loc("ominous_trial_key");
     public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_PROJECTILES = Constants.loc("ominous_trial_projectiles");
     public static final ResourceLocation BOGGED_DROPS = Constants.loc("entities/bogged");
+    public static final ResourceLocation BREEZE_DROPS = Constants.loc("entities/breeze");
 
     public static void registerLootTables()
     {
@@ -26,5 +27,6 @@ public class DeeperDepthsLootTables
         LootTableList.register(TRIAL_SPAWNER_KEY_OMINOUS);
         LootTableList.register(TRIAL_SPAWNER_OMINOUS_PROJECTILES);
         LootTableList.register(BOGGED_DROPS);
+        LootTableList.register(BREEZE_DROPS);
     }
 }

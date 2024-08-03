@@ -52,34 +52,17 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperTrapdoor> WAXED_COPPER_TRAPDOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> WAXED_COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
-
-    public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
-    //public static final Block LIGHTNING_ROD = null;
     
-   /*
-    public static final Block COPPER_DOOR = null;
-    public static final Block EXPOSED_COPPER_DOOR = null;
-    public static final Block WEATHERED_COPPER_DOOR = null;
-    public static final Block OXIDIZED_COPPER_DOOR = null;
-    public static final Block WAXED_COPPER_DOOR = null;
-    public static final Block WAXED_EXPOSED_COPPER_DOOR = null;
-    public static final Block WAXED_WEATHERED_COPPER_DOOR = null;
-    public static final Block WAXED_OXIDIZED_COPPER_DOOR = null;
-    public static final Block COPPER_TRAPDOOR = null;
-    public static final Block EXPOSED_COPPER_TRAPDOOR = null;
-    public static final Block WEATHERED_COPPER_TRAPDOOR = null;
-    public static final Block OXIDIZED_COPPER_TRAPDOOR = null;
-    public static final Block WAXED_COPPER_TRAPDOOR = null;
-    public static final Block WAXED_EXPOSED_COPPER_TRAPDOOR = null;
-    public static final Block WAXED_WEATHERED_COPPER_TRAPDOOR = null;
-    public static final Block WAXED_OXIDIZED_COPPER_TRAPDOOR = null;*/
     
-    //functional blocks
-   
     //public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
     public static final BlockTrialSpawner TRIAL_SPAWNER = new BlockTrialSpawner();
     public static final BlockVault VAULT = new BlockVault();
     public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
+    public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
+    //public static final Block LIGHTNING_ROD = null;
+    
+   
+    //functional blocks
     
     //sculk
     /*public static final Block SCULK = null;

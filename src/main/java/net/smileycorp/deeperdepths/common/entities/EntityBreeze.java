@@ -27,7 +27,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.smileycorp.deeperdepths.animation.EZAnimation;
 import net.smileycorp.deeperdepths.animation.EZAnimationHandler;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
+import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+
+import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber
 public class EntityBreeze extends EntityMob implements IAnimatedEntity {
@@ -77,6 +80,11 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(24.0);
+    }
+
+    @Nullable
+    protected ResourceLocation getLootTable() {
+        return DeeperDepthsLootTables.BREEZE_DROPS;
     }
 
     protected SoundEvent getAmbientSound()
