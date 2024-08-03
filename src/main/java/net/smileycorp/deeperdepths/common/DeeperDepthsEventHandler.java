@@ -33,15 +33,14 @@ public class DeeperDepthsEventHandler {
         World world = event.getWorld();
         BlockPos pos = event.getPos();
         if (world == null) return;
-        if (world.isRemote) return;
         ItemStack stack = event.getItemStack();
         IBlockState state = world.getBlockState(pos);
         if (!(state.getBlock() instanceof ICopperBlock)) return;
         ICopperBlock copper = (ICopperBlock) state.getBlock();
         EntityLivingBase entity = event.getEntityLiving();
         if (copper.interactRequiresSneak() &! entity.isSneaking()) return;
-        if (stack.getItem() instanceof ItemAxe) copper.scrape(entity, world, stack, state, pos);
-        if (stack.getItem() == Items.SLIME_BALL) copper.wax(entity, world, stack, state, pos);
+        if (stack.getItem() instanceof ItemAxe) copper.scrape(entity, world, stack, state, pos, event.getHand());
+        if (stack.getItem() == Items.SLIME_BALL) copper.wax(entity, world, stack, state, pos, event.getHand());
     }
     
 }

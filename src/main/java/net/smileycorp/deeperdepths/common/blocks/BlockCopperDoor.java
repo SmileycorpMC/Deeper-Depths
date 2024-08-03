@@ -148,8 +148,10 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
         BlockPos otherpos = state.getValue(HALF) == EnumDoorHalf.LOWER ? pos.up() : pos.down();
         IBlockState other = world.getBlockState(otherpos);
         if (other.getBlock() != this) return false;
-        world.setBlockState(pos, getScraped(state), 3);
-        world.setBlockState(otherpos, getScraped(other), 3);
+        if (!world.isRemote) {
+            world.setBlockState(pos, getScraped(state), 3);
+            world.setBlockState(otherpos, getScraped(other), 3);
+        }
         return true;
     }
     
@@ -159,8 +161,10 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
         BlockPos otherpos = state.getValue(HALF) == EnumDoorHalf.LOWER ? pos.up() : pos.down();
         IBlockState other = world.getBlockState(otherpos);
         if (other.getBlock() != this) return false;
-        world.setBlockState(pos, getWaxed(state), 3);
-        world.setBlockState(otherpos, getWaxed(other), 3);
+        if (!world.isRemote) {
+            world.setBlockState(pos, getWaxed(state), 3);
+            world.setBlockState(otherpos, getWaxed(other), 3);
+        }
         return true;
     }
     
@@ -170,8 +174,10 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
         BlockPos otherpos = state.getValue(HALF) == EnumDoorHalf.LOWER ? pos.up() : pos.down();
         IBlockState other = world.getBlockState(otherpos);
         if (other.getBlock() != this) return false;
-        world.setBlockState(pos, getWeathered(state), 3);
-        world.setBlockState(otherpos, getWeathered(other), 3);
+        if (!world.isRemote) {
+            world.setBlockState(pos, getWeathered(state), 3);
+            world.setBlockState(otherpos, getWeathered(other), 3);
+        }
         return true;
     }
     
