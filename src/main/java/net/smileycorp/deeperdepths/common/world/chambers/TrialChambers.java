@@ -96,7 +96,6 @@ public class TrialChambers {
         TrialChambersTemplate tube = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(tube_types), rot);
         components.add(tube);
         int yDifference = getGroundFromAbove(world, posIdentified.getX(), posIdentified.getZ());
-        System.out.println("Surface Height at" + yDifference);
 
         if((yDifference - (chamberTubeVarHeight)) / 3 >= (tube_count + 2) * 2) {
             tube_count++;
@@ -203,7 +202,8 @@ public class TrialChambers {
         components.add(template_hall_1);
         hasGeneratedAConnect = false;
         if(CORRIDOR_SIZE_LIMIT < 6 && !isSecondMainCorridor) {
-            generateCorridorCross(template_hall_1, pos, rot);
+            int randomCross = ModRand.range(1, 3);
+            generateCorridorCross(template_hall_1, pos, rot, randomCross);
         }
 
         int chamberVar = ModRand.range(1, 15);
@@ -283,16 +283,28 @@ public class TrialChambers {
     //End Parts for 3rd Plate
 
     //handles generation of the Corridor 2 part and other chamber
-    public boolean generateCorridorCross(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        TrialChambersTemplate template_cross = addAdjustedPiece(parent, pos, "c_cross_1", rot);
-        components.add(template_cross);
-
-        if(world.rand.nextInt(2) == 0) {
-            generateSecondCorridor(template_cross, pos.add(18, 0, 0), rot.add(Rotation.CLOCKWISE_90));
-            secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
-        } else {
-            generateSecondCorridor(template_cross, pos.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
-            secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,0,0), rot.add(Rotation.CLOCKWISE_90));
+    public boolean generateCorridorCross(TrialChambersTemplate parent, BlockPos pos, Rotation rot, int id) {
+        TrialChambersTemplate template_cross;
+        if(id == 1) {
+          template_cross = addAdjustedPiece(parent, pos, "c_cross_1", rot);
+            components.add(template_cross);
+            if(world.rand.nextInt(2) == 0) {
+                generateSecondCorridor(template_cross, pos.add(18, 0, 0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else {
+                generateSecondCorridor(template_cross, pos.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,0,0), rot.add(Rotation.CLOCKWISE_90));
+            }
+        } else if (id == 2) {
+          template_cross = addAdjustedPiece(parent, pos.add(0, -15, 0), "c_cross_2", rot);
+            components.add(template_cross);
+            if(world.rand.nextInt(2) == 0) {
+                generateSecondCorridor(template_cross, pos.add(18, 15, 0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 15, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else {
+                generateSecondCorridor(template_cross, pos.add(0, 15, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,15,0), rot.add(Rotation.CLOCKWISE_90));
+            }
         }
         return true;
     }
