@@ -202,7 +202,7 @@ public class TrialChambers {
         components.add(template_hall_1);
         hasGeneratedAConnect = false;
         if(CORRIDOR_SIZE_LIMIT < 6 && !isSecondMainCorridor) {
-            int randomCross = ModRand.range(1, 3);
+            int randomCross = ModRand.range(1, 4);
             generateCorridorCross(template_hall_1, pos, rot, randomCross);
         }
 
@@ -304,6 +304,16 @@ public class TrialChambers {
             } else {
                 generateSecondCorridor(template_cross, pos.add(0, 15, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
                 secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,15,0), rot.add(Rotation.CLOCKWISE_90));
+            }
+        } else if (id == 3) {
+            template_cross = addAdjustedPiece(parent, pos.add(0, -3, 0), "c_cross_3", rot);
+            components.add(template_cross);
+            if(world.rand.nextInt(2) == 0) {
+                generateSecondCorridor(template_cross, pos.add(18, 3, 0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 3, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else {
+                generateSecondCorridor(template_cross, pos.add(0, 3, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,3,0), rot.add(Rotation.CLOCKWISE_90));
             }
         }
         return true;
