@@ -10,6 +10,7 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
@@ -20,6 +21,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,8 +50,11 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     public boolean isSlidingAnim() {return this.dataManager.get(SLIDE);}
     public void setSlidingAnim(boolean value) {this.dataManager.set(SLIDE, Boolean.valueOf(value));}
 
-    public EntityBreeze(World worldIn) {
+    public EntityBreeze(World worldIn)
+    {
         super(worldIn);
+        //this.jumpMovementFactor = this.getAIMoveSpeed() * 0.21600003184F;
+        this.experienceValue = 10;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(4, new AIWindChargeAttack(this));
+        this.tasks.addTask(4, new AIWindChargeAttack(this, 0.8));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0, 0.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
@@ -107,6 +112,7 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     @Override
     public void onUpdate() {
         super.onUpdate();
+        //this.onGround = true;
         IBlockState iblockstate = this.world.getBlockState(this.getPosition().down());
 
         if (this.world.isRemote)
@@ -171,20 +177,43 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
         this.setShootAttack(nbt.getBoolean("Shoot_Attack"));
     }
 
-
-    /** The entire Combat AI of the Breeze, very basic currently. */
+    /** The entire Combat AI of the Breeze, very basic currently.
+     *
+     * Has 3 States: Attack, Reposition, and Jump
+     * Base state is Reposition, trying to move behind the target. Hard interrupted by Jump or Attack state.
+     * Timer counts down before it enters Attack State. Attack only temp interupted by Retreating, will resume.
+     * Reposition can randomly go into Jump. Jump has no interrupt.
+     *
+     * Breeze will try to stack behind target, keep distance, and attack.
+     * */
     static class AIWindChargeAttack extends EntityAIBase
     {
         private final EntityBreeze breeze;
-        private int attackStep;
-        private int attackTime;
-        private boolean canJump = false;
-        private boolean didJump;
+        private final double entityMoveSpeed;
 
-        public AIWindChargeAttack(EntityBreeze breezeIn)
+        /** Timer used for entering Attack State. */
+        private int attackTimer = 0;
+        /** Timer used to space out actions. */
+        private int actionTimer = 0;
+        private int pauseTimer = 0;
+        /** If the Breeze needs to retreat currently. */
+        private boolean isRetreating = false;
+        /** If the Breeze is preforming a Jump. */
+        private boolean isJumping = false;
+        /** Max allowed time before a Breeze gives up on Retreating, and attacks. */
+        int maxRetreatTime = 80;
+        /** The distance to move behind the target. */
+        double repositionDistance = 8.0;
+        /** Movement has been give to the Breeze, and it is headed there. */
+        private boolean hasMovement = false;
+        double attackDistance = 16.0F;
+        double retreatDistance = 3.0F;
+
+        public AIWindChargeAttack(EntityBreeze breezeIn, double moveSpeedIn)
         {
             this.breeze = breezeIn;
             this.setMutexBits(3);
+            entityMoveSpeed = moveSpeedIn;
         }
 
         public boolean shouldExecute() {
@@ -192,9 +221,12 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
             return entitylivingbase != null && entitylivingbase.isEntityAlive();
         }
 
-        public void startExecuting() {
-            this.attackStep = 0;
+        public void startExecuting()
+        {
+            attackTimer = 10;
+            actionTimer = 0;
         }
+
 
         public void resetTask()
         {
@@ -205,75 +237,163 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
 
         public void updateTask()
         {
-            if (breeze.onGround)
+            if (!isJumping) attackTimer++;
+            boolean seeTarget = this.breeze.getEntitySenses().canSee(this.breeze.getAttackTarget());
+            EntityLivingBase entitylivingbase = this.breeze.getAttackTarget();
+            double d0 = this.breeze.getDistanceSq(entitylivingbase);
+            boolean dontGet2Close = d0 <= retreatDistance * retreatDistance;
+
+            float targetYaw = entitylivingbase.rotationYawHead * ((float)Math.PI / 180F);
+            Vec3d targetLook = new Vec3d(-Math.sin(targetYaw), 0, Math.cos(targetYaw));
+
+            double randomOffsetX = (this.breeze.getRNG().nextDouble() - 0.5) * 2.0;
+            double randomOffsetZ = (this.breeze.getRNG().nextDouble() - 0.5) * 2.0;
+
+            Vec3d behindTarget = entitylivingbase.getPositionVector().subtract(targetLook.scale(repositionDistance)).addVector(randomOffsetX, 0, randomOffsetZ);
+
+            if (isRetreating && attackTimer <= maxRetreatTime)
             {
-                didJump = false;
-                --this.attackTime;
-                EntityLivingBase entitylivingbase = this.breeze.getAttackTarget();
-                double d0 = this.breeze.getDistanceSq(entitylivingbase);
-                if (d0 < this.getFollowDistance() * this.getFollowDistance())
+                breeze.setShootAttack(false);
+                doRetreat(entitylivingbase, dontGet2Close);
+            }
+            else if (isJumping)
+            {
+                this.breeze.getNavigator().clearPath();
+                this.breeze.getLookHelper().setLookPosition(behindTarget.x, behindTarget.y, behindTarget.z, 10.0F, 10.0F);
+                ++this.actionTimer;
+
+                if (this.actionTimer == 5)
                 {
-                    if (this.attackStep == 1)
+                    this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_CHARGE, 1, 1);
+                }
+                else if (this.actionTimer == 20)
+                {
+                    double moveDistance = breeze.getDistanceSq(behindTarget.x, behindTarget.y, behindTarget.z);
+                    this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_JUMP, 1, 1);
+                    this.breeze.motionY = Math.min(1.0, 0.2D + moveDistance * 0.01D);
+                    this.breeze.velocityChanged = true;
+                    this.breeze.getMoveHelper().setMoveTo(behindTarget.x, behindTarget.y, behindTarget.z, entityMoveSpeed * 3);
+                }
+
+                if (actionTimer >= 25 && (this.breeze.onGround || breeze.isInWater()) )
+                {
+                    this.actionTimer = 0;
+                    this.attackTimer = 20;
+                    isJumping = false;
+                }
+            }
+            else if (attackTimer > 20)
+            {
+                if (dontGet2Close && attackTimer <= maxRetreatTime)
+                {
+                    hasMovement = false;
+                    isRetreating = true;
+                }
+
+                this.breeze.getNavigator().clearPath();
+                this.breeze.getLookHelper().setLookPositionWithEntity(entitylivingbase, 10.0F, 10.0F);
+
+                if (d0 <= attackDistance * attackDistance && seeTarget)
+                {
+                    ++this.actionTimer;
+                    if (this.actionTimer == 5 && (breeze.onGround || breeze.isInWater()))
                     {
                         this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_INHALE, 1, 1);
                         breeze.setShootAttack(true);
                     }
-
-
-                    double d1 = entitylivingbase.posX - this.breeze.posX;
-                    double d2 = entitylivingbase.getEntityBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (this.breeze.posY + (double)(this.breeze.height / 2.0F));
-                    double d3 = entitylivingbase.posZ - this.breeze.posZ;
-                    if (this.attackTime <= 0)
+                    else if (this.actionTimer >= 25 && seeTarget && (breeze.onGround || breeze.isInWater()))
                     {
-                        ++this.attackStep;
-                        if (this.attackStep == 20)
-                        {
-                            float f = MathHelper.sqrt(MathHelper.sqrt(d0)) * 0.5F;
-
-                            this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_SHOOT, 1, 1);
-
-                            EntityWindCharge entitywindcharge = new EntityWindCharge(this.breeze.world, this.breeze, this.breeze);
-                            double s1 = entitylivingbase.posY + entitylivingbase.height/3;
-                            double s2 = entitylivingbase.posX - breeze.posX;
-                            double s3 = s1 - entitywindcharge.posY;
-                            double s4 = entitylivingbase.posZ - breeze.posZ;
-                            float j = MathHelper.sqrt(s2 * s2 + s4 * s4) * 0.2F;
-                            entitywindcharge.shoot(s2, s3 + (double)j, s4, 0.8F, 1.0F);
-
-                            entitywindcharge.posY = this.breeze.posY + 0.5;
-                            this.breeze.world.spawnEntity(entitywindcharge);
-                            canJump = true;
-                        }
-                        else if(this.attackStep == 40)
-                        {
-                            if (!this.breeze.world.getBlockState(breeze.getPosition().up(2)).isSideSolid(this.breeze.world, breeze.getPosition().up(2), EnumFacing.DOWN))
-                            {
-                                this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_JUMP, 1, 1);
-                                this.breeze.motionX = this.breeze.getRNG().nextGaussian()/1.1;
-                                this.breeze.motionZ = this.breeze.getRNG().nextGaussian()/1.1;
-                                this.breeze.motionY = 0.8D;
-                                this.breeze.velocityChanged = true;
-                            }
-
-                            this.attackStep = 0;
-                            this.breeze.getLookHelper().setLookPositionWithEntity(entitylivingbase, 10.0F, 10.0F);
-                        }
+                        attackWindCharge(entitylivingbase, d0);
+                        breeze.setShootAttack(false);
+                        hasMovement = false;
+                        this.actionTimer = 0;
+                        this.attackTimer = 0;
+                        pauseTimer = 5 + breeze.getRNG().nextInt(6);
                     }
-
-                    this.breeze.getLookHelper().setLookPositionWithEntity(entitylivingbase, 10.0F, 10.0F);
-                } else {
+                }
+                else
+                {
+                    breeze.setShootAttack(false);
                     this.breeze.getNavigator().clearPath();
-                    this.breeze.getMoveHelper().setMoveTo(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, 1.0);
+
+                    this.breeze.getNavigator().tryMoveToXYZ(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, entityMoveSpeed);
+
+                    this.actionTimer = 0;
                 }
             }
-            else if (canJump && !didJump)
+            else
             {
-                canJump = true;
-                didJump = true;
+                breeze.setShootAttack(false);
+                if (!hasMovement)
+                {
+                    if (breeze.getRNG().nextInt(4) != 0 || breeze.isInWater()) isJumping = true;
+                    hasMovement = true;
+                }
+
+                this.breeze.getNavigator().clearPath();
+                this.breeze.getNavigator().tryMoveToXYZ(behindTarget.x, behindTarget.y, behindTarget.z, entityMoveSpeed);
+            }
+
+            super.updateTask();
+        }
+
+        /** Shoot a Wind Charge at the target entity. */
+        private void doRetreat(Entity target, boolean dontGet2Close)
+        {
+            ++this.actionTimer;
+
+            if (!hasMovement)
+            {
+                this.breeze.getNavigator().clearPath();
+
+                Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.breeze, 4, 4, new Vec3d(target.posX, target.posY, target.posZ));
+
+                if (vec3d != null) this.breeze.getNavigator().setPath(this.breeze.getNavigator().getPathToXYZ(vec3d.x, vec3d.y, vec3d.z), entityMoveSpeed);
+
+                this.hasMovement = true;
             }
 
 
-            super.updateTask();
+            if (this.breeze.isInWater())
+            {
+                this.doAWackyBoing();
+            }
+
+
+            if (this.breeze.getNavigator().noPath())
+            {
+                this.actionTimer = 0;
+                this.hasMovement = false;
+                if (!dontGet2Close) isRetreating = false;
+            }
+        }
+
+        /** Shoot a Wind Charge at the target entity. */
+        private void attackWindCharge(Entity target, double distance)
+        {
+            float f = MathHelper.sqrt(MathHelper.sqrt(distance)) * 0.5F;
+
+            this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_SHOOT, 1, 1);
+
+            EntityWindCharge entitywindcharge = new EntityWindCharge(this.breeze.world, this.breeze, this.breeze);
+            double s1 = target.posY - this.breeze.posY + 0.5;
+            double s2 = target.posX - breeze.posX;
+            //double s3 = s1 - entitywindcharge.posY;
+            double s4 = target.posZ - breeze.posZ;
+            float j = MathHelper.sqrt(s2 * s2 + s4 * s4) * 0.2F;
+            entitywindcharge.shoot(s2, s1, s4, 0.7F, 1.0F);
+
+            entitywindcharge.posY = this.breeze.posY + 0.5;
+            this.breeze.world.spawnEntity(entitywindcharge);
+        }
+
+        private void doAWackyBoing()
+        {
+            this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_JUMP, 1, 1);
+            //this.breeze.motionX = this.breeze.getRNG().nextGaussian()/1.1;
+            //this.breeze.motionZ = this.breeze.getRNG().nextGaussian()/1.1;
+            this.breeze.motionY = 0.8D;
+            this.breeze.velocityChanged = true;
         }
 
         private double getFollowDistance() {

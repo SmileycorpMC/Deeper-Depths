@@ -74,7 +74,7 @@ public class EntityWindCharge extends EntityThrowable
 
         this.dataManager.register(BURST_RANGE, 10F);
         this.dataManager.register(BURST_INTERACT_RANGE, 5F);
-        this.dataManager.register(BURST_INTENSITY, 1.2F);
+        this.dataManager.register(BURST_INTENSITY, 0.8F);
         this.dataManager.register(DO_FALL_REDUCTION, Boolean.FALSE);
     }
 
