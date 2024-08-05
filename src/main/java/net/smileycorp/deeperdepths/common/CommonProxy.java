@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -29,10 +30,12 @@ public class CommonProxy {
         DeeperDepthsLootTables.registerLootTables();
     }
     
-    public void init(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event)
+    {
         int packetId = 0;
         DeeperDepths.network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
         DeeperDepths.network.registerMessage(AnimationMessage.Handler.class, AnimationMessage.class, packetId++, Side.SERVER);
+        CapabilityManager.INSTANCE.register(CapabilityWindChargeFall.ICapabilityWindChargeFall.class, new CapabilityWindChargeFall.Storage(), CapabilityWindChargeFall.WindChargeHorn::new);
     }
     
     public void postInit(FMLPostInitializationEvent event)
@@ -50,6 +53,7 @@ public class CommonProxy {
                 entitywindcharge.setBurstPower(nbttagcompound != null && nbttagcompound.hasKey("BurstPower") ? nbttagcompound.getFloat("BurstPower") : 0.9F);
                 entitywindcharge.setBurstRange(nbttagcompound != null && nbttagcompound.hasKey("BurstRange") ? nbttagcompound.getFloat("BurstRange") : 2.5F);
                 entitywindcharge.setBurstInteractRange(nbttagcompound != null && nbttagcompound.hasKey("BurstInteractRange") ? nbttagcompound.getFloat("BurstInteractRange") : 2.5F);
+                entitywindcharge.setPlayerFallReduction(true);
 
                 return entitywindcharge;
             }

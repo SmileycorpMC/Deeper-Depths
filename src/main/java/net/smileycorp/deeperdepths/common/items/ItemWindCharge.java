@@ -32,6 +32,7 @@ public class ItemWindCharge extends ItemDeeperDepths
             entitywindcharge.setBurstPower(nbttagcompound != null && nbttagcompound.hasKey("BurstPower") ? nbttagcompound.getFloat("BurstPower") : 1.0F);
             entitywindcharge.setBurstRange(nbttagcompound != null && nbttagcompound.hasKey("BurstRange") ? nbttagcompound.getFloat("BurstRange") : 2.5F);
             entitywindcharge.setBurstInteractRange(nbttagcompound != null && nbttagcompound.hasKey("BurstInteractRange") ? nbttagcompound.getFloat("BurstInteractRange") : 2.5F);
+            entitywindcharge.setPlayerFallReduction(true);
             worldIn.spawnEntity(entitywindcharge);
         }
 

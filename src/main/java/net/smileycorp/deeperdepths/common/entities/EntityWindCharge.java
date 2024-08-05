@@ -17,11 +17,10 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.smileycorp.deeperdepths.client.ClientProxy;
+import net.smileycorp.deeperdepths.common.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 
 import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +45,6 @@ public class EntityWindCharge extends EntityThrowable
     private int ticksInAir;
     public Entity ignoreEntity;
     private int ignoreTime;
-
-    //boolean playerFallReduction;
 
     public EntityWindCharge(World worldIn, EntityLivingBase throwerIn)
     { super(worldIn, throwerIn); }
@@ -124,19 +121,22 @@ public class EntityWindCharge extends EntityThrowable
     protected void onImpact(RayTraceResult result)
     {
         SoundEvent burstSound = knockbackImmune instanceof EntityBreeze ? DeeperDepthsSoundEvents.BREEZE_WIND_BURST : DeeperDepthsSoundEvents.WIND_CHARGE_WIND_BURST;
+        float pitch = knockbackImmune instanceof EntityBreeze ? this.rand.nextFloat() * 0.336F + 0.672F : this.rand.nextFloat() * 0.305F + 0.7F;
 
-        this.playSound(burstSound, 1, 1);
+        this.playSound(burstSound, 1.0F, pitch);
 
 
         if (!this.world.isRemote)
         {
-            if (result != null && result.entityHit != null && !(result.entityHit instanceof EntityEnderCrystal))
+            /* TODO: Seperate out into its own method! */
+            if (result != null && result.entityHit != null && !(result.entityHit instanceof EntityEnderCrystal) && !(result.entityHit == this.getThrower()))
             {
                 result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)1);
+                /* This is Bedrock specific behavior, maybe make it optional? */
                 if(this.isBurning()) result.entityHit.setFire(5);
             }
 
-            preformKnockbackEffects();
+            preformKnockbackEffects(0.0);
             checkBlockInteraction(this.getPosition());
 
             this.world.setEntityState(this, (byte)3);
@@ -153,9 +153,6 @@ public class EntityWindCharge extends EntityThrowable
                 double z = this.posZ + world.rand.nextFloat() * range - world.rand.nextFloat() * range;
 
                 ((WorldServer)this.world).spawnParticle(type, x, y, z, 1, 0, 0, 0, 0.0);
-
-                /** Client Proxy Particle causes a Crash!!! */
-                //ClientProxy.addParticle(type, x, y, z, Color.WHITE);
             }
         }
     }
@@ -165,11 +162,14 @@ public class EntityWindCharge extends EntityThrowable
         return 0.0F;
     }
 
-    /** Mostly from Minecraft's Explosion Code, as Wind Charges use the same code, but altered to remove damage. */
-    public void preformKnockbackEffects()
+    /** Mostly from Minecraft's Explosion Code, as Wind Charges use the same code, but altered a ton for customizability.
+     *
+     * resistModifier is how much Knockback Resistance is applied.
+     * */
+    public void preformKnockbackEffects(double resistModifier)
     {
         float scale = getBurstRange();
-        double knockbackStrength = getBurstPower() + 0.2;
+        double knockbackStrength = getBurstPower() + 0.1;
         float k = MathHelper.floor(this.posX - (double) scale - 1.0);
         float l = MathHelper.floor(this.posX + (double) scale + 1.0);
         double i2 = MathHelper.floor(this.posY - (double) scale - 1.0);
@@ -181,9 +181,9 @@ public class EntityWindCharge extends EntityThrowable
 
         for (Entity entity : list)
         {
-            Double knockbackResist = 1D;
-
-            if (entity instanceof EntityLivingBase) knockbackResist = knockbackResist - ((EntityLivingBase)entity).getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue();
+            /* Multiplied by the knockback to lower it, so low number means lower knockback! */
+            double knockbackResist = 1D;
+            if (entity instanceof EntityLivingBase) knockbackResist -= ((EntityLivingBase) entity).getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue() * resistModifier;
 
             if (!entity.isImmuneToExplosions() && entity != this.knockbackImmune)
             {
@@ -205,10 +205,25 @@ public class EntityWindCharge extends EntityThrowable
                         double blockStoppage = (double) this.checkBlockBlocking(vec3d, entity.getEntityBoundingBox());
                         double kmult = (knockbackStrength - d12) * blockStoppage;
 
-                        entity.motionX += (dx * kmult);
-                        entity.motionY += (dy * kmult);
-                        entity.motionZ += (dz * kmult);
+                        entity.motionX += (dx * kmult) * knockbackResist;
+                        entity.motionY += (dy * kmult) * knockbackResist;
+                        entity.motionZ += (dz * kmult) * knockbackResist;
                         entity.velocityChanged = true;
+
+
+                        if (entity instanceof EntityPlayer)
+                        {
+                            CapabilityWindChargeFall.ICapabilityWindChargeFall capWindCharge = entity.getCapability(CapabilityWindChargeFall.WINDBURSTHEIGHT_CAP, null);
+
+                            if (getPlayerFallReduction())
+                            {
+                                capWindCharge.setUsedWindCharge(true);
+                                capWindCharge.setWindBurstHeight((int)this.posY);
+                                /** This is the Scheduled time, where the landing must occur BEFORE this, or it wil not be applied. */
+                                int getTime = (int) (entity.ticksExisted + Math.max(entity.motionY * 60, 30));
+                                capWindCharge.setWindBurstTime(getTime);
+                            }
+                        }
                     }
                 }
             }
@@ -453,7 +468,14 @@ public class EntityWindCharge extends EntityThrowable
     { this.dataManager.set(BURST_INTENSITY, Float.valueOf(size)); }
 
     public float getBurstPower()
-    { return ((Float)this.dataManager.get(BURST_INTENSITY)).floatValue(); }
+    { return ((Float)this.dataManager.get(BURST_INTENSITY)); }
+
+    public void setPlayerFallReduction(boolean boolIn)
+    { this.dataManager.set(DO_FALL_REDUCTION, boolIn); }
+
+    public boolean getPlayerFallReduction()
+    { return ((boolean)this.dataManager.get(DO_FALL_REDUCTION)); }
+
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound)
@@ -463,6 +485,7 @@ public class EntityWindCharge extends EntityThrowable
         this.dataManager.set(BURST_RANGE, Float.valueOf(compound.getFloat("BurstRange")));
         this.dataManager.set(BURST_INTERACT_RANGE, Float.valueOf(compound.getFloat("BurstInteractRange")));
         this.dataManager.set(BURST_INTENSITY, Float.valueOf(compound.getFloat("BurstPower")));
+        this.setPlayerFallReduction(compound.getBoolean("PlayerFallDamageReduction"));
     }
 
     @Override
@@ -473,5 +496,6 @@ public class EntityWindCharge extends EntityThrowable
         compound.setFloat("BurstRange", getBurstRange());
         compound.setFloat("BurstInteractRange", getBurstInteractRange());
         compound.setFloat("BurstPower", getBurstPower());
+        compound.setBoolean("PlayerFallDamageReduction", getPlayerFallReduction());
     }
 }

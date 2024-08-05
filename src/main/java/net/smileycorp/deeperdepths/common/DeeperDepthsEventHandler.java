@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -29,8 +30,6 @@ import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 
 import java.util.Random;
-
-import static net.smileycorp.deeperdepths.common.CapabilityWindChargeFall.createProvider;
 
 public class DeeperDepthsEventHandler {
     
@@ -143,6 +142,54 @@ public class DeeperDepthsEventHandler {
             deflectProjectile(projectile);
             //projectile.thrower = entityBlocking;
             event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public void attachCapabilities(AttachCapabilitiesEvent<Entity> event)
+    {
+        if (event.getObject() instanceof EntityPlayer)
+        {
+            event.addCapability(CapabilityWindChargeFall.ID, new CapabilityWindChargeFall.Provider(new CapabilityWindChargeFall.WindChargeHorn(), CapabilityWindChargeFall.WINDBURSTHEIGHT_CAP, null));
+        }
+    }
+
+    @SubscribeEvent
+    public void onFall(LivingFallEvent event)
+    {
+        if (event.getEntity() == null) return;
+
+        if (event.getEntity().hasCapability(CapabilityWindChargeFall.WINDBURSTHEIGHT_CAP, null))
+        {
+            CapabilityWindChargeFall.ICapabilityWindChargeFall capWindCharge = event.getEntity().getCapability(CapabilityWindChargeFall.WINDBURSTHEIGHT_CAP, null);
+
+            if (capWindCharge.getUsedWindCharge())
+            {
+                boolean getTime = event.getEntity().ticksExisted <= capWindCharge.getWindBurstTime();
+
+                //System.out.print("Height is: " + getTime + "Entity is: " + event.getEntity().ticksExisted);
+
+                if (event.getDistance() > 3 && getTime)
+                {
+                    if (event.getEntity().posY < capWindCharge.getWindBurstHeight())
+                    {
+                        event.setDistance((float) (capWindCharge.getWindBurstHeight() - event.getEntity().posY) + 2);
+                        capWindCharge.setUsedWindCharge(false);
+                        capWindCharge.setWindBurstHeight(0.0);
+                    }
+                    else
+                    {
+                        capWindCharge.setUsedWindCharge(false);
+                        capWindCharge.setWindBurstHeight(0.0);
+                        event.setDistance(0);
+                    }
+                }
+                else
+                {
+                    capWindCharge.setUsedWindCharge(false);
+                    capWindCharge.setWindBurstHeight(0.0);
+                }
+            }
         }
     }
 }
