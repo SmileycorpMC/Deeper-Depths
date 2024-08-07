@@ -1,8 +1,5 @@
 {
   "variants": {
-    "normal": {
-      "model": "deeperdepths:weathered_copper_door_inventory"
-    },
     "facing=east,half=lower,hinge=left,open=false": {
       "model": "deeperdepths:weathered_copper_door_bottom"
     },
