@@ -53,7 +53,7 @@ public class TrialChambers {
     public void startChambers(BlockPos pos, Rotation rot) {
         posIdentified = pos;
         TrialChambersTemplate template = new TrialChambersTemplate(manager, "c_board", pos, rot, 0, true);
-        String[] b_entrance_types = {"e_hall_big_entrance_1", "e_hall_big_entrance_2", "e_hall_big_entrance_3"};
+        String[] b_entrance_types = {"e_hall_big_entrance_1", "e_hall_big_entrance_2", "e_hall_big_entrance_3", "e_hall_big_entrance_4", "e_hall_big_entrance_5"};
         TrialChambersTemplate templateStart = new TrialChambersTemplate(manager, ModRand.choice(b_entrance_types), pos.add(0, 1, 0), rot, 0,true);
         components.add(template);
         components.add(templateStart);
@@ -321,7 +321,7 @@ public class TrialChambers {
 
     public boolean generateSecondCorridor(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
         TrialChambersTemplate first_board = addAdjustedPieceWithoutCount(parent, pos.add(0, -8, 0), "c_board", rot);
-        String[] b_entrance_types = {"e_hall_big_entrance_1", "e_hall_big_entrance_2", "e_hall_big_entrance_3"};
+        String[] b_entrance_types = {"e_hall_big_entrance_1", "e_hall_big_entrance_2", "e_hall_big_entrance_3", "e_hall_big_entrance_4", "e_hall_big_entrance_5"};
         TrialChambersTemplate bigEntryRoom = addAdjustedPieceWithoutCount(parent, pos.add(0, -7, 0), ModRand.choice(b_entrance_types), rot);
         isSecondMainCorridor = true;
         components.add(first_board);
