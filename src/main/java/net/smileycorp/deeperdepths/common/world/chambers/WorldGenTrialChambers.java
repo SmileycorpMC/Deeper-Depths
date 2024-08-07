@@ -21,8 +21,10 @@ public class WorldGenTrialChambers extends WorldGenerator {
 
     @Override
     public boolean generate(World world, Random random, BlockPos pos) {
-            //For this you can make it a configurable number and as well add additional parameters for spawning
-        if(spacing > 1200) {
+        /**
+         * MAKE THIS CONFIGURABLE, SPACING IS THE AMOUNT OF EACH TIME IT IS CAPAPABLE OF GENERATING
+         */
+        if((spacing / 4) > 525) {
             getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
                     .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
             return true;

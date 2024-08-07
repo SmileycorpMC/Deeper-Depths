@@ -170,12 +170,12 @@ public class TrialChambersTemplate extends DDStructureTemplate {
 
     private boolean generateVaultSpawn() {
         int randomNumberVaultGenerator = ModRand.range(0, 11);
-        return randomNumberVaultGenerator < 6;
+        return randomNumberVaultGenerator <= 6;
     }
 
     private boolean generateOminousVaultSpawn() {
         int randomOmniGenerator = ModRand.range(0, 11);
-        return randomOmniGenerator < 8;
+        return randomOmniGenerator < 9;
     }
 
     private boolean generatePotSpawn() {
