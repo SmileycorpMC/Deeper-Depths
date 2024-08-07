@@ -61,7 +61,7 @@ public class TrialChambers {
         CORRIDOR_SIZE_LIMIT++;
         System.out.println("Generated Trial Chambers at" + pos);
         TrialChambersTemplate.resetTemplateCount();
-        int entryVar = ModRand.range(1, 3);
+        int entryVar = ModRand.range(1, 5);
         placeEntryRoom(templateStart, BlockPos.ORIGIN, rot.add(Rotation.CLOCKWISE_180), entryVar);
     }
 
@@ -81,6 +81,22 @@ public class TrialChambers {
             //add config to have this disabled
                 placeModifyTube(room, BlockPos.ORIGIN.add(-12,21, 0), rot);
                 chamberTubeVarHeight = 54;
+        } else if(id == 3) {
+            TrialChambersTemplate room = addAdjustedPieceWithoutCount(parent, pos.add(19, 2, 18), "chamber/chamber_entry_3", rot);
+            components.add(room);
+            //add Config to have this disabled
+            placeModifyTube(room, BlockPos.ORIGIN.add(-12, 18, 0), rot);
+            chamberTubeVarHeight = 47;
+            //rel 41
+            //old 49
+        } else if (id == 4) {
+            TrialChambersTemplate room = addAdjustedPieceWithoutCount(parent, pos.add(19, -3, 18), "chamber/chamber_entry_4", rot);
+            components.add(room);
+            //add Config to have this disabled
+            placeModifyTube(room, BlockPos.ORIGIN.add(-12, 18, 0), rot);
+            chamberTubeVarHeight = 42;
+            //rel 37
+            //old 44
         }
 
         return true;
@@ -115,7 +131,7 @@ public class TrialChambers {
     }
 
     public boolean generateSecondBoard(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
+        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1" ,"c_hall_m_2", "c_hall_m_3", "c_hall_m_4", "c_hall_m_5"};
         TrialChambersTemplate template = addAdjustedPieceWithoutCount(parent, pos, "c_board", rot);
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos.add(0, 1, 0), ModRand.choice(c_hall_types), rot);
 
@@ -149,7 +165,7 @@ public class TrialChambers {
 
     //Second Plate Begin
     public boolean generateFillPlate2(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
+        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1" ,"c_hall_m_2", "c_hall_m_3", "c_hall_m_4", "c_hall_m_5"};
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generateFillPlate3(template_hall_1, pos, rot);
@@ -158,7 +174,7 @@ public class TrialChambers {
     }
 
     public boolean generateFillPlate3(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
+        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1" ,"c_hall_m_2", "c_hall_m_3", "c_hall_m_4", "c_hall_m_5"};
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
 
@@ -188,7 +204,7 @@ public class TrialChambers {
     }
 
     public boolean generateFillPlate4(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
+        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1" ,"c_hall_m_2", "c_hall_m_3", "c_hall_m_4", "c_hall_m_5"};
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generateThirdBoard(template_hall_1, pos, rot);
@@ -202,7 +218,7 @@ public class TrialChambers {
         components.add(template_hall_1);
         hasGeneratedAConnect = false;
         if(CORRIDOR_SIZE_LIMIT < 6 && !isSecondMainCorridor) {
-            int randomCross = ModRand.range(1, 4);
+            int randomCross = ModRand.range(1, 5);
             generateCorridorCross(template_hall_1, pos, rot, randomCross);
         }
 
@@ -214,7 +230,7 @@ public class TrialChambers {
     }
     //Second Plate End
     public boolean generateThirdBoard(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
+        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1","c_hall_m_2", "c_hall_m_3", "c_hall_m_4", "c_hall_m_5" };
         TrialChambersTemplate template = addAdjustedPieceWithoutCount(parent, pos.add(0, -1, 0), "c_board", rot);
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
 
@@ -248,7 +264,7 @@ public class TrialChambers {
     }
     //Parts for the 3rd Plate
     public boolean generate3FillPlate2(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
+        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1" ,"c_hall_m_2", "c_hall_m_3", "c_hall_m_4", "c_hall_m_5"};
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generate3FillPlate3(template_hall_1, pos, rot);
@@ -257,7 +273,7 @@ public class TrialChambers {
     }
 
     public boolean generate3FillPlate3(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1"};
+        String[] c_hall_types = {"c_hall_1", "c_hall_2", "c_hall_3", "c_hall_4", "c_hall_5", "c_hall_6", "c_hall_m_1" ,"c_hall_m_2", "c_hall_m_3", "c_hall_m_4", "c_hall_m_5"};
         TrialChambersTemplate template_hall_1 = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(c_hall_types), rot);
         components.add(template_hall_1);
         generateEndCorridorPlate(template_hall_1, pos, rot);
@@ -314,6 +330,16 @@ public class TrialChambers {
             } else {
                 generateSecondCorridor(template_cross, pos.add(0, 3, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
                 secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,3,0), rot.add(Rotation.CLOCKWISE_90));
+            }
+        } else if (id == 4) {
+            template_cross = addAdjustedPiece(parent, pos.add(0, -5, 0), "c_cross_4", rot);
+            components.add(template_cross);
+            if(world.rand.nextInt(2) == 0) {
+                generateSecondCorridor(template_cross, pos.add(18, 5, 0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 5, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+            } else {
+                generateSecondCorridor(template_cross, pos.add(0, 5, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,5,0), rot.add(Rotation.CLOCKWISE_90));
             }
         }
         return true;
