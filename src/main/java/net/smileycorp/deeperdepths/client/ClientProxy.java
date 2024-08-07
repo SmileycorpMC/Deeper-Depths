@@ -1,10 +1,12 @@
 package net.smileycorp.deeperdepths.client;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumParticleTypes;
@@ -27,6 +29,7 @@ import net.smileycorp.deeperdepths.client.tesr.TESRTrialSpawner;
 import net.smileycorp.deeperdepths.client.tesr.TESRVault;
 import net.smileycorp.deeperdepths.common.CommonProxy;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.blocks.BlockTrialPot;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.IBlockProperties;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
@@ -72,11 +75,11 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_STONE_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CUT_COPPER_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_CUT_COPPER_SLAB, new SlabStateMapper());
-        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.TRIAL_POT, new DirectionalStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.TRIAL_POT, new StateMap.Builder().ignore(BlockTrialPot.CRACKED).build());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.VAULT, new VaultStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.TRIAL_SPAWNER, new TrialSpawnerStateMapper());
-        for (Block block : DeeperDepthsBlocks.COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new CopperDoorStateMapper());
-        for (Block block : DeeperDepthsBlocks.WAXED_COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new CopperDoorStateMapper());
+        for (Block block : DeeperDepthsBlocks.COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
+        for (Block block : DeeperDepthsBlocks.WAXED_COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
                 ((IBlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
