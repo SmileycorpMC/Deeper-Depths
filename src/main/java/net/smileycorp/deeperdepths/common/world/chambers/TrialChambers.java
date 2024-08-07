@@ -453,7 +453,8 @@ public class TrialChambers {
 
     //Connect Piece 1
     public boolean connectPieceOne(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_1", rot);
+        String[] connect_types = {"connect/connect_piece_1", "connect/connect_piece_4"};
+        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(connect_types), rot);
         if(connect_piece.isCollidingExcParent(manager, parent, components)) {
             return false;
         }
@@ -472,7 +473,8 @@ public class TrialChambers {
     //End Connect Piece 1
 
     public boolean connectPieceTwo(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_2", rot);
+        String[] connect_types = {"connect/connect_piece_2", "connect/connect_piece_5","connect/connect_piece_7" };
+        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(connect_types), rot);
         if(connect_piece.isCollidingExcParent(manager, parent, components)) {
             return false;
         }
@@ -488,7 +490,8 @@ public class TrialChambers {
     }
 
     public boolean connectPieceThree(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, "connect/connect_piece_3", rot);
+        String[] connect_types = {"connect/connect_piece_3", "connect/connect_piece_6", "connect/connect_piece_8"};
+        TrialChambersTemplate connect_piece = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(connect_types), rot);
         if(connect_piece.isCollidingExcParent(manager, parent, components)) {
             return false;
         }
