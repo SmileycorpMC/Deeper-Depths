@@ -28,6 +28,7 @@ public class CommonProxy {
         //Registers Entity Spawns even though I think we'll only have one lmao
         DeeperDepthsEntities.registerEntitySpawns();
         DeeperDepthsLootTables.registerLootTables();
+        DeeperDepthsSoundEvents.registerSounds();
     }
     
     public void init(FMLInitializationEvent event)
