@@ -86,24 +86,34 @@ public enum EnumStoneType implements IStringSerializable {
         return material.soundType;
     }
     
+    public boolean hasVariants() {
+        return hasVariants;
+    }
+    
     public enum Material {
         
-        TUFF(MapColor.GRAY_STAINED_HARDENED_CLAY, 1.5f, 6, DeeperDepthsSoundTypes.TUFF),
-        TUFF_BRICKS(MapColor.GRAY_STAINED_HARDENED_CLAY, 1.5f, 6, DeeperDepthsSoundTypes.TUFF_BRICKS),
-        CALCITE(MapColor.WHITE_STAINED_HARDENED_CLAY, 0.75f, 0.75f, DeeperDepthsSoundTypes.CALCITE),
         DEEPSLATE(MapColor.GRAY, 3.5f, 6, DeeperDepthsSoundTypes.DEEPSLATE),
         DEEPSLATE_BRICKS(MapColor.GRAY, 3.5f, 6, DeeperDepthsSoundTypes.DEEPSLATE_BRICKS),
-        DEEPSLATE_TILES(MapColor.GRAY, 3.5f, 6, DeeperDepthsSoundTypes.DEEPSLATE_TILES);
+        DEEPSLATE_TILES(MapColor.GRAY, 3.5f, 6, DeeperDepthsSoundTypes.DEEPSLATE_TILES),
+        TUFF(MapColor.GRAY_STAINED_HARDENED_CLAY, 1.5f, 6, DeeperDepthsSoundTypes.TUFF),
+        TUFF_BRICKS(MapColor.GRAY_STAINED_HARDENED_CLAY, 1.5f, 6, DeeperDepthsSoundTypes.TUFF_BRICKS),
+        CALCITE(MapColor.WHITE_STAINED_HARDENED_CLAY, 0.75f, 0.75f, DeeperDepthsSoundTypes.CALCITE);
         
         private final MapColor color;
         private final float hardness, resistance;
         private final SoundType soundType;
+        private final List<EnumStoneType> types = Lists.newArrayList();
         
         Material(MapColor color, float hardness, float resistance, SoundType soundType) {
             this.color = color;
             this.hardness = hardness;
             this.resistance = resistance;
             this.soundType = soundType;
+        }
+        
+        public List<EnumStoneType> getTypes() {
+            if (types.isEmpty()) for (EnumStoneType type : EnumStoneType.values()) if (type.material == this) types.add(type);
+            return types;
         }
         
     }
