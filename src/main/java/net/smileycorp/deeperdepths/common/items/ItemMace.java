@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
@@ -52,6 +53,8 @@ public class ItemMace extends ItemDeeperDepths
     /** Why yes, I did stack all the abilities in the vanilla hitEntity method. It works better than Forge's `LivingHurtEvent`. */
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
+        if (attacker.world.isRemote) return false;
+
         stack.damageItem(1, attacker);
 
         if (attacker.fallDistance > 1.5)
@@ -85,7 +88,7 @@ public class ItemMace extends ItemDeeperDepths
             attacker.world.playSound(null, attacker.getPosition(), target.onGround ? heavyLand ? DeeperDepthsSoundEvents.MACE_SMASH_GROUND_HEAVY : DeeperDepthsSoundEvents.MACE_SMASH_GROUND : DeeperDepthsSoundEvents.MACE_SMASH_AIR, SoundCategory.PLAYERS, 1, 1);
 
             pushFromTarget(target, attacker);
-            if (target.onGround) spawnSmashParticles(target);
+            if (target.onGround) spawnSmashParticles(attacker, target);
         }
         return true;
     }
@@ -123,6 +126,7 @@ public class ItemMace extends ItemDeeperDepths
         entitywindcharge.forceSpawn = true;
         entitywindcharge.forceExplode(null);
         spawnPoint.world.spawnEntity(entitywindcharge);
+        entitywindcharge.setDead();
     }
 
     /** Pushes entities away from the struck target. */
@@ -169,7 +173,7 @@ public class ItemMace extends ItemDeeperDepths
     }
 
     /** Spawns a ring of BlockDust Particles around the given entity. */
-    private static void spawnSmashParticles(EntityLivingBase target)
+    private static void spawnSmashParticles(EntityLivingBase attacker, EntityLivingBase target)
     {
         /* Whole particle radius uses the block directly below the Target. */
         IBlockState iblockstate = target.world.getBlockState(target.getPosition().down());
@@ -189,8 +193,17 @@ public class ItemMace extends ItemDeeperDepths
             double spreadY = target.getRNG().nextFloat()*4 - target.getRNG().nextFloat()*4;
             double spreadZ = target.getRNG().nextFloat() - target.getRNG().nextFloat();
 
-            ((WorldServer)target.world).spawnParticle(EnumParticleTypes.BLOCK_DUST, target.posX, target.posY, target.posZ, 1, spreadX, spreadY, spreadZ, 0.05, new int[]{Block.getStateId(iblockstate)});
-            ((WorldServer)target.world).spawnParticle(EnumParticleTypes.BLOCK_DUST, x, y, z, 10, spreadX, spreadY, spreadZ, 0.05, new int[]{Block.getStateId(iblockstate)});
+            /* Tweaks made to `hitEntity` might make this unnecessary now. Investigate to see about shortening! */
+            if (attacker.world instanceof WorldServer)
+            {
+                ((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.BLOCK_DUST, target.posX, target.posY, target.posZ, 1, spreadX, spreadY, spreadZ, 0.05, new int[]{Block.getStateId(iblockstate)});
+                ((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.BLOCK_DUST, x, y, z, 10, spreadX, spreadY, spreadZ, 0.05, new int[]{Block.getStateId(iblockstate)});
+            }
+            else
+            {
+                attacker.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, target.posX, target.posY, target.posZ, spreadX, spreadY, spreadZ, new int[]{Block.getStateId(iblockstate)});
+                attacker.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, x, y, z, spreadX, spreadY, spreadZ, new int[]{Block.getStateId(iblockstate)});
+            }
         }
     }
 
