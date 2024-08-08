@@ -78,7 +78,7 @@ public class DeeperDepthsEventHandler {
     }
 
     /** Basic, reusable reflecting code, also handles the sound. */
-    private static void deflectProjectile(Entity projectile)
+    private void deflectProjectile(Entity projectile)
     {
         double bounceStrength = -1.0D;
         projectile.motionX *= bounceStrength;
@@ -91,7 +91,7 @@ public class DeeperDepthsEventHandler {
 
     /** Events have to be used for Projectile Reflection, as `attackEntityFrom` is called within onImpact for most projectiles, which breaks this behavior! */
     @SubscribeEvent
-    public static void reflectArrowEvent(ProjectileImpactEvent.Arrow event)
+    public void reflectArrowEvent(ProjectileImpactEvent.Arrow event)
     {
         final EntityArrow projectile = event.getArrow();
 
@@ -108,7 +108,7 @@ public class DeeperDepthsEventHandler {
     }
 
     @SubscribeEvent
-    public static void reflectFireballEvent(ProjectileImpactEvent.Fireball event)
+    public void reflectFireballEvent(ProjectileImpactEvent.Fireball event)
     {
         final EntityFireball projectile = event.getFireball();
 
@@ -129,7 +129,7 @@ public class DeeperDepthsEventHandler {
     }
 
     @SubscribeEvent
-    public static void reflectThrowableEvent(ProjectileImpactEvent.Throwable event)
+    public void reflectThrowableEvent(ProjectileImpactEvent.Throwable event)
     {
         final EntityThrowable projectile = event.getThrowable();
         if (projectile instanceof EntityWindCharge) return;
