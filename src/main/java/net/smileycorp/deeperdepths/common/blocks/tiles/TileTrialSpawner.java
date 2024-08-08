@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
@@ -52,6 +53,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     
     private List<UUID> active_players = Lists.newArrayList();
     private List<WeakReference<Entity>> current_mobs = Lists.newArrayList();
+    private final List<UUID> mob_cache = Lists.newArrayList();
     private EnumTrialSpawnerState state = EnumTrialSpawnerState.INACTIVE;
     private boolean ominous;
     private final Config config;
@@ -141,8 +143,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         }
         if (state == EnumTrialSpawnerState.EJECTING) {
             if (active_players.isEmpty()) {
-                setState(EnumTrialSpawnerState.INACTIVE);
-                ejected_items = 0;
+                reset();
                 playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_CLOSE_SHUTTER, 1f);
                 cooldown = 36000;
             }
@@ -282,6 +283,9 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         cooldown = 0;
         ominous_cooldown = 0;
         current_mobs.clear();
+        mob_cache.clear();
+        spawned_mobs = 0;
+        ejected_items = 0;
     }
     
     public boolean isOminous() {
@@ -301,6 +305,11 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public void setWorld(World world) {
         super.setWorld(world);
         world.markBlockRangeForRenderUpdate(pos, pos);
+        if (world instanceof WorldServer) for (UUID uuid : mob_cache) {
+            Entity entity = ((WorldServer)world).getEntityFromUuid(uuid);
+            current_mobs.add(new WeakReference<>(entity));
+        }
+        mob_cache.clear();
         rebuildCachedEntity();
     }
     
@@ -315,7 +324,10 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         if (nbt.hasKey("cooldown")) cooldown = nbt.getInteger("cooldown");
         if (nbt.hasKey("ominous_cooldown")) ominous_cooldown = nbt.getInteger("ominous_cooldown");
         if (nbt.hasKey("required_range")) required_range = nbt.getFloat("required_range");
-    }
+        if (nbt.hasKey("spawned_mobs")) spawned_mobs = nbt.getInteger("spawned_mobs");
+        if (nbt.hasKey("current_mobs")) for (NBTBase compound : nbt.getTagList("current_mobs", 10))
+            mob_cache.add(NBTUtil.getUUIDFromTag((NBTTagCompound) compound));
+     }
     
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -328,6 +340,13 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         nbt.setInteger("cooldown", cooldown);
         nbt.setInteger("ominous_cooldown", ominous_cooldown);
         nbt.setFloat("required_range", required_range);
+        nbt.setInteger("spawned_mobs", spawned_mobs);
+        NBTTagList mobs = new NBTTagList();
+        for (WeakReference<Entity> ref : current_mobs) {
+            if (ref.get() == null) continue;
+            mobs.appendTag(NBTUtil.createUUIDTag(ref.get().getUniqueID()));
+        }
+        nbt.setTag("current_mobs", mobs);
         return nbt;
     }
     
