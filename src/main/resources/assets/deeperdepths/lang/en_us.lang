@@ -161,6 +161,10 @@ effect.deeperdepths.infested=Infested
 effect.deeperdepths.weaving=Weaving
 effect.deeperdepths.wind_charged=Wind Charged
 
+enchantment.deeperdepths.breach=Breach
+enchantment.deeperdepths.density=Density
+enchantment.deeperdepths.windburst=Wind Burst
+
 entity.deeperdepths.bogged.name=Bogged
 entity.deeperdepths.breeze.name=Breeze
 entity.deeperdepths.bleeze.name=Bleeze

@@ -9,24 +9,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
@@ -47,6 +40,7 @@ public class ItemMace extends ItemDeeperDepths
     }
 
     /** Yes, the Mace mines everything x1.5 faster. */
+    @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state)
     { return 1.5F; }
 
@@ -82,7 +76,7 @@ public class ItemMace extends ItemDeeperDepths
             else
             {
                 attacker.motionY = 0;
-                attacker.velocityChanged = true;
+                //attacker.velocityChanged = true;
             }
 
             attacker.world.playSound(null, attacker.getPosition(), target.onGround ? heavyLand ? DeeperDepthsSoundEvents.MACE_SMASH_GROUND_HEAVY : DeeperDepthsSoundEvents.MACE_SMASH_GROUND : DeeperDepthsSoundEvents.MACE_SMASH_AIR, SoundCategory.PLAYERS, 1, 1);
@@ -219,6 +213,9 @@ public class ItemMace extends ItemDeeperDepths
     @SideOnly(Side.CLIENT)
     public boolean isFull3D()
     { return true; }
+
+    public EnumRarity getRarity(ItemStack stack)
+    { return EnumRarity.EPIC; }
 
     public int getItemEnchantability()
     { return 15; }
