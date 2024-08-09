@@ -1,18 +1,12 @@
 package net.smileycorp.deeperdepths.client.entity.model;
 
-import com.google.common.collect.ImmutableList;
-import com.ibm.icu.text.Normalizer;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
-import net.smileycorp.deeperdepths.animation.model.BasicModelEntity;
 import net.smileycorp.deeperdepths.animation.model.BasicModelPart;
-import net.smileycorp.deeperdepths.animation.model.EZModelAnimator;
-import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 
 @SideOnly(Side.CLIENT)
 public class ModelBreezeWind extends ModelBreeze

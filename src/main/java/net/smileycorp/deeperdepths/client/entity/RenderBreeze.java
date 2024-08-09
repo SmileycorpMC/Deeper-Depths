@@ -3,7 +3,6 @@ package net.smileycorp.deeperdepths.client.entity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -11,7 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.animation.model.BasicModelEntity;
 import net.smileycorp.deeperdepths.client.entity.model.ModelBreeze;
-import net.smileycorp.deeperdepths.client.entity.model.ModelBreezeWind;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 
@@ -26,7 +24,6 @@ public class RenderBreeze extends RenderLiving<EntityBreeze> {
     {
         super(rendermanagerIn, new ModelBreeze(), 0.8F);
         this.addLayer(new LayerBreezeWind(this, new ModelBreeze.ModelBreezeWind()));
-
     }
 
     @Nullable

@@ -8,8 +8,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-import javax.annotation.Nullable;
-
 public class BlockHeavyCore extends BlockDeeperDepths
 {
     protected static final AxisAlignedBB C_FLOOR_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 0.5D, 0.75D);

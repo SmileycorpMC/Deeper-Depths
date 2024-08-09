@@ -3,7 +3,6 @@ package net.smileycorp.deeperdepths.common.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 
 public class ItemTrialKey extends ItemDeeperDepths {

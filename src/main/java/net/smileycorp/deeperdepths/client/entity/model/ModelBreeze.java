@@ -1,13 +1,10 @@
 package net.smileycorp.deeperdepths.client.entity.model;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.ModelBox;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.deeperdepths.animation.EZAnimation;
 import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.animation.model.BasicModelBox;
 import net.smileycorp.deeperdepths.animation.model.BasicModelEntity;
