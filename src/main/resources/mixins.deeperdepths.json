@@ -6,7 +6,8 @@
       "MixinBehaviorDefaultDispenseItem",
       "MixinBehaviourProjectileDispense",
       "MixinBlockDispenser",
-      "MixinBootstrap$11"
+      "MixinBootstrap$11",
+      "MixinEntity"
   ],
   "client": [],
   "server": []

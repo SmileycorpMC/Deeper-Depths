@@ -1,11 +1,15 @@
 package net.smileycorp.deeperdepths.common.potion;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -46,8 +50,6 @@ public class PotionInfested extends PotionDeeperDepths
     public static void onHurtEvent(LivingHurtEvent event)
     {
         EntityLivingBase entity = event.getEntityLiving();
-        /* Particles will need to be fed through a Packet Handler. */
-        //entity.world.spawnParticle(EnumParticleTypes.SLIME, entity.posX, entity.posY, entity.posZ, 0, 0,0, new int[0]);
 
         /* Currently hard-coded against Silverfish, make configurable later. */
         if (entity instanceof EntitySilverfish || !entity.isNonBoss()) entity.removePotionEffect(DeeperDepthsPotions.INFESTED);
@@ -71,4 +73,8 @@ public class PotionInfested extends PotionDeeperDepths
             }
         }
     }
+
+    @Override
+    public void spawnParticles(EntityLivingBase entity)
+    { ((WorldServer)entity.world).spawnParticle(EnumParticleTypes.BLOCK_CRACK, entity.posX, entity.posY + (entity.height / 2), entity.posZ, 1, entity.width/3, entity.height/2, entity.width/3, 0.0, Block.getStateId(Blocks.STONE.getDefaultState())); }
 }

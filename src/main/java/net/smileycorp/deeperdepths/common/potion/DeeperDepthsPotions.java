@@ -22,10 +22,10 @@ public class DeeperDepthsPotions
     public static final Potion WEAVING = new PotionWeaving("weaving", true, 7891290, Blocks.WEB, 2, 3, 1);
     public static final Potion WIND_CHARGED = new PotionWindCharged("wind_charged", true, 12438015);
 
-    public static final PotionType OOZING_POTION = new PotionType(Constants.MODID + "." + "oozing", new PotionEffect[] { new PotionEffect(OOZING, 3600, 0, false, true)} ).setRegistryName("oozing");
-    public static final PotionType INFESTED_POTION = new PotionType(Constants.MODID + "." + "infested", new PotionEffect[] { new PotionEffect(INFESTED, 3600, 0, false, true)} ).setRegistryName("infested");
-    public static final PotionType WEAVING_POTION = new PotionType(Constants.MODID + "." + "weaving", new PotionEffect[] { new PotionEffect(WEAVING, 3600, 0, false, true)} ).setRegistryName("weaving");
-    public static final PotionType WIND_CHARGED_POTION = new PotionType(Constants.MODID + "." + "wind_charged", new PotionEffect[] { new PotionEffect(WIND_CHARGED, 3600, 0, false, true)} ).setRegistryName("wind_charged");
+    public static final PotionType OOZING_POTION = new PotionType(Constants.MODID + "." + "oozing", new PotionEffect[] { new PotionEffect(OOZING, 3600, 0)} ).setRegistryName("oozing");
+    public static final PotionType INFESTED_POTION = new PotionType(Constants.MODID + "." + "infested", new PotionEffect[] { new PotionEffect(INFESTED, 3600, 0)} ).setRegistryName("infested");
+    public static final PotionType WEAVING_POTION = new PotionType(Constants.MODID + "." + "weaving", new PotionEffect[] { new PotionEffect(WEAVING, 3600, 0)} ).setRegistryName("weaving");
+    public static final PotionType WIND_CHARGED_POTION = new PotionType(Constants.MODID + "." + "wind_charged", new PotionEffect[] { new PotionEffect(WIND_CHARGED, 3600, 0)} ).setRegistryName("wind_charged");
 
     @SubscribeEvent
     public static void onPotionRegister(RegistryEvent.Register<Potion> event)

@@ -1,25 +1,36 @@
 package net.smileycorp.deeperdepths.common.potion;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * A basic form of Oozing, still requires Particles, better spawning logic, better
  * removal logic, and polish.
  */
+@Mod.EventBusSubscriber
 public class PotionOozing extends PotionDeeperDepths
 {
     /** The entity to spawn. */
-    private final Class spawnEntity;
+    private static Class spawnEntity;
     /** How many entities to spawn. */
-    private final int spawnQuantity;
+    private static int spawnQuantity;
     /** If the entities should be initialized via `onInitialSpawn`. */
-    private final boolean doInitialSpawn;
+    private static boolean doInitialSpawn;
 
     protected PotionOozing(String nameIn, boolean isBadEffectIn, int liquidColorIn, Class spawnEntityIn, int spawnQuantityIn, boolean doInitialSpawnIn)
     {
@@ -29,16 +40,18 @@ public class PotionOozing extends PotionDeeperDepths
         doInitialSpawn = doInitialSpawnIn;
     }
 
-    @Override
-    public void performEffect(EntityLivingBase entity, int amplifier)
+    /** Uses Forge's `LivingDeathEvent`, as repeatedly scanning if an Entity is dead is silly. */
+    @SubscribeEvent
+    public static void onOozingDeathEvent(LivingDeathEvent event)
     {
-        /* Particles will need to be fed through a Packet Handler. */
-        //entity.world.spawnParticle(EnumParticleTypes.SLIME, entity.posX, entity.posY, entity.posZ, 0, 0,0, new int[0]);
+        EntityLivingBase entity = event.getEntityLiving();
 
-        /* Currently hard-coded against Slimes, make configurable later. */
+        /* Currently hard-coded against Silverfish, make configurable later. */
         if (entity instanceof EntitySlime || !entity.isNonBoss()) entity.removePotionEffect(DeeperDepthsPotions.OOZING);
 
-        if(entity.isDead && !entity.world.isRemote)
+        if (!entity.isPotionActive(DeeperDepthsPotions.OOZING)) return;
+
+        if(!entity.world.isRemote)
         {
             for (int i = 0; i < spawnQuantity; i++)
             {
@@ -57,8 +70,12 @@ public class PotionOozing extends PotionDeeperDepths
         }
     }
 
+    @Override
+    public void spawnParticles(EntityLivingBase entity)
+    { ((WorldServer)entity.world).spawnParticle(EnumParticleTypes.SLIME, entity.posX, entity.posY + (entity.height / 2), entity.posZ, 1, entity.width/3, entity.height/2, entity.width/3, 0.0); }
+
     /** Slimes are annoyingly privatized, so we forcefully update slimes. */
-    public void setSlimeStats(Entity oozed, int size)
+    public static void setSlimeStats(Entity oozed, int size)
     {
         EntitySlime slime = ((EntitySlime)oozed);
 

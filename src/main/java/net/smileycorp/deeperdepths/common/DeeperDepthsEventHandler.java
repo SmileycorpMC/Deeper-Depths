@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +29,7 @@ import net.smileycorp.deeperdepths.common.blocks.ICopperBlock;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
+import net.smileycorp.deeperdepths.common.potion.PotionDeeperDepths;
 
 import java.util.Random;
 
@@ -142,6 +144,25 @@ public class DeeperDepthsEventHandler {
             deflectProjectile(projectile);
             //projectile.thrower = entityBlocking;
             event.setCanceled(true);
+        }
+    }
+
+    /** Grabs, and removes the vanilla particles from our Potion Effects.
+     *  This is used because setting the Potion Effect to not display particles in the PotionType registry causes no color to be set, due to PotionUtils `getPotionColorFromEffectList`!
+     *
+     *  REPLACE WITH A MIXIN LATER
+     * */
+    @SubscribeEvent
+    public void removePotionParticles(PotionEvent.PotionAddedEvent event)
+    {
+        Potion potion = event.getPotionEffect().getPotion();
+
+        if (potion == null || event.getEntityLiving() == null) return;
+
+        if (potion instanceof PotionDeeperDepths && event.getPotionEffect().doesShowParticles())
+        {
+            event.getEntityLiving().removePotionEffect(potion);
+            event.getEntityLiving().addPotionEffect(new PotionEffect(potion, event.getPotionEffect().getDuration(), event.getPotionEffect().getAmplifier(), event.getPotionEffect().getIsAmbient(), false));
         }
     }
 

@@ -1,7 +1,9 @@
 package net.smileycorp.deeperdepths.common.potion;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.deeperdepths.common.Constants;
 
@@ -31,4 +33,20 @@ public class PotionDeeperDepths extends Potion
         Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
         return super.getStatusIconIndex();
     }
+
+    /** Generic timer for spawning particles. */
+    @Override
+    public void performEffect(EntityLivingBase entity, int amplifier)
+    {
+        if (entity.world.getTotalWorldTime() % getParticleSpawnRate(entity) == 0L && !entity.world.isRemote)
+        { spawnParticles(entity); }
+    }
+
+    /** How often particles are spawned via. */
+    public long getParticleSpawnRate(EntityLivingBase entity)
+    { return 25L - entity.getRNG().nextInt(10); }
+
+    /** The actual method to spawn particles. Make sure to use `((WorldServer)entity.world).spawnParticle` when setting up! */
+    public void spawnParticles(EntityLivingBase entity)
+    { }
 }
