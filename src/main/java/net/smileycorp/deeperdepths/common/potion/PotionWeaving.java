@@ -2,25 +2,18 @@ package net.smileycorp.deeperdepths.common.potion;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * The Weaving Effect.
@@ -85,6 +78,9 @@ public class PotionWeaving extends PotionDeeperDepths
                 entity.world.setBlockState(webPos, block.getDefaultState());
             }
         }
+
+        /* Remove after preforming the effect once. */
+        entity.removePotionEffect(DeeperDepthsPotions.WEAVING);
     }
 
     @Override

@@ -1,12 +1,16 @@
 package net.smileycorp.deeperdepths.common.potion;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 
 /**
  * The Wind Charged Effect.
  * Requires Particles, and a Mixin for Weaving allowing slightly faster web movement.
  */
+@Mod.EventBusSubscriber
 public class PotionWindCharged extends PotionDeeperDepths
 {
     protected PotionWindCharged(String nameIn, boolean isBadEffectIn, int liquidColorIn)
@@ -14,16 +18,17 @@ public class PotionWindCharged extends PotionDeeperDepths
         super(nameIn, isBadEffectIn, liquidColorIn, 6);
     }
 
-    @Override
-    public void performEffect(EntityLivingBase entity, int amplifier)
+    /** Uses Forge's `LivingDeathEvent`, as repeatedly scanning if an Entity is dead is silly. */
+    @SubscribeEvent
+    public static void onWindChargedDeathEvent(LivingDeathEvent event)
     {
-        /* Particles will need to be fed through a Packet Handler. */
-        //entity.world.spawnParticle(EnumParticleTypes.SLIME, entity.posX, entity.posY, entity.posZ, 0, 0,0, new int[0]);
+        EntityLivingBase entity = event.getEntityLiving();
 
-        /* Currently hard-coded against Slimes, make configurable later. */
         if (!entity.isNonBoss()) entity.removePotionEffect(DeeperDepthsPotions.WIND_CHARGED);
 
-        if(entity.isDead && !entity.world.isRemote)
+        if (!entity.isPotionActive(DeeperDepthsPotions.WIND_CHARGED)) return;
+
+        if(!entity.world.isRemote)
         {
             EntityWindCharge entitywindcharge = new EntityWindCharge(entity.world, entity, entity);
             entitywindcharge.posY = entity.posY;
@@ -31,5 +36,8 @@ public class PotionWindCharged extends PotionDeeperDepths
             entitywindcharge.forceExplode(null);
             entity.world.spawnEntity(entitywindcharge);
         }
+
+        /* Remove after preforming the effect once. */
+        entity.removePotionEffect(DeeperDepthsPotions.WIND_CHARGED);
     }
 }

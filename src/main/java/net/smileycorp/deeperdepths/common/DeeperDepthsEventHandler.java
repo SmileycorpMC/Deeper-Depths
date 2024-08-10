@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -149,8 +148,6 @@ public class DeeperDepthsEventHandler {
 
     /** Grabs, and removes the vanilla particles from our Potion Effects.
      *  This is used because setting the Potion Effect to not display particles in the PotionType registry causes no color to be set, due to PotionUtils `getPotionColorFromEffectList`!
-     *
-     *  REPLACE WITH A MIXIN LATER
      * */
     @SubscribeEvent
     public void removePotionParticles(PotionEvent.PotionAddedEvent event)

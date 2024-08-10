@@ -1,10 +1,8 @@
 package net.smileycorp.deeperdepths.common.potion;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
@@ -13,9 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -68,6 +63,8 @@ public class PotionOozing extends PotionDeeperDepths
                 entity.world.spawnEntity(oozed);
             }
         }
+        /* Remove after preforming the effect once. */
+        entity.removePotionEffect(DeeperDepthsPotions.OOZING);
     }
 
     @Override
