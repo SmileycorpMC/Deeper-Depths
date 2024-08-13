@@ -25,13 +25,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.deeperdepths.client.ClientProxy;
@@ -74,14 +70,6 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         config = new Config();
         ominous_config = new Config().clearLootTables().addLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_KEY_OMINOUS, 3)
                 .addLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT_OMINOUS, 7);
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-    
-    @SubscribeEvent
-    public void startTrackingChunk(ChunkWatchEvent.Watch event) {
-        if (world == null || event == null) return;
-        Chunk chunk = event.getChunkInstance();
-        if (world.getChunkFromBlockCoords(pos).equals(chunk)) markDirty();
     }
     
     @Override
