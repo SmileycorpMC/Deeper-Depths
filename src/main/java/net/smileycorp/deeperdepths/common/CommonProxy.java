@@ -7,6 +7,7 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,6 +20,7 @@ import net.smileycorp.deeperdepths.animation.AnimationMessage;
 import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
+import net.smileycorp.deeperdepths.common.world.loot.functions.ApplyEnchantments;
 
 public class CommonProxy {
     
@@ -28,6 +30,7 @@ public class CommonProxy {
         //Registers Entity Spawns even though I think we'll only have one lmao
         DeeperDepthsEntities.registerEntitySpawns();
         DeeperDepthsLootTables.registerLootTables();
+        LootFunctionManager.registerFunction(new ApplyEnchantments.Serializer());
         DeeperDepthsSoundEvents.registerSounds();
     }
     

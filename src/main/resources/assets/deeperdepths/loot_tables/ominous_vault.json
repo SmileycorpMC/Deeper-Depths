@@ -1,7 +1,7 @@
 {
     "pools": [
         {
-            "name": "deeperdepths:vault_common",
+            "name": "deeperdepths:ominous_vault_common",
             "rolls": {
                 "min": 1,
                 "max": 3
@@ -9,13 +9,13 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "minecraft:arrow",
+                    "name": "deeperdepths:wind_charge",
                     "functions": [
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 2,
-                                "max": 8
+                                "min": 8,
+                                "max": 12
                             }
                         }
                     ],
@@ -28,13 +28,13 @@
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 2,
-                                "max": 8
+                                "min": 4,
+                                "max": 12
                             }
                         },
                         {
                             "function": "minecraft:set_nbt",
-                            "tag": "{Potion:\"minecraft:poison\"}"
+                            "tag": "{Potion:\"minecraft:strong_slowness\"}"
                         }
                     ],
                     "weight": 4
@@ -46,32 +46,12 @@
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 1,
-                                "max": 3
+                                "min": 4,
+                                "max": 10
                             }
                         }
                     ],
-                    "weight": 4
-                },
-                {
-                    "type": "item",
-                    "name": "minecraft:milk_bucket",
-                    "functions": [],
-                    "weight": 2
-                },
-                {
-                    "type": "item",
-                    "name": "minecraft:pumpkin_pie",
-                    "functions": [
-                        {
-                            "function": "set_count",
-                            "count": {
-                                "min": 1,
-                                "max": 3
-                            }
-                        }
-                    ],
-                    "weight": 2
+                    "weight": 5
                 },
                 {
                     "type": "item",
@@ -80,8 +60,8 @@
                         {
                             "function": "set_data",
                             "data": {
-                                "min": 0,
-                                "max": 1
+                                "min": 2,
+                                "max": 4
                             }
                         }
                     ],
@@ -94,8 +74,8 @@
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 1,
-                                "max": 2
+                                "min": 2,
+                                "max": 3
                             }
                         }
                     ],
@@ -104,28 +84,20 @@
             ]
         },
         {
-            "name": "deeperdepths:vault_rare",
+            "name": "deeperdepths:ominous_vault_rare",
             "rolls": 1,
             "entries": [
                 {
                     "type": "item",
-                    "name": "minecraft:emerald",
-                    "functions": [
-                        {
-                            "function": "set_count",
-                            "count": {
-                                "min": 2,
-                                "max": 4
-                            }
-                        }
-                    ],
-                    "weight": 3
+                    "name": "minecraft:emerald_block",
+                    "functions": [],
+                    "weight": 5
                 },
                 {
                     "type": "item",
-                    "name": "minecraft:shield",
+                    "name": "minecraft:iron_block",
                     "functions": [],
-                    "weight": 3
+                    "weight": 4
                 },
                 {
                     "type": "item",
@@ -134,64 +106,13 @@
                         {
                             "function": "minecraft:enchant_with_levels",
                             "levels": {
-                                "min": 5,
-                                "max": 20
-                            }
+                                "min": 15,
+                                "max": 30
+                            },
+                            "treasure": true
                         }
                     ],
-                    "weight": 2
-                },
-                {
-                    "type": "item",
-                    "name": "minecraft:iron_axe",
-                    "functions": [
-                        {
-                            "function": "minecraft:enchant_with_levels",
-                            "levels": {
-                                "min": 0,
-                                "max": 10
-                            }
-                        }
-                    ],
-                    "weight": 2
-                },
-                {
-                    "type": "item",
-                    "name": "minecraft:iron_chestplate",
-                    "functions": [
-                        {
-                            "function": "minecraft:enchant_with_levels",
-                            "levels": {
-                                "min": 0,
-                                "max": 10
-                            }
-                        }
-                    ],
-                    "weight": 2
-                },
-                {
-                    "type": "item",
-                    "name": "minecraft:golden_carrot",
-                    "functions": [
-                        {
-                            "function": "set_count",
-                            "count": {
-                                "min": 2,
-                                "max": 4
-                            }
-                        }
-                    ],
-                    "weight": 2
-                },
-                {
-                    "type": "item",
-                    "name": "minecraft:book",
-                    "weight": 3,
-                    "functions": [
-                        {
-                            "function": "enchant_randomly"
-                        }
-                    ]
+                    "weight": 4
                 },
                 {
                     "type": "item",
@@ -200,13 +121,13 @@
                         {
                             "function": "minecraft:enchant_with_levels",
                             "levels": {
-                                "min": 5,
-                                "max": 15
+                                "min": 10,
+                                "max": 20
                             },
                             "treasure": true
                         }
                     ],
-                    "weight": 1
+                    "weight": 3
                 },
                 {
                     "type": "item",
@@ -215,18 +136,82 @@
                         {
                             "function": "minecraft:enchant_with_levels",
                             "levels": {
-                                "min": 5,
-                                "max": 15
+                                "min": 10,
+                                "max": 20
                             },
                             "treasure": true
                         }
                     ],
+                    "weight": 2
+                },
+                {
+                    "entryName": "wind_burst",
+                    "type": "item",
+                    "name": "minecraft:book",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "deeperdepths:apply_enchantments",
+                            "enchantments": {
+                                "deeperdepths:wind_burst": 1
+                            }
+                        }
+                    ]
+                },
+				{
+                    "entryName": "breach",
+                    "type": "item",
+                    "name": "minecraft:book",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "deeperdepths:apply_enchantments",
+                            "enchantments": {
+                                "deeperdepths:breach":  {
+									"min": 1,
+									"max": 4
+								}
+                            }
+                        }
+                    ]
+                },
+				{
+                    "entryName": "density",
+                    "type": "item",
+                    "name": "minecraft:book",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "deeperdepths:apply_enchantments",
+                            "enchantments": {
+                                "deeperdepths:density":  {
+									"min": 1,
+									"max": 5
+								}
+                            }
+                        }
+                    ]
+                },            
+                {
+                    "type": "item",
+                    "name": "minecraft:book",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "minecraft:enchant_randomly"
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:diamond_block",
+                    "functions": [],
                     "weight": 1
                 }
             ]
         },
         {
-            "name": "deeperdepths:vault_unique",
+            "name": "deeperdepths:ominous_vault_unique",
             "rolls": 1,
             "entries": [
                 {
@@ -236,24 +221,37 @@
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 5,
-                                "max": 13
+                                "min": 10,
+                                "max": 24
                             }
                         }
                     ],
-                    "weight": 4
+                    "weight": 3
                 },
                 {
                     "type": "item",
                     "name": "minecraft:golden_apple",
-                    "functions": [],
-                    "weight": 4
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 1
+                        }
+                    ],
+                    "weight": 3
                 },
                 {
                     "type": "item",
                     "name": "minecraft:diamond_block",
-                    "functions": [],
-                    "weight": 3
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        }
+                    ],
+                    "weight": 2
                 },
                 {
                     "type": "item",
@@ -265,6 +263,12 @@
                             "tag": "{StoredEnchantments:[{lvl:1s,id:70s}]}"
                         }
                     ]
+                },
+                {
+                    "type": "item",
+                    "name": "deeperdepths:heavy_core",
+                    "functions": [],
+                    "weight": 1
                 }
             ]
         }
