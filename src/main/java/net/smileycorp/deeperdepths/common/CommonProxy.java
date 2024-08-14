@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.deeperdepths.animation.AnimationMessage;
+import net.smileycorp.deeperdepths.client.ParticleMessage;
 import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
@@ -39,6 +40,7 @@ public class CommonProxy {
         int packetId = 0;
         DeeperDepths.network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
         DeeperDepths.network.registerMessage(AnimationMessage.Handler.class, AnimationMessage.class, packetId++, Side.SERVER);
+        DeeperDepths.network.registerMessage(ParticleMessage.Handler.class, ParticleMessage.class, packetId++, Side.CLIENT);
         CapabilityManager.INSTANCE.register(CapabilityWindChargeFall.ICapabilityWindChargeFall.class, new CapabilityWindChargeFall.Storage(), CapabilityWindChargeFall.WindChargeHorn::new);
     }
     
@@ -71,5 +73,16 @@ public class CommonProxy {
     public void handleAnimationPacket(int entityId, int index) {
 
     }
-    
+
+    /** Handles spawning of Particles */
+    public void spawnParticle(int particleId, World world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int... parameters)
+    {
+        if (world.isRemote)
+        { spawnParticle(particleId, posX, posY, posZ, speedX, speedY, speedZ, parameters); }
+        else
+        { DeeperDepths.network.sendToAllTracking( new ParticleMessage(particleId, posX, posY, posZ, speedX, speedY, speedZ, parameters), new NetworkRegistry.TargetPoint(world.provider.getDimension(), posX, posY, posZ, 0.0D)); }
+    }
+
+    /** This exists to be overridden in the ClientProxy! */
+    public void spawnParticle(int particleId, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int... parameters) {}
 }

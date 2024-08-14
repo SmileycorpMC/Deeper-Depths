@@ -1,22 +1,22 @@
 package net.smileycorp.deeperdepths.common.items;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
@@ -49,6 +49,8 @@ public class ItemOminousBottle extends ItemDeeperDepths {
             entity.addPotionEffect(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000, getAmplifier(stack), false, false));
             if (entity instanceof EntityPlayerMP) CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entity, stack);
             if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative())) stack.shrink(1);
+            /** An extra thing I added for fun. */
+            ((WorldServer)entity.world).spawnParticle(EnumParticleTypes.ITEM_CRACK, entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ, 10, 0, 0, 0, 0.1, new int[]{Item.getIdFromItem(stack.getItem()), stack.getMetadata()});
         }
         return stack;
     }

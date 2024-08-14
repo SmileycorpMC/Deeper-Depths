@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -25,6 +27,7 @@ import net.smileycorp.deeperdepths.client.entity.RenderBogged;
 import net.smileycorp.deeperdepths.client.entity.RenderBreeze;
 import net.smileycorp.deeperdepths.client.entity.RenderOminousItemSpawner;
 import net.smileycorp.deeperdepths.client.entity.RenderWindCharge;
+import net.smileycorp.deeperdepths.client.particle.ParticleTypes;
 import net.smileycorp.deeperdepths.client.tesr.TESRTrialSpawner;
 import net.smileycorp.deeperdepths.client.tesr.TESRVault;
 import net.smileycorp.deeperdepths.common.CommonProxy;
@@ -114,5 +117,12 @@ public class ClientProxy extends CommonProxy {
         Particle particle = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(type.getParticleID(), x, y, z, vel_x, vel_y, vel_z);
         particle.setRBGColorF((float) color.getRed() / 255f, (float) color.getGreen() / 255f, (float) color.getBlue() / 255f);
     }
-    
+
+    @Override
+    public void spawnParticle(int particle, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int... parameters)
+    {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        World world = minecraft.world;
+        minecraft.effectRenderer.addEffect(ParticleTypes.getFactory(particle).createParticle(0, world, posX, posY, posZ, speedX, speedY, speedZ, parameters));
+    }
 }
