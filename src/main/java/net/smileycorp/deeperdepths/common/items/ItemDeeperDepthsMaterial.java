@@ -1,8 +1,10 @@
 package net.smileycorp.deeperdepths.common.items;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.IRarity;
 import net.smileycorp.deeperdepths.common.Constants;
 
 public class ItemDeeperDepthsMaterial extends ItemDeeperDepths {
@@ -33,6 +35,11 @@ public class ItemDeeperDepthsMaterial extends ItemDeeperDepths {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         return "item." + Constants.name(byMeta(stack.getMetadata()));
+    }
+    
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return stack.getMetadata() == 2 ? EnumRarity.UNCOMMON : super.getForgeRarity(stack);
     }
     
 }

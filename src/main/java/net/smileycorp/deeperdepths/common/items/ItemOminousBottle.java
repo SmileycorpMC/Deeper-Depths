@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -17,6 +18,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
@@ -69,6 +71,11 @@ public class ItemOminousBottle extends ItemDeeperDepths {
         if (amplifier > 0) builder.append(" " + I18n.translateToLocal("potion.potency." + amplifier).trim());
         builder.append(" (" + Potion.getPotionDurationString(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000), 1f) + ")");
         tooltip.add(TextFormatting.BLUE + builder.toString());
+    }
+    
+    @Override
+    public IRarity getForgeRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
     
     @Override
