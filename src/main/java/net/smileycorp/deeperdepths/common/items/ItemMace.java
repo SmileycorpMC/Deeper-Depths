@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.enchantments.DeeperDepthsEnchantments;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
@@ -64,8 +65,8 @@ public class ItemMace extends ItemDeeperDepths
             float breachDamage = fallDamage * breachArmorIgnorePercent;
             float densityAdditionalDamage = attacker.fallDistance * density_level * 0.5F;
 
-            target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker), (fallDamage - breachDamage) + densityAdditionalDamage);
-            target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) attacker).setDamageBypassesArmor(), breachDamage + densityAdditionalDamage);
+            target.attackEntityFrom(Constants.causeMaceDamage(attacker), (fallDamage - breachDamage) + densityAdditionalDamage);
+            target.attackEntityFrom(Constants.causeMaceDamage(attacker).setDamageBypassesArmor(), breachDamage + densityAdditionalDamage);
 
             if (attacker.fallDistance > 3) heavyLand = true;
             attacker.motionY = 2;

@@ -1,5 +1,8 @@
 itemGroup.deeperdepths.tab=§3Deeper Depths
 
+death.attack.deeperdepths.mace=%1$s was smashed by %2$s
+death.attack.deeperdepths.mace.item=%1$s was smashed by %2$s using %3$s
+
 item.deeperdepths.copperingot.name=Copper Ingot
 item.deeperdepths.amethystshard.name=Amethyst Shard
 item.deeperdepths.echoshard.name=Echo Shard
