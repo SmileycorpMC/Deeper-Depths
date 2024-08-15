@@ -24,6 +24,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.config.EntityConfig;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
@@ -33,12 +34,6 @@ public class EntityBogged extends AbstractSkeleton
     private static final DataParameter<Boolean> SHEARED = EntityDataManager.createKey(EntityBogged.class, DataSerializers.BOOLEAN);
     /** How many mushrooms are dropped when sheared. */
     int mushroomsDropped = 2;
-    /** How long the poison from arrows last, in seconds. */
-    int poisonArrowDuration = 4;
-    /** The cooldown between firing on Easy+Normal, in seconds. */
-    double attackCooldown = 3.5;
-    /** The cooldown between firing on Hard, in seconds. */
-    double attackCooldownHard = 2.5;
     private final EntityAIAttackRangedBow<AbstractSkeleton> aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0, 20, 15.0F);
     private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.2, false)
     {
@@ -65,6 +60,12 @@ public class EntityBogged extends AbstractSkeleton
     {
         super.entityInit();
         dataManager.register(SHEARED, false);
+    }
+    
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        EntityConfig.bogged.applyAttributes(this);
     }
 
     public boolean processInteract(EntityPlayer player, EnumHand hand)
@@ -116,10 +117,17 @@ public class EntityBogged extends AbstractSkeleton
             ItemStack itemstack = this.getHeldItemMainhand();
             if (itemstack.getItem() instanceof ItemBow)
             {
-                int i = (int) (attackCooldownHard * 20);
-                if (this.world.getDifficulty() != EnumDifficulty.HARD)
-                {
-                    i = (int) (attackCooldown * 20);
+                int i = 20;
+                switch (world.getDifficulty()) {
+                    case EASY:
+                        i += EntityConfig.boggedAttackCooldownEasy;
+                        break;
+                    case NORMAL:
+                        i += EntityConfig.boggedAttackCooldownNormal;
+                        break;
+                    case HARD:
+                        i += EntityConfig.boggedAttackCooldownHard;
+                        break;
                 }
 
                 this.aiArrowAttack.setAttackCooldown(i);
@@ -154,7 +162,7 @@ public class EntityBogged extends AbstractSkeleton
         EntityArrow entityarrow = super.getArrow(p_190726_1_);
         if (entityarrow instanceof EntityTippedArrow)
         {
-            ((EntityTippedArrow)entityarrow).addEffect(new PotionEffect(MobEffects.POISON, poisonArrowDuration * 20));
+            ((EntityTippedArrow)entityarrow).addEffect(new PotionEffect(MobEffects.POISON, EntityConfig.poisonArrowDuration * 20));
         }
 
         return entityarrow;

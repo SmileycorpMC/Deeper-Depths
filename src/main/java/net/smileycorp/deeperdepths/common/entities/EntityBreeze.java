@@ -20,6 +20,7 @@ import net.smileycorp.deeperdepths.animation.IAnimatedEntity;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.entities.ai.EntityAIBreezeAttackCycle;
+import net.smileycorp.deeperdepths.config.EntityConfig;
 
 import javax.annotation.Nullable;
 
@@ -68,10 +69,7 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30.0);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6);
-        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(24.0);
+        EntityConfig.breeze.applyAttributes(this);
     }
 
     @Nullable
