@@ -151,6 +151,8 @@ tile.deeperdepths.WaxedExposedCopperBulb.name=Waxed Exposed Copper Bulb
 tile.deeperdepths.WaxedWeatheredCopperBulb.name=Waxed Weathered Copper Bulb
 tile.deeperdepths.WaxedOxidizedCopperBulb.name=Waxed Oxidized Copper Bulb
 
+tile.deeperdepths.TintedGlass.name=Tinted Glass
+
 tile.deeperdepths.heavycore.name=Heavy Core
 tile.deeperdepths.TrialPot.name=Trial Pot
 tile.deeperdepths.TrialSpawner.name=Trial Spawner
