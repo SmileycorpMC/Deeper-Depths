@@ -23,11 +23,13 @@ import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 import net.smileycorp.deeperdepths.common.world.loot.functions.ApplyEnchantments;
 import net.smileycorp.deeperdepths.config.EntityConfig;
+import net.smileycorp.deeperdepths.config.WorldConfig;
 
 public class CommonProxy {
     
     public void preInit(FMLPreInitializationEvent event) {
         EntityConfig.syncConfig(event);
+        WorldConfig.syncConfig(event);
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
         DeeperDepthsEntities.registerEntities();
         //Registers Entity Spawns even though I think we'll only have one lmao

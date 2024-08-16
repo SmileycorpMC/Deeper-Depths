@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.smileycorp.deeperdepths.common.world.DDOreGen;
 import net.smileycorp.deeperdepths.common.world.DDRegisterStructures;
 import net.smileycorp.deeperdepths.common.world.DDWorldGen;
 import org.apache.logging.log4j.LogManager;
@@ -36,6 +37,7 @@ public class DeeperDepths {
 
         //registers the World Generator for all structures that we add
         GameRegistry.registerWorldGenerator(new DDWorldGen(), 1);
+        GameRegistry.registerWorldGenerator(new DDOreGen(), 99);
     }
     
     @Mod.EventHandler
