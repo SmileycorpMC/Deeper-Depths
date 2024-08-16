@@ -13,6 +13,12 @@ public class DeeperDepthsLootTables
     public static final ResourceLocation TRIAL_SPAWNER_KEY = Constants.loc("trial_key");
     public static final ResourceLocation TRIAL_SPAWNER_KEY_OMINOUS = Constants.loc("ominous_trial_key");
     public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_PROJECTILES = Constants.loc("ominous_trial_projectiles");
+    public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_HELMETS = Constants.loc("equipment/ominous_trial_helmets");
+    public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_CHESTPLATES = Constants.loc("equipment/ominous_trial_chestplates");
+    public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_LEGGINGS = Constants.loc("equipment/ominous_trial_leggings");
+    public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_BOOTS = Constants.loc("equipment/ominous_trial_boots");
+    public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_MELEE_WEAPONS = Constants.loc("equipment/ominous_trial_melee_weapons");
+    public static final ResourceLocation TRIAL_SPAWNER_OMINOUS_RANGED_WEAPONS = Constants.loc("equipment/ominous_trial_ranged_weapons");
     public static final ResourceLocation BOGGED_DROPS = Constants.loc("entities/bogged");
     public static final ResourceLocation BREEZE_DROPS = Constants.loc("entities/breeze");
 

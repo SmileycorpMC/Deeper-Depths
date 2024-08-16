@@ -1,0 +1,49 @@
+{
+    "pools": [
+        {
+            "name": "deeperdepths:ominous_trial_helmets",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:iron_sword",
+                    "functions": [],
+                    "weight": 4
+                },
+                {
+                    "entryName": "sharpness_sword",
+                    "type": "item",
+                    "name": "minecraft:iron_sword",
+                    "functions": [
+                        {
+                            "function": "deeperdepths:apply_enchantments",
+                            "enchantments": {
+                                "minecraft:sharpness": 1
+                            }
+                        }
+                    ],
+                    "weight": 1
+                },
+                {
+                    "entryName": "knockback_sword",
+                    "type": "item",
+                    "name": "minecraft:iron_sword",
+                    "functions": [
+                        {
+                            "function": "deeperdepths:apply_enchantments",
+                            "enchantments": {
+                                "minecraft:knockback": 1
+                            }
+                        }
+                    ],
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:diamond_sword",
+                    "functions": []
+                }
+            ]
+        }
+    ]
+}

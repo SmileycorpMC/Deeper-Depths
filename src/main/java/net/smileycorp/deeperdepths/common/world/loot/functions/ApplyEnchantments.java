@@ -1,8 +1,10 @@
 package net.smileycorp.deeperdepths.common.world.loot.functions;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -12,13 +14,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraft.world.storage.loot.functions.EnchantRandomly;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.smileycorp.deeperdepths.common.Constants;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 

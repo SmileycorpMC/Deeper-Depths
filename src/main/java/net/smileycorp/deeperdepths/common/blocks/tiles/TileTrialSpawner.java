@@ -8,8 +8,10 @@ import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.PositionImpl;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
@@ -67,8 +70,8 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     private Entity cached_entity;
     
     public TileTrialSpawner() {
-        config = new Config();
-        ominous_config = new Config().clearLootTables().addLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_KEY_OMINOUS, 3)
+        config = new Config(false);
+        ominous_config = new Config(true).clearLootTables().addLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_KEY_OMINOUS, 3)
                 .addLootTable(DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT_OMINOUS, 7);
     }
     
@@ -121,7 +124,8 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             int simultaneous = getSimultaneousMobs();
             if (current_mobs.size() < simultaneous && spawned_mobs < total) {
                 Config config = getActiveConfig();
-                NBTTagCompound nbt = config.entities.getResult(world.rand);
+                Entry entry = config.entities.getResult(world.rand);
+                NBTTagCompound nbt = entry.getNbt();
                 double x = pos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
                 double y = pos.getY() + world.rand.nextInt(3) - 1;
                 double z = pos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
@@ -135,6 +139,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 spawned_mobs++;
                 current_mobs.add(new WeakReference<>(entity));
                 ((EntityLiving)entity).onInitialSpawn(world.getDifficultyForLocation(entity.getPosition()), null);
+                entry.applyEquipment((EntityLivingBase) entity);
                 AnvilChunkLoader.spawnEntity(entity, world);
                 world.playSound(null, entity.posX, entity.posY, entity.posZ,
                         DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_MOB, SoundCategory.BLOCKS, 1, 1);
@@ -396,9 +401,9 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public void rebuildCachedEntity() {
-        WeightedOutputs<NBTTagCompound> outputs = getActiveConfig().getEntities();
+        WeightedOutputs<Entry> outputs = getActiveConfig().getEntities();
         if (outputs.isEmpty()) return;
-        NBTTagCompound nbt = outputs.getResult(world.rand);
+        NBTTagCompound nbt = outputs.getResult(world.rand).getNbt();
         if (nbt != null) {
             cached_entity = AnvilChunkLoader.readWorldEntity(nbt, world, false);
             if (cached_entity instanceof EntityLiving) ((EntityLiving) cached_entity).onInitialSpawn(world.getDifficultyForLocation(pos), null);
@@ -407,12 +412,21 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     
     public static class Config {
         
+        private final boolean ominous;
         private int spawn_range = 4, total_entities = 6, simultaneous_entities = 2, total_entities_per_player = 2,
                 simultaneous_entities_per_player = 1, ticks_between_spawn = 40;
-        private WeightedOutputs<NBTTagCompound> entities = new WeightedOutputs<>(ImmutableMap.of());
+        private WeightedOutputs<Entry> entities = new WeightedOutputs<>(ImmutableMap.of());
         private WeightedOutputs<ResourceLocation> loot_tables = new WeightedOutputs<>(ImmutableMap.of(DeeperDepthsLootTables.TRIAL_SPAWNER_KEY, 1,
                 DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT, 1));
         private long loot_table_seed;
+        
+        private Config(boolean ominous) {
+            this.ominous = ominous;
+        }
+        
+        public boolean isOminous() {
+            return ominous;
+        }
         
         public int getSpawnRange() {
             return spawn_range;
@@ -496,12 +510,12 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             return this;
         }
         
-        public WeightedOutputs<NBTTagCompound> getEntities() {
+        public WeightedOutputs<Entry> getEntities() {
             return entities;
         }
         
         public Config addEntity(ResourceLocation entity, int weight) {
-            return addEntity(Constants.getEntityTag(entity), weight);
+            return addEntity(new Entry(entity), weight);
         }
         
         public Config addEntity(EntityEntry entity, int weight) {
@@ -509,7 +523,11 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         }
         
         public Config addEntity(NBTTagCompound nbt, int weight) {
-            entities.addEntry(nbt, weight);
+            return addEntity(new Entry(nbt), weight);
+        }
+        
+        public Config addEntity(Entry entry, int weight) {
+            entities.addEntry(entry, weight);
             return this;
         }
         
@@ -518,7 +536,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             return this;
         }
         
-        public Config setEntities(Map<NBTTagCompound, Integer> entries) {
+        public Config setEntities(Map<Entry, Integer> entries) {
             entities = new WeightedOutputs<>(entries);
             return this;
         }
@@ -537,10 +555,10 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             }
             this.loot_tables = new WeightedOutputs<>(loot_tables);
             loot_table_seed = nbt.getLong("loot_table_seed");
-            Map<NBTTagCompound, Integer> entities = Maps.newHashMap();
+            Map<Entry, Integer> entities = Maps.newHashMap();
             for (NBTBase entry : nbt.getTagList("entities", 10)) {
                 NBTTagCompound compound = (NBTTagCompound) entry;
-                entities.put(compound.getCompoundTag("entity"), compound.getInteger("weight"));
+                entities.put(Entry.fromNBT(compound), compound.getInteger("weight"));
             }
             this.entities = new WeightedOutputs<>(entities);
         }
@@ -563,14 +581,87 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             nbt.setTag("loot_tables", loot_tables);
             nbt.setLong("loot_table_seed", loot_table_seed);
             NBTTagList entities = new NBTTagList();
-            for (Map.Entry<NBTTagCompound, Integer> entry : this.entities.getTable()) {
-                NBTTagCompound compound = new NBTTagCompound();
-                compound.setTag("entity", entry.getKey());
+            for (Map.Entry<Entry, Integer> entry : this.entities.getTable()) {
+                NBTTagCompound compound = entry.getKey().writeToNBT();
                 compound.setInteger("weight", entry.getValue());
                 entities.appendTag(compound);
             }
             nbt.setTag("entities", entities);
             return nbt;
+        }
+        
+    }
+    
+    public static class Entry {
+        
+        private final NBTTagCompound nbt;
+        private final Map<EntityEquipmentSlot, ResourceLocation> equipment = Maps.newHashMap();
+        
+        public Entry(NBTTagCompound nbt) {
+            this.nbt = nbt;
+        }
+        
+        public Entry(ResourceLocation entity) {
+            this(Constants.getEntityTag(entity));
+        }
+        
+        public NBTTagCompound getNbt() {
+            return nbt;
+        }
+        
+        public Entry setEquipment(EntityEquipmentSlot slot, ResourceLocation table) {
+            equipment.put(slot, table);
+            return this;
+        }
+        
+        public Entry setDefaultEquipment() {
+            equipment.put(EntityEquipmentSlot.HEAD, DeeperDepthsLootTables.TRIAL_SPAWNER_OMINOUS_HELMETS);
+            equipment.put(EntityEquipmentSlot.CHEST, DeeperDepthsLootTables.TRIAL_SPAWNER_OMINOUS_CHESTPLATES);
+            equipment.put(EntityEquipmentSlot.LEGS, DeeperDepthsLootTables.TRIAL_SPAWNER_OMINOUS_LEGGINGS);
+            equipment.put(EntityEquipmentSlot.FEET, DeeperDepthsLootTables.TRIAL_SPAWNER_OMINOUS_BOOTS);
+            return this;
+        }
+        
+        public Entry setRangedEquipment() {
+            equipment.put(EntityEquipmentSlot.MAINHAND, DeeperDepthsLootTables.TRIAL_SPAWNER_OMINOUS_RANGED_WEAPONS);
+            return setDefaultEquipment();
+        }
+        
+        public Entry setMeleeEquipment() {
+            equipment.put(EntityEquipmentSlot.MAINHAND, DeeperDepthsLootTables.TRIAL_SPAWNER_OMINOUS_MELEE_WEAPONS);
+            return setDefaultEquipment();
+        }
+        
+        public void applyEquipment(EntityLivingBase entity) {
+            for (Map.Entry<EntityEquipmentSlot, ResourceLocation> entry : this.equipment.entrySet()) {
+                LootTable table = entity.world.getLootTableManager().getLootTableFromLocation(entry.getValue());
+                if (table.equals(LootTable.EMPTY_LOOT_TABLE)) continue;
+                List<ItemStack> items = table.generateLootForPools(entity.getRNG(), new LootContext.Builder((WorldServer) entity.world).build());
+                if (items.isEmpty()) continue;
+                ItemStack stack = items.get(0);
+                if (stack.isEmpty()) continue;
+                entity.setItemStackToSlot(entry.getKey(), stack);
+            }
+        }
+        
+        public static Entry fromNBT(NBTTagCompound nbt) {
+            Entry entry = new Entry(nbt.getCompoundTag("entity"));
+            if (nbt.hasKey("equipment")) {
+                NBTTagCompound equipment = nbt.getCompoundTag("equipment");
+                for (String key : equipment.getKeySet())
+                    entry.setEquipment(EntityEquipmentSlot.fromString(key), new ResourceLocation(equipment.getString(key)));
+            }
+            return entry;
+        }
+        
+        public NBTTagCompound writeToNBT() {
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setTag("entity", nbt);
+            NBTTagCompound equipment = new NBTTagCompound();
+            for (Map.Entry<EntityEquipmentSlot, ResourceLocation> entry : this.equipment.entrySet())
+                equipment.setString(entry.getKey().getName(), entry.getValue().toString());
+            compound.setTag("equipment", equipment);
+            return compound;
         }
         
     }

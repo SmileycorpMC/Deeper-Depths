@@ -1,0 +1,73 @@
+{
+    "pools": [
+        {
+            "name": "deeperdepths:ominous_trial_chestplates",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:chainmail_chestplate",
+                    "functions": [
+                        {
+                            "function": "minecraft:enchant_randomly",
+                            "enchantments": [
+                                "minecraft:protection",
+                                "minecraft:fire_protection",
+                                "minecraft:blast_protection"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "chance": 0.5,
+                            "condition": "minecraft:random_chance"
+                        }
+                    ],
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:iron_chestplate",
+                    "functions": [
+                        {
+                            "function": "minecraft:enchant_randomly",
+                            "enchantments": [
+                                "minecraft:protection",
+                                "minecraft:fire_protection",
+                                "minecraft:blast_protection"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "chance": 0.5,
+                            "condition": "minecraft:random_chance"
+                        }
+                    ],
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:diamond_chestplate",
+                    "functions": [
+                        {
+                            "function": "minecraft:enchant_randomly",
+                            "enchantments": [
+                                "minecraft:protection",
+                                "minecraft:fire_protection",
+                                "minecraft:blast_protection"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "chance": 0.5,
+                            "condition": "minecraft:random_chance"
+                        }
+                    ],
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

@@ -46,7 +46,7 @@ public class BlockTrialSpawner extends BlockTrial {
         if (!world.isRemote) {
             NBTTagCompound nbt = stack.getTagCompound();
             if (nbt.hasKey("EntityTag")) ((TileTrialSpawner)tile).modifyConfigs(cfg ->
-                    cfg.setEntities(ImmutableMap.of(nbt.getCompoundTag("EntityTag"), 1)));
+                    cfg.setEntities(ImmutableMap.of(new TileTrialSpawner.Entry(nbt.getCompoundTag("EntityTag")), 1)));
         }
         return true;
     }
