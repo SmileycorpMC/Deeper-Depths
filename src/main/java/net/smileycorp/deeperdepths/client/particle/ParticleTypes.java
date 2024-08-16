@@ -24,6 +24,10 @@ public enum ParticleTypes
             default:
             case 0:
                 return new ParticleTrialOmen.Factory();
+            case 1:
+                return new ParticleOmenRelease.Factory();
+            case 2:
+                return new ParticleOozingDrip.Factory();
         }
     }
 }

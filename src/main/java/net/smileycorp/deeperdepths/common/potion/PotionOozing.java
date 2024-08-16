@@ -10,6 +10,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 
 import java.util.Objects;
 
@@ -69,7 +70,19 @@ public class PotionOozing extends PotionDeeperDepths
 
     @Override
     public void spawnParticles(EntityLivingBase entity)
-    { ((WorldServer)entity.world).spawnParticle(EnumParticleTypes.SLIME, entity.posX, entity.posY + (entity.height / 2), entity.posZ, 1, entity.width/3, entity.height/2, entity.width/3, 0.0); }
+    {
+        double x = entity.posX + (entity.getRNG().nextFloat() - entity.getRNG().nextFloat());
+        double y = entity.posY + (entity.height / 2) + (entity.getRNG().nextFloat() - entity.getRNG().nextFloat());
+        double z = entity.posZ + (entity.getRNG().nextFloat() - entity.getRNG().nextFloat());
+
+        double speedX = (entity.getRNG().nextFloat() - entity.getRNG().nextFloat())/8;
+        double speedY = entity.getRNG().nextFloat()/8;
+        double speedZ = (entity.getRNG().nextFloat() - entity.getRNG().nextFloat())/8;
+
+        DeeperDepths.proxy.spawnParticle(2, entity.world, x, y, z, speedX, speedY, speedZ);
+
+        //((WorldServer)entity.world).spawnParticle(EnumParticleTypes.SLIME, entity.posX, entity.posY + (entity.height / 2), entity.posZ, 1, entity.width/3, entity.height/2, entity.width/3, 0.0);
+    }
 
     /** Slimes are annoyingly privatized, so we forcefully update slimes. */
     public static void setSlimeStats(Entity oozed, int size)
