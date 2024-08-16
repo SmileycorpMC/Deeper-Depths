@@ -1,7 +1,5 @@
 package net.smileycorp.deeperdepths.common.entities;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAttackRangedBow;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -10,10 +8,7 @@ import net.minecraft.entity.monster.AbstractSkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;

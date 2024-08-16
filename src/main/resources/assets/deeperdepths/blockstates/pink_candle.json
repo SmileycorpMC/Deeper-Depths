@@ -1,0 +1,53 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "candles=1,lit=false": {
+      "model": "deeperdepths:one_candle",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle"
+      }
+    },
+    "candles=2,lit=false": {
+      "model": "deeperdepths:two_candles",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle"
+      }
+    },
+    "candles=3,lit=false": {
+      "model": "deeperdepths:three_candles",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle"
+      }
+    },
+    "candles=4,lit=false": {
+      "model": "deeperdepths:four_candles",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle"
+      }
+    },
+    "candles=1,lit=true": {
+      "model": "deeperdepths:one_candle",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle_lit"
+      }
+    },
+    "candles=2,lit=true": {
+      "model": "deeperdepths:two_candles",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle_lit"
+      }
+    },
+    "candles=3,lit=true": {
+      "model": "deeperdepths:three_candles",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle_lit"
+      }
+    },
+    "candles=4,lit=true": {
+      "model": "deeperdepths:four_candles",
+      "textures": {
+        "all": "deeperdepths:blocks/pink_candle_lit"
+      }
+    }
+  }
+}

@@ -38,7 +38,8 @@ public class DeeperDepthsItems {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DeeperDepthsBlocks.BLOCKS) {
-            if (block instanceof BlockCopperDoor) register(registry, ((BlockCopperDoor) block).getItem());
+            if (block instanceof BlockCandle) register(registry, new ItemBlockCandle((BlockCandle) block));
+            else if (block instanceof BlockCopperDoor) register(registry, ((BlockCopperDoor) block).getItem());
             else if (!(block instanceof BlockDDSlab)) register(registry, (block instanceof BlockCopper || block instanceof BlockCopperBulb) &&
                     Constants.IS_COPPER_TASTY ? new ItemTastyCopper(block) : new ItemDDBlock(block));
             else if (!((BlockDDSlab) block).isDouble()) register(registry, block instanceof BlockCutCopperSlab &&
