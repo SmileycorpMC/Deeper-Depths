@@ -19,7 +19,6 @@ import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
-import scala.collection.immutable.Stream;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class DeeperDepthsRecipes {

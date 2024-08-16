@@ -1,11 +1,9 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
-import net.minecraft.block.BlockGlass;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
-import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 
 public class BlockTintedGlass extends BlockDeeperDepths {
     
