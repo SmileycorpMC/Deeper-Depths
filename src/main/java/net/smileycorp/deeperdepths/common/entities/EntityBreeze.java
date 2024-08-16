@@ -58,7 +58,7 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(4, new EntityAIBreezeAttackCycle(this, 0.8));
+        this.tasks.addTask(4, new EntityAIBreezeAttackCycle(this, 0.8, 0));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0, 0.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
