@@ -36,6 +36,8 @@ public class ItemWindCharge extends ItemDeeperDepths
             worldIn.spawnEntity(entitywindcharge);
         }
 
+        playerIn.getCooldownTracker().setCooldown(this, nbttagcompound != null && nbttagcompound.hasKey("Cooldown") ? nbttagcompound.getInteger("Cooldown") : 10);
+
         playerIn.addStat(StatList.getObjectUseStats(this));
         return new ActionResult(EnumActionResult.SUCCESS, itemstack);
     }
