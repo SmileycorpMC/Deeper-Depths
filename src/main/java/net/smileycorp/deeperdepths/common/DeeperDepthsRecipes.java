@@ -3,6 +3,7 @@ package net.smileycorp.deeperdepths.common;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -14,6 +15,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.OreIngredient;
+import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
@@ -193,6 +196,12 @@ public class DeeperDepthsRecipes {
 
         GameRegistry.addShapedRecipe(Constants.loc("mace"), null, new ItemStack(DeeperDepthsItems.MACE),
                 "H", "B", 'H', Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.HEAVY_CORE)), 'B', Ingredient.fromStacks(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)));
+        
+        //candles
+        for (EnumDyeColor color : EnumDyeColor.values()) GameRegistry.addShapelessRecipe(Constants.loc((
+                color == EnumDyeColor.SILVER ? "light_gray" : color.getName()) + "_candle"), Constants.loc("candles"),
+                new ItemStack(DeeperDepthsBlocks.CANDLES.get(color)), Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CANDLE)),
+                new OreIngredient("dye" + (color == EnumDyeColor.SILVER ? "LightGray" : TextUtils.toProperCase(color.getUnlocalizedName()))));
         
         //tinted glass
         GameRegistry.addShapedRecipe(Constants.loc("tintedGlass"), new ResourceLocation("glass"), new ItemStack(DeeperDepthsBlocks.TINTED_GLASS, 2),
