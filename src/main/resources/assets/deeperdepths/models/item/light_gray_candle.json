@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "deeperdepths:items/silver_candle"
+    "layer0": "deeperdepths:items/light_gray_candle"
   }
 }

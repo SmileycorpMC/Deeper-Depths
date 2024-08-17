@@ -44,11 +44,13 @@ public class BlockCandle extends BlockDeeperDepths {
                     new Vec3d[] {new Vec3d(0.375, 0.4375, 0.5), new Vec3d(0.5625, 0.5, 0.4375), new Vec3d(0.5, 0.3125, 0.625)},
                     new Vec3d[] {new Vec3d(0.375, 0.4375, 0.375), new Vec3d(0.5625, 0.5, 0.375), new Vec3d(0.4375, 0.3125, 0.5625), new Vec3d(0.625, 0.4375, 0.5625)}
             };
+    //no way wick, like john wick fortnite?
     
     private final EnumDyeColor color;
     
     public BlockCandle(EnumDyeColor color) {
-        super(color == null ? "Candle" : color.getName() + "_Candle", Material.CARPET, 0.1f, 0.1f, 0);
+        //why is it called silver in the enum when it's called light gray everywhere else
+        super(color == null ? "Candle" : (color == EnumDyeColor.SILVER ? "light_gray" : color.getName()) + "_Candle", Material.CARPET, 0.1f, 0.1f, 0);
         this.color = color;
         setSoundType(DeeperDepthsSoundTypes.CANDLE);
         setDefaultState(getBlockState().getBaseState().withProperty(LIT, false).withProperty(CANDLES, 1));
