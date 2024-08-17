@@ -204,8 +204,11 @@ public class DeeperDepthsRecipes {
                 new OreIngredient("dye" + (color == EnumDyeColor.SILVER ? "LightGray" : TextUtils.toProperCase(color.getUnlocalizedName()))));
         
         //tinted glass
-        GameRegistry.addShapedRecipe(Constants.loc("tintedGlass"), new ResourceLocation("glass"), new ItemStack(DeeperDepthsBlocks.TINTED_GLASS, 2),
+        GameRegistry.addShapedRecipe(Constants.loc("tinted_glass"), new ResourceLocation("glass"), new ItemStack(DeeperDepthsBlocks.TINTED_GLASS, 2),
                 " A ", "AGA", " A ", 'A', "gemAmethyst", 'G', "blockGlassColorless");
+        //amethyst block
+        GameRegistry.addShapedRecipe(Constants.loc("amethyst_block"), new ResourceLocation("amethyst"), new ItemStack(DeeperDepthsBlocks.AMETHYST_BLOCK),
+                "AA", "AA", 'A', "gemAmethyst");
     }
 
     private static void registerBrewingRecipes()
