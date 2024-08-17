@@ -9,6 +9,8 @@
       "MixinBootstrap$11",
       "MixinEntity"
   ],
-  "client": [],
+  "client": [
+    "MixinInventoryEffectRenderer"
+  ],
   "server": []
 }

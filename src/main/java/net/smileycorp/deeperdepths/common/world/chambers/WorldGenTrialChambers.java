@@ -1,7 +1,5 @@
 package net.smileycorp.deeperdepths.common.world.chambers;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

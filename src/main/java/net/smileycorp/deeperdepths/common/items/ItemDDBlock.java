@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.smileycorp.atlas.api.item.IMetaItem;
-import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.blocks.IBlockProperties;
 
@@ -29,7 +28,7 @@ public class ItemDDBlock<T extends Block & IBlockProperties> extends ItemBlock i
     
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return getMaxMeta() > 0 ? "tile." + Constants.name(TextUtils.toProperCase(byMeta(stack.getMetadata()))) : super.getUnlocalizedName();
+        return getMaxMeta() > 0 ? "tile." + Constants.name(byMeta(stack.getMetadata())) : super.getUnlocalizedName();
     }
     
     

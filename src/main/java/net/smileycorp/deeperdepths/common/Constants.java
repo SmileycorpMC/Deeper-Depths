@@ -5,10 +5,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.smileycorp.atlas.api.util.TextUtils;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Locale;
 
 public class Constants {
 	
@@ -26,7 +26,7 @@ public class Constants {
 	{ return (new EntityDamageSource(MODID + "." + "mace", source)); }
 
 	public static String name(String name) {
-		return MODID + "." + TextUtils.toProperCase(name).trim();
+		return MODID + "." + name.toLowerCase(Locale.US);
 	}
 	
 	public static ResourceLocation loc(String name) {

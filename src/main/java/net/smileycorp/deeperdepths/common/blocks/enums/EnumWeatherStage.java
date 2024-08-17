@@ -3,22 +3,19 @@ package net.smileycorp.deeperdepths.common.blocks.enums;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.util.IStringSerializable;
 
-import java.util.Locale;
-
 public enum EnumWeatherStage implements IStringSerializable {
    
-    NORMAL("Normal", MapColor.ADOBE, 0.75f),
-    EXPOSED("Exposed", MapColor.SILVER_STAINED_HARDENED_CLAY, 1f),
-    WEATHERED("Weathered", MapColor.CYAN, 1f),
-    OXIDIZED("Oxidized", MapColor.DIAMOND, 0);
+    NORMAL("normal", MapColor.ADOBE, 0.75f),
+    EXPOSED("exposed", MapColor.SILVER_STAINED_HARDENED_CLAY, 1f),
+    WEATHERED("weathered", MapColor.CYAN, 1f),
+    OXIDIZED("oxidized", MapColor.DIAMOND, 0);
     
-    private final String name, unlocalizedName;
+    private final String name;
     private final MapColor color;
     private final float ageModifier;
     
     EnumWeatherStage(String name, MapColor color, float ageModifier) {
-        this.name = name.toLowerCase(Locale.US);
-        this.unlocalizedName = name.replace("_", "");
+        this.name = name;
         this.color = color;
         this.ageModifier = ageModifier;
     }
@@ -29,7 +26,7 @@ public enum EnumWeatherStage implements IStringSerializable {
     }
     
     public String getUnlocalizedName() {
-        return this == NORMAL ? "" : unlocalizedName;
+        return this == NORMAL ? "" : name;
     }
     
     public MapColor getMapColor() {

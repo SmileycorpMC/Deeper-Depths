@@ -53,7 +53,7 @@ public class BlockDDStoneSlab extends BlockDDSlab {
     
     @Override
     public String getUnlocalizedName(int meta) {
-        return "tile." + Constants.MODID + "." + EnumStoneType.getShaped(meta).getUnlocalizedName() + "Slab";
+        return "tile." + Constants.MODID + "." + EnumStoneType.getShaped(meta).getName() + "_slab";
     }
     
     @Override
