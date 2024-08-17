@@ -25,28 +25,13 @@ public class WorldGenTrialChambers extends WorldGenerator {
          * MAKE THIS CONFIGURABLE, SPACING IS THE AMOUNT OF EACH TIME IT IS CAPAPABLE OF GENERATING
          */
         //old 525
-        if((spacing / 4) > 100) {
+        if((spacing / 4) > 525) {
             getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
                     .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
             return true;
         }
         spacing++;
         return false;
-    }
-
-
-    //As a note maybe we can use this function to find the height of the ground and ensure that it has enough space to generate in that area?
-    public static int getGroundFromAbove(World world, int x, int z)
-    {
-        int y = 255;
-        boolean foundGround = false;
-        while(!foundGround && y-- >= 31)
-        {
-            Block blockAt = world.getBlockState(new BlockPos(x,y,z)).getBlock();
-            foundGround =  blockAt == Blocks.GRASS;
-        }
-
-        return y;
     }
 
 
