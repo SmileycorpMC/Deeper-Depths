@@ -29,14 +29,16 @@ public class EntityAIBreezeAttackCycle extends EntityAIBase
     double repositionDistance = 8.0;
     /** Movement has been give to the Breeze, and it is headed there. */
     private boolean hasMovement = false;
-    double attackDistance = 16.0F;
+    /** How close the Breeze must be to preform an attack. 0 makes this range infinite. */
+    double attackDistance;
     double retreatDistance = 3.0F;
 
-    public EntityAIBreezeAttackCycle(EntityBreeze breezeIn, double moveSpeedIn)
+    public EntityAIBreezeAttackCycle(EntityBreeze breezeIn, double moveSpeedIn, double attackDistanceIn)
     {
         this.breeze = breezeIn;
         this.setMutexBits(3);
         entityMoveSpeed = moveSpeedIn;
+        attackDistance = attackDistanceIn;
     }
 
     public boolean shouldExecute()
@@ -160,7 +162,7 @@ public class EntityAIBreezeAttackCycle extends EntityAIBase
         this.breeze.getNavigator().clearPath();
         this.breeze.getLookHelper().setLookPositionWithEntity(target, 10.0F, 10.0F);
 
-        if (distance <= attackDistance * attackDistance && seeTarget)
+        if ((attackDistance == 0 || distance <= attackDistance * attackDistance) && seeTarget)
         {
             ++this.actionTimer;
             if (this.actionTimer == 5 && (breeze.onGround || breeze.isInWater()))

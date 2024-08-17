@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -43,6 +44,7 @@ public class DeeperDepthsRecipes {
         OreDictionary.registerOre("blockCopper", new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("blockCopperCut", new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("blockCopperChiseled", new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockGlass", new ItemStack(DeeperDepthsBlocks.TINTED_GLASS));
     }
     
     private static void registerFurnaceRecipes() {
@@ -191,6 +193,10 @@ public class DeeperDepthsRecipes {
 
         GameRegistry.addShapedRecipe(Constants.loc("mace"), null, new ItemStack(DeeperDepthsItems.MACE),
                 "H", "B", 'H', Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.HEAVY_CORE)), 'B', Ingredient.fromStacks(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)));
+        
+        //tinted glass
+        GameRegistry.addShapedRecipe(Constants.loc("tintedGlass"), new ResourceLocation("glass"), new ItemStack(DeeperDepthsBlocks.TINTED_GLASS, 2),
+                " A ", "AGA", " A ", 'A', "gemAmethyst", 'G', "blockGlassColorless");
     }
 
     private static void registerBrewingRecipes()

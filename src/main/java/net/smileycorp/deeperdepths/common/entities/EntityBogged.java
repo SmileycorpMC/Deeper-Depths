@@ -1,6 +1,5 @@
 package net.smileycorp.deeperdepths.common.entities;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAttackRangedBow;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -9,7 +8,6 @@ import net.minecraft.entity.monster.AbstractSkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemShears;
@@ -21,6 +19,9 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.config.EntityConfig;
@@ -31,8 +32,9 @@ import java.util.Iterator;
 public class EntityBogged extends AbstractSkeleton
 {
     private static final DataParameter<Boolean> SHEARED = EntityDataManager.createKey(EntityBogged.class, DataSerializers.BOOLEAN);
-    /** How many mushrooms are dropped when sheared. */
-    int mushroomsDropped = 2;
+    /** A seperate shearing loot table that can be defined via NBT. Otherwise the default is used. */
+    private ResourceLocation shearLootTable;
+    private long shearLootTableSeed;
     private final EntityAIAttackRangedBow<AbstractSkeleton> aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0, 20, 15.0F);
     private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.2, false)
     {
@@ -79,12 +81,15 @@ public class EntityBogged extends AbstractSkeleton
 
             if (!this.world.isRemote)
             {
-                for (int i = 0; i < mushroomsDropped; i++)
-                {
-                    Block mushroom = Blocks.BROWN_MUSHROOM;
-                    if (this.world.rand.nextBoolean()) mushroom = Blocks.RED_MUSHROOM;
+                ResourceLocation lootTableLocation = this.shearLootTable;
+                if (lootTableLocation == null) lootTableLocation = this.getShearLootTable();
 
-                    this.entityDropItem(new ItemStack(mushroom, 1), 1.0F);
+                LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer)this.world);
+                LootTable loottable = this.world.getLootTableManager().getLootTableFromLocation(lootTableLocation);
+
+                for (ItemStack itemSheared : loottable.generateLootForPools(this.getRNG(), lootcontext$builder.build()))
+                {
+                    this.entityDropItem(itemSheared, 1.0F);
                 }
             }
             return true;
@@ -136,25 +141,24 @@ public class EntityBogged extends AbstractSkeleton
     }
 
     @Nullable
-    protected ResourceLocation getLootTable() {
-        return DeeperDepthsLootTables.BOGGED_DROPS;
-    }
+    protected ResourceLocation getShearLootTable()
+    { return DeeperDepthsLootTables.BOGGED_SHEAR; }
 
-    protected SoundEvent getAmbientSound() {
-        return DeeperDepthsSoundEvents.BOGGED_AMBIENT;
-    }
+    @Nullable
+    protected ResourceLocation getLootTable()
+    { return DeeperDepthsLootTables.BOGGED_DROPS; }
 
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return DeeperDepthsSoundEvents.BOGGED_HURT;
-    }
+    protected SoundEvent getAmbientSound()
+    { return DeeperDepthsSoundEvents.BOGGED_AMBIENT; }
 
-    protected SoundEvent getDeathSound() {
-        return DeeperDepthsSoundEvents.BOGGED_DEATH;
-    }
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+    { return DeeperDepthsSoundEvents.BOGGED_HURT; }
 
-    protected SoundEvent getStepSound() {
-        return DeeperDepthsSoundEvents.BOGGED_STEP;
-    }
+    protected SoundEvent getDeathSound()
+    { return DeeperDepthsSoundEvents.BOGGED_DEATH; }
+
+    protected SoundEvent getStepSound()
+    { return DeeperDepthsSoundEvents.BOGGED_STEP; }
 
     protected EntityArrow getArrow(float p_190726_1_)
     {
@@ -163,7 +167,6 @@ public class EntityBogged extends AbstractSkeleton
         {
             ((EntityTippedArrow)entityarrow).addEffect(new PotionEffect(MobEffects.POISON, EntityConfig.poisonArrowDuration * 20));
         }
-
         return entityarrow;
     }
 
@@ -178,6 +181,12 @@ public class EntityBogged extends AbstractSkeleton
     {
         super.writeEntityToNBT(compound);
         compound.setBoolean("sheared", this.getSheared());
+
+        if (this.shearLootTable != null)
+        {
+            compound.setString("ShearLootTable", this.shearLootTable.toString());
+            if (this.shearLootTableSeed != 0L) compound.setLong("ShearLootTableSeed", this.shearLootTableSeed);
+        }
     }
 
     @Override
@@ -185,5 +194,10 @@ public class EntityBogged extends AbstractSkeleton
     {
         super.readEntityFromNBT(compound);
         this.setSheared(compound.getBoolean("sheared"));
+        if (compound.hasKey("ShearLootTable", 8))
+        {
+            this.shearLootTable = new ResourceLocation(compound.getString("ShearLootTable"));
+            this.shearLootTableSeed = compound.getLong("ShearLootTableSeed");
+        }
     }
 }

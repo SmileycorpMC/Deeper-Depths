@@ -20,6 +20,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 
@@ -52,6 +53,7 @@ public class ItemOminousBottle extends ItemDeeperDepths {
             if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative())) stack.shrink(1);
             /** An extra thing I added for fun. */
             ((WorldServer)entity.world).spawnParticle(EnumParticleTypes.ITEM_CRACK, entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ, 10, 0, 0, 0, 0.1, new int[]{Item.getIdFromItem(stack.getItem()), stack.getMetadata()});
+            DeeperDepths.proxy.spawnParticle(1, entity.world, entity.posX, entity.posY + entity.height/2, entity.posZ, 0, 0.1, 0);
         }
         return stack;
     }

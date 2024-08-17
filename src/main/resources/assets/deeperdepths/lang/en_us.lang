@@ -151,6 +151,25 @@ tile.deeperdepths.WaxedExposedCopperBulb.name=Waxed Exposed Copper Bulb
 tile.deeperdepths.WaxedWeatheredCopperBulb.name=Waxed Weathered Copper Bulb
 tile.deeperdepths.WaxedOxidizedCopperBulb.name=Waxed Oxidized Copper Bulb
 
+tile.deeperdepths.Candle.name=Candle
+tile.deeperdepths.WhiteCandle.name=White Candle
+tile.deeperdepths.OrangeCandle.name=Orange Candle
+tile.deeperdepths.MagentaCandle.name=Magenta Candle
+tile.deeperdepths.LightBlueCandle.name=Light Blue Candle
+tile.deeperdepths.YellowCandle.name=Yellow Candle
+tile.deeperdepths.LimeCandle.name=Lime Candle
+tile.deeperdepths.PinkCandle.name=Pink Candle
+tile.deeperdepths.GrayCandle.name=Gray Candle
+tile.deeperdepths.SilverCandle.name=Silver Candle
+tile.deeperdepths.CyanCandle.name=Cyan Candle
+tile.deeperdepths.PurpleCandle.name=Purple Candle
+tile.deeperdepths.BlueCandle.name=Blue Candle
+tile.deeperdepths.BrownCandle.name=Brown Candle
+tile.deeperdepths.GreenCandle.name=Green Candle
+tile.deeperdepths.RedCandle.name=Red Candle
+tile.deeperdepths.BlackCandle.name=Black Candle
+tile.deeperdepths.TintedGlass.name=Tinted Glass
+
 tile.deeperdepths.heavycore.name=Heavy Core
 tile.deeperdepths.TrialPot.name=Trial Pot
 tile.deeperdepths.TrialSpawner.name=Trial Spawner
