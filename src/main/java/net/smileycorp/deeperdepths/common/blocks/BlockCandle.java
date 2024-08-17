@@ -16,10 +16,16 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
+
+import java.util.Random;
 
 public class BlockCandle extends BlockDeeperDepths {
     
@@ -29,6 +35,15 @@ public class BlockCandle extends BlockDeeperDepths {
             new AxisAlignedBB(0.3125, 0, 0.375, 0.6875, 0.375, 0.5625),
             new AxisAlignedBB(0.3125, 0, 0.375, 0.625, 0.375, 0.6875),
             new AxisAlignedBB(0.3125, 0, 0.3125, 0.6875, 0.375, 0.625)};
+
+    /** MULTIDIMENSIONAL WICK ARRAY. */
+    private Vec3d[][] wickSpot = new Vec3d[][]
+            {
+                    new Vec3d[] {new Vec3d(0.5, 0.5, 0.5)},
+                    new Vec3d[] {new Vec3d(0.375, 0.4375, 0.5), new Vec3d(0.625, 0.5, 0.4375)},
+                    new Vec3d[] {new Vec3d(0.375, 0.4375, 0.5), new Vec3d(0.5625, 0.5, 0.4375), new Vec3d(0.5, 0.3125, 0.625)},
+                    new Vec3d[] {new Vec3d(0.375, 0.4375, 0.375), new Vec3d(0.5625, 0.5, 0.375), new Vec3d(0.4375, 0.3125, 0.5625), new Vec3d(0.625, 0.4375, 0.5625)}
+            };
     
     private final EnumDyeColor color;
     
@@ -78,12 +93,14 @@ public class BlockCandle extends BlockDeeperDepths {
     
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP);
+
+        IBlockState state = world.getBlockState(pos.down());
+        return state.getBlock().canPlaceTorchOnTop(state, world, pos);
     }
     
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos other) {
-        if (!world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP)) {
+        if (!canPlaceBlockAt(world, pos)) {
             dropBlockAsItem(world, pos, state, 0);
             world.setBlockToAir(pos);
         }
@@ -127,6 +144,21 @@ public class BlockCandle extends BlockDeeperDepths {
     @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing facing) {
         return BlockFaceShape.UNDEFINED;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
+    {
+        /* Skip if not lit. */
+        if (!state.getValue(LIT)) return;
+        int candles = state.getValue(CANDLES);
+
+        for (int c = 0; c <= candles - 1; c++)
+        {
+            if (rand.nextInt(4)==0) world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + wickSpot[candles - 1][c].x, pos.getY() + wickSpot[candles - 1][c].y, pos.getZ() + wickSpot[candles - 1][c].z, 0.0D, 0.0D, 0.0D);
+            //world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + wickSpot[candles - 1][c].x, pos.getY() + wickSpot[candles - 1][c].y, pos.getZ() + wickSpot[candles - 1][c].z, 0.0D, 0.0D, 0.0D);
+            DeeperDepths.proxy.spawnParticle(3, world, pos.getX() + wickSpot[candles - 1][c].x, pos.getY() + wickSpot[candles - 1][c].y, pos.getZ() + wickSpot[candles - 1][c].z, 0.0D, 0.0D, 0.0D);
+        }
     }
     
     @Override

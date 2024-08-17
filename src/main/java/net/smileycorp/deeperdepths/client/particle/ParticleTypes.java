@@ -11,10 +11,7 @@ public enum ParticleTypes
 {
     TRIAL_OMEN;
 
-    public int getId()
-    {
-        return this.ordinal();
-    }
+    //public int getId() { return this.ordinal(); }
 
     @SideOnly(Side.CLIENT)
     public static IParticleFactory getFactory(int particleId)
@@ -28,6 +25,8 @@ public enum ParticleTypes
                 return new ParticleOmenRelease.Factory();
             case 2:
                 return new ParticleOozingDrip.Factory();
+            case 3:
+                return new ParticleFlameScalable.Factory();
         }
     }
 }
