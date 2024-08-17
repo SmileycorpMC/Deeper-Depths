@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -53,12 +54,13 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperDoor> COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> WAXED_COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     
-    public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
-    //public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
+    public static final BlockCandle CANDLE = new BlockCandle(null);
+    public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
     public static final BlockTrialSpawner TRIAL_SPAWNER = new BlockTrialSpawner();
     public static final BlockVault VAULT = new BlockVault();
     public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
     public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
+    public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
     //public static final Block LIGHTNING_ROD = null;
     
    
@@ -95,6 +97,7 @@ public class DeeperDepthsBlocks {
                 }
                 if (!(object instanceof Block) || object == null) continue;
                 register(registry, (Block) object);
+                if (object == CANDLE) for (EnumDyeColor color : EnumDyeColor.values()) CANDLES.put(color, new BlockCandle(color));
             } catch (Exception e) {
                 DeeperDepths.error(field, e);
             }

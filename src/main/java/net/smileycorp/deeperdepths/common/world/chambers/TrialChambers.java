@@ -9,6 +9,7 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.smileycorp.deeperdepths.common.world.base.ModRand;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrialChambers {
@@ -33,7 +34,7 @@ public class TrialChambers {
     private int yAxel2Level = 0;
 
     //Make sure that you put the config option for size here too
-    private static final int SIZE = 3;
+    private static final int SIZE = 6;
 
     //this is just for a second floor used by my structures, you can realistically go as infinite with floors and levels as you'd like
     private static final int SECOND_SIZE = SIZE * 2;
@@ -224,7 +225,12 @@ public class TrialChambers {
 
         int chamberVar = ModRand.range(1, 15);
         if(isSecondMainCorridor) {
-            generateRegularChamber(template_hall_1, pos, rot,chamberVar);
+            if(!generateRegularChamber(template_hall_1, pos, rot, chamberVar)) {
+                if(!secondChanceToGenerateChamber(template_hall_1, pos, rot)) {
+                   // generateChamberEnd(template_hall_1, pos, rot);
+                }
+            }
+          //  generateRegularChamber(template_hall_1, pos, rot,chamberVar);
         }
         return true;
     }
@@ -306,40 +312,40 @@ public class TrialChambers {
             components.add(template_cross);
             if(world.rand.nextInt(2) == 0) {
                 generateSecondCorridor(template_cross, pos.add(18, 0, 0), rot.add(Rotation.CLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
             } else {
                 generateSecondCorridor(template_cross, pos.add(0, 0, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,0,0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(18,0,0), rot.add(Rotation.CLOCKWISE_90));
             }
         } else if (id == 2) {
           template_cross = addAdjustedPiece(parent, pos.add(0, -15, 0), "c_cross_2", rot);
             components.add(template_cross);
             if(world.rand.nextInt(2) == 0) {
                 generateSecondCorridor(template_cross, pos.add(18, 15, 0), rot.add(Rotation.CLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 15, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(0, 15, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
             } else {
                 generateSecondCorridor(template_cross, pos.add(0, 15, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,15,0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(18,15,0), rot.add(Rotation.CLOCKWISE_90));
             }
         } else if (id == 3) {
             template_cross = addAdjustedPiece(parent, pos.add(0, -3, 0), "c_cross_3", rot);
             components.add(template_cross);
             if(world.rand.nextInt(2) == 0) {
                 generateSecondCorridor(template_cross, pos.add(18, 3, 0), rot.add(Rotation.CLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 3, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(0, 3, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
             } else {
                 generateSecondCorridor(template_cross, pos.add(0, 3, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,3,0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(18,3,0), rot.add(Rotation.CLOCKWISE_90));
             }
         } else if (id == 4) {
             template_cross = addAdjustedPiece(parent, pos.add(0, -5, 0), "c_cross_4", rot);
             components.add(template_cross);
             if(world.rand.nextInt(2) == 0) {
                 generateSecondCorridor(template_cross, pos.add(18, 5, 0), rot.add(Rotation.CLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(0, 5, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(0, 5, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
             } else {
                 generateSecondCorridor(template_cross, pos.add(0, 5, 19), rot.add(Rotation.COUNTERCLOCKWISE_90));
-                secondChanceToGenerateChamber(template_cross, BlockPos.ORIGIN.add(18,5,0), rot.add(Rotation.CLOCKWISE_90));
+                secondChanceToGenerateChamberForCross(template_cross, BlockPos.ORIGIN.add(18,5,0), rot.add(Rotation.CLOCKWISE_90));
             }
         }
         return true;
@@ -451,6 +457,59 @@ public class TrialChambers {
         return true;
     }
 
+    //1 Left
+    //2 Straight
+    //3 Right
+    protected boolean generateEncounterRotation(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+
+        //try Left First
+        int chamberVar = ModRand.range(1, 15);
+        List<StructureComponent> structures = new ArrayList<>(components);
+        String[] left_types = {"encounter/encounter_3", "encounter/encounter_4"};
+        String[] right_types = {"encounter/encounter_1", "encounter/encounter_2"};
+        String[] straight_types = {"encounter/straight_connect_piece", "encounter/straight_connect_piece_2"};
+        TrialChambersTemplate connectPiece = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(left_types), rot);
+        if(connectPiece.isCollidingExcParent(manager, parent, components)) {
+            return false;
+        }
+        if(!generateRegularChamber(connectPiece, BlockPos.ORIGIN.add(-5,5,13), rot.add(Rotation.COUNTERCLOCKWISE_90), chamberVar)) {
+            //then try Straight
+            connectPiece = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(straight_types), rot);
+
+            if(connectPiece.isCollidingExcParent(manager, parent, components)) {
+                return false;
+            }
+            if(!generateRegularChamber(connectPiece, BlockPos.ORIGIN.add(0, 7, 0), rot, chamberVar)) {
+                //Lastly Try Right
+                //will add this later just need to get the first two directions working first
+                connectPiece = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(right_types), rot);
+
+                if(connectPiece.isCollidingExcParent(manager, parent, components)) {
+                    return false;
+                }
+                if(!generateRegularChamber(connectPiece, BlockPos.ORIGIN.add(-13, 5, -5), rot.add(Rotation.CLOCKWISE_90), chamberVar)) {
+                    //if all directions fail remove everything
+                    components.clear();
+                    components.remove(connectPiece);
+                    components.addAll(structures);
+                    return false;
+
+                } else {
+                    components.add(connectPiece);
+                    return true;
+                }
+
+            } else {
+                components.add(connectPiece);
+                return true;
+            }
+
+        } else {
+            components.add(connectPiece);
+            return true;
+        }
+    }
+
     //Connect Piece 1
     public boolean connectPieceOne(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
         String[] connect_types = {"connect/connect_piece_1", "connect/connect_piece_4"};
@@ -461,9 +520,23 @@ public class TrialChambers {
         components.add(connect_piece);
         int chamberVar = ModRand.range(1, 15);
         //generate Chamber
-       if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+        if(world.rand.nextInt(9) == 0) {
+            //Prioritizes the Encounter first
+            if(!generateEncounterRotation(connect_piece, BlockPos.ORIGIN, rot)) {
+                if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+                    if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
+                            generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+                        }
+                    }
+            }
+
+        } else if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+           //Generate a small sub straight
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
-                generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+                    //generate a encounter room if nothing else works
+                    if (!generateEncounterRotation(connect_piece, BlockPos.ORIGIN, rot)) {
+                        generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+                    }
             }
         }
 
@@ -481,9 +554,24 @@ public class TrialChambers {
         components.add(connect_piece);
         int chamberVar = ModRand.range(1, 15);
         //generate Chamber
-        if(!generateRegularChamberForConnectTwo(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+        if(world.rand.nextInt(6) == 0) {
+            //Prioritizes the Encounter first
+            if(!generateEncounterRotation(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
+                if(!generateRegularChamberForConnectTwo(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+                    if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
+                            generateChamberEnd(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot);
+                        }
+                    }
+
+            }
+
+        } else if(!generateRegularChamberForConnectTwo(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+            //generate a small sub straight
             if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
-                generateChamberEnd(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot);
+                    //attempt a generation of the Encounter rooms in each dir
+                    if (!generateEncounterRotation(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
+                        generateChamberEnd(connect_piece, BlockPos.ORIGIN.add(0, 7, 0), rot);
+                    }
             }
         }
         return true;
@@ -498,10 +586,25 @@ public class TrialChambers {
         components.add(connect_piece);
         int chamberVar = ModRand.range(1, 15);
         //generate Chamber
-        if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
-            if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
-                generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+        if(world.rand.nextInt(8) == 0) {
+            //Prioritizes the Encounter first
+            if(!generateEncounterRotation(connect_piece, BlockPos.ORIGIN, rot)) {
+                if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+                    if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
+                            generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+                    }
+                }
             }
+
+        } else if(!generateRegularChamber(connect_piece, BlockPos.ORIGIN, rot, chamberVar)) {
+            //generate a small sub straight
+            if(!secondChanceToGenerateChamber(connect_piece, BlockPos.ORIGIN, rot)) {
+                    //else try a rotation room
+                    if (!generateEncounterRotation(connect_piece, BlockPos.ORIGIN, rot)) {
+                        generateChamberEnd(connect_piece, BlockPos.ORIGIN, rot);
+                    }
+                }
+
         }
 
         return true;
@@ -509,8 +612,31 @@ public class TrialChambers {
 
     //Generates a simple door at the end of the hall, I'll add more pieces that can generate later
     public boolean generateChamberEnd(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        String[] small_types = {"end/stubby_end_1", "end/stubby_end_2"};
+
+        TrialChambersTemplate small_end = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(small_types), rot);
         TrialChambersTemplate end = addAdjustedPieceWithoutCount(parent, pos, "chamber/chamber_end", rot);
-        components.add(end);
+        if(world.rand.nextInt(2) == 0) {
+            if(small_end.isCollidingExcParent(manager, parent, components)) {
+                components.add(end);
+            } else {
+                components.add(small_end);
+            }
+        } else {
+            components.add(end);
+        }
+        return true;
+    }
+
+    public boolean generateLargeEnd(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        String[] big_types = {"end/end_hall_1", "end/end_hall_2", "end/end_hall_3"};
+        TrialChambersTemplate big_end = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(big_types), rot);
+
+        if(big_end.isCollidingExcParent(manager, parent, components)) {
+            return generateChamberEnd(parent, pos, rot);
+        } else {
+            components.add(big_end);
+        }
         return true;
     }
 
@@ -524,8 +650,169 @@ public class TrialChambers {
 
         components.add(chamer_connect);
         int chamberVar = ModRand.range(1, 15);
-        if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
-            generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
+        //generate a chamber
+        if(world.rand.nextInt(2) == 0) {
+            if(!generateEncounterRotation(chamer_connect, BlockPos.ORIGIN, rot)) {
+                if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
+                    //were gonna try to go left, right, up and down
+                    components.remove(chamer_connect);
+                    if(!generateHallWithRotation(parent, pos, rot)) {
+                        if(!generateStaircase(parent, pos, rot)) {
+                            components.add(chamer_connect);
+                            generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
+                        }
+                    }
+                }
+            }
+        } else if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
+            //try to generate a rotation pice
+            if(!generateEncounterRotation(chamer_connect, BlockPos.ORIGIN, rot)) {
+                //were gonna try to go left, right, up and down
+                components.remove(chamer_connect);
+                if(!generateHallWithRotation(parent, pos, rot)) {
+                    if(!generateStaircase(parent, pos, rot)) {
+                        components.add(chamer_connect);
+                        generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean secondChanceToGenerateChamberForCross(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        String[] b_entrance_types = {"chamber/chamber_connect", "chamber/chamber_connect_2", "chamber/chamber_connect_3"};
+        TrialChambersTemplate chamer_connect = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(b_entrance_types), rot);
+        if(chamer_connect.isCollidingExcParent(manager, parent, components)) {
+            return false;
+        }
+
+        components.add(chamer_connect);
+        int chamberVar = ModRand.range(1, 15);
+
+
+        //generate a chamber
+        if(world.rand.nextInt(2) == 0) {
+            if(!generateEncounterRotation(chamer_connect, BlockPos.ORIGIN, rot)) {
+                if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
+                    //were gonna try to go left, right, up and down
+                    if(!generateHallWithRotation(chamer_connect, BlockPos.ORIGIN, rot)) {
+                        if(!generateStaircase(chamer_connect, BlockPos.ORIGIN, rot)) {
+                            generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
+                        }
+                    }
+                }
+            }
+        } else if(!generateRegularChamber(chamer_connect, BlockPos.ORIGIN, rot, chamberVar)) {
+            //try to generate a rotation pice
+            if(!generateEncounterRotation(chamer_connect, BlockPos.ORIGIN, rot)) {
+                //were gonna try to go left, right, up and down
+                if(!generateHallWithRotation(chamer_connect, BlockPos.ORIGIN, rot)) {
+                    if(!generateStaircase(chamer_connect, BlockPos.ORIGIN, rot)) {
+                        generateChamberEnd(chamer_connect, BlockPos.ORIGIN, rot);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+
+    public boolean generateHallWithRotation(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        TrialChambersTemplate hall_left = addAdjustedPieceWithoutCount(parent, pos.add(0, 1, -5), "encounter/left_way_1", rot);
+        int chamberVar = ModRand.range(1, 15);
+        if (hall_left.isCollidingExcParent(manager, parent, components)) {
+            //cool now try a right hall way
+            components.remove(hall_left);
+            TrialChambersTemplate hall_right = addAdjustedPieceWithoutCount(parent, pos.add(0, 1, 5), "encounter/right_way_1", rot);
+
+            if(hall_right.isCollidingExcParent(manager, parent, components)) {
+                generateChamberEnd(parent, pos, rot);
+                return false;
+            }
+
+            components.add(hall_right);
+            if(!generateRegularChamber(hall_right, BlockPos.ORIGIN.add(9,0,10), rot.add(Rotation.CLOCKWISE_90), chamberVar)) {
+                if(!generateStaircase(hall_right, BlockPos.ORIGIN.add(9, 0,10), rot.add(Rotation.CLOCKWISE_90))) {
+                    generateLargeEnd(hall_right, BlockPos.ORIGIN.add(9, 0, 10), rot.add(Rotation.CLOCKWISE_90));
+                }
+            }
+        } else {
+            if(!generateRegularChamber(hall_left, BlockPos.ORIGIN.add(-5,0,4), rot.add(Rotation.COUNTERCLOCKWISE_90), chamberVar)) {
+                if(!generateStaircase(hall_left, BlockPos.ORIGIN.add(-5, 0, 4), rot.add(Rotation.COUNTERCLOCKWISE_90))) {
+                    TrialChambersTemplate hall_right = addAdjustedPieceWithoutCount(parent, pos.add(0, 1, 5), "encounter/right_way_1", rot);
+
+                    if(hall_right.isCollidingExcParent(manager, parent, components)) {
+                        components.add(hall_left);
+                        generateLargeEnd(hall_left, BlockPos.ORIGIN.add(-5, 0, 4), rot.add(Rotation.COUNTERCLOCKWISE_90));
+                        return true;
+                    }
+                    components.add(hall_right);
+                    if(!generateRegularChamber(hall_right, BlockPos.ORIGIN.add(9,0,10), rot.add(Rotation.CLOCKWISE_90), chamberVar)) {
+                        if(!generateStaircase(hall_right, BlockPos.ORIGIN.add(9, 0,10), rot.add(Rotation.CLOCKWISE_90))) {
+                            generateLargeEnd(hall_right, BlockPos.ORIGIN.add(9, 0, 10), rot.add(Rotation.CLOCKWISE_90));
+                        }
+                    }
+                } else {
+                    components.add(hall_left);
+                }
+            } else {
+                components.add(hall_left);
+            }
+        }
+
+
+        return true;
+    }
+
+    //this is basically going to generate a lot or nothing at all, it's trying to find the best
+    //route and way to try to generate this chamber
+    public boolean generateStaircase(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
+        //the ID is for making sure a staircase can't go down if it's on the lowest level of the chambers
+        int chamberVar = ModRand.range(1, 15);
+        TrialChambersTemplate stair_case_up = addAdjustedPieceWithoutCount(parent, pos, "encounter/staircase_up", rot);
+        if(stair_case_up.isCollidingExcParent(manager, parent, components)) {
+            //try a lower staircase instead
+            components.remove(stair_case_up);
+            TrialChambersTemplate stair_case_down = addAdjustedPieceWithoutCount(parent, pos.add(0, -7, 0), "encounter/staircase_down", rot);
+
+            if(stair_case_down.isCollidingExcParent(manager, parent, components)) {
+                return false;
+            }
+            //tries a lower staircase
+            if(!generateRegularChamber(stair_case_down, BlockPos.ORIGIN, rot, chamberVar)) {
+                if(!generateEncounterRotation(stair_case_down, BlockPos.ORIGIN, rot)) {
+                    return false;
+                }
+            }
+                components.add(stair_case_down);
+
+        } else {
+
+            if(!generateRegularChamber(stair_case_up, BlockPos.ORIGIN.add(0, 7, 0), rot, chamberVar)) {
+              if(!generateEncounterRotation(stair_case_up, BlockPos.ORIGIN.add(0, 7, 0), rot)) {
+                  components.remove(stair_case_up);
+                  //Try a lower Staircase just in case
+                  TrialChambersTemplate stair_case_down = addAdjustedPieceWithoutCount(parent, pos.add(0, -7, 0), "encounter/staircase_down", rot);
+                  if(stair_case_down.isCollidingExcParent(manager, parent, components)) {
+                      return false;
+                  }
+                  //tries a lower staircase
+                  if(!generateRegularChamber(stair_case_down, BlockPos.ORIGIN, rot, chamberVar)) {
+                      if(!generateEncounterRotation(stair_case_down, BlockPos.ORIGIN, rot)) {
+                          return false;
+                      }
+                  }
+                  components.add(stair_case_down);
+              } else {
+                  components.add(stair_case_up);
+              }
+            } else {
+                components.add(stair_case_up);
+            }
+
+
+
         }
         return true;
     }

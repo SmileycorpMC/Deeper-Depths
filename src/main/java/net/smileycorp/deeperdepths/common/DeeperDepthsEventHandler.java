@@ -1,5 +1,6 @@
 package net.smileycorp.deeperdepths.common;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,9 +15,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -25,8 +28,10 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.smileycorp.deeperdepths.common.blocks.BlockCandle;
 import net.smileycorp.deeperdepths.common.blocks.ICopperBlock;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
@@ -80,6 +85,23 @@ public class DeeperDepthsEventHandler {
             ICopperBlock copper = (ICopperBlock) state.getBlock();
             if (copper.isWaxed(state)) return;
             copper.scrape(world, state, pos);
+        }
+    }
+    
+    @SubscribeEvent
+    public void blockPlaceEvent(BlockEvent.EntityPlaceEvent event) {
+        World world = event.getWorld();
+        if (world.isRemote) return;
+        if (event.getPlacedBlock().getMaterial() != Material.FIRE) return;
+        if (event.getPlacedAgainst().getBlock() instanceof BlockCandle) {
+            Vec3d vec = event.getEntity().getLookVec();
+            BlockPos pos = event.getPos().offset(EnumFacing.getFacingFromVector((float) vec.x, (float) vec.y, (float) vec.z));
+            IBlockState state = world.getBlockState(pos);
+            if (state.getBlock() instanceof BlockCandle) {
+                if (state.getValue(BlockCandle.LIT)) return;
+                BlockCandle.light(event.getWorld(), state, pos);
+                event.setCanceled(true);
+            }
         }
     }
 
