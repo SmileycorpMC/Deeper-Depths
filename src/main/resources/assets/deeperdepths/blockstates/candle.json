@@ -14,7 +14,7 @@
 	  "textures": { "all": "deeperdepths:blocks/candle"}
     },
 	 "candles=4,lit=false": {
-      "model": "deeperdepths:four_candless",
+      "model": "deeperdepths:four_candles",
 	  "textures": { "all": "deeperdepths:blocks/candle"}
     },
 	"candles=1,lit=true": {
@@ -30,7 +30,7 @@
 	  "textures": { "all": "deeperdepths:blocks/candle_lit"}
     },
 	 "candles=4,lit=true": {
-      "model": "deeperdepths:four_candless",
+      "model": "deeperdepths:four_candles",
 	  "textures": { "all": "deeperdepths:blocks/candle_lit"}
     }
   }

@@ -1,6 +1,6 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.*;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -8,6 +8,9 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
@@ -97,16 +100,30 @@ public class BlockCandle extends BlockDeeperDepths {
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
 
         IBlockState state = world.getBlockState(pos.down());
-        return state.getBlock().canPlaceTorchOnTop(state, world, pos);
+        return checkSpecialPlacementBlock(state, world, pos);
     }
-    
-    @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos other) {
-        if (!canPlaceBlockAt(world, pos)) {
-            dropBlockAsItem(world, pos, state, 0);
-            world.setBlockToAir(pos);
-        }
-        super.neighborChanged(state, world, pos, block, other);
+
+    /** Bedrock feature, Burning Mobs ignite Candles when touching them. */
+    public boolean checkSpecialPlacementBlock(IBlockState state, World world, BlockPos pos)
+    {
+        /* Deal with Shulker boxes immediately, `getBlockFaceShape` causes a crash if it checks the Shulker */
+        if (state.getBlock() instanceof BlockShulkerBox) return true;
+        if (state.getBlock() instanceof BlockAnvil) return true;
+        if (state.getBlock() instanceof BlockHopper) return false;
+        if (state.getBlock() instanceof BlockLeaves) return false;
+        if (state.getBlock().canPlaceTorchOnTop(state, world, pos)) return true;
+        if (state.getBlock() instanceof BlockEndRod && state.getValue(BlockEndRod.FACING) == EnumFacing.UP) return true;
+        BlockFaceShape shape = state.getBlockFaceShape(world, pos, EnumFacing.UP);
+        if (shape != BlockFaceShape.BOWL && shape != BlockFaceShape.UNDEFINED) return true;
+
+        return false;
+    }
+
+    /** Bedrock feature, Burning Mobs ignite Candles when touching them. */
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
+    {
+        if (entityIn.isBurning()) light(worldIn, worldIn.getBlockState(pos), pos);
+        super.onEntityWalk(worldIn, pos, entityIn);
     }
     
     @Override
