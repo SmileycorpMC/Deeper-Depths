@@ -1,0 +1,50 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing=up": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/medium_amethyst_bud"
+            }
+        },
+        "facing=down": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/medium_amethyst_bud"
+            },
+            "x": 180
+        },
+        "facing=east": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/medium_amethyst_bud"
+            },
+            "y": 90,
+            "x": 90
+        },
+        "facing=south": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/medium_amethyst_bud"
+            },
+            "y": 180,
+            "x": 90
+        },
+        "facing=west": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/medium_amethyst_bud"
+            },
+            "y": 270,
+            "x": 90
+        },
+        "facing=north": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/medium_amethyst_bud"
+            },
+            "y": 0,
+            "x": 90
+        }
+    }
+}

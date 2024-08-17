@@ -1,0 +1,6 @@
+{
+  "parent": "deeperdepths:item/amethyst_bud",
+  "textures": {
+    "layer0": "deeperdepths:blocks/medium_amethyst_bud"
+  }
+}

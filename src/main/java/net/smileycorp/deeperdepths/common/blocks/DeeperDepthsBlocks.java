@@ -13,6 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
+import net.smileycorp.deeperdepths.common.blocks.enums.EnumClusterSize;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialPot;
@@ -54,8 +55,12 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperDoor> COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> WAXED_COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     
+    public static final BlockAmethyst AMETHYST_BLOCK = new BlockAmethyst("amethyst_block");
+    public static final BlockBuddingAmethyst BUDDING_AMETHYST = new BlockBuddingAmethyst();
+    public static final Map<EnumClusterSize, BlockAmethystBud> AMETHYST_BUDS = Maps.newEnumMap(EnumClusterSize.class);
+    
     public static final BlockCandle CANDLE = new BlockCandle(null);
-    public static final Map<EnumDyeColor, Block> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
+    public static final Map<EnumDyeColor, BlockCandle> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
     public static final BlockTrialSpawner TRIAL_SPAWNER = new BlockTrialSpawner();
     public static final BlockVault VAULT = new BlockVault();
     public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
@@ -88,6 +93,8 @@ public class DeeperDepthsBlocks {
             COPPER_DOORS.put(stage, new BlockCopperDoor(stage, false));
             WAXED_COPPER_DOORS.put(stage, new BlockCopperDoor(stage, true));
         }
+        for (EnumDyeColor color : EnumDyeColor.values()) CANDLES.put(color, new BlockCandle(color));
+        for (EnumClusterSize size : EnumClusterSize.values()) AMETHYST_BUDS.put(size, new BlockAmethystBud(size));
         for (Field field : DeeperDepthsBlocks.class.getDeclaredFields()) {
             try {
                 Object object = field.get(null);
@@ -97,7 +104,6 @@ public class DeeperDepthsBlocks {
                 }
                 if (!(object instanceof Block) || object == null) continue;
                 register(registry, (Block) object);
-                if (object == CANDLE) for (EnumDyeColor color : EnumDyeColor.values()) CANDLES.put(color, new BlockCandle(color));
             } catch (Exception e) {
                 DeeperDepths.error(field, e);
             }

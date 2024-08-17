@@ -1,0 +1,50 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing=up": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/amethyst_cluster"
+            }
+        },
+        "facing=down": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/amethyst_cluster"
+            },
+            "x": 180
+        },
+        "facing=east": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/amethyst_cluster"
+            },
+            "y": 90,
+            "x": 90
+        },
+        "facing=south": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/amethyst_cluster"
+            },
+            "y": 180,
+            "x": 90
+        },
+        "facing=west": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/amethyst_cluster"
+            },
+            "y": 270,
+            "x": 90
+        },
+        "facing=north": {
+            "model": "cross",
+            "textures": {
+                "cross": "deeperdepths:blocks/amethyst_cluster"
+            },
+            "y": 0,
+            "x": 90
+        }
+    }
+}
