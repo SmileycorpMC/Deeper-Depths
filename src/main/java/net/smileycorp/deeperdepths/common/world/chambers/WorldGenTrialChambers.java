@@ -24,7 +24,8 @@ public class WorldGenTrialChambers extends WorldGenerator {
         /**
          * MAKE THIS CONFIGURABLE, SPACING IS THE AMOUNT OF EACH TIME IT IS CAPAPABLE OF GENERATING
          */
-        if((spacing / 4) > 525) {
+        //old 525
+        if((spacing / 4) > 100) {
             getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
                     .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
             return true;
@@ -76,8 +77,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
                 for(int i = 0; i < 4; i++) {
                     Rotation rotation = Rotation.values()[(rand2 + i) % Rotation.values().length];
                     components.clear();
-                    //the set position plus whatever y axis you want
-                    //CHANGE ME LATER FOR TESTING PURPOSES ONLY
+                    //Set IAW with the best Position to spawn the first layer of the chambers at
                     BlockPos blockpos = posI.add(0, 22, 0);
                     TrialChambers chambers = new TrialChambers(world, world.getSaveHandler().getStructureTemplateManager(), components);
                     //Starts the first room within the Trial Chambers
@@ -103,7 +103,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
         //Here is where you specify the size of the structure in terms of rooms, I guess you could make this configurable if you want
         @Override
         public boolean isSizeableStructure() {
-            return components.size() > 1;
+            return components.size() > 6;
         }
     }
 
