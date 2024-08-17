@@ -25,10 +25,10 @@ public class BlockCandle extends BlockDeeperDepths {
     
     public static final PropertyBool LIT = PropertyBool.create("lit");
     public static final PropertyInteger CANDLES = PropertyInteger.create("candles", 1, 4);
-    private static final AxisAlignedBB[] AABBS = {new AxisAlignedBB(0.4375, 0, 0.4375, 0.5625, 0.25, 0.5625),
-            new AxisAlignedBB(0.3125, 0, 0.375, 0.6875, 0.25, 0.5625),
-            new AxisAlignedBB(0.3125, 0, 0.375, 0.625, 0.25, 0.6875),
-            new AxisAlignedBB(0.3125, 0, 0.3125, 0.6875, 0.25, 0.625)};
+    private static final AxisAlignedBB[] AABBS = {new AxisAlignedBB(0.4375, 0, 0.4375, 0.5625, 0.375, 0.5625),
+            new AxisAlignedBB(0.3125, 0, 0.375, 0.6875, 0.375, 0.5625),
+            new AxisAlignedBB(0.3125, 0, 0.375, 0.625, 0.375, 0.6875),
+            new AxisAlignedBB(0.3125, 0, 0.3125, 0.6875, 0.375, 0.625)};
     
     private final EnumDyeColor color;
     
@@ -49,25 +49,26 @@ public class BlockCandle extends BlockDeeperDepths {
     }
     
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
         ItemStack stack = player.getHeldItem(hand);
-        if (!player.isSneaking() && stack.getItem() instanceof ItemBlock && ((ItemBlock) stack.getItem()).getBlock() == state.getBlock()) {
+        if (!player.isSneaking() && stack.getItem() instanceof ItemBlock && ((ItemBlock) stack.getItem()).getBlock() == state.getBlock())
+        {
             int candles = state.getValue(CANDLES);
             if (candles >= 4) return false;
             player.swingArm(hand);
-            if (!world.isRemote) {
-                world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, blockSoundType.getPlaceSound(),
-                        SoundCategory.BLOCKS, (blockSoundType.getVolume() + 1f) / 2f, blockSoundType.getPitch() * 0.8F);
-                world.setBlockState(pos, state.withProperty(CANDLES, candles + 1), 3);
-                if (!player.isCreative()) stack.shrink(1);
-                return true;
-            }
+            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, blockSoundType.getPlaceSound(),
+                    SoundCategory.BLOCKS, (blockSoundType.getVolume() + 1f) / 2f, blockSoundType.getPitch() * 0.8F);
+            world.setBlockState(pos, state.withProperty(CANDLES, candles + 1), 3);
+            if (!player.isCreative()) stack.shrink(1);
+            return true;
         }
-        if (!player.isSneaking() && state.getValue(LIT)) {
+        if (!player.isSneaking() && state.getValue(LIT))
+        {
             player.swingArm(hand);
-            if (!world.isRemote) {
-                world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                        DeeperDepthsSoundEvents.CANDLE_EXTINGUISH, SoundCategory.BLOCKS, 1, 1);
+            if (!world.isRemote)
+            {
+                world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, DeeperDepthsSoundEvents.CANDLE_EXTINGUISH, SoundCategory.BLOCKS, 1, 1);
                 world.setBlockState(pos, state.withProperty(LIT, false), 3);
             }
             return true;
@@ -115,13 +116,12 @@ public class BlockCandle extends BlockDeeperDepths {
     }
     
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return (state.getValue(LIT) ? 4 : 0) + state.getValue(CANDLES) - 1;
-    }
+    public int getMetaFromState(IBlockState state)
+    { return (state.getValue(LIT) ? 4 : 0) + state.getValue(CANDLES) - 1; }
     
     @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return FULL_BLOCK_AABB;
+        return AABBS[state.getValue(CANDLES) - 1];
     }
     
     @Override
