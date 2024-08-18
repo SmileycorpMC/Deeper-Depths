@@ -612,7 +612,7 @@ public class TrialChambers {
 
     //Generates a simple door at the end of the hall, I'll add more pieces that can generate later
     public boolean generateChamberEnd(TrialChambersTemplate parent, BlockPos pos, Rotation rot) {
-        String[] small_types = {"end/stubby_end_1", "end/stubby_end_2"};
+        String[] small_types = {"end/stubby_end_1", "end/stubby_end_2", "end/stubby_end_3"};
 
         TrialChambersTemplate small_end = addAdjustedPieceWithoutCount(parent, pos, ModRand.choice(small_types), rot);
         TrialChambersTemplate end = addAdjustedPieceWithoutCount(parent, pos, "chamber/chamber_end", rot);
