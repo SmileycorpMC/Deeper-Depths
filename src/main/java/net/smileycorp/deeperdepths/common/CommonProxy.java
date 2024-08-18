@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.deeperdepths.animation.AnimationMessage;
 import net.smileycorp.deeperdepths.client.ParticleMessage;
+import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;

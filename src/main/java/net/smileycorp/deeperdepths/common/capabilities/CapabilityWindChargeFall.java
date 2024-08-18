@@ -1,4 +1,4 @@
-package net.smileycorp.deeperdepths.common;
+package net.smileycorp.deeperdepths.common.capabilities;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.smileycorp.deeperdepths.common.Constants;
 
 import javax.annotation.Nullable;
 
@@ -93,7 +94,7 @@ public class CapabilityWindChargeFall
         final EnumFacing facing;
         final ICapabilityWindChargeFall instance;
 
-        Provider(final ICapabilityWindChargeFall instance, final Capability<ICapabilityWindChargeFall> capability, @Nullable final EnumFacing facing)
+        public Provider(final ICapabilityWindChargeFall instance, final Capability<ICapabilityWindChargeFall> capability, @Nullable final EnumFacing facing)
         {
             this.instance = instance;
             this.capability = capability;

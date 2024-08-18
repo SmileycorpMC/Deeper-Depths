@@ -17,7 +17,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.smileycorp.deeperdepths.common.CapabilityWindChargeFall;
+import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 
 import javax.annotation.Nullable;

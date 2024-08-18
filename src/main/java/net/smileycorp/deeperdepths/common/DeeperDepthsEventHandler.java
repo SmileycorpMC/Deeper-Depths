@@ -35,6 +35,7 @@ import net.smileycorp.deeperdepths.common.blocks.BlockCandle;
 import net.smileycorp.deeperdepths.common.blocks.ICopperBlock;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
+import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
@@ -74,6 +75,7 @@ public class DeeperDepthsEventHandler {
     public void entityJoinWorld(EntityJoinWorldEvent event) {
         World world = event.getWorld();
         if (!(event.getEntity() instanceof EntityLightningBolt) || world.isRemote) return;
+        
         Random rand = world.rand;
         BlockPos base = event.getEntity().getPosition().add(-1, -1, -1);
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(base);
