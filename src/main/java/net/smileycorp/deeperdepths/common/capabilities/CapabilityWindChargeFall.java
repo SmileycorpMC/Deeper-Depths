@@ -66,7 +66,7 @@ public class CapabilityWindChargeFall
         { getWindFall = value; }
     }
 
-    static class Storage implements Capability.IStorage<ICapabilityWindChargeFall>
+    public static class Storage implements Capability.IStorage<ICapabilityWindChargeFall>
     {
         @Override
         public NBTBase writeNBT(Capability<ICapabilityWindChargeFall> capability, ICapabilityWindChargeFall instance, EnumFacing side)
