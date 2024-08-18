@@ -2,7 +2,6 @@ package net.smileycorp.deeperdepths.common.blocks.enums;
 
 import com.google.common.collect.Maps;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.EnumMap;

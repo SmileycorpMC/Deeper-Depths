@@ -32,6 +32,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.smileycorp.deeperdepths.common.blocks.BlockCandle;
+import net.smileycorp.deeperdepths.common.blocks.BlockLightningRod;
 import net.smileycorp.deeperdepths.common.blocks.ICopperBlock;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
@@ -75,18 +76,19 @@ public class DeeperDepthsEventHandler {
     public void entityJoinWorld(EntityJoinWorldEvent event) {
         World world = event.getWorld();
         if (!(event.getEntity() instanceof EntityLightningBolt) || world.isRemote) return;
-        
         Random rand = world.rand;
-        BlockPos base = event.getEntity().getPosition().add(-1, -1, -1);
+        BlockPos base = event.getEntity().getPosition().down();
+        IBlockState state = world.getBlockState(base);
+        if (state.getBlock() instanceof BlockLightningRod) ((BlockLightningRod) state.getBlock()).struck(world, base, state);
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(base);
         //copper stripping
         for (int i = 0; i < 10; i++) {
             pos.setPos(base.add(rand.nextInt(3), rand.nextInt(3), rand.nextInt(3)));
-            IBlockState state = world.getBlockState(pos);
-            if (!(state.getBlock() instanceof ICopperBlock)) return;
-            ICopperBlock copper = (ICopperBlock) state.getBlock();
-            if (copper.isWaxed(state)) return;
-            copper.scrape(world, state, pos);
+            IBlockState state1 = world.getBlockState(pos);
+            if (!(state1.getBlock() instanceof ICopperBlock)) continue;
+            ICopperBlock copper = (ICopperBlock) state1.getBlock();
+            if (copper.isWaxed(state1)) continue;
+            copper.scrape(world, state1, pos);
         }
     }
     
