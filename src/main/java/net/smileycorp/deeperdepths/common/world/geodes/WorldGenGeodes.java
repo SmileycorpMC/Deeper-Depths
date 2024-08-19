@@ -18,10 +18,9 @@ public class WorldGenGeodes extends WorldGenCustomStructure {
 
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
-        if(spacing/4 > 100) {
+        if(spacing/4 > 40) {
             spacing = 0;
-            System.out.println("Generated Geode at POS" + position);
-            return generate(worldIn, rand, position.add(0, ModRand.range(20, 40), 0));
+            return super.generate(worldIn, rand, position);
         }
         spacing++;
         return false;

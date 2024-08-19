@@ -60,7 +60,7 @@ public class TrialChambers {
         components.add(templateStart);
         generateSecondBoard(template, BlockPos.ORIGIN, rot);
         CORRIDOR_SIZE_LIMIT++;
-        System.out.println("Generated Trial Chambers at" + pos);
+      //  System.out.println("Generated Trial Chambers at" + pos);
         TrialChambersTemplate.resetTemplateCount();
         int entryVar = ModRand.range(1, 5);
         placeEntryRoom(templateStart, BlockPos.ORIGIN, rot.add(Rotation.CLOCKWISE_180), entryVar);
