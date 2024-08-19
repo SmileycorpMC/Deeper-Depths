@@ -2,7 +2,6 @@ package net.smileycorp.deeperdepths.common.world.geodes;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.smileycorp.deeperdepths.common.world.base.ModRand;
 import net.smileycorp.deeperdepths.common.world.base.WorldGenCustomStructure;
 
 import java.util.Random;
