@@ -32,9 +32,10 @@ public class BlockTintedGlass extends BlockDeeperDepths {
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-
-    @Override
+    
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing facing)
-    { return world.getBlockState(pos.offset(facing)).getBlock() != this && super.shouldSideBeRendered(state, world, pos, facing); }
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing facing) {
+        return world.getBlockState(pos.offset(facing)).getBlock() != this;
+    }
+    
 }
