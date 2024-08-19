@@ -6,8 +6,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import net.smileycorp.deeperdepths.common.world.base.ModRand;
-import net.smileycorp.deeperdepths.common.world.base.WorldGenCustomStructure;
 import net.smileycorp.deeperdepths.common.world.chambers.WorldGenTrialChambers;
 import net.smileycorp.deeperdepths.common.world.geodes.WorldGenGeodes;
 

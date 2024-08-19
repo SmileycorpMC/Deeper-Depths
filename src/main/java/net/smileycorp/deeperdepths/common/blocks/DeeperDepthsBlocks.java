@@ -54,6 +54,7 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperTrapdoor> WAXED_COPPER_TRAPDOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> WAXED_COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final BlockLightningRod LIGHTNING_ROD = new BlockLightningRod();
     
     public static final BlockAmethyst AMETHYST_BLOCK = new BlockAmethyst("amethyst_block");
     public static final BlockBuddingAmethyst BUDDING_AMETHYST = new BlockBuddingAmethyst();
@@ -66,10 +67,6 @@ public class DeeperDepthsBlocks {
     public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
     public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
     public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
-    //public static final Block LIGHTNING_ROD = null;
-    
-   
-    //functional blocks
     
     //sculk
     /*public static final Block SCULK = null;

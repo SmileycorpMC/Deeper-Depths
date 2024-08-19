@@ -152,6 +152,15 @@ tile.deeperdepths.waxed_exposed_copper_bulb.name=Waxed Exposed Copper Bulb
 tile.deeperdepths.waxed_weathered_copper_bulb.name=Waxed Weathered Copper Bulb
 tile.deeperdepths.waxed_oxidized_copper_bulb.name=Waxed Oxidized Copper Bulb
 
+tile.deeperdepths.lightning_rod.name=Lightning Rod
+tile.deeperdepths.exposed_lightning_rod.name=Exposed Lightning Rod
+tile.deeperdepths.weathered_lightning_rod.name=Weathered Lightning Rod
+tile.deeperdepths.oxidized_lightning_rod.name=Oxidized Lightning Rod
+tile.deeperdepths.waxed_lightning_rod.name=Waxed Lightning Rod
+tile.deeperdepths.waxed_exposed_lightning_rod.name=Waxed Exposed Lightning Rod
+tile.deeperdepths.waxed_weathered_lightning_rod.name=Waxed Weathered Lightning Rod
+tile.deeperdepths.waxed_oxidized_lightning_rod.name=Waxed Oxidized Lightning Rod
+
 tile.deeperdepths.candle.name=Candle
 tile.deeperdepths.white_candle.name=White Candle
 tile.deeperdepths.orange_candle.name=Orange Candle
