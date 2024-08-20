@@ -65,7 +65,7 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
     
     @Override
     public IBlockState getScraped(IBlockState state) {
-        return stage == EnumWeatherStage.NORMAL ? state : copyProperties(state, DeeperDepthsBlocks.COPPER_TRAPDOORS.get(waxed ? stage : stage.previous()).getDefaultState());
+        return copyProperties(state, DeeperDepthsBlocks.COPPER_TRAPDOORS.get(waxed ? stage : stage.previous()).getDefaultState());
     }
     
     private IBlockState copyProperties(IBlockState oldState, IBlockState newState) {

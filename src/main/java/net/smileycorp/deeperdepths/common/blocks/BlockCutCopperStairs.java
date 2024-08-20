@@ -45,7 +45,7 @@ public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock 
     
     @Override
     public IBlockState getScraped(IBlockState state) {
-        return stage == EnumWeatherStage.NORMAL ? state : copyProperties(state, DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(waxed ? stage : stage.previous()).getDefaultState());
+        return copyProperties(state, DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(waxed ? stage : stage.previous()).getDefaultState());
     }
     
     private IBlockState copyProperties(IBlockState oldState, IBlockState newState) {
