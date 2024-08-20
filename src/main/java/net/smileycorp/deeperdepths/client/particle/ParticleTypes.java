@@ -27,6 +27,10 @@ public enum ParticleTypes
                 return new ParticleOozingDrip.Factory();
             case 3:
                 return new ParticleFlameScalable.Factory();
+            case 4:
+                return new ParticleSparkColorable.Factory();
+            case 5:
+                return new ParticleSpawnerDetect.Factory();
         }
     }
 }

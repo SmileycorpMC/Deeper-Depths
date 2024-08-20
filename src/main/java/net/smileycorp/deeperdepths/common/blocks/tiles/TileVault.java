@@ -22,6 +22,7 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.smileycorp.atlas.api.util.RecipeUtils;
 import net.smileycorp.deeperdepths.client.ClientProxy;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.BlockTrial;
@@ -56,8 +57,11 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         if (world.isRemote) {
             if (world.rand.nextFloat() < 0.5f) {
                 spawnParticle(EnumParticleTypes.SMOKE_NORMAL, Color.DARK_GRAY);
-                if (state != EnumVaultState.INACTIVE) spawnParticle(EnumParticleTypes.FLAME, isOminous()
-                        ? new Color(0x0000F0) : Color.WHITE);
+                if (state != EnumVaultState.INACTIVE)
+                {
+                    if (isOminous()) DeeperDepths.proxy.spawnParticle(3, this.world, pos.getX() + world.rand.nextFloat() * 0.8 + 0.1, pos.getY() + world.rand.nextFloat() * 0.5 + 0.25, pos.getZ() + world.rand.nextFloat() * 0.8 + 0.1, 0,0,0, 1);
+                    else spawnParticle(EnumParticleTypes.FLAME, Color.WHITE);
+                }
             }
             if (state != EnumVaultState.INACTIVE && world.rand.nextFloat() <= 0.02f)
                 world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,

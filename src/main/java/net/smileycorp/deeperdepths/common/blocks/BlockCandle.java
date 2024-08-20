@@ -174,7 +174,7 @@ public class BlockCandle extends BlockDeeperDepths {
         {
             if (rand.nextInt(4)==0) world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + wickSpot[candles - 1][c].x, pos.getY() + wickSpot[candles - 1][c].y, pos.getZ() + wickSpot[candles - 1][c].z, 0.0D, 0.0D, 0.0D);
             //world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + wickSpot[candles - 1][c].x, pos.getY() + wickSpot[candles - 1][c].y, pos.getZ() + wickSpot[candles - 1][c].z, 0.0D, 0.0D, 0.0D);
-            DeeperDepths.proxy.spawnParticle(3, world, pos.getX() + wickSpot[candles - 1][c].x, pos.getY() + wickSpot[candles - 1][c].y, pos.getZ() + wickSpot[candles - 1][c].z, 0.0D, 0.0D, 0.0D);
+            DeeperDepths.proxy.spawnParticle(3, world, pos.getX() + wickSpot[candles - 1][c].x, pos.getY() + wickSpot[candles - 1][c].y, pos.getZ() + wickSpot[candles - 1][c].z, 0.0D, 0.0D, 0.0D, 0, 8);
         }
     }
     

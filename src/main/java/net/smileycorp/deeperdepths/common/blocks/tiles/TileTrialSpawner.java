@@ -35,6 +35,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.deeperdepths.client.ClientProxy;
 import net.smileycorp.deeperdepths.common.Constants;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
@@ -89,8 +90,10 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                         getRandomPosInside(), Color.DARK_GRAY, 0, 0, 0);
                 if (state != EnumTrialSpawnerState.INACTIVE) {
                     if (state == EnumTrialSpawnerState.ACTIVE || world.rand.nextInt(2) == 1)
-                        ClientProxy.addParticle(EnumParticleTypes.FLAME, getRandomPosInside(),
-                            isOminous() ? new Color(0x0000F0) : Color.WHITE, 0, 0 , 0);
+                    {
+                        if (isOminous()) DeeperDepths.proxy.spawnParticle(3, this.world, pos.getX() + world.rand.nextFloat() * 0.8 + 0.1, pos.getY() + world.rand.nextFloat() * 0.5 + 0.25, pos.getZ() + world.rand.nextFloat() * 0.8 + 0.1, 0,0,0, 1);
+                        else ClientProxy.addParticle(EnumParticleTypes.FLAME, getRandomPosInside(), Color.WHITE, 0, 0 , 0);
+                    }
                 }
             }
             if (state == EnumTrialSpawnerState.ACTIVE && world.rand.nextFloat() <= 0.02f)
@@ -143,6 +146,26 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 AnvilChunkLoader.spawnEntity(entity, world);
                 world.playSound(null, entity.posX, entity.posY, entity.posZ,
                         DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_MOB, SoundCategory.BLOCKS, 1, 1);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    double xRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
+                    double yRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
+                    double zRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
+
+
+
+                    if (isOminous())
+                    {
+                        DeeperDepths.proxy.spawnParticle(3, this.world, pos.getX() + xRandSpread, pos.getY() + yRandSpread, pos.getZ() + zRandSpread, 0,0,0, 1);
+                        DeeperDepths.proxy.spawnParticle(3, this.world, x + xRandSpread, y + yRandSpread, z + zRandSpread, 0,0,0, 1);
+                    }
+                    else
+                    {
+                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, pos.getX() + xRandSpread, pos.getY() + yRandSpread, pos.getZ() + zRandSpread, 1, 0, 0, 0, 0.0);
+                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, x + xRandSpread, y + yRandSpread, z + zRandSpread, 1, 0, 0, 0, 0.0);
+                    }
+                }
                 cooldown = 20;
             }
         }
@@ -188,7 +211,17 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::canActivate)) {
             if (state == EnumTrialSpawnerState.WAITING) {
                 playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_DETECT_PLAYER, 1f);
+                for (int i = 0; i < 50; i++)
+                {
+                    double xRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
+                    double yRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
+                    double zRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
+
+                    DeeperDepths.proxy.spawnParticle(5, this.world, pos.getX() + xRandSpread, pos.getY() + yRandSpread, pos.getZ() + zRandSpread, 0,this.world.rand.nextFloat() * 0.25,0, isOminous() ? 1 : 0);
+                }
+                cooldown = 40;
                 setState(EnumTrialSpawnerState.ACTIVE);
+
             }
             if (player.isPotionActive(DeeperDepthsPotions.BAD_OMEN)) {
                 addTrialOmen(player, player.getActivePotionEffect(DeeperDepthsPotions.BAD_OMEN).getAmplifier());

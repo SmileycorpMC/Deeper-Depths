@@ -11,12 +11,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.capabilities.LightingRods;
 
 import java.util.Random;
@@ -74,7 +78,24 @@ public class BlockLightningRod extends BlockDeeperDepths {
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this);
     }
-    
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
+    {
+        if (!world.canBlockSeeSky(pos) || !world.isThundering()) return;
+        EnumFacing enumfacing = state.getValue(BlockDirectional.FACING);
+        double d0 = (double)pos.getX() + 0.55D - (double)(rand.nextFloat() * 0.2F);
+        double d1 = (double)pos.getY() + 0.55D - (double)(rand.nextFloat() * 0.2F);
+        double d2 = (double)pos.getZ() + 0.55D - (double)(rand.nextFloat() * 0.2F);
+        double d3 = (double)(0.4F - (rand.nextFloat() + rand.nextFloat()) * 0.4F);
+
+        double velocityX = (double)enumfacing.getFrontOffsetX() * rand.nextGaussian();
+        double velocityY = (double)enumfacing.getFrontOffsetY() * rand.nextGaussian();
+        double velocityZ = (double)enumfacing.getFrontOffsetZ() * rand.nextGaussian();
+
+        if (rand.nextInt(4)==0)  DeeperDepths.proxy.spawnParticle(4, world, d0 + (double)enumfacing.getFrontOffsetX() * d3, d1 + (double)enumfacing.getFrontOffsetY() * d3, d2 + (double)enumfacing.getFrontOffsetZ() * d3, velocityX, velocityY, velocityZ, 3, 201, 227, 255);
+    }
+
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(POWERED, meta % 2 == 1)

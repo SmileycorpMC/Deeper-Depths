@@ -4,11 +4,15 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 
@@ -39,7 +43,10 @@ public interface ICopperBlock {
         world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
                 isWaxed(state) ? DeeperDepthsSoundEvents.COPPER_WAX_OFF : DeeperDepthsSoundEvents.COPPER_SCRAPE,
                 SoundCategory.BLOCKS, 1, 1);
-        //needs particle spawning once we have a particle system
+
+        if (isWaxed(state)) spawnSurfaceParticles(world, pos, 4, 244, 214, 212);
+        else spawnSurfaceParticles(world, pos, 4, 107, 186, 130);
+
         entity.swingArm(hand);
         if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
             stack.damageItem(1, entity);
@@ -57,7 +64,7 @@ public interface ICopperBlock {
         if (world.isRemote) return;
         world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
                 DeeperDepthsSoundEvents.COPPER_WAX_ON, SoundCategory.BLOCKS, 1, 1);
-        //needs particle spawning once we have a particle system
+        spawnSurfaceParticles(world, pos, 4, 212, 166, 119);
         if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
             stack.shrink(1);
     }
@@ -99,5 +106,24 @@ public interface ICopperBlock {
         if (!world.isRemote) world.setBlockState(pos, getWeathered(state), 3);
         return true;
     }
-    
+
+    /** Spawns particles to slide on the surfaces of the Copper block. */
+    default void spawnSurfaceParticles(World worldIn, BlockPos pos, int particleCount, int red, int green, int blue)
+    {
+        for (int i = 0; i < particleCount; i++)
+        {
+            for (EnumFacing facing : EnumFacing.values())
+            {
+                double x = pos.getX() + 0.5 + (facing.getAxis() == EnumFacing.Axis.X ? 0.55 * facing.getFrontOffsetX() : (worldIn.rand.nextDouble() - 0.5));
+                double y = pos.getY() + 0.5 + (facing.getAxis() == EnumFacing.Axis.Y ? 0.55 * facing.getFrontOffsetY() : (worldIn.rand.nextDouble() - 0.5));
+                double z = pos.getZ() + 0.5 + (facing.getAxis() == EnumFacing.Axis.Z ? 0.55 * facing.getFrontOffsetZ() : (worldIn.rand.nextDouble() - 0.5));
+
+                double velocityX = (facing.getAxis() != EnumFacing.Axis.X) ? (worldIn.rand.nextDouble() - 0.5) * 0.1 : 0;
+                double velocityY = (facing.getAxis() != EnumFacing.Axis.Y) ? (worldIn.rand.nextDouble() - 0.5) * 0.1 : 0;
+                double velocityZ = (facing.getAxis() != EnumFacing.Axis.Z) ? (worldIn.rand.nextDouble() - 0.5) * 0.1 : 0;
+
+                DeeperDepths.proxy.spawnParticle(4, worldIn, x, y, z, velocityX, velocityY, velocityZ, 30, red, green, blue);
+            }
+        }
+    }
 }
