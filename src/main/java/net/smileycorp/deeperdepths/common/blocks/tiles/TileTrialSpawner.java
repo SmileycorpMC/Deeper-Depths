@@ -220,6 +220,8 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                     DeeperDepths.proxy.spawnParticle(5, this.world, pos.getX() + xRandSpread, pos.getY() + yRandSpread, pos.getZ() + zRandSpread, 0,this.world.rand.nextFloat() * 0.25,0, isOminous() ? 1 : 0);
                 }
                 cooldown = 40;
+                /* A player is required for the activation to occur, so they themselves are the first to be recorded */
+                active_players.add(player.getUniqueID());
                 setState(EnumTrialSpawnerState.ACTIVE);
 
             }
