@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,28 +21,23 @@ public class ParticleDeeperDepths extends Particle
 	protected TextureManager textureManager;
 	public ResourceLocation texture;
 	private static final VertexFormat VERTEX_FORMAT = (new VertexFormat()).addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(DefaultVertexFormats.COLOR_4UB).addElement(DefaultVertexFormats.TEX_2S).addElement(DefaultVertexFormats.NORMAL_3B).addElement(DefaultVertexFormats.PADDING_1B);
-	
-	/** SIZE. Ya know, the PARTICLE SIZE. */
-	public float size;
-    /** Adds this offset to the rendering of the Particle. */
+
+    /** Adds this offset to the rendering of the Particle. Best to use for Particles that rely on collisions. */
     public float renderYOffset;
 	/** The spot to on the cut texture sheet to use */
 	public int texSpot;
 	/** Determines how the particle sheet is cut, EX. Default 4 cuts the sheet 4x4*/
 	public int texSheetSeg;
 	
-	public ParticleDeeperDepths(TextureManager textureManager, World world, double x, double y, double z, double speedX, double ySpeed, double zSpeed, ResourceLocation resource, int texSpotIn)
-	{
-		this(textureManager, world, x, y, z, speedX, ySpeed, zSpeed, resource, texSpotIn, 4);
-	}
+	public ParticleDeeperDepths(TextureManager textureManager, World world, double x, double y, double z, double movementX, double movementY, double movementZ, ResourceLocation resource, int texSpotIn)
+	{ this(textureManager, world, x, y, z, movementX, movementY, movementZ, resource, texSpotIn, 1); }
 	
-	public ParticleDeeperDepths(TextureManager textureManager, World world, double x, double y, double z, double speedX, double ySpeed, double zSpeed, ResourceLocation resource, int texSpotIn, int texSheetSeg)
+	public ParticleDeeperDepths(TextureManager textureManager, World world, double x, double y, double z, double movementX, double movementY, double movementZ, ResourceLocation resource, int texSpotIn, int texSheetSeg)
 	{
-		super(world, x, y, z, speedX, ySpeed, zSpeed);
+		super(world, x, y, z, movementX, movementY, movementZ);
         this.textureManager = textureManager;
-        
-        this.size = 0.1F;
-        this.renderYOffset = this.height / 2;
+        this.particleScale = 1.0F;
+        this.renderYOffset = 0;
         this.texture = resource;
         this.texSpot = texSpotIn;
         this.texSheetSeg = texSheetSeg;
@@ -56,7 +52,7 @@ public class ParticleDeeperDepths extends Particle
         float f1 = f + (1.0F / texSheetSeg);
         float f2 = (float) (texSpot / texSheetSeg) / texSheetSeg;
         float f3 = f2 + (1.0F / texSheetSeg);
-        float particleSize = this.size;
+        float particleSize = this.particleScale * 0.1F;
         /* The default particles use `interpPos*` for axis, which use `entity.lastTickPos*` for calculations, which causes pretty visible movement delay when combined with the FXLayer we use. */
         float f5 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - (entity.prevPosX + (entity.posX - entity.prevPosX) * (double) partialTicks));
         float f6 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - (entity.prevPosY + (entity.posY - entity.prevPosY) * (double) partialTicks) + renderYOffset);
@@ -81,6 +77,24 @@ public class ParticleDeeperDepths extends Particle
         buffer.pos((double)f5 + avec3d[3].x, (double)f6 + avec3d[3].y, (double)f7 + avec3d[3].z).tex(f, f3).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).normal(0.0F, 1.0F, 0.0F).endVertex();
         Tessellator.getInstance().draw();
         GlStateManager.disableBlend();
+    }
+
+    /** The logic for brightness transitioning from Combined Light to Full Bright. Made a separate method due to how often it is used. */
+    public int brightnessIncreaseToFull(float partialTicks)
+    {
+        float f = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge;
+        f = MathHelper.clamp(f, 0.0F, 1.0F);
+        int i = super.getBrightnessForRender(partialTicks);
+        int j = i & 255;
+        int k = i >> 16 & 255;
+        j = j + (int)(f * 15.0F * 16.0F);
+
+        if (j > 240)
+        {
+            j = 240;
+        }
+
+        return j | k << 16;
     }
 
     @Override

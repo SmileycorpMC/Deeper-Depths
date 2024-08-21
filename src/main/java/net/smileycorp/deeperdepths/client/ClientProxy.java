@@ -26,7 +26,6 @@ import net.smileycorp.deeperdepths.client.entity.RenderBogged;
 import net.smileycorp.deeperdepths.client.entity.RenderBreeze;
 import net.smileycorp.deeperdepths.client.entity.RenderOminousItemSpawner;
 import net.smileycorp.deeperdepths.client.entity.RenderWindCharge;
-import net.smileycorp.deeperdepths.client.particle.ParticleTypes;
 import net.smileycorp.deeperdepths.client.tesr.TESRTrialSpawner;
 import net.smileycorp.deeperdepths.client.tesr.TESRVault;
 import net.smileycorp.deeperdepths.common.CommonProxy;
@@ -122,6 +121,6 @@ public class ClientProxy extends CommonProxy {
     {
         Minecraft minecraft = Minecraft.getMinecraft();
         World world = minecraft.world;
-        minecraft.effectRenderer.addEffect(ParticleTypes.getFactory(particle).createParticle(0, world, posX, posY, posZ, speedX, speedY, speedZ, parameters));
+        minecraft.effectRenderer.addEffect(Constants.getFactory(particle).createParticle(0, world, posX, posY, posZ, speedX, speedY, speedZ, parameters));
     }
 }

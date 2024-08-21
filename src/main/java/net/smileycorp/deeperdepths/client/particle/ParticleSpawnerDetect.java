@@ -5,7 +5,6 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,22 +19,21 @@ public class ParticleSpawnerDetect extends ParticleDeeperDepths
     private static final ResourceLocation DETECT_TEXTURE = new ResourceLocation(Constants.MODID, "textures/particles/trial_spawner_detect.png");
     private static final ResourceLocation DETECT_OMINOUS_TEXTURE = new ResourceLocation(Constants.MODID, "textures/particles/trial_spawner_detect_ominous.png");
 
-    protected ParticleSpawnerDetect(TextureManager textureManager, World worldIn, double x, double y, double z, double xMovementIn, double yMovementIn, double zMovementIn)
-    { this(textureManager, worldIn, x, y, z, xMovementIn, yMovementIn, zMovementIn, 0); }
+    protected ParticleSpawnerDetect(TextureManager textureManager, World worldIn, double x, double y, double z, double movementX, double movementY, double movementZ)
+    { this(textureManager, worldIn, x, y, z, movementX, movementY, movementZ, 0); }
 
-    protected ParticleSpawnerDetect(TextureManager textureManager, World worldIn, double x, double y, double z, double xMovementIn, double yMovementIn, double zMovementIn, int ominous)
+    protected ParticleSpawnerDetect(TextureManager textureManager, World worldIn, double x, double y, double z, double movementX, double movementY, double movementZ, int ominous)
     {
-        super(textureManager, worldIn, x, y, z, xMovementIn, yMovementIn, zMovementIn, ominous == 1 ? DETECT_OMINOUS_TEXTURE : DETECT_TEXTURE, 0);
+        super(textureManager, worldIn, x, y, z, movementX, movementY, movementZ, ominous == 1 ? DETECT_OMINOUS_TEXTURE : DETECT_TEXTURE, 0);
         this.textureManager = textureManager;
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
         this.motionZ *= 0.10000000149011612D;
-        this.motionX += xMovementIn;
-        this.motionY += yMovementIn;
-        this.motionZ += zMovementIn;
+        this.motionX += movementX;
+        this.motionY += movementY;
+        this.motionZ += movementZ;
         this.particleMaxAge = 10;
         this.texSheetSeg = 3;
-        this.size = 0.1F;
     }
 
     public void onUpdate()
@@ -45,22 +43,8 @@ public class ParticleSpawnerDetect extends ParticleDeeperDepths
     }
 
     @Override
-    public int getBrightnessForRender(float p_189214_1_)
-    {
-        float f = ((float)this.particleAge + p_189214_1_) / (float)this.particleMaxAge;
-        f = MathHelper.clamp(f, 0.0F, 1.0F);
-        int i = super.getBrightnessForRender(p_189214_1_);
-        int j = i & 255;
-        int k = i >> 16 & 255;
-        j = j + (int)(f * 15.0F * 16.0F);
-
-        if (j > 240)
-        {
-            j = 240;
-        }
-
-        return j | k << 16;
-    }
+    public int getBrightnessForRender(float partialTicks)
+    { return brightnessIncreaseToFull(partialTicks); }
 
     @SideOnly(Side.CLIENT)
     public static class Factory implements IParticleFactory

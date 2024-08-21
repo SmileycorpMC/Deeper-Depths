@@ -1,10 +1,14 @@
 package net.smileycorp.deeperdepths.common;
 
+import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.deeperdepths.client.particle.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -47,5 +51,29 @@ public class Constants {
 		LocalDateTime time = LocalDateTime.now();
 		return time.getDayOfMonth() == 1 && time.getMonth().equals(Month.APRIL);
 	}
-	
+
+	/**
+	 * This is used by the Particle Spawning as an ID system for out Particles.
+	 * We do not require Ids for Particles, it's just more convenient for sending over packets!
+	 * */
+	@SideOnly(Side.CLIENT)
+	public static IParticleFactory getFactory(int particleId)
+	{
+		switch(particleId)
+		{
+			default:
+			case 0:
+				return new ParticleTrialOmen.Factory();
+			case 1:
+				return new ParticleOmenRelease.Factory();
+			case 2:
+				return new ParticleOozingDrip.Factory();
+			case 3:
+				return new ParticleFlameScalable.Factory();
+			case 4:
+				return new ParticleSparkColorable.Factory();
+			case 5:
+				return new ParticleSpawnerDetect.Factory();
+		}
+	}
 }

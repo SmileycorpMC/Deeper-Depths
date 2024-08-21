@@ -20,17 +20,18 @@ public class ParticleOozingDrip extends ParticleDeeperDepths
 
     private static final ResourceLocation OOZING_TEXTURE = new ResourceLocation(Constants.MODID, "textures/particles/oozing_drip.png");
 
-    public ParticleOozingDrip(TextureManager textureManager, World world, double x, double y, double z, double speedX, double ySpeed, double zSpeed)
+    public ParticleOozingDrip(TextureManager textureManager, World world, double x, double y, double z, double movementX, double movementY, double movementZ)
     {
-        super(textureManager, world, x, y, z, speedX, ySpeed, zSpeed, OOZING_TEXTURE, 0);
+        super(textureManager, world, x, y, z, movementX, movementY, movementZ, OOZING_TEXTURE, 0);
         this.textureManager = textureManager;
-        this.motionX = speedX;
-        this.motionY = ySpeed;
-        this.motionZ = zSpeed;
+        this.motionX = movementX;
+        this.motionY = movementY;
+        this.motionZ = movementZ;
         this.particleMaxAge = (int)(64.0 / (Math.random() * 0.8 + 0.2));
         this.texSheetSeg = 3;
+        this.renderYOffset = this.height / 2;
         this.canCollide = true;
-        this.size = 0.15F;
+        this.particleScale = 1.5F;
     }
 
     public void onUpdate()

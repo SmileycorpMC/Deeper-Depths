@@ -198,7 +198,7 @@ public class EntityAIBreezeAttackCycle extends EntityAIBase
         double s1 = target.posY - this.breeze.posY + 0.5;
         double s2 = target.posX - breeze.posX;
         double s4 = target.posZ - breeze.posZ;
-        float j = MathHelper.sqrt(s2 * s2 + s4 * s4) * 0.2F;
+        //float j = MathHelper.sqrt(s2 * s2 + s4 * s4) * 0.2F;
         entitywindcharge.shoot(s2, s1, s4, 0.7F, 1.0F);
 
         entitywindcharge.posY = this.breeze.posY + 0.5;
