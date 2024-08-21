@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.blocks.BlockCandle;
 import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 
 import javax.annotation.Nullable;
@@ -128,7 +129,6 @@ public class EntityWindCharge extends EntityThrowable
 
         if (!this.world.isRemote)
         {
-            /* TODO: Seperate out into its own method! */
             if (result != null && result.entityHit != null && !(result.entityHit instanceof EntityEnderCrystal) && !(result.entityHit == this.getThrower()))
             {
                 result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)1);
@@ -321,6 +321,10 @@ public class EntityWindCharge extends EntityThrowable
 
             world.setBlockState(pos, this.world.getBlockState(pos).withProperty(BlockFenceGate.OPEN, !isOpen).withProperty(BlockFenceGate.FACING, this.rand.nextBoolean() ? getFacing.getOpposite() : getFacing));
             world.playEvent(null, isOpen ? 1014 : 1008, pos, 0);
+        }
+        else if (block instanceof BlockCandle)
+        {
+            world.setBlockState(pos, this.world.getBlockState(pos).withProperty(BlockCandle.LIT, false));
         }
     }
 
