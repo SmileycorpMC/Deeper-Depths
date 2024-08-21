@@ -87,12 +87,13 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                             pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, Color.DARK_GRAY);
                 if (state == EnumTrialSpawnerState.ACTIVE || (state == EnumTrialSpawnerState.INACTIVE && world.rand.nextInt(3) == 0))
                     ClientProxy.addParticle(EnumParticleTypes.SMOKE_NORMAL,
-                        getRandomPosInside(), Color.DARK_GRAY, 0, 0, 0);
+                            getRandomPosInCube(pos, 0.45F, 0.1F), Color.DARK_GRAY, 0, 0, 0);
                 if (state != EnumTrialSpawnerState.INACTIVE) {
                     if (state == EnumTrialSpawnerState.ACTIVE || world.rand.nextInt(2) == 1)
                     {
-                        if (isOminous()) DeeperDepths.proxy.spawnParticle(3, this.world, pos.getX() + world.rand.nextFloat() * 0.8 + 0.1, pos.getY() + world.rand.nextFloat() * 0.5 + 0.25, pos.getZ() + world.rand.nextFloat() * 0.8 + 0.1, 0,0,0, 1);
-                        else ClientProxy.addParticle(EnumParticleTypes.FLAME, getRandomPosInside(), Color.WHITE, 0, 0 , 0);
+                        Vec3d particleRandom = getRandomPosInCube(pos, 0.45F, 0.1F);
+                        if (isOminous()) DeeperDepths.proxy.spawnParticle(3, this.world, particleRandom.x, particleRandom.y, particleRandom.z, 0,0,0, 1);
+                        else ClientProxy.addParticle(EnumParticleTypes.FLAME, particleRandom, Color.WHITE, 0, 0 , 0);
                     }
                 }
             }
@@ -149,21 +150,18 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
 
                 for (int i = 0; i < 20; i++)
                 {
-                    double xRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                    double yRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-                    double zRandSpread = 0.5 + (this.world.rand.nextFloat() - this.world.rand.nextFloat());
-
-
+                    Vec3d particleSpawnerRandom = getRandomPosInCube(pos, 1.0F, 0.0F);
+                    Vec3d particleMobRandom = getRandomPosInCube(entity.getPosition().up(), entity.height/3, 0.0F);
 
                     if (isOminous())
                     {
-                        DeeperDepths.proxy.spawnParticle(3, this.world, pos.getX() + xRandSpread, pos.getY() + yRandSpread, pos.getZ() + zRandSpread, 0,0,0, 1);
-                        DeeperDepths.proxy.spawnParticle(3, this.world, x + xRandSpread, y + yRandSpread, z + zRandSpread, 0,0,0, 1);
+                        DeeperDepths.proxy.spawnParticle(3, this.world, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, 0, 0,0,1);
+                        DeeperDepths.proxy.spawnParticle(3, this.world, particleMobRandom.x, particleMobRandom.y, particleMobRandom.z, 0,0,0, 1);
                     }
                     else
                     {
-                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, pos.getX() + xRandSpread, pos.getY() + yRandSpread, pos.getZ() + zRandSpread, 1, 0, 0, 0, 0.0);
-                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, x + xRandSpread, y + yRandSpread, z + zRandSpread, 1, 0, 0, 0, 0.0);
+                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, 1, 0, 0, 0, 0.0);
+                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, particleMobRandom.x, particleMobRandom.y, particleMobRandom.z, 1, 0, 0, 0, 0.0);
                     }
                 }
                 cooldown = 20;
@@ -209,6 +207,27 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     
     private void detectPlayers() {
         for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::canActivate)) {
+            if (player.isPotionActive(DeeperDepthsPotions.BAD_OMEN)) {
+                addTrialOmen(player, player.getActivePotionEffect(DeeperDepthsPotions.BAD_OMEN).getAmplifier());
+                player.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
+                if (!ominous) setOminous(true);
+            } else if (Loader.isModLoaded("raids") && RaidsIntegration.hasBadOmen(player)) {
+                addTrialOmen(player, RaidsIntegration.getBadOmenLevel(player));
+                if (!ominous) setOminous(true);
+            } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &!ominous)
+            {
+                setOminous(true);
+                for (int i = 0; i < 20; i++)
+                {
+                    Vec3d particleSpawnerRandom = getRandomPosInCube(pos, 1.0F, 0.0F);
+                    double xRandSpread = (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.1;
+                    double zRandSpread = (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.1;
+
+                    DeeperDepths.proxy.spawnParticle(0, this.world, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, xRandSpread, this.world.rand.nextFloat() * 0.1, zRandSpread);
+                    DeeperDepths.proxy.spawnParticle(3, this.world, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, 0,0,0,1);
+                }
+            }
+
             if (state == EnumTrialSpawnerState.WAITING) {
                 playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_DETECT_PLAYER, 1f);
                 for (int i = 0; i < 50; i++)
@@ -225,14 +244,6 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 setState(EnumTrialSpawnerState.ACTIVE);
 
             }
-            if (player.isPotionActive(DeeperDepthsPotions.BAD_OMEN)) {
-                addTrialOmen(player, player.getActivePotionEffect(DeeperDepthsPotions.BAD_OMEN).getAmplifier());
-                player.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
-                if (!ominous) setOminous(true);
-            } else if (Loader.isModLoaded("raids") && RaidsIntegration.hasBadOmen(player)) {
-                addTrialOmen(player, RaidsIntegration.getBadOmenLevel(player));
-                if (!ominous) setOminous(true);
-            } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &!ominous) setOminous(true);
             if (!active_players.contains(player.getUniqueID()) && state.isActive()) {
                 active_players.add(player.getUniqueID());
                 world.playSound(null, player.posX, player.posY, player.posZ,
@@ -245,11 +256,12 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
                 event, SoundCategory.BLOCKS, 1, pitch);
     }
-    
-    public Vec3d getRandomPosInside() {
-        return new Vec3d(pos.getX() + world.rand.nextFloat() * 0.8 + 0.1,
-                pos.getY() + world.rand.nextFloat() * 0.8 + 0.1,
-                pos.getZ() + world.rand.nextFloat() * 0.8 + 0.1);
+
+    /** Gets a random position within the given area. */
+    public Vec3d getRandomPosInCube(BlockPos posIn, float cubeScale, float cubeHollow)
+    {
+        float floatRange = cubeScale - cubeHollow;
+        return new Vec3d(posIn.getX() + 0.5F + (world.rand.nextFloat() * 2 - 1) * floatRange, posIn.getY() + 0.5F + (world.rand.nextFloat() * 2 - 1) * floatRange, posIn.getZ() + 0.5F + (world.rand.nextFloat() * 2 - 1) * floatRange);
     }
     
     private int getTotalMobs() {
