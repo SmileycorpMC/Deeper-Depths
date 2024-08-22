@@ -55,7 +55,10 @@ public class EntityAIBreezeAttackCycle extends EntityAIBase
     }
 
     public void resetTask()
-    { breeze.setShootAttack(false); }
+    {
+        breeze.setShootAttack(false);
+        breeze.setJumpingAnim(false);
+    }
 
     /** Tries to break up Breeze AI into separate loops. There is a priority, and interruptions to some loops. */
     public void updateTask()
@@ -128,22 +131,32 @@ public class EntityAIBreezeAttackCycle extends EntityAIBase
 
         if (this.actionTimer == 5)
         {
+            breeze.setJumpingAnim(true);
             this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_CHARGE, 1, 1);
         }
         else if (this.actionTimer == 20)
         {
             double moveDistance = breeze.getDistanceSq(behindTarget.x, behindTarget.y, behindTarget.z);
-            this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_JUMP, 1, 1);
+            double dX = behindTarget.x - this.breeze.posX;
+            double dZ = behindTarget.z - this.breeze.posZ;
+            double horizontalDistance = Math.sqrt(dX * dX + dZ * dZ);
             this.breeze.motionY = Math.min(1.0, 0.2D + moveDistance * 0.01D);
+            this.breeze.motionX = (dX / horizontalDistance) * (entityMoveSpeed * 3);
+            this.breeze.motionZ = (dZ / horizontalDistance) * (entityMoveSpeed * 3);
+
+            this.breeze.playSound(DeeperDepthsSoundEvents.BREEZE_JUMP, 1, 1);
             this.breeze.velocityChanged = true;
-            this.breeze.getMoveHelper().setMoveTo(behindTarget.x, behindTarget.y, behindTarget.z, entityMoveSpeed * 3);
         }
 
-        if (actionTimer >= 25 && (this.breeze.onGround || breeze.isInWater()) )
+        if (actionTimer >= 25)
         {
-            this.actionTimer = 0;
-            this.attackTimer = 20;
-            isJumping = false;
+            breeze.setJumpingAnim(false);
+            if (this.breeze.onGround || breeze.isInWater())
+            {
+                this.actionTimer = 0;
+                this.attackTimer = 20;
+                isJumping = false;
+            }
         }
     }
 
@@ -195,13 +208,14 @@ public class EntityAIBreezeAttackCycle extends EntityAIBase
     private void shootWindCharge(Entity target)
     {
         EntityWindCharge entitywindcharge = new EntityWindCharge(this.breeze.world, this.breeze, this.breeze);
-        double s1 = target.posY - this.breeze.posY + 0.5;
+        double s1 = (target.posY - target.height*0.3) - breeze.posY;
         double s2 = target.posX - breeze.posX;
         double s4 = target.posZ - breeze.posZ;
-        //float j = MathHelper.sqrt(s2 * s2 + s4 * s4) * 0.2F;
         entitywindcharge.shoot(s2, s1, s4, 0.7F, 1.0F);
 
-        entitywindcharge.posY = this.breeze.posY + 0.5;
+        /* This lets you set the charge's spawn height */
+        //entitywindcharge.posY = this.breeze.posY + 0.5;
+        entitywindcharge.posY = this.breeze.posY + (double)(this.breeze.height / 2.0F) + 0.5D;
         this.breeze.world.spawnEntity(entitywindcharge);
     }
 }

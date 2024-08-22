@@ -15,6 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.animation.EZAnimation;
 import net.smileycorp.deeperdepths.animation.EZAnimationHandler;
@@ -121,6 +122,9 @@ public class EntityBreeze extends EntityMob implements IAnimatedEntity {
         //sends the Animation Handler constant updates on the animations
         EZAnimationHandler.INSTANCE.updateAnimations(this);
     }
+
+    protected float getWaterSlowDown()
+    { return 1.0F; }
 
     /** Immune to Fall Damage, instead plays a sound effect. */
     public void fall(float distance, float damageMultiplier)
