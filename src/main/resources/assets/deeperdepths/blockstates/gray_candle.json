@@ -2,49 +2,49 @@
   "forge_marker": 1,
   "variants": {
     "candles=1,lit=false": {
-      "model": "deeperdepths:one_candle",
+      "model": "deeperdepths:candles_1",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle"
       }
     },
     "candles=2,lit=false": {
-      "model": "deeperdepths:two_candles",
+      "model": "deeperdepths:candles_2",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle"
       }
     },
     "candles=3,lit=false": {
-      "model": "deeperdepths:three_candles",
+      "model": "deeperdepths:candles_3",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle"
       }
     },
     "candles=4,lit=false": {
-      "model": "deeperdepths:four_candles",
+      "model": "deeperdepths:candles_4",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle"
       }
     },
     "candles=1,lit=true": {
-      "model": "deeperdepths:one_candle",
+      "model": "deeperdepths:candles_1",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle_lit"
       }
     },
     "candles=2,lit=true": {
-      "model": "deeperdepths:two_candles",
+      "model": "deeperdepths:candles_2",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle_lit"
       }
     },
     "candles=3,lit=true": {
-      "model": "deeperdepths:three_candles",
+      "model": "deeperdepths:candles_3",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle_lit"
       }
     },
     "candles=4,lit=true": {
-      "model": "deeperdepths:four_candles",
+      "model": "deeperdepths:candles_4",
       "textures": {
         "all": "deeperdepths:blocks/gray_candle_lit"
       }
