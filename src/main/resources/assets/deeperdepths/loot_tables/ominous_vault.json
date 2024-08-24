@@ -34,7 +34,7 @@
                         },
                         {
                             "function": "minecraft:set_nbt",
-                            "tag": "{Potion:\"minecraft:strong_slowness\"}"
+                            "tag": "{Potion:\"minecraft:long_slowness\"}"
                         }
                     ],
                     "weight": 4
