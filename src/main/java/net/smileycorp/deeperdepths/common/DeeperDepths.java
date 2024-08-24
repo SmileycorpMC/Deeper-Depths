@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.smileycorp.deeperdepths.common.world.DDOreGen;
 import net.smileycorp.deeperdepths.common.world.DDRegisterStructures;
@@ -20,8 +19,6 @@ import org.apache.logging.log4j.Logger;
 public class DeeperDepths {
     
     private static Logger logger = LogManager.getLogger(Constants.NAME);
-    
-    public static SimpleNetworkWrapper network;
     
     @SidedProxy(clientSide = Constants.CLIENT, serverSide = Constants.SERVER)
     public static CommonProxy proxy;

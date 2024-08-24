@@ -15,9 +15,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.smileycorp.deeperdepths.animation.AnimationMessage;
-import net.smileycorp.deeperdepths.client.ParticleMessage;
+import net.smileycorp.deeperdepths.common.network.NetworkHandler;
+import net.smileycorp.deeperdepths.common.network.ParticleMessage;
 import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
@@ -42,10 +41,7 @@ public class CommonProxy {
     
     public void init(FMLInitializationEvent event)
     {
-        int packetId = 0;
-        DeeperDepths.network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
-        DeeperDepths.network.registerMessage(AnimationMessage.Handler.class, AnimationMessage.class, packetId++, Side.SERVER);
-        DeeperDepths.network.registerMessage(ParticleMessage.Handler.class, ParticleMessage.class, packetId++, Side.CLIENT);
+        NetworkHandler.init();
         CapabilityManager.INSTANCE.register(CapabilityWindChargeFall.ICapabilityWindChargeFall.class, new CapabilityWindChargeFall.Storage(), CapabilityWindChargeFall.WindChargeHorn::new);
     }
     
@@ -85,7 +81,7 @@ public class CommonProxy {
         if (world.isRemote)
         { spawnParticle(particleId, posX, posY, posZ, speedX, speedY, speedZ, parameters); }
         else
-        { DeeperDepths.network.sendToAllTracking( new ParticleMessage(particleId, posX, posY, posZ, speedX, speedY, speedZ, parameters), new NetworkRegistry.TargetPoint(world.provider.getDimension(), posX, posY, posZ, 0.0D)); }
+        { NetworkHandler.network.sendToAllTracking( new ParticleMessage(particleId, posX, posY, posZ, speedX, speedY, speedZ, parameters), new NetworkRegistry.TargetPoint(world.provider.getDimension(), posX, posY, posZ, 0.0D)); }
     }
 
     /** This exists to be overridden in the ClientProxy! */

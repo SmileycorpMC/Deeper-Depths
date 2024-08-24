@@ -1,4 +1,4 @@
-package net.smileycorp.deeperdepths.client;
+package net.smileycorp.deeperdepths.common.network;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
