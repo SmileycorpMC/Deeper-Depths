@@ -183,8 +183,9 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                     active_players.clear();
                     return;
                 }
+                /* Don't forget BehaviorDefaultDispenseItem's stupid additional offset of -0.125D! */
                 BehaviorDefaultDispenseItem.doDispense(world, loot.get(0),2, EnumFacing.UP,
-                        new PositionImpl(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
+                        new PositionImpl(pos.getX() + 0.5, pos.getY() + 1.125D, pos.getZ() + 0.5));
                 playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_EJECT_ITEM, 0.8f + ejected_items * 0.4f);
                 ejected_items++;
                 active_players.remove(0);

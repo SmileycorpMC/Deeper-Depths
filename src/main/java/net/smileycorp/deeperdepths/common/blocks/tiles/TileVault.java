@@ -95,8 +95,8 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
                 playSound( DeeperDepthsSoundEvents.VAULT_CLOSE_SHUTTER, 1f);
             }
             else {
-                BehaviorDefaultDispenseItem.doDispense(world, stored_items.get(0),2, EnumFacing.UP,
-                        new PositionImpl(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
+                /* Don't forget BehaviorDefaultDispenseItem's stupid additional offset of -0.125D! */
+                BehaviorDefaultDispenseItem.doDispense(world, stored_items.get(0),2, EnumFacing.UP, new PositionImpl(pos.getX() + 0.5, pos.getY() + 1.125D, pos.getZ() + 0.5));
                 playSound(DeeperDepthsSoundEvents.VAULT_EJECT_ITEM, 0.8f + ejected_items * 0.4f);
                 ejected_items++;
                 stored_items.remove(0);
