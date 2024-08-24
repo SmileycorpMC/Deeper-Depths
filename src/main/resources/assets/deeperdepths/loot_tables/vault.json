@@ -261,8 +261,10 @@
                     "weight": 2,
                     "functions": [
                         {
-                            "function": "minecraft:set_nbt",
-                            "tag": "{StoredEnchantments:[{lvl:1s,id:70s}]}"
+                            "function": "deeperdepths:apply_enchantments",
+                            "enchantments": {
+                                "minecraft:mending": 1
+                            }
                         }
                     ]
                 }
