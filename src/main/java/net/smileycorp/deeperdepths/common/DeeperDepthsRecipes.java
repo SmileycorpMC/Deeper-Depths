@@ -190,6 +190,8 @@ public class DeeperDepthsRecipes {
         GameRegistry.addShapedRecipe(Constants.loc("copper_door"), Constants.loc("copper"),
                 new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(EnumWeatherStage.NORMAL).getItem(), 3, 0), "MM", "MM", "MM", 'M',
                 "ingotCopper");
+        GameRegistry.addShapedRecipe(Constants.loc("lightning_rod"), Constants.loc("copper"),
+                new ItemStack(DeeperDepthsBlocks.LIGHTNING_ROD), "M", "M", "M", 'M', "ingotCopper");
 
         GameRegistry.addShapelessRecipe(Constants.loc("wind_charges"), null, new ItemStack(DeeperDepthsItems.WIND_CHARGE, 4),
                 Ingredient.fromStacks(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)));
