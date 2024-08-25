@@ -110,7 +110,7 @@ public class WorldGenTrialSpawnerType extends WorldGenCustomStructure {
             worldIn.setBlockState(pos, DeeperDepthsBlocks.TRIAL_SPAWNER.getDefaultState());
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if(tileEntity instanceof TileTrialSpawner) {
-                ((TileTrialSpawner)tileEntity).modifyConfigs( config -> config.setSimultaneousEntities(1).setTotalEntities(2).setSpawnRange(4).setTicksBetweenSpawn(60).setSimultaneousEntitiesPerPlayer(0)
+                ((TileTrialSpawner)tileEntity).modifyConfigs(config -> config.setSimultaneousEntities(1).setTotalEntities(2).setSpawnRange(4).setTicksBetweenSpawn(60).setSimultaneousEntitiesPerPlayer(1)
                         .setEntities(ImmutableMap.of(new TileTrialSpawner.Entry(Constants.loc("breeze")), 1)));
                 tileEntity.setWorld(worldIn);
                 ((TileTrialSpawner)tileEntity).setState(EnumTrialSpawnerState.WAITING);
