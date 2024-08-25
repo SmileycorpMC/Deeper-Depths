@@ -18,7 +18,7 @@ public class WorldConfig {
             //bogged
             copperOre = new WorldGenEntry(config, "copper ore", 10, 16, 0, 112);
             tuff = new WorldGenEntry(config, "tuff", 33, 2, 0, 16);
-            deepslate = new WorldGenEntry(config, "deepslate", 33, 10, 0, 16);
+            deepslate = new WorldGenEntry(config, "deepslate", 33, 0, 0, 16);
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();
