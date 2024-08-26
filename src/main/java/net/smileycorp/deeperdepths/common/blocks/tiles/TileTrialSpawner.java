@@ -59,7 +59,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     private List<WeakReference<Entity>> current_mobs = Lists.newArrayList();
     private final List<UUID> mob_cache = Lists.newArrayList();
     private EnumTrialSpawnerState state = EnumTrialSpawnerState.INACTIVE;
-    private boolean ominous;
+    private byte ominous_level;
     private final Config config;
     private final Config ominous_config;
     private float required_range = 14;
@@ -99,13 +99,13 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             }
             if (state == EnumTrialSpawnerState.ACTIVE && world.rand.nextFloat() <= 0.02f)
                 world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                        ominous ? DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT_OMINOUS : DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT,
+                        isOminous() ? DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT_OMINOUS : DeeperDepthsSoundEvents.TRIAL_SPAWNER_AMBIENT,
                         SoundCategory.BLOCKS, world.rand.nextFloat() * 0.25f + 0.75f,
                         world.rand.nextFloat() + 0.5f, false);
         }
         if (world.getDifficulty() == EnumDifficulty.PEACEFUL |! world.getGameRules().getBoolean("doMobSpawning")) return;
         if (getActiveConfig().entities.isEmpty()) return;
-        if (state == EnumTrialSpawnerState.INACTIVE &! ominous && world.getWorldTime() % 20 == 0) detectPlayers();
+        if (state == EnumTrialSpawnerState.INACTIVE &!isOminous() && world.getWorldTime() % 20 == 0) detectPlayers();
         if (cooldown > 0) {
             cooldown--;
             return;
@@ -114,7 +114,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         if (state.isActive() && world.getWorldTime() % 20 == 0) detectPlayers();
         if (state == EnumTrialSpawnerState.ACTIVE) {
             clearInvalidEntities();
-            if (ominous) {
+            if (isOminous()) {
                 if (ominous_cooldown <= 0) spawnOminousProjectiles();
                 if (ominous_cooldown > 0) ominous_cooldown--;
             }
@@ -209,15 +209,16 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     private void detectPlayers() {
         for (EntityPlayer player : world.getPlayers(EntityPlayer.class, this::canActivate)) {
             if (player.isPotionActive(DeeperDepthsPotions.BAD_OMEN)) {
-                addTrialOmen(player, player.getActivePotionEffect(DeeperDepthsPotions.BAD_OMEN).getAmplifier());
+                byte level = addTrialOmen(player, player.getActivePotionEffect(DeeperDepthsPotions.BAD_OMEN).getAmplifier());
                 player.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
-                if (!ominous) setOminous(true);
+                if (level > ominous_level) setOminous(level);
             } else if (Loader.isModLoaded("raids") && RaidsIntegration.hasBadOmen(player)) {
-                addTrialOmen(player, RaidsIntegration.getBadOmenLevel(player));
-                if (!ominous) setOminous(true);
-            } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &!ominous)
-            {
-                setOminous(true);
+                byte level = addTrialOmen(player, RaidsIntegration.getBadOmenLevel(player));
+                RaidsIntegration.removeBadOmen(player);
+                if (level > ominous_level) setOminous(level);
+            } else if (player.isPotionActive(DeeperDepthsPotions.TRIAL_OMEN) &&
+                    player.getActivePotionEffect(DeeperDepthsPotions.TRIAL_OMEN).getAmplifier() + 1 > ominous_level) {
+                setOminous((byte) (player.getActivePotionEffect(DeeperDepthsPotions.TRIAL_OMEN).getAmplifier() + 1));
                 for (int i = 0; i < 20; i++)
                 {
                     Vec3d particleSpawnerRandom = getRandomPosInCube(pos, 1.0F, 0.0F);
@@ -273,10 +274,12 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         return getActiveConfig().simultaneous_entities + active_players.size() * getActiveConfig().simultaneous_entities_per_player;
     }
     
-    public static void addTrialOmen(EntityPlayer player, int bad_omen_amplifier) {
-        player.addPotionEffect(new PotionEffect(DeeperDepthsPotions.TRIAL_OMEN, 18000 * (bad_omen_amplifier + 1)));
+    public static byte addTrialOmen(EntityPlayer player, int bad_omen_amplifier) {
+        byte level = 1;
+        player.addPotionEffect(new PotionEffect(DeeperDepthsPotions.TRIAL_OMEN, 18000 * (bad_omen_amplifier + 1), level));
         player.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
         if (Loader.isModLoaded("raids")) RaidsIntegration.removeBadOmen(player);
+        return level;
     }
     
     public boolean canActivate(EntityPlayer player) {
@@ -294,7 +297,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                     DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, SoundCategory.BLOCKS, 1, 1);
             world.spawnEntity(new EntityOminousItemSpawner(world, pos, stack));
         }
-        ominous_cooldown = 160;
+        ominous_cooldown = 160 / ominous_level;
     }
     
     public void setState(EnumTrialSpawnerState state) {
@@ -307,13 +310,13 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         return state;
     }
     
-    public void setOminous(boolean isOminous) {
-        if (!ominous && isOminous) {
+    public void setOminous(byte level) {
+        if (ominous_level < level) {
             playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1f);
             if (state != EnumTrialSpawnerState.EJECTING) reset();
-            ominous_cooldown = 160;
+            ominous_cooldown = 160 / level;
         }
-        this.ominous = isOminous;
+        this.ominous_level = level;
         rebuildCachedEntity();
         markDirty();
     }
@@ -327,7 +330,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public Config getActiveConfig() {
-        return ominous ? ominous_config : config;
+        return ominous_level > 0 ? ominous_config : config;
     }
     
     private void reset() {
@@ -342,7 +345,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public boolean isOminous() {
-        return ominous;
+        return ominous_level > 0;
     }
     
     @Override
@@ -370,7 +373,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         if (nbt.hasKey("state", 1)) state = EnumTrialSpawnerState.values()[nbt.getByte("state")];
-        if (nbt.hasKey("ominous")) ominous = nbt.getBoolean("ominous");
+        if (nbt.hasKey("ominous_level")) ominous_level = nbt.getByte("ominous");
         if (nbt.hasKey("config")) config.readFromNBT(nbt.getCompoundTag("config"));
         if (nbt.hasKey("ominous_config")) ominous_config.readFromNBT(nbt.getCompoundTag("ominous_config"));
         if (nbt.hasKey("loot_table")) loot_table = new ResourceLocation(nbt.getString("loot_table"));
@@ -386,7 +389,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setByte("state", (byte)state.ordinal());
-        nbt.setBoolean("ominous", ominous);
+        nbt.setByte("ominous_level", ominous_level);
         if (config != null) nbt.setTag("config", config.writeToNBT());
         if (ominous_config != null) nbt.setTag("ominous_config", ominous_config.writeToNBT());
         if (loot_table != null) nbt.setString("loot_table", loot_table.toString());
@@ -407,7 +410,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public NBTTagCompound getUpdateTag() {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setByte("state", (byte)state.ordinal());
-        nbt.setBoolean("ominous", ominous);
+        nbt.setByte("ominous_level", ominous_level);
         Entity entity = getCachedEntity();
         if (entity != null) nbt.setTag("cached_entity", entity.serializeNBT());
         return nbt;
@@ -416,7 +419,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     @Override
     public void handleUpdateTag(NBTTagCompound nbt) {
         if (nbt.hasKey("state", 1)) state = EnumTrialSpawnerState.values()[nbt.getByte("state")];
-        if (nbt.hasKey("ominous")) ominous = nbt.getBoolean("ominous");
+        if (nbt.hasKey("ominous_level")) ominous_level = nbt.getByte("ominous");
         if (nbt.hasKey("cached_entity")) cached_entity = AnvilChunkLoader.readWorldEntity(nbt.getCompoundTag("cached_entity"), world, false);
     }
     
