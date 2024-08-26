@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import java.util.Random;
 
@@ -28,13 +29,14 @@ public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
     public BlockCutCopperSlab(boolean isDouble) {
         super(Material.IRON, "Cut_Copper_Slab", isDouble);
         setHarvestLevel("PICKAXE", 1);
-        setHardness(3);
-        setResistance(6);
+        setHardness(BlockConfig.copper.getHardness());
+        setResistance(BlockConfig.copper.getResistance());
+        setHarvestLevel("PICKAXE", BlockConfig.copper.getHarvestLevel());
         IBlockState base = blockState.getBaseState().withProperty(VARIANT, Variant.NORMAL);
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.BOTTOM);
         setSoundType(DeeperDepthsSoundTypes.COPPER);
         setDefaultState(base);
-        needsRandomTick = true;
+        needsRandomTick = BlockConfig.copperAges;
     }
     
     @Override

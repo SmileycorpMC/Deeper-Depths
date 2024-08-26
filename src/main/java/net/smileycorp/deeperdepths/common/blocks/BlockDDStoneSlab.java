@@ -52,6 +52,11 @@ public class BlockDDStoneSlab extends BlockDDSlab {
     }
     
     @Override
+    public int getHarvestLevel(IBlockState state) {
+        return state.getValue(VARIANT).getHarvestLevel();
+    }
+    
+    @Override
     public String getUnlocalizedName(int meta) {
         return "tile." + Constants.MODID + "." + EnumStoneType.getShaped(meta).getName() + "_slab";
     }

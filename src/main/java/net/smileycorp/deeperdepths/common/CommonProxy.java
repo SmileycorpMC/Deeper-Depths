@@ -15,13 +15,14 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.smileycorp.deeperdepths.common.network.NetworkHandler;
-import net.smileycorp.deeperdepths.common.network.ParticleMessage;
 import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
+import net.smileycorp.deeperdepths.common.network.NetworkHandler;
+import net.smileycorp.deeperdepths.common.network.ParticleMessage;
 import net.smileycorp.deeperdepths.common.world.loot.functions.ApplyEnchantments;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 import net.smileycorp.deeperdepths.config.EntityConfig;
 import net.smileycorp.deeperdepths.config.WorldConfig;
 
@@ -30,6 +31,7 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         EntityConfig.syncConfig(event);
         WorldConfig.syncConfig(event);
+        BlockConfig.syncConfig(event);
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
         DeeperDepthsEntities.registerEntities();
         //Registers Entity Spawns even though I think we'll only have one lmao

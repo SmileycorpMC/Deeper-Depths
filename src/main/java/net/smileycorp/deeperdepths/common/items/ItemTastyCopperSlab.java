@@ -22,13 +22,13 @@ public class ItemTastyCopperSlab<T extends BlockCutCopperSlab> extends ItemDDSla
     }
     
     public EnumAction getItemUseAction(ItemStack stack) {
-        return isFunny(stack) ? EnumAction.EAT : super.getItemUseAction(stack);
+        return getBlock().isEdible(stack) ? EnumAction.EAT : super.getItemUseAction(stack);
     }
     
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (isFunny(stack)) {
+        if (getBlock().isEdible(stack)) {
             player.setActiveHand(hand);
             return new ActionResult(EnumActionResult.SUCCESS, stack);
         }
@@ -37,28 +37,24 @@ public class ItemTastyCopperSlab<T extends BlockCutCopperSlab> extends ItemDDSla
     
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
-        return isFunny(stack) ? 32 : 0;
+        return getBlock().isEdible(stack) ? 32 : 0;
     }
     
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-        if (!isFunny(stack)) return stack;
-        if (entityLiving instanceof EntityPlayer)
-        {
-            EntityPlayer entityplayer = (EntityPlayer)entityLiving;
-            worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
-                    SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
+        if (!getBlock().isEdible(stack)) return stack;
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer entityplayer = (EntityPlayer)entity;
+            world.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
+                    SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5f, world.rand.nextFloat() * 0.1f + 0.9f);
             entityplayer.addStat(StatList.getObjectUseStats(this));
-            if (entityplayer instanceof EntityPlayerMP)
-            {
-                CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
-            }
+            if (entityplayer instanceof EntityPlayerMP) CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
         }
-        stack.setItemDamage(stack.getItemDamage() - 1);
-        return stack;
+        return getBlock().getPrevious(stack);
     }
     
-    private boolean isFunny(ItemStack stack) {
-        return stack.getMetadata() % 4 > 0;
+    @Override
+    public T getBlock() {
+        return (T) block;
     }
     
 }

@@ -69,6 +69,11 @@ public class BlockDDStoneWall extends BlockWall implements IBlockProperties {
     }
     
     @Override
+    public int getHarvestLevel(IBlockState state) {
+        return state.getValue(TYPE).getHarvestLevel();
+    }
+    
+    @Override
     public int damageDropped(IBlockState state) {
         return state.getValue(TYPE).getShapedMeta();
     }

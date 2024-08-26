@@ -11,11 +11,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 public class BlockAmethyst extends BlockDeeperDepths {
     
     public BlockAmethyst(String name) {
-        super(name, Material.ROCK, 1.5f, 1.5f, 0);
+        super(name, Material.ROCK, BlockConfig.amethyst.getHardness(), BlockConfig.amethyst.getResistance(), BlockConfig.amethyst.getHarvestLevel());
         setSoundType(DeeperDepthsSoundTypes.AMETHYST);
     }
     

@@ -67,6 +67,11 @@ public class BlockDDStone extends BlockDeeperDepths {
     }
     
     @Override
+    public int getHarvestLevel(IBlockState state) {
+        return state.getValue(VARIANT).getHarvestLevel();
+    }
+    
+    @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(VARIANT).ordinal();
     }

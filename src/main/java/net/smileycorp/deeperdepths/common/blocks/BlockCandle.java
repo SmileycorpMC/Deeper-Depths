@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import java.util.Random;
 
@@ -51,7 +52,7 @@ public class BlockCandle extends BlockDeeperDepths {
     
     public BlockCandle(EnumDyeColor color) {
         //why is it called silver in the enum when it's called light gray everywhere else
-        super(color == null ? "Candle" : (color == EnumDyeColor.SILVER ? "light_gray" : color.getName()) + "_Candle", Material.CARPET, 0.1f, 0.1f, 0);
+        super(color == null ? "Candle" : (color == EnumDyeColor.SILVER ? "light_gray" : color.getName()) + "_Candle", Material.CARPET, BlockConfig.candle.getHardness(), BlockConfig.candle.getResistance(), BlockConfig.candle.getHarvestLevel());
         this.color = color;
         setSoundType(DeeperDepthsSoundTypes.CANDLE);
         setDefaultState(getBlockState().getBaseState().withProperty(LIT, false).withProperty(CANDLES, 1));

@@ -19,6 +19,7 @@ import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialPot;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -38,7 +39,7 @@ public class DeeperDepthsBlocks {
     public static final BlockReinforcedDeepslate REINFORCED_DEEPSLATE = new BlockReinforcedDeepslate();
     
     //copper
-    public static final BlockDeeperDepths COPPER_ORE = new BlockDeeperDepths("Copper_Ore", Material.ROCK, 3, 3, 1);
+    public static final BlockDeeperDepths COPPER_ORE = new BlockDeeperDepths("Copper_Ore", Material.ROCK, BlockConfig.copperOre.getHardness(), BlockConfig.copperOre.getHardness(), BlockConfig.copperOre.getHarvestLevel());
     public static final BlockCopper COPPER_BLOCK = new BlockCopper("Copper_Block");
     public static final BlockCopper CUT_COPPER = new BlockCopper("Cut_Copper");
     public static final BlockCutCopperSlab CUT_COPPER_SLAB = new BlockCutCopperSlab(false);

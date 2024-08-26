@@ -5,6 +5,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.util.IStringSerializable;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
+import net.smileycorp.deeperdepths.config.BlockConfig;
+import net.smileycorp.deeperdepths.config.BlockStatEntry;
 
 import java.util.List;
 
@@ -52,11 +54,15 @@ public enum EnumStoneType implements IStringSerializable {
     }
     
     public float getHardness() {
-        return material.hardness;
+        return material.stats.getHardness();
     }
     
     public float getResistance() {
-        return material.resistance;
+        return material.stats.getResistance();
+    }
+    
+    public int getHarvestLevel() {
+        return material.stats.getHarvestLevel();
     }
     
     public int getShapedMeta() {
@@ -86,22 +92,21 @@ public enum EnumStoneType implements IStringSerializable {
     
     public enum Material {
         
-        DEEPSLATE(MapColor.GRAY, 3.5f, 6, DeeperDepthsSoundTypes.DEEPSLATE),
-        DEEPSLATE_BRICKS(MapColor.GRAY, 3.5f, 6, DeeperDepthsSoundTypes.DEEPSLATE_BRICKS),
-        DEEPSLATE_TILES(MapColor.GRAY, 3.5f, 6, DeeperDepthsSoundTypes.DEEPSLATE_TILES),
-        TUFF(MapColor.GRAY_STAINED_HARDENED_CLAY, 1.5f, 6, DeeperDepthsSoundTypes.TUFF),
-        TUFF_BRICKS(MapColor.GRAY_STAINED_HARDENED_CLAY, 1.5f, 6, DeeperDepthsSoundTypes.TUFF_BRICKS),
-        CALCITE(MapColor.WHITE_STAINED_HARDENED_CLAY, 0.75f, 0.75f, DeeperDepthsSoundTypes.CALCITE);
+        DEEPSLATE(MapColor.GRAY, BlockConfig.cobbledDeepslate, DeeperDepthsSoundTypes.DEEPSLATE),
+        DEEPSLATE_BRICKS(MapColor.GRAY, BlockConfig.deepslateBricks, DeeperDepthsSoundTypes.DEEPSLATE_BRICKS),
+        DEEPSLATE_TILES(MapColor.GRAY, BlockConfig.deepslateTiles, DeeperDepthsSoundTypes.DEEPSLATE_TILES),
+        TUFF(MapColor.GRAY_STAINED_HARDENED_CLAY, BlockConfig.tuff, DeeperDepthsSoundTypes.TUFF),
+        TUFF_BRICKS(MapColor.GRAY_STAINED_HARDENED_CLAY,  BlockConfig.tuffBricks, DeeperDepthsSoundTypes.TUFF_BRICKS),
+        CALCITE(MapColor.WHITE_STAINED_HARDENED_CLAY, BlockConfig.calcite, DeeperDepthsSoundTypes.CALCITE);
         
         private final MapColor color;
-        private final float hardness, resistance;
+        private final BlockStatEntry stats;
         private final SoundType soundType;
         private final List<EnumStoneType> types = Lists.newArrayList();
         
-        Material(MapColor color, float hardness, float resistance, SoundType soundType) {
+        Material(MapColor color, BlockStatEntry stats, SoundType soundType) {
             this.color = color;
-            this.hardness = hardness;
-            this.resistance = resistance;
+            this.stats = stats;
             this.soundType = soundType;
         }
         

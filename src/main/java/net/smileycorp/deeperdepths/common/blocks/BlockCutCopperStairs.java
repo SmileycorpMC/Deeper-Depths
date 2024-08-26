@@ -1,10 +1,12 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import java.util.Random;
 
@@ -18,7 +20,7 @@ public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock 
         setSoundType(DeeperDepthsSoundTypes.COPPER);
         this.stage = stage;
         this.waxed = waxed;
-        needsRandomTick = !waxed && stage != EnumWeatherStage.OXIDIZED;
+        needsRandomTick = BlockConfig.copperAges &! waxed && stage != EnumWeatherStage.OXIDIZED;
     }
     
     @Override
@@ -41,6 +43,17 @@ public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock 
     @Override
     public EnumWeatherStage getStage(IBlockState state) {
         return stage;
+    }
+    
+    public boolean isEdible(ItemStack stack) {
+        return stage != EnumWeatherStage.NORMAL;
+    }
+    
+    public ItemStack getPrevious(ItemStack stack) {
+        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_CUT_COPPER_STAIRS : DeeperDepthsBlocks.CUT_COPPER_STAIRS)
+                .get(stage.previous()), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
     }
     
     @Override

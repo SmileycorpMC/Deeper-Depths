@@ -8,6 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumClusterSize;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class BlockBuddingAmethyst extends BlockAmethyst {
     @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
         if (world.isRemote) return;
-        if (world.rand.nextInt(5) > 0) return;
+        if (world.rand.nextFloat() > BlockConfig.amethystGrowChance) return;
         EnumFacing facing = EnumFacing.values()[random.nextInt(6)];
         BlockPos pos1 = pos.offset(facing);
         IBlockState state1 = world.getBlockState(pos1);

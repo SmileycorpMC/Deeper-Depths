@@ -15,7 +15,6 @@ public class WorldConfig {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/deeperdepths/world.cfg"));
         try{
             config.load();
-            //bogged
             copperOre = new WorldGenEntry(config, "copper ore", 10, 16, 0, 112);
             tuff = new WorldGenEntry(config, "tuff", 33, 2, 0, 16);
             deepslate = new WorldGenEntry(config, "deepslate", 33, 0, 0, 16);

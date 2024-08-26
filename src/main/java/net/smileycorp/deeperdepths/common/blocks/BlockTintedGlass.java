@@ -9,11 +9,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 public class BlockTintedGlass extends BlockDeeperDepths {
     
     public BlockTintedGlass() {
-        super("Tinted_Glass", Material.GLASS, 0.3f, 0.3f, 0);
+        super("Tinted_Glass", Material.GLASS, BlockConfig.tintedGlass.getHardness(), BlockConfig.tintedGlass.getResistance(), BlockConfig.tintedGlass.getHarvestLevel());
         setSoundType(SoundType.GLASS);
         lightOpacity = 255;
     }

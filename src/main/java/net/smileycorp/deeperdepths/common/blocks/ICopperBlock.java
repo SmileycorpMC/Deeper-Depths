@@ -1,20 +1,20 @@
 package net.smileycorp.deeperdepths.common.blocks;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import java.util.Random;
 
@@ -46,7 +46,6 @@ public interface ICopperBlock {
 
         if (isWaxed(state)) spawnSurfaceParticles(world, pos, 4, 244, 214, 212);
         else spawnSurfaceParticles(world, pos, 4, 107, 186, 130);
-
         entity.swingArm(hand);
         if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
             stack.damageItem(1, entity);
@@ -80,7 +79,7 @@ public interface ICopperBlock {
         int same = 0;
         int moreWeathered = 0;
         if (isWaxed(state) || getStage(state) == EnumWeatherStage.OXIDIZED) return;
-        if (rand.nextFloat() < 0.055555f) return;
+        if (rand.nextFloat() > BlockConfig.copperAgeChance) return;
         BlockPos.MutableBlockPos pos1 = new BlockPos.MutableBlockPos(pos);
         for (int i = -4; i <= 4; i++) {
             for (int j = -4; j <= 4; j++) {
@@ -106,6 +105,16 @@ public interface ICopperBlock {
         if (!world.isRemote) world.setBlockState(pos, getWeathered(state), 3);
         return true;
     }
+    
+    default boolean isEdible(ItemStack stack) {
+        return stack.getMetadata() % 4 > 0;
+    }
+    
+    default ItemStack getPrevious(ItemStack stack) {
+        ItemStack stack1 = new ItemStack((Block) this, stack.getCount(), stack.getMetadata() - 1);
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
 
     /** Spawns particles to slide on the surfaces of the Copper block. */
     default void spawnSurfaceParticles(World worldIn, BlockPos pos, int particleCount, int red, int green, int blue)
@@ -126,4 +135,5 @@ public interface ICopperBlock {
             }
         }
     }
+    
 }

@@ -7,6 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 public class BlockHeavyCore extends BlockDeeperDepths
 {
@@ -14,7 +15,7 @@ public class BlockHeavyCore extends BlockDeeperDepths
 
     public BlockHeavyCore()
     {
-        super("heavy_core", Material.IRON, 10, 50, 0);
+        super("heavy_core", Material.IRON, BlockConfig.heavyCore.getHardness(), BlockConfig.heavyCore.getResistance(), BlockConfig.heavyCore.getHarvestLevel());
     }
 
     @Override

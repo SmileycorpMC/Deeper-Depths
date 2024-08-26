@@ -15,7 +15,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.animation.EZAnimation;
 import net.smileycorp.deeperdepths.animation.EZAnimationHandler;

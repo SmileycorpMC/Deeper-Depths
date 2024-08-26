@@ -23,7 +23,7 @@ public class Constants {
 	public static final String PATH = "net.smileycorp.deeperdepths.";
 	public static final String CLIENT = PATH + "client.ClientProxy";
 	public static final String SERVER = PATH + "common.CommonProxy";
-    public static final boolean IS_COPPER_TASTY = isCopperTasty();
+    public static final boolean FUNNY = isFunny();
 
 	/** The damage source used by Maces. */
 	public static DamageSource causeMaceDamage(Entity source)
@@ -47,7 +47,7 @@ public class Constants {
 		return tag;
 	}
 	
-	private static boolean isCopperTasty() {
+	private static boolean isFunny() {
 		LocalDateTime time = LocalDateTime.now();
 		return time.getDayOfMonth() == 1 && time.getMonth().equals(Month.APRIL);
 	}

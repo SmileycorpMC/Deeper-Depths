@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.tiles.TileTrialPot;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import javax.annotation.Nullable;
 
@@ -40,7 +41,7 @@ public class BlockTrialPot extends BlockDeeperDepths implements ITileEntityProvi
     public static final PropertyBool CRACKED = PropertyBool.create("cracked");
     
     public BlockTrialPot() {
-        super("Trial_Pot", Material.ROCK, 0, 0, 0);
+        super("Trial_Pot", Material.ROCK, BlockConfig.trialPot.getHardness(), BlockConfig.trialPot.getHardness(), BlockConfig.trialPot.getHarvestLevel());
         setDefaultState(blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH).withProperty(CRACKED, false));
         useNeighborBrightness = true;
     }

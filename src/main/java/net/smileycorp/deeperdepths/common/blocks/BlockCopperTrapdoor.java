@@ -4,6 +4,7 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
@@ -15,6 +16,7 @@ import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundTypes;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 import java.util.Random;
 
@@ -34,8 +36,11 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
         setRegistryName(Constants.loc(name));
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         setSoundType(DeeperDepthsSoundTypes.COPPER);
+        setHardness(BlockConfig.copper.getHardness());
+        setResistance(BlockConfig.copper.getResistance());
+        setHarvestLevel("PICKAXE", BlockConfig.copper.getHarvestLevel());
         useNeighborBrightness = true;
-        needsRandomTick = !waxed && stage != EnumWeatherStage.OXIDIZED;
+        needsRandomTick = BlockConfig.copperAges &! waxed && stage != EnumWeatherStage.OXIDIZED;
     }
     
     @Override
@@ -61,6 +66,17 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
     @Override
     public EnumWeatherStage getStage(IBlockState state) {
         return stage;
+    }
+    
+    public boolean isEdible(ItemStack stack) {
+        return stage != EnumWeatherStage.NORMAL;
+    }
+    
+    public ItemStack getPrevious(ItemStack stack) {
+        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS : DeeperDepthsBlocks.COPPER_TRAPDOORS)
+                .get(stage.previous()), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
     }
     
     @Override
