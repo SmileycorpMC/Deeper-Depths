@@ -78,7 +78,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             }
         } else if (state == EnumVaultState.ACTIVE) {
             if (world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                    config.deactivation_range, false) == null) {
+                    config.deactivation_range, this::canReward) == null) {
                 setState(EnumVaultState.INACTIVE);
                 playSound(DeeperDepthsSoundEvents.VAULT_DEACTIVATE, 1f);
             } else {
