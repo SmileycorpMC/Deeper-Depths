@@ -16,6 +16,8 @@ item.deeperdepths.ominous_key.name=Ominous Trial Key
 item.deeperdepths.spyglass.name=Spyglass
 item.deeperdepths.recovery_compass.name=Recovery Compass
 item.deeperdepths.mace.name=Mace
+item.deeperdepths.configurator.name=Configurator
+item.deeperdepths.configurator.tooltip=Use on trial spawners or vaults to modify their configs.
 
 tile.deeperdepths.tuff.name=Tuff
 tile.deeperdepths.tuff_slab.name=Tuff Slab

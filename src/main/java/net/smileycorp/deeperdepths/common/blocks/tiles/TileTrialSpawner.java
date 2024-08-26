@@ -20,7 +20,6 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -53,15 +52,14 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class TileTrialSpawner extends TileEntity implements ITickable {
+public class TileTrialSpawner extends TileTrial {
     
     private List<UUID> active_players = Lists.newArrayList();
     private List<WeakReference<Entity>> current_mobs = Lists.newArrayList();
     private final List<UUID> mob_cache = Lists.newArrayList();
     private EnumTrialSpawnerState state = EnumTrialSpawnerState.INACTIVE;
     private boolean ominous;
-    private final Config config;
-    private final Config ominous_config;
+    private Config config, ominous_config;
     private float required_range = 14;
     private int cooldown = 0;
     private int ominous_cooldown = 0;
@@ -126,6 +124,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 loot_table = getActiveConfig().loot_tables.getResult(world.rand);
             }
             int simultaneous = getSimultaneousMobs();
+            DeeperDepths.info(getActiveConfig().entities.getTable().get(0).getKey().getNbt() + ", " + simultaneous + ", " + current_mobs.size());
             if (current_mobs.size() < simultaneous && spawned_mobs < total) {
                 Config config = getActiveConfig();
                 Entry entry = config.entities.getResult(world.rand);
@@ -371,8 +370,8 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         super.readFromNBT(nbt);
         if (nbt.hasKey("state", 1)) state = EnumTrialSpawnerState.values()[nbt.getByte("state")];
         if (nbt.hasKey("ominous")) ominous = nbt.getBoolean("ominous");
-        if (nbt.hasKey("config")) config.readFromNBT(nbt.getCompoundTag("config"));
-        if (nbt.hasKey("ominous_config")) ominous_config.readFromNBT(nbt.getCompoundTag("ominous_config"));
+        if (nbt.hasKey("config")) config = new Config(nbt.getCompoundTag("config"), false);
+        if (nbt.hasKey("ominous_config")) ominous_config = new Config(nbt.getCompoundTag("ominous_config"), true);
         if (nbt.hasKey("loot_table")) loot_table = new ResourceLocation(nbt.getString("loot_table"));
         if (nbt.hasKey("cooldown")) cooldown = nbt.getInteger("cooldown");
         if (nbt.hasKey("ominous_cooldown")) ominous_cooldown = nbt.getInteger("ominous_cooldown");
@@ -470,6 +469,29 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         
         private Config(boolean ominous) {
             this.ominous = ominous;
+        }
+        
+        public Config(NBTTagCompound nbt, boolean ominous) {
+            this.ominous = ominous;
+            spawn_range = nbt.getInteger("spawn_range");
+            total_entities = nbt.getInteger("spawn_range");
+            simultaneous_entities = nbt.getInteger("simultaneous_entities ");
+            total_entities_per_player = nbt.getInteger("total_entities_per_player");
+            simultaneous_entities_per_player = nbt.getInteger("simultaneous_entities_per_player");
+            ticks_between_spawn = nbt.getInteger("ticks_between_spawn");
+            Map<ResourceLocation, Integer> loot_tables = Maps.newHashMap();
+            for (NBTBase entry : nbt.getTagList("loot_tables", 10)) {
+                NBTTagCompound compound = (NBTTagCompound) entry;
+                loot_tables.put(new ResourceLocation(compound.getString("table")), compound.getInteger("weight"));
+            }
+            this.loot_tables = new WeightedOutputs<>(loot_tables);
+            loot_table_seed = nbt.getLong("loot_table_seed");
+            Map<Entry, Integer> entities = Maps.newHashMap();
+            for (NBTBase entry : nbt.getTagList("entities", 10)) {
+                NBTTagCompound compound = (NBTTagCompound) entry;
+                entities.put(Entry.fromNBT(compound), compound.getInteger("weight"));
+            }
+            this.entities = new WeightedOutputs<>(entities);
         }
         
         public boolean isOminous() {
@@ -587,28 +609,6 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         public Config setEntities(Map<Entry, Integer> entries) {
             entities = new WeightedOutputs<>(entries);
             return this;
-        }
-        
-        public void readFromNBT(NBTTagCompound nbt) {
-            spawn_range = nbt.getInteger("spawn_range");
-            total_entities = nbt.getInteger("spawn_range");
-            simultaneous_entities = nbt.getInteger("simultaneous_entities ");
-            total_entities_per_player = nbt.getInteger("total_entities_per_player");
-            simultaneous_entities_per_player = nbt.getInteger("simultaneous_entities_per_player");
-            ticks_between_spawn = nbt.getInteger("ticks_between_spawn");
-            Map<ResourceLocation, Integer> loot_tables = Maps.newHashMap();
-            for (NBTBase entry : nbt.getTagList("loot_tables", 10)) {
-                NBTTagCompound compound = (NBTTagCompound) entry;
-                loot_tables.put(new ResourceLocation(compound.getString("table")), compound.getInteger("weight"));
-            }
-            this.loot_tables = new WeightedOutputs<>(loot_tables);
-            loot_table_seed = nbt.getLong("loot_table_seed");
-            Map<Entry, Integer> entities = Maps.newHashMap();
-            for (NBTBase entry : nbt.getTagList("entities", 10)) {
-                NBTTagCompound compound = (NBTTagCompound) entry;
-                entities.put(Entry.fromNBT(compound), compound.getInteger("weight"));
-            }
-            this.entities = new WeightedOutputs<>(entities);
         }
         
         public NBTTagCompound writeToNBT() {

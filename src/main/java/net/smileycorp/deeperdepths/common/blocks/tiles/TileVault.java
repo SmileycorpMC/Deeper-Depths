@@ -13,7 +13,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -35,7 +34,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class TileVault extends TileEntity implements ITickable, ILootContainer {
+public class TileVault extends TileTrial implements ILootContainer {
     
     private EnumVaultState state = EnumVaultState.INACTIVE;
     private Config config = new Config();
