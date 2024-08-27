@@ -12,10 +12,11 @@ import java.util.Random;
 public class WorldGenTrialChambers extends WorldGenerator {
 
     private int spacing = 0;
-
     public WorldGenTrialChambers() {
 
     }
+
+
 
     @Override
     public boolean generate(World world, Random random, BlockPos pos) {

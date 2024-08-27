@@ -15,7 +15,7 @@ public class WorldGenEntry {
         this.minHeight = config.get(name, "minHeight", minHeight, "Minimum Y level the block can generate. (Setting below 0 or above 255 may cause issues if a world extension mod is not installed)").getInt();
         this.maxHeight = config.get(name, "maxHeight", maxHeight, "Maximum Y level the block can generate. (Setting below 0 or above 255 may cause issues if a world extension mod is not installed)").getInt();
     }
-    
+
     public int getMaxHeight() {
         return maxHeight;
     }

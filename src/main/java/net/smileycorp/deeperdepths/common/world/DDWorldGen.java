@@ -33,7 +33,7 @@ public class DDWorldGen implements IWorldGenerator {
                 //Geodes
                 //Awaiting Structures and Textures
                 WorldGenCustomStructure genGeode = ModRand.choice(geodes);
-                genGeode.generate(world, random, pos.add(0, ModRand.range(15, 45), 0));
+                genGeode.generate(world, random, pos.add(0, ModRand.range(15, 35), 0));
 
             }
         }
