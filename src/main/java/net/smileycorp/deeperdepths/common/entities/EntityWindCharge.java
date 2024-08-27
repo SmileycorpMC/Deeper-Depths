@@ -17,6 +17,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.blocks.BlockCandle;
 import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
@@ -144,15 +145,16 @@ public class EntityWindCharge extends EntityThrowable
 
 
 
-            for (int i = 0; i < this.getBurstRange() * 10; i++)
+            for (int i = 0; i < this.getBurstRange() * 1.5; i++)
             {
                 EnumParticleTypes type = i < this.getBurstRange() * 10 / 10 ? EnumParticleTypes.EXPLOSION_LARGE : EnumParticleTypes.CLOUD;
-                float range = this.getBurstRange()/2;
+                float range = this.getBurstRange()/3;
                 double x = this.posX + world.rand.nextFloat() * range - world.rand.nextFloat() * range;
                 double y = this.posY + (world.rand.nextFloat() * range - world.rand.nextFloat() * range)/2;
                 double z = this.posZ + world.rand.nextFloat() * range - world.rand.nextFloat() * range;
 
-                ((WorldServer)this.world).spawnParticle(type, x, y, z, 1, 0, 0, 0, 0.0);
+                DeeperDepths.proxy.spawnParticle(6, this.world, x, y, z, 0, 0, 0);
+                //((WorldServer)this.world).spawnParticle(type, x, y, z, 1, 0, 0, 0, 0.0);
             }
         }
     }

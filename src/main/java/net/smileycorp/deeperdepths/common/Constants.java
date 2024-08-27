@@ -74,6 +74,8 @@ public class Constants {
 				return new ParticleSparkColorable.Factory();
 			case 5:
 				return new ParticleSpawnerDetect.Factory();
+			case 6:
+				return new ParticleGust.Factory();
 		}
 	}
 }
