@@ -22,6 +22,7 @@ import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
+import net.smileycorp.deeperdepths.config.BlockConfig;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class DeeperDepthsRecipes {
@@ -103,7 +104,7 @@ public class DeeperDepthsRecipes {
         }
         //copper
         GameRegistry.addShapedRecipe(Constants.loc("copper_block"), Constants.loc("copper"),
-                new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, 0), "MM", "MM", 'M',
+                new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, 0), "MMM", "MMM", "MMM", 'M',
                 "ingotCopper");
         GameRegistry.addShapedRecipe(Constants.loc("copper_ingot"), Constants.loc("copper"),
                 new ItemStack(DeeperDepthsItems.MATERIALS, 9, 0), "M", 'M',
@@ -183,6 +184,20 @@ public class DeeperDepthsRecipes {
                     new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stage).getItem()),
                     Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem())),
                     Ingredient.fromItem(Items.SLIME_BALL));
+            if (BlockConfig.bulkCopper) {
+                GameRegistry.addShapedRecipe(Constants.loc(name + "_copper_trapdoor_"), Constants.loc("copper"),
+                        new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(stage), 18), "MMM", "MMM", 'M',
+                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal())));
+                GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "_copper_trapdoor"), Constants.loc("copper"),
+                        new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage), 18), "MMM", "MMM", 'M',
+                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4)));
+                GameRegistry.addShapedRecipe(Constants.loc(name + "_copper_door"), Constants.loc("copper"),
+                        new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem(), 27), "MM", "MM", "MM", 'M',
+                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal())));
+                GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "_copper_door"), Constants.loc("copper"),
+                        new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stage).getItem(), 27), "MM", "MM", "MM", 'M',
+                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4)));
+            }
         }
         GameRegistry.addShapedRecipe(Constants.loc("copper_trapdoor"), Constants.loc("copper"),
                 new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(EnumWeatherStage.NORMAL), 2, 0), "MMM", "MMM", 'M',

@@ -13,6 +13,7 @@ public class BlockConfig {
     public static BlockStatEntry candle;
     public static BlockStatEntry cobbledDeepslate;
     public static BlockStatEntry copper;
+    public static boolean bulkCopper;
     //why do they call it oven when you of in the cold food out of hot eat the food
     public static boolean tastyCopper;
     public static boolean copperAges;
@@ -39,6 +40,7 @@ public class BlockConfig {
             candle = new BlockStatEntry(config, "candle", 0.5, 0.5, 0);
             cobbledDeepslate = new BlockStatEntry(config, "cobbled deepslate", 3.5, 6, 0);
             copper = new BlockStatEntry(config, "copper", 3, 6, 1);
+            bulkCopper = config.get("copper", "bulkCopper", true, "Can copper items be crafted in bulk using blocks?").getBoolean();
             tastyCopper = config.get("copper", "tastyCopper", false, "Is copper tasty?").getBoolean();
             copperAges = config.get("copper", "copperAges", true, "Does copper age?").getBoolean();
             copperAgeChance = config.get("copper", "ageChance", 0.05688889, "Decimal chance for copper to attempt to age?").getDouble();
