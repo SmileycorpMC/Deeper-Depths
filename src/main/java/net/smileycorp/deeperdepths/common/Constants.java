@@ -76,6 +76,8 @@ public class Constants {
 				return new ParticleSpawnerDetect.Factory();
 			case 6:
 				return new ParticleGust.Factory();
+			case 7:
+				return new ParticleChargedGust.Factory();
 		}
 	}
 }

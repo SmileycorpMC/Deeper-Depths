@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 
 /**
@@ -39,5 +40,19 @@ public class PotionWindCharged extends PotionDeeperDepths
 
         /* Remove after preforming the effect once. */
         entity.removePotionEffect(DeeperDepthsPotions.WIND_CHARGED);
+    }
+
+    @Override
+    public long getParticleSpawnRate(EntityLivingBase entity)
+    { return 15L - entity.getRNG().nextInt(5); }
+
+    @Override
+    public void spawnParticles(EntityLivingBase entity)
+    {
+        double x = entity.posX + (entity.getRNG().nextFloat() - entity.getRNG().nextFloat());
+        double y = entity.posY + (entity.height / 2) + (entity.getRNG().nextFloat() - entity.getRNG().nextFloat());
+        double z = entity.posZ + (entity.getRNG().nextFloat() - entity.getRNG().nextFloat());
+
+        DeeperDepths.proxy.spawnParticle(7, entity.world, x, y, z, 0, 0, 0);
     }
 }
