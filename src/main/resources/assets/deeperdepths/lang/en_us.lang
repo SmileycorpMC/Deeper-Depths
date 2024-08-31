@@ -321,3 +321,8 @@ subtitles.deeperdepths.item.mace.smash_ground_heavy=Mace smashes
 subtitles.deeperdepths.item.spyglass.stop_using=Spyglass retracts
 subtitles.deeperdepths.item.spyglass.use=Spyglass expands
 subtitles.deeperdepths.item.ominous_bottle.dispose=Bottle breaks
+
+advancements.deeperdepths.lets_go_gambling.title=Let's Go Gambling!
+advancements.deeperdepths.lets_go_gambling.description=Use an Ominous Trial Key to open an Ominous Vault
+advancements.deeperdepths.aw_dang_it.title=Aw Dang It
+advancements.deeperdepths.aw_dang_it.description=Open an ominous vault without getting a heavy core

@@ -1,11 +1,14 @@
 package net.smileycorp.deeperdepths.common.blocks.tiles;
 
 import com.google.common.collect.Lists;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.PositionImpl;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,7 +28,9 @@ import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsLootTables;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import net.smileycorp.deeperdepths.common.blocks.BlockTrial;
+import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumVaultState;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 
@@ -43,6 +48,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
     private List<ItemStack> stored_items = Lists.newArrayList();
     private List<UUID> rewarded_players = Lists.newArrayList();
     private int ejected_items = 0;
+    private boolean dropped_core;
     
     public TileVault() {}
     
@@ -92,14 +98,20 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
             if (stored_items.isEmpty()) {
                 setState(EnumVaultState.INACTIVE);
                 ejected_items = 0;
-                playSound( DeeperDepthsSoundEvents.VAULT_CLOSE_SHUTTER, 1f);
+                playSound(DeeperDepthsSoundEvents.VAULT_CLOSE_SHUTTER, 1f);
             }
             else {
                 /* Don't forget BehaviorDefaultDispenseItem's stupid additional offset of -0.125D! */
-                BehaviorDefaultDispenseItem.doDispense(world, stored_items.get(0),2, EnumFacing.UP, new PositionImpl(pos.getX() + 0.5, pos.getY() + 1.125D, pos.getZ() + 0.5));
+                ItemStack stack = stored_items.get(0);
+                if (stack.getItem() == Item.getItemFromBlock(DeeperDepthsBlocks.HEAVY_CORE)) dropped_core = true;
+                BehaviorDefaultDispenseItem.doDispense(world, stack,2, EnumFacing.UP, new PositionImpl(pos.getX() + 0.5, pos.getY() + 1.125D, pos.getZ() + 0.5));
                 playSound(DeeperDepthsSoundEvents.VAULT_EJECT_ITEM, 0.8f + ejected_items * 0.4f);
                 ejected_items++;
                 stored_items.remove(0);
+                if (stored_items.isEmpty() &! dropped_core &! isOminous() && rewarded_players.isEmpty()) {
+                    EntityPlayer player = world.getPlayerEntityByUUID(rewarded_players.get(rewarded_players.size() - 1));
+                    if (player instanceof EntityPlayerMP) DeeperDepthsAdvancements.AW_DANG_IT.trigger((EntityPlayerMP) player);
+                }
             }
         }
     }
@@ -124,6 +136,11 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         playSound(DeeperDepthsSoundEvents.VAULT_INSERT_ITEM, 1f);
         stack.shrink(1);
         rewarded_players.add(player.getUniqueID());
+        if (player instanceof EntityPlayerMP) {
+            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, stack);
+            if (isOminous()) DeeperDepthsAdvancements.LETS_GO_GAMBLING.trigger((EntityPlayerMP) player);
+        }
+        dropped_core = false;
         setState(EnumVaultState.UNLOCKING);
     }
     

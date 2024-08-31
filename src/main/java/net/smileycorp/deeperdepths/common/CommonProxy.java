@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.smileycorp.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.entities.DeeperDepthsEntities;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
@@ -38,6 +39,7 @@ public class CommonProxy {
         DeeperDepthsEntities.registerEntitySpawns();
         DeeperDepthsLootTables.registerLootTables();
         LootFunctionManager.registerFunction(new ApplyEnchantments.Serializer());
+        DeeperDepthsAdvancements.init();
         DeeperDepthsSoundEvents.registerSounds();
     }
     

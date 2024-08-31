@@ -5,6 +5,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -13,6 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.advancements.DeeperDepthsAdvancements;
+import net.smileycorp.deeperdepths.common.advancements.DeeperDepthsCriterionTrigger;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.config.BlockConfig;
 
@@ -37,18 +40,20 @@ public interface ICopperBlock {
     }
     
     default void scrape(EntityLivingBase entity, World world, ItemStack stack, IBlockState state, BlockPos pos, EnumHand hand) {
+        boolean waxed = isWaxed(state);
         if (!scrape(world, state, pos)) return;
         entity.swingArm(hand);
         if (world.isRemote) return;
         world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                isWaxed(state) ? DeeperDepthsSoundEvents.COPPER_WAX_OFF : DeeperDepthsSoundEvents.COPPER_SCRAPE,
+                waxed ? DeeperDepthsSoundEvents.COPPER_WAX_OFF : DeeperDepthsSoundEvents.COPPER_SCRAPE,
                 SoundCategory.BLOCKS, 1, 1);
 
-        if (isWaxed(state)) spawnSurfaceParticles(world, pos, 4, 244, 214, 212);
+        if (waxed) spawnSurfaceParticles(world, pos, 4, 244, 214, 212);
         else spawnSurfaceParticles(world, pos, 4, 107, 186, 130);
         entity.swingArm(hand);
         if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
             stack.damageItem(1, entity);
+        if (waxed && entity instanceof EntityPlayerMP) DeeperDepthsAdvancements.WAX_OFF.trigger((EntityPlayerMP) entity);
     }
     
     default boolean scrape(World world, IBlockState state, BlockPos pos) {
@@ -66,6 +71,7 @@ public interface ICopperBlock {
         spawnSurfaceParticles(world, pos, 4, 212, 166, 119);
         if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()))
             stack.shrink(1);
+        if (entity instanceof EntityPlayerMP) DeeperDepthsAdvancements.WAX_ON.trigger((EntityPlayerMP) entity);
     }
     
     default boolean wax(World world, IBlockState state, BlockPos pos) {
