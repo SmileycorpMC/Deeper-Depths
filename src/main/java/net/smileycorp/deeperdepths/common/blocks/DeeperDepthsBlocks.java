@@ -44,7 +44,6 @@ public class DeeperDepthsBlocks {
     public static final BlockCopper CUT_COPPER = new BlockCopper("Cut_Copper");
     public static final BlockCutCopperSlab CUT_COPPER_SLAB = new BlockCutCopperSlab(false);
     public static final BlockCutCopperSlab DOUBLE_CUT_COPPER_SLAB = new BlockCutCopperSlab(true);
-    
     public static final BlockCopper CHISELED_COPPER = new BlockCopper("Chiseled_Copper");
     public static final BlockCopperGrate COPPER_GRATE = new BlockCopperGrate();
     public static final BlockCopperBulb COPPER_BULB = new BlockCopperBulb(false);

@@ -11,6 +11,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -20,6 +21,7 @@ import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import net.smileycorp.deeperdepths.common.integration.MekanismIntegration;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.smileycorp.deeperdepths.config.BlockConfig;
@@ -33,6 +35,7 @@ public class DeeperDepthsRecipes {
         registerFurnaceRecipes();
         registerCraftingRecipes();
         registerBrewingRecipes();
+        if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
     }
     
     private static void registerOreDictionary() {
