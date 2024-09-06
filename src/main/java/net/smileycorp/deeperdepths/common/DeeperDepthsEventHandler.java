@@ -10,12 +10,14 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +25,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -30,6 +33,7 @@ import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.smileycorp.deeperdepths.common.blocks.BlockCandle;
 import net.smileycorp.deeperdepths.common.blocks.BlockLightningRod;
@@ -39,6 +43,7 @@ import net.smileycorp.deeperdepths.common.blocks.tiles.TileVault;
 import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
+import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.smileycorp.deeperdepths.common.potion.PotionDeeperDepths;
 
@@ -89,6 +94,28 @@ public class DeeperDepthsEventHandler {
             ICopperBlock copper = (ICopperBlock) state1.getBlock();
             if (copper.isWaxed(state1)) continue;
             copper.scrape(world, state1, pos);
+        }
+    }
+
+    @SubscribeEvent
+    public static void remapItems(RegistryEvent.MissingMappings<Item> event) {
+        if (Loader.isModLoaded("raids")) return;
+        for (RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
+            if (mapping.key.equals(new ResourceLocation("raids:ominous_bottle"))) {
+                mapping.remap(DeeperDepthsItems.OMINOUS_BOTTLE);
+                return;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void remapEffects(RegistryEvent.MissingMappings<Potion> event) {
+        if (Loader.isModLoaded("raids")) return;
+        for (RegistryEvent.MissingMappings.Mapping<Potion> mapping : event.getAllMappings()) {
+            if (mapping.key.equals(new ResourceLocation("raids:bad_omen"))) {
+                mapping.remap(DeeperDepthsPotions.BAD_OMEN);
+                return;
+            }
         }
     }
     
