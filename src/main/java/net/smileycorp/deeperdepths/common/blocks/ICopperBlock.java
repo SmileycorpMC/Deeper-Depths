@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import net.smileycorp.deeperdepths.common.DeeperDepths;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.smileycorp.deeperdepths.common.advancements.DeeperDepthsAdvancements;
-import net.smileycorp.deeperdepths.common.advancements.DeeperDepthsCriterionTrigger;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import net.smileycorp.deeperdepths.config.BlockConfig;
 

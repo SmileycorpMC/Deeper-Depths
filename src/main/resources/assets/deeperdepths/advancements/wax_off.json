@@ -1,0 +1,25 @@
+{
+  "parent": "deeperdepths:wax_on",
+  "display": {
+    "icon": {
+      "item": "minecraft:stone_axe"
+	  },
+    "title": {
+      "translate": "advancements.deeperdepths.wax_off.title"
+    },
+    "description": {
+      "translate": "advancements.deeperdepths.wax_off.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hero_of_the_village": {
+      "trigger": "deeperdepths:wax_off",
+      "conditions": {}
+    }
+  },
+  "requirements": []
+}

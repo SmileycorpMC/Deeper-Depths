@@ -12,6 +12,8 @@ public class DeeperDepthsAdvancements {
     public static void init() {
         CriteriaTriggers.register(LETS_GO_GAMBLING);
         CriteriaTriggers.register(AW_DANG_IT);
+        CriteriaTriggers.register(WAX_ON);
+        CriteriaTriggers.register(WAX_OFF);
     }
     
 }
