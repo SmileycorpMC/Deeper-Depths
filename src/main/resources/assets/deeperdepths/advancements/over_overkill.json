@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:adventure/root"",
+  "display": {
+    "icon": {
+      "item": "deeperdepths:mace"
+	},
+    "title": {
+      "translate": "advancements.deeperdepths.over_overkill.title"
+    },
+    "description": {
+      "translate": "advancements.deeperdepths.over_overkill.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+        "experience": 50
+    },
+  "criteria": {
+    "hero_of_the_village": {
+      "trigger": "deeperdepths:over_overkill",
+      "conditions": {}
+    }
+  },
+  "requirements": []
+}

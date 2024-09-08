@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.deeperdepths.common.Constants;
 import net.smileycorp.deeperdepths.common.DeeperDepthsSoundEvents;
+import net.smileycorp.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import net.smileycorp.deeperdepths.common.enchantments.DeeperDepthsEnchantments;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 
@@ -64,9 +66,11 @@ public class ItemMace extends ItemDeeperDepths
             float breachDamage = fallDamage * breachArmorIgnorePercent;
             float densityAdditionalDamage = attacker.fallDistance * density_level * 0.5F;
 
+            float oldHealth = target.getHealth();
             target.attackEntityFrom(Constants.causeMaceDamage(attacker), (fallDamage - breachDamage) + densityAdditionalDamage);
             target.attackEntityFrom(Constants.causeMaceDamage(attacker).setDamageBypassesArmor(), breachDamage + densityAdditionalDamage);
-
+            if (attacker instanceof EntityPlayerMP && oldHealth - target.getHealth() >= 100)
+                DeeperDepthsAdvancements.OVER_OVERKILL.trigger((EntityPlayerMP) attacker);
             if (attacker.fallDistance > 3) heavyLand = true;
             attacker.motionY = 2;
             attacker.velocityChanged = true;
