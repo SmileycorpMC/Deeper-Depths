@@ -98,9 +98,10 @@ public class DeeperDepthsEventHandler {
     }
 
     @SubscribeEvent
-    public static void remapItems(RegistryEvent.MissingMappings<Item> event) {
+    public void remapItems(RegistryEvent.MissingMappings<Item> event) {
         if (Loader.isModLoaded("raids")) return;
         for (RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
+            DeeperDepths.info(mapping.key);
             if (mapping.key.equals(new ResourceLocation("raids:ominous_bottle"))) {
                 mapping.remap(DeeperDepthsItems.OMINOUS_BOTTLE);
                 return;
@@ -109,9 +110,10 @@ public class DeeperDepthsEventHandler {
     }
 
     @SubscribeEvent
-    public static void remapEffects(RegistryEvent.MissingMappings<Potion> event) {
+    public void remapEffects(RegistryEvent.MissingMappings<Potion> event) {
         if (Loader.isModLoaded("raids")) return;
         for (RegistryEvent.MissingMappings.Mapping<Potion> mapping : event.getAllMappings()) {
+            DeeperDepths.info(mapping.key);
             if (mapping.key.equals(new ResourceLocation("raids:bad_omen"))) {
                 mapping.remap(DeeperDepthsPotions.BAD_OMEN);
                 return;
