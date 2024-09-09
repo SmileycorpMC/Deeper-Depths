@@ -28,15 +28,15 @@ public class RaidsIntegration {
     }
     
     public static boolean hasBadOmen(EntityPlayer player) {
-        return player.isPotionActive(RaidsContent.RAID_OMEN);
+        return player.isPotionActive(RaidsContent.BAD_OMEN);
     }
     
     public static int getBadOmenLevel(EntityPlayer player) {
-        return player.getActivePotionEffect(RaidsContent.RAID_OMEN).getAmplifier();
+        return player.getActivePotionEffect(RaidsContent.BAD_OMEN).getAmplifier();
     }
     
     public static void removeBadOmen(EntityPlayer player) {
-        player.removePotionEffect(RaidsContent.RAID_OMEN);
+        player.removePotionEffect(RaidsContent.BAD_OMEN);
     }
     
 }
