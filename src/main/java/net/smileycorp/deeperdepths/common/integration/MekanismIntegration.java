@@ -40,7 +40,7 @@ public class MekanismIntegration {
             addCopperRecipes(helper, stage, DeeperDepthsBlocks.CUT_COPPER_STAIRS);
             addCopperRecipes(helper, stage, DeeperDepthsBlocks.COPPER_TRAPDOORS);
             addCopperRecipes(helper, new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem()),
-                    new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem()));
+                    new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage.next()).getItem()));
         }
     }
 
@@ -50,7 +50,7 @@ public class MekanismIntegration {
 
     private static void addCopperRecipes(MekanismRecipeHelper helper, EnumWeatherStage stage, Block block) {
         addCopperRecipes(helper, new ItemStack(block, 1, stage.ordinal()),
-                new ItemStack(block, 1, stage.ordinal()));
+                new ItemStack(block, 1, stage.ordinal() + 1));
     }
 
     private static void addCopperRecipes(MekanismRecipeHelper helper, EnumWeatherStage stage, Map<EnumWeatherStage, ? extends Block> map) {
