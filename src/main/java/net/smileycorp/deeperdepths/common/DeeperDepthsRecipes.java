@@ -21,6 +21,7 @@ import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import net.smileycorp.deeperdepths.common.integration.ChiselIntegration;
 import net.smileycorp.deeperdepths.common.integration.MekanismIntegration;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
@@ -36,6 +37,7 @@ public class DeeperDepthsRecipes {
         registerCraftingRecipes();
         registerBrewingRecipes();
         if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
+        if (Loader.isModLoaded("chisel")) ChiselIntegration.registerRecipes();
     }
     
     private static void registerOreDictionary() {
