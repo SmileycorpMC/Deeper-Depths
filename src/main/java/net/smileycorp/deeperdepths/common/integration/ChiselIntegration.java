@@ -5,6 +5,7 @@ import net.smileycorp.deeperdepths.common.blocks.BlockDDStone;
 import net.smileycorp.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import net.smileycorp.deeperdepths.common.blocks.enums.EnumStoneType;
 import team.chisel.api.carving.CarvingUtils;
+import team.chisel.api.carving.ICarvingGroup;
 import team.chisel.api.carving.ICarvingRegistry;
 
 public class ChiselIntegration {
@@ -17,7 +18,8 @@ public class ChiselIntegration {
     }
 
     private static void registerStoneVariants(ICarvingRegistry registry, String name, EnumStoneType.Material... materials) {
-        CarvingUtils.addOreGroup(name);
+        ICarvingGroup group = CarvingUtils.getDefaultGroupFor(name);
+        registry.addGroup(group);
         int i = 0;
         for (EnumStoneType.Material material : materials) for (EnumStoneType type : material.getTypes())
             registry.addVariation(name, CarvingUtils.variationFor(new ItemStack(DeeperDepthsBlocks.STONE, 1, type.ordinal()),
