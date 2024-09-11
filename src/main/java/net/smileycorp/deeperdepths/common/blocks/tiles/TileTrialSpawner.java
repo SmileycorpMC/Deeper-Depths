@@ -275,7 +275,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     }
     
     public static byte addTrialOmen(EntityPlayer player, int bad_omen_amplifier) {
-        byte level = 1;
+        byte level = 0;
         player.addPotionEffect(new PotionEffect(DeeperDepthsPotions.TRIAL_OMEN, 18000 * (bad_omen_amplifier + 1), level));
         player.removePotionEffect(DeeperDepthsPotions.BAD_OMEN);
         if (Loader.isModLoaded("raids")) RaidsIntegration.removeBadOmen(player);
