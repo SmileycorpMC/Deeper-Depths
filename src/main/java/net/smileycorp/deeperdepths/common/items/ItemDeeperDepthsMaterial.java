@@ -29,7 +29,7 @@ public class ItemDeeperDepthsMaterial extends ItemDeeperDepths {
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!isInCreativeTab(tab)) return;
-        for (int i = 0; i < variants.length; i++) items.add(new ItemStack(this, 1, i));
+        for (int i = 0; i < variants.length; i++) if (i != 2) items.add(new ItemStack(this, 1, i));
     }
     
     @Override
