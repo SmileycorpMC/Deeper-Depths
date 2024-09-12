@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -16,10 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -28,12 +26,14 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.smileycorp.deeperdepths.common.blocks.BlockCandle;
 import net.smileycorp.deeperdepths.common.blocks.BlockLightningRod;
@@ -44,6 +44,7 @@ import net.smileycorp.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import net.smileycorp.deeperdepths.common.entities.EntityBreeze;
 import net.smileycorp.deeperdepths.common.entities.EntityWindCharge;
 import net.smileycorp.deeperdepths.common.items.DeeperDepthsItems;
+import net.smileycorp.deeperdepths.common.items.ItemMace;
 import net.smileycorp.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.smileycorp.deeperdepths.common.potion.PotionDeeperDepths;
 
@@ -278,6 +279,29 @@ public class DeeperDepthsEventHandler {
         //visually update vaults and spawners
         for (TileEntity te : chunk.getTileEntityMap().values())
             if (te instanceof TileTrialSpawner || te instanceof TileVault) te.markDirty();
+    }
+
+    //makes the mace damage advancement work hopefully
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void livingHurt(LivingAttackEvent event) {
+        DamageSource source = event.getSource();
+        if (source.getImmediateSource() instanceof EntityPlayerMP) {
+            if (((EntityPlayerMP) source.getImmediateSource()).getHeldItemMainhand().getItem() instanceof ItemMace) {
+                if (ItemMace.CACHED_HEALTH == 0) ItemMace.CACHED_HEALTH = event.getEntityLiving().getHealth();
+                DeeperDepths.info(ItemMace.CACHED_HEALTH);
+            }
+        }
+    }
+
+    //extra jank but I wanna make sure the cache gets cleared if the damage is cancelled
+    @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+    public void livingHurtEnd(LivingAttackEvent event) {
+        if (!event.isCanceled()) return;
+        DamageSource source = event.getSource();
+        if (source.getImmediateSource() instanceof EntityPlayerMP) {
+            if (((EntityPlayerMP) source.getImmediateSource()).getHeldItemMainhand().getItem() instanceof ItemMace)
+                if (ItemMace.CACHED_HEALTH != 0) ItemMace.CACHED_HEALTH = 0;
+        }
     }
     
 }

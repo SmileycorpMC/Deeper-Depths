@@ -32,6 +32,11 @@ import java.util.List;
 
 public class ItemMace extends ItemDeeperDepths
 {
+
+    //ok this is really janky and bad but forge basically does the same thing for a lot of its item methods
+    //it's the only way I could make the advancement work without rewriting too much of squidly's mace code
+    public static float CACHED_HEALTH = 0;
+
     private final float attackDamage;
     public ItemMace()
     {
@@ -66,11 +71,12 @@ public class ItemMace extends ItemDeeperDepths
             float breachDamage = fallDamage * breachArmorIgnorePercent;
             float densityAdditionalDamage = attacker.fallDistance * density_level * 0.5F;
 
-            float oldHealth = target.getHealth();
             target.attackEntityFrom(Constants.causeMaceDamage(attacker), (fallDamage - breachDamage) + densityAdditionalDamage);
             target.attackEntityFrom(Constants.causeMaceDamage(attacker).setDamageBypassesArmor(), breachDamage + densityAdditionalDamage);
-            if (attacker instanceof EntityPlayerMP && oldHealth - target.getHealth() >= 100)
-                DeeperDepthsAdvancements.OVER_OVERKILL.trigger((EntityPlayerMP) attacker);
+            if (attacker instanceof EntityPlayerMP) {
+                if (CACHED_HEALTH - target.getHealth() >= 100) DeeperDepthsAdvancements.OVER_OVERKILL.trigger((EntityPlayerMP) attacker);
+                CACHED_HEALTH = 0;
+            }
             if (attacker.fallDistance > 3) heavyLand = true;
             attacker.motionY = 2;
             attacker.velocityChanged = true;
