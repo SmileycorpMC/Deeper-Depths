@@ -1,14 +1,14 @@
 {
   "compatibilityLevel": "JAVA_8",
-  "package": "net.smileycorp.deeperdepths.mixin",
+  "package": "com.deeperdepths.mixin",
   "refmap": "mixins.deeperdepths.refmap.json",
   "mixins": [
-      "MixinBehaviorDefaultDispenseItem",
-      "MixinBehaviourProjectileDispense",
-      "MixinBlockDispenser",
-      "MixinBootstrap$11",
-      "MixinEntity",
-      "MixinWorldServer"
+    "MixinBehaviorDefaultDispenseItem",
+    "MixinBehaviourProjectileDispense",
+    "MixinBlockDispenser",
+    "MixinBootstrap$11",
+    "MixinEntity",
+    "MixinWorldServer"
   ],
   "client": [
     "MixinInventoryEffectRenderer"
