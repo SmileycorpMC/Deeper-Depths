@@ -20,7 +20,7 @@ public class Constants {
 	public static final String MODID = "deeperdepths";
 	public static final String VERSION = "0.1.1";
 	public static final String DEPENDENCIES = "required-after:atlaslib";
-	public static final String PATH = "net.smileycorp.deeperdepths.";
+	public static final String PATH = "com.deeperdepths.";
 	public static final String CLIENT = PATH + "client.ClientProxy";
 	public static final String SERVER = PATH + "common.CommonProxy";
     public static final boolean FUNNY = isFunny();

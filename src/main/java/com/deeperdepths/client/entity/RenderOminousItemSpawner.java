@@ -37,7 +37,8 @@ public class RenderOminousItemSpawner extends Render<EntityOminousItemSpawner> {
         mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
         GlStateManager.translate(x + 0.5, y + 0.4, z + 0.5);
-        GlStateManager.rotate(9 * ((entity.world.getTotalWorldTime() % 40) + partialTicks), 0, 1, 0);
+        GlStateManager.rotate(27 * ((entity.world.getTotalWorldTime() % 40) + partialTicks), 0, 1, 0);
+        GlStateManager.scale(0.75f, 0.75f, 0.75f);
         RenderItem render = mc.getRenderItem();
         IBakedModel model = render.getItemModelWithOverrides(stack, entity.world, mc.player);
         model = ForgeHooksClient.handleCameraTransforms(model, ItemCameraTransforms.TransformType.GROUND, false);

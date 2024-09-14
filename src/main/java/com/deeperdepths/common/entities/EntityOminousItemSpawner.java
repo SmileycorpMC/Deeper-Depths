@@ -1,5 +1,6 @@
 package com.deeperdepths.common.entities;
 
+import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockSourceImpl;
@@ -47,9 +48,7 @@ public class EntityOminousItemSpawner extends Entity {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (world.isRemote) {
-            return;
-        }
+        if (world.isRemote) return;
         if (ticksExisted == spawn_time - 26) playSound(DeeperDepthsSoundEvents.TRIAL_SPAWNER_ABOUT_TO_SPAWN_ITEM, 1, 1);
         if (ticksExisted >= spawn_time) {
             ItemStack stack = getItem();
@@ -58,6 +57,8 @@ public class EntityOminousItemSpawner extends Entity {
             behaviour.dispense(new BlockSourceImpl(world, pos), stack);
             world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
                     DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_ITEM, SoundCategory.BLOCKS, 1, 1);
+            for (int i = 0; i < 18; i++) DeeperDepths.proxy.spawnParticle(3, world,
+                    posX + rand.nextFloat() * 2 - 1, posY + rand.nextFloat() * 2 - 1, posZ + rand.nextFloat() * 2 - 1, 0, 0,0,1);
             setDead();
         }
     }
