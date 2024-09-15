@@ -104,7 +104,7 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
             return;
         }
         boolean power = world.isBlockPowered(pos) || world.isBlockPowered(otherpos);
-        if (block instanceof BlockCopperDoor |! (power && block.getDefaultState().canProvidePower())
+        if (block instanceof BlockCopperDoor |! (power || block.getDefaultState().canProvidePower())
             || power == other.getValue(POWERED)) return;
         world.setBlockState(otherpos, other.withProperty(POWERED, power), 2);
         if (power == state.getValue(OPEN)) return;
