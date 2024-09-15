@@ -373,7 +373,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         if (nbt.hasKey("state", 1)) state = EnumTrialSpawnerState.values()[nbt.getByte("state")];
-        if (nbt.hasKey("ominous_level")) ominous_level = nbt.getByte("ominous");
+        if (nbt.hasKey("ominous_level")) ominous_level = nbt.getByte("ominous_level");
         if (nbt.hasKey("config")) config.readFromNBT(nbt.getCompoundTag("config"));
         if (nbt.hasKey("ominous_config")) ominous_config.readFromNBT(nbt.getCompoundTag("ominous_config"));
         if (nbt.hasKey("loot_table")) loot_table = new ResourceLocation(nbt.getString("loot_table"));
@@ -419,7 +419,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
     @Override
     public void handleUpdateTag(NBTTagCompound nbt) {
         if (nbt.hasKey("state", 1)) state = EnumTrialSpawnerState.values()[nbt.getByte("state")];
-        if (nbt.hasKey("ominous_level")) ominous_level = nbt.getByte("ominous");
+        if (nbt.hasKey("ominous_level")) ominous_level = nbt.getByte("ominous_level");
         if (nbt.hasKey("cached_entity")) cached_entity = AnvilChunkLoader.readWorldEntity(nbt.getCompoundTag("cached_entity"), world, false);
     }
     
