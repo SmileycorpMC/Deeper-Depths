@@ -29,6 +29,7 @@ public class DeeperDepthsItems {
     public static final Item OMINOUS_BOTTLE = new ItemOminousBottle();
     public static final Item TRIAL_KEY = new ItemTrialKey();
     public static final Item MACE = new ItemMace();
+    public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
 
     //tools
     /*public static final Item SPYGLASS = null;

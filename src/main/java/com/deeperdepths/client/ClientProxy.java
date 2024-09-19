@@ -2,10 +2,7 @@ package com.deeperdepths.client;
 
 import com.deeperdepths.animation.IAnimatedEntity;
 import com.deeperdepths.client.blocks.*;
-import com.deeperdepths.client.entity.RenderBogged;
-import com.deeperdepths.client.entity.RenderBreeze;
-import com.deeperdepths.client.entity.RenderOminousItemSpawner;
-import com.deeperdepths.client.entity.RenderWindCharge;
+import com.deeperdepths.client.entity.*;
 import com.deeperdepths.client.tesr.TESRTrialSpawner;
 import com.deeperdepths.client.tesr.TESRVault;
 import com.deeperdepths.common.CommonProxy;
@@ -15,10 +12,7 @@ import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.IBlockProperties;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
-import com.deeperdepths.common.entities.EntityBogged;
-import com.deeperdepths.common.entities.EntityBreeze;
-import com.deeperdepths.common.entities.EntityOminousItemSpawner;
-import com.deeperdepths.common.entities.EntityWindCharge;
+import com.deeperdepths.common.entities.*;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -101,6 +95,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityWindCharge.class, RenderWindCharge::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityOminousItemSpawner.class, RenderOminousItemSpawner::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityDDPainting.class, RenderDDPainting::new);
     }
     
     public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color color) {
