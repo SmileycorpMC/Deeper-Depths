@@ -40,7 +40,7 @@ public class EntityDDPainting extends EntityHanging implements IEntityAdditional
     @Override
     public void onBroken(@Nullable Entity brokenEntity) {
         if(this.world.getGameRules().getBoolean("doEntityDrops")) {
-            this.playSound(SoundEvents.BLOCK_WOOD_BREAK, 1.0F, 1.0F);
+            this.playSound(SoundEvents.ENTITY_PAINTING_BREAK, 1.0F, 1.0F);
             if (brokenEntity instanceof EntityPlayer) {
                 EntityPlayer entityplayer = (EntityPlayer)brokenEntity;
 
@@ -54,7 +54,7 @@ public class EntityDDPainting extends EntityHanging implements IEntityAdditional
 
     @Override
     public void playPlaceSound() {
-        this.playSound(SoundEvents.BLOCK_WOOD_PLACE, 1.0F, 1.0F);
+        this.playSound(SoundEvents.ENTITY_PAINTING_PLACE, 1.0F, 1.0F);
     }
 
     @Override
