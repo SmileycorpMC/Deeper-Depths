@@ -16,6 +16,11 @@ public class WorldGenEntry {
         this.maxHeight = config.get(name, "maxHeight", maxHeight, "Maximum Y level the block can generate. (Setting below 0 or above 255 may cause issues if a world extension mod is not installed)").getInt();
     }
 
+    public WorldGenEntry(Configuration config, String name, int spawnChances) {
+        this.spawnChances = config.get(name, "spawnChances", spawnChances, "Change the distance between each Trial Chambers, lower means more frequent, higher means less.").getInt();
+    }
+
+
     public int getMaxHeight() {
         return maxHeight;
     }

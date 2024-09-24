@@ -1,5 +1,6 @@
 package com.deeperdepths.common.world.chambers;
 
+import com.deeperdepths.config.WorldConfig;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,7 +25,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
          * MAKE THIS CONFIGURABLE, SPACING IS THE AMOUNT OF EACH TIME IT IS CAPAPABLE OF GENERATING
          */
         //old 525
-        if((spacing / 12) > 525) {
+        if((spacing / 12) > WorldConfig.trial_chambers.getSpawnChances()) {
             getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
                     .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
             return true;
