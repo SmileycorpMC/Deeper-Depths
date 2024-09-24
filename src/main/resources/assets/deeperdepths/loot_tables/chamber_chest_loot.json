@@ -102,6 +102,11 @@
         },
         {
           "type": "item",
+          "name": "deeperdepths:trial_chambers_painting",
+          "weight": 8
+        },
+        {
+          "type": "item",
           "name": "minecraft:diamond_block",
           "weight": 2
         },
