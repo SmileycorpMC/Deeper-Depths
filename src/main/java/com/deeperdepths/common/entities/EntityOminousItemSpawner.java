@@ -4,13 +4,16 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockSourceImpl;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -54,7 +57,13 @@ public class EntityOminousItemSpawner extends Entity {
             ItemStack stack = getItem();
             BlockPos pos = getPosition();
             IBehaviorDispenseItem behaviour = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(stack.getItem());
-            behaviour.dispense(new BlockSourceImpl(world, pos), stack);
+            //this is kinda silly, but it replaces the 5 mixins we used before
+            behaviour.dispense(new BlockSourceImpl(world, pos) {
+                @Override
+                public IBlockState getBlockState() {
+                    return Blocks.DISPENSER.getDefaultState().withProperty(BlockDispenser.FACING, EnumFacing.DOWN);
+                }
+            }, stack);
             world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
                     DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_ITEM, SoundCategory.BLOCKS, 1, 1);
             for (int i = 0; i < 18; i++) DeeperDepths.proxy.spawnParticle(3, world,
