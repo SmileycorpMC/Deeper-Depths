@@ -25,7 +25,7 @@ public class BlockDDStoneSlab extends BlockDDSlab {
     
     public BlockDDStoneSlab(boolean isDouble) {
         super(Material.ROCK, "Stone_Slab", isDouble);
-        setHarvestLevel("PICKAXE", 0);
+        setHarvestLevel("pickaxe", 0);
         IBlockState base = getBlockState().getBaseState().withProperty(VARIANT, EnumStoneType.TUFF);
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.TOP);
         setDefaultState(base);

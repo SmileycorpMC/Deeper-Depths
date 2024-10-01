@@ -33,7 +33,7 @@ public class BlockDDStoneWall extends BlockWall implements IBlockProperties {
         String name = "Stone_Wall";
         setRegistryName(Constants.loc(name));
         setUnlocalizedName(Constants.name(name));
-        setHarvestLevel("PICKAXE", 0);
+        setHarvestLevel("pickaxe", 0);
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         useNeighborBrightness = true;
     }

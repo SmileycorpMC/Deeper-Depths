@@ -16,7 +16,7 @@ public class BlockDeepslate extends BlockRotatedPillar implements IBlockProperti
         setUnlocalizedName(Constants.name("Deepslate"));
         setHardness(BlockConfig.deepslate.getHardness());
         setResistance(BlockConfig.deepslate.getResistance());
-        setHarvestLevel("PICKAXE", BlockConfig.deepslate.getHarvestLevel());
+        setHarvestLevel("pickaxe", BlockConfig.deepslate.getHarvestLevel());
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         setSoundType(DeeperDepthsSoundTypes.DEEPSLATE);
     }

@@ -12,7 +12,7 @@ public class BlockDeeperDepths extends Block implements IBlockProperties {
         super(material);
         setResistance(r);
         setHardness(h);
-        setHarvestLevel("PICKAXE", level);
+        setHarvestLevel("pickaxe", level);
         setRegistryName(Constants.loc(name));
         setUnlocalizedName(Constants.name(name));
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
