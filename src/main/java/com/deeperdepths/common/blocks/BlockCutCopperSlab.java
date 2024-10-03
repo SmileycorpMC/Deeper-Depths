@@ -31,7 +31,7 @@ public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
         setHarvestLevel("PICKAXE", 1);
         setHardness(BlockConfig.copper.getHardness());
         setResistance(BlockConfig.copper.getResistance());
-        setHarvestLevel("PICKAXE", BlockConfig.copper.getHarvestLevel());
+        setHarvestLevel("pickaxe", BlockConfig.copper.getHarvestLevel());
         IBlockState base = blockState.getBaseState().withProperty(VARIANT, Variant.NORMAL);
         if (!isDouble) base = base.withProperty(HALF, EnumBlockHalf.BOTTOM);
         setSoundType(DeeperDepthsSoundTypes.COPPER);

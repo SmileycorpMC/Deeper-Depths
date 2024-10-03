@@ -42,7 +42,7 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
         setSoundType(DeeperDepthsSoundTypes.COPPER);
         setHardness(BlockConfig.copper.getHardness());
         setResistance(BlockConfig.copper.getResistance());
-        setHarvestLevel("PICKAXE", BlockConfig.copper.getHarvestLevel());
+        setHarvestLevel("pickaxe", BlockConfig.copper.getHarvestLevel());
         useNeighborBrightness = true;
         item = new ItemCopperDoor(this);
         needsRandomTick = BlockConfig.copperAges &! waxed && stage != EnumWeatherStage.OXIDIZED;

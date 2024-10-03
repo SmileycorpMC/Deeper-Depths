@@ -3,6 +3,10 @@ itemGroup.deeperdepths.tab=§3Deeper Depths
 death.attack.deeperdepths.mace=%1$s was smashed by %2$s
 death.attack.deeperdepths.mace.item=%1$s was smashed by %2$s using %3$s
 
+description.deeperdepths.trial_chambers_painting.name=Idyllic #2
+description.deeperdepths.trial_chambers_painting.artist=Foreck
+description.deeperdepths.trial_chambers_painting.dimensions=3x2
+
 item.deeperdepths.copper_ingot.name=Copper Ingot
 item.deeperdepths.amethyst_shard.name=Amethyst Shard
 item.deeperdepths.echo_shard.name=Echo Shard
