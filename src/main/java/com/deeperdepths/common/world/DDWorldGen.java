@@ -26,7 +26,7 @@ public class DDWorldGen implements IWorldGenerator {
 
         if(world.provider.getDimension() == 0) {
             //What starts the process for seeing the chambers can generate
-            if(world.getBiomeForCoordsBody(pos) != Biomes.OCEAN) {
+            if(world.getBiomeForCoordsBody(pos) != Biomes.OCEAN && world.getBiomeForCoordsBody(pos) != Biomes.DEEP_OCEAN) {
                 //Trial Chambers
                 chambers.generate(world, random, pos);
 
