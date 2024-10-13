@@ -73,7 +73,7 @@ public class BlockDDStoneSlab extends BlockDDSlab {
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return (isDouble() ? getDefaultState() : getDefaultState().withProperty(HALF, meta == 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
+        return (isDouble() ? getDefaultState() : getDefaultState().withProperty(HALF, meta >= 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
                 .withProperty(VARIANT, EnumStoneType.getShaped(meta));
     }
     

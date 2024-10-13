@@ -74,7 +74,7 @@ public class BlockCutCopperSlab extends BlockDDSlab implements ICopperBlock {
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return (isDouble() ? getDefaultState() : getDefaultState().withProperty(HALF, meta == 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
+        return (isDouble() ? getDefaultState() : getDefaultState().withProperty(HALF, meta >= 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
                 .withProperty(VARIANT, Variant.values()[meta % 8]);
     }
     
