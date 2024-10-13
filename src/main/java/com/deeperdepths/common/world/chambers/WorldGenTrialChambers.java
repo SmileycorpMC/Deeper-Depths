@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class WorldGenTrialChambers extends WorldGenerator {
 
-    private int spacing = 0;
+    private int spacing = 1;
     public WorldGenTrialChambers() {
 
     }
@@ -25,6 +25,10 @@ public class WorldGenTrialChambers extends WorldGenerator {
          * MAKE THIS CONFIGURABLE, SPACING IS THE AMOUNT OF EACH TIME IT IS CAPAPABLE OF GENERATING
          */
         //old 525
+        if(WorldConfig.trial_chambers.getSpawnChances() == 0) {
+            return false;
+        }
+
         if((spacing / 12) > WorldConfig.trial_chambers.getSpawnChances()) {
             getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
                     .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
@@ -36,7 +40,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
 
 
     protected StructureStart getStructureStart(World world, int chunkX, int chunkZ, Random rand) {
-        spacing = 0;
+        spacing = 1;
         return new WorldGenTrialChambers.Start(world, rand , chunkX, chunkZ);
     }
 
@@ -63,7 +67,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
                     Rotation rotation = Rotation.values()[(rand2 + i) % Rotation.values().length];
                     components.clear();
                     //Set IAW with the best Position to spawn the first layer of the chambers at
-                    BlockPos blockpos = posI.add(0, 22, 0);
+                    BlockPos blockpos = posI.add(0, WorldConfig.trial_chambers.getMinHeight(), 0);
                     TrialChambers chambers = new TrialChambers(world, world.getSaveHandler().getStructureTemplateManager(), components);
                     //Starts the first room within the Trial Chambers
                     chambers.startChambers(blockpos, rotation);

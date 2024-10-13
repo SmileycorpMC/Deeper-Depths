@@ -4,6 +4,7 @@ import com.deeperdepths.common.world.base.ModRand;
 import com.deeperdepths.common.world.base.WorldGenCustomStructure;
 import com.deeperdepths.common.world.chambers.WorldGenTrialChambers;
 import com.deeperdepths.common.world.geodes.WorldGenGeodes;
+import com.deeperdepths.config.WorldConfig;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,7 +25,8 @@ public class DDWorldGen implements IWorldGenerator {
         int z = chunkZ * 16;
         BlockPos pos = new BlockPos(x + 8, 0, z + 8);
 
-        if(world.provider.getDimension() == 0) {
+        //Dimension iterator List
+        if(isAllowedDimensionTooSpawnIn(world.provider.getDimension())) {
             //What starts the process for seeing the chambers can generate
             if(world.getBiomeForCoordsBody(pos) != Biomes.OCEAN && world.getBiomeForCoordsBody(pos) != Biomes.DEEP_OCEAN) {
                 //Trial Chambers
@@ -40,5 +42,14 @@ public class DDWorldGen implements IWorldGenerator {
     }
 
 
+
+    public static boolean isAllowedDimensionTooSpawnIn(int dimensionIn) {
+        for(int i : WorldConfig.trial_chambers.getDimensions()) {
+            if(i == dimensionIn)
+                return true;
+        }
+
+        return false;
+    }
 
 }
