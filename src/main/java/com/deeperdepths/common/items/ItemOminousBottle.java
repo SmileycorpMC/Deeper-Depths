@@ -71,12 +71,12 @@ public class ItemOminousBottle extends ItemDeeperDepths {
         int amplifier = getAmplifier(stack);
         if (amplifier > 0) builder.append(" " + I18n.translateToLocal("potion.potency." + amplifier).trim());
         builder.append(" (" + Potion.getPotionDurationString(new PotionEffect(DeeperDepthsPotions.BAD_OMEN, 120000), 1f) + ")");
-        tooltip.add(TextFormatting.BLUE + builder.toString());
+        tooltip.add((stack.getMetadata() > 4 ? TextFormatting.RED : TextFormatting.BLUE) + builder.toString());
     }
     
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
+        return stack.getMetadata() > 4 ? EnumRarity.EPIC : EnumRarity.UNCOMMON;
     }
     
     @Override
