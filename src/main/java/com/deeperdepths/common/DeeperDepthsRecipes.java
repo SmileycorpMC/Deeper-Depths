@@ -31,7 +31,7 @@ import net.smileycorp.atlas.api.util.TextUtils;
 public class DeeperDepthsRecipes {
     
     @SubscribeEvent
-    public static void registerRecipes(RegistryEvent<IRecipe> event) {
+    public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         registerOreDictionary();
         registerFurnaceRecipes();
         registerCraftingRecipes();
