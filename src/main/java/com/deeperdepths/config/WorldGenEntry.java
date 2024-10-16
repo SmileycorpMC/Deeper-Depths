@@ -8,14 +8,14 @@ public class WorldGenEntry {
     private int spawnChances;
     private int minHeight;
     private int maxHeight;
-
     private int[] dimensions;
     
-    public WorldGenEntry(Configuration config, String name, int size, int spawnChances, int minHeight, int maxHeight) {
+    public WorldGenEntry(Configuration config, String name, int size, int spawnChances, int minHeight, int maxHeight, int... dimensions) {
         this.size = config.get(name, "size", size, "Size of block generation to generate").getInt();
-        this.spawnChances = config.get(name, "spawnChances", spawnChances, "Number of chances for the block to generate (Set to 0 to disable generation)").getInt();
-        this.minHeight = config.get(name, "minHeight", minHeight, "Minimum Y level the block can generate. (Setting below 0 or above 255 may cause issues if a world extension mod is not installed)").getInt();
-        this.maxHeight = config.get(name, "maxHeight", maxHeight, "Maximum Y level the block can generate. (Setting below 0 or above 255 may cause issues if a world extension mod is not installed)").getInt();
+        this.spawnChances = config.get(name, "spawnChances", spawnChances, "Number of chances for the feature to generate (Set to 0 to disable generation)").getInt();
+        this.minHeight = config.get(name, "minHeight", minHeight, "Minimum Y level the feature can generate. (Setting below 0 or above 255 may cause issues if a world extension mod is not installed)").getInt();
+        this.maxHeight = config.get(name, "maxHeight", maxHeight, "Maximum Y level the feature can generate. (Setting below 0 or above 255 may cause issues if a world extension mod is not installed)").getInt();
+        this.dimensions = config.get(name, "dimensions", dimensions, "Which dimensions can the feature generate in?").getIntList();
     }
 
     public WorldGenEntry(Configuration config, String name, int spawnChances, int[] dimensionsTooSpawnIn, int yHeight) {

@@ -16,11 +16,10 @@ public class WorldConfig {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/deeperdepths/world.cfg"));
         try{
             config.load();
-            copperOre = new WorldGenEntry(config, "copper ore", 10, 16, 0, 112);
-            tuff = new WorldGenEntry(config, "tuff", 33, 2, 0, 16);
-            deepslate = new WorldGenEntry(config, "deepslate", 33, 0, 0, 16);
+            copperOre = new WorldGenEntry(config, "copper ore", 10, 16, 0, 112, 0);
+            tuff = new WorldGenEntry(config, "tuff", 33, 2, 0, 16, 0);
+            deepslate = new WorldGenEntry(config, "deepslate", 33, 0, 0, 16, 0);
             trial_chambers = new WorldGenEntry(config, "trial_chambers", 525, new int[]{0}, 22);
-
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();
