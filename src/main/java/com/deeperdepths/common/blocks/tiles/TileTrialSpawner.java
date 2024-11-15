@@ -126,46 +126,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 loot_table = getActiveConfig().loot_tables.getResult(world.rand);
             }
             int simultaneous = getSimultaneousMobs();
-            if (current_mobs.size() < simultaneous && spawned_mobs < total) {
-                Config config = getActiveConfig();
-                Entry entry = config.entities.getResult(world.rand);
-                NBTTagCompound nbt = entry.getNbt();
-                double x = pos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
-                double y = pos.getY() + world.rand.nextInt(3) - 1;
-                double z = pos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
-                Entity entity = AnvilChunkLoader.readWorldEntityPos(nbt, world, x, y, z, false);
-                if (!(entity instanceof EntityLiving)) {
-                    setState(EnumTrialSpawnerState.INACTIVE);
-                    return;
-                }
-                if (!canSpawn(entity)) return;
-                entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360, 0);
-                spawned_mobs++;
-                current_mobs.add(new WeakReference<>(entity));
-                ((EntityLiving)entity).onInitialSpawn(world.getDifficultyForLocation(entity.getPosition()), null);
-                entry.applyEquipment((EntityLivingBase) entity);
-                AnvilChunkLoader.spawnEntity(entity, world);
-                world.playSound(null, entity.posX, entity.posY, entity.posZ,
-                        DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_MOB, SoundCategory.BLOCKS, 1, 1);
-
-                for (int i = 0; i < 20; i++)
-                {
-                    Vec3d particleSpawnerRandom = getRandomPosInCube(pos, 1.0F, 0.0F);
-                    Vec3d particleMobRandom = getRandomPosInCube(entity.getPosition().up(), entity.height/3, 0.0F);
-
-                    if (isOminous())
-                    {
-                        DeeperDepths.proxy.spawnParticle(3, this.world, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, 0, 0,0,1);
-                        DeeperDepths.proxy.spawnParticle(3, this.world, particleMobRandom.x, particleMobRandom.y, particleMobRandom.z, 0,0,0, 1);
-                    }
-                    else
-                    {
-                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, 1, 0, 0, 0, 0.0);
-                        ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, particleMobRandom.x, particleMobRandom.y, particleMobRandom.z, 1, 0, 0, 0, 0.0);
-                    }
-                }
-                cooldown = 20;
-            }
+            if (current_mobs.size() < simultaneous && spawned_mobs < total) spawnMob();
         }
         if (state == EnumTrialSpawnerState.EJECTING) {
             if (active_players.isEmpty()) {
@@ -192,6 +153,47 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 cooldown = 20;
             }
         }
+    }
+    
+    private void spawnMob() {
+        Config config = getActiveConfig();
+        Entry entry = config.entities.getResult(world.rand);
+        NBTTagCompound nbt = entry.getNbt();
+        double x = 0, y = 0, z = 0;
+        double distance = config.spawn_range * config.spawn_range + 1;
+        while (distance > config.spawn_range * config.spawn_range) {
+            x = pos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
+            y = pos.getY() + world.rand.nextInt(3) - 1;
+            z = pos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * config.spawn_range + 0.5D;
+            distance = pos.distanceSqToCenter(x, y, z);
+        }
+        Entity entity = AnvilChunkLoader.readWorldEntityPos(nbt, world, x, y, z, false);
+        if (!(entity instanceof EntityLiving)) {
+            setState(EnumTrialSpawnerState.INACTIVE);
+            return;
+        }
+        if (!canSpawn(entity)) return;
+        entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360, 0);
+        spawned_mobs++;
+        current_mobs.add(new WeakReference<>(entity));
+        ((EntityLiving)entity).onInitialSpawn(world.getDifficultyForLocation(entity.getPosition()), null);
+        entry.applyEquipment((EntityLivingBase) entity);
+        AnvilChunkLoader.spawnEntity(entity, world);
+        world.playSound(null, entity.posX, entity.posY, entity.posZ,
+                DeeperDepthsSoundEvents.TRIAL_SPAWNER_SPAWN_MOB, SoundCategory.BLOCKS, 1, 1);
+        
+        for (int i = 0; i < 20; i++) {
+            Vec3d particleSpawnerRandom = getRandomPosInCube(pos, 1.0F, 0.0F);
+            Vec3d particleMobRandom = getRandomPosInCube(entity.getPosition().up(), entity.height / 3, 0.0F);
+            if (isOminous()) {
+                DeeperDepths.proxy.spawnParticle(3, this.world, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, 0, 0,0,1);
+                DeeperDepths.proxy.spawnParticle(3, this.world, particleMobRandom.x, particleMobRandom.y, particleMobRandom.z, 0,0,0, 1);
+            } else {
+                ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, particleSpawnerRandom.x, particleSpawnerRandom.y, particleSpawnerRandom.z, 1, 0, 0, 0, 0.0);
+                ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FLAME, particleMobRandom.x, particleMobRandom.y, particleMobRandom.z, 1, 0, 0, 0, 0.0);
+            }
+        }
+        cooldown = 20;
     }
     
     private boolean canSpawn(Entity entity) {
