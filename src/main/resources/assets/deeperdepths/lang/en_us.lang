@@ -191,6 +191,13 @@ tile.deeperdepths.trial_spawner.name=Trial Spawner
 tile.deeperdepths.vault.name=Vault
 tile.deeperdepths.ominous_vault.name=Ominous Vault
 
+tile.deeperdepths.sculk.name=Sculk
+tile.deeperdepths.sculk_vein.name=Sculk Vein
+tile.deeperdepths.sculk_catalyst.name=Sculk Catalyst
+tile.deeperdepths.sculk_sensor.name=Sculk Sensor
+tile.deeperdepths.calibrated_sculk_sensor.name=Calibrated Sculk Sensor
+tile.deeperdepths.sculk_shrieker.name=Sculk Shrieker
+
 effect.deeperdepths.bad_omen=Bad Omen
 effect.deeperdepths.trial_omen=Trial Omen
 effect.deeperdepths.oozing=Oozing

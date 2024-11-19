@@ -4,6 +4,7 @@
   "refmap": "mixins.deeperdepths.refmap.json",
   "mixins": [
     "MixinEntity",
+    "MixinItem",
     "MixinWorldServer"
   ],
   "client": [
