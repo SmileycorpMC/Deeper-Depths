@@ -5,6 +5,7 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.blocks.enums.EnumClusterSize;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import com.deeperdepths.common.blocks.tiles.TileSculkVein;
 import com.deeperdepths.common.blocks.tiles.TileTrialPot;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
@@ -70,8 +71,8 @@ public class DeeperDepthsBlocks {
     
     //sculk
     public static final Block SCULK = new BlockSculk("sculk");
-    /*public static final Block SCULK_VEIN = null;
-    public static final Block SCULK_SHRIEKER = null;
+    public static final Block SCULK_VEIN = new BlockSculkVein();
+    /*public static final Block SCULK_SHRIEKER = null;
     public static final Block SCULK_SENSOR = null;
     public static final Block CALIBRATED_SCULK_SENSOR = null;*/
     
@@ -108,6 +109,7 @@ public class DeeperDepthsBlocks {
         GameRegistry.registerTileEntity(TileTrialSpawner.class, Constants.loc("trial_spawner"));
         GameRegistry.registerTileEntity(TileVault.class, Constants.loc("vault"));
         GameRegistry.registerTileEntity(TileTrialPot.class, Constants.loc("pot"));
+        GameRegistry.registerTileEntity(TileSculkVein.class, Constants.loc("sculk_vein"));
     }
     
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {
