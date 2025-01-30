@@ -35,13 +35,17 @@ public class DeeperDepthsItems {
     /*public static final Item SPYGLASS = null;
     public static final Item RECOVERY_COMPASS = null;*/
     
+    //skull emoji
+    public static final Item SCULK_VEIN = new ItemSculkVein();
+    
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DeeperDepthsBlocks.BLOCKS) {
             if (block instanceof BlockCandle) register(registry, new ItemBlockCandle((BlockCandle) block));
-            else if (block instanceof BlockSculkVein) register(registry, new ItemBlockSculkVein((BlockSculkVein) block));
+            //jank
+            else if (block instanceof BlockSculkVein) {if (((BlockSculkVein)block).getOrdinal() == 0) register(registry, SCULK_VEIN);}
             else if (block instanceof BlockCopperDoor) register(registry, ((BlockCopperDoor) block).getItem());
             else if (!(block instanceof BlockDDSlab)) register(registry, (block instanceof ICopperBlock) &&
                     (Constants.FUNNY || BlockConfig.tastyCopper) ? new ItemTastyCopper(block) : new ItemDDBlock(block));
@@ -51,7 +55,8 @@ public class DeeperDepthsItems {
         for (Field field : DeeperDepthsItems.class.getDeclaredFields()) {
             try {
                 Object object = field.get(null);
-                if (!(object instanceof Item) || object == null) continue;
+                //bad
+                if (!(object instanceof Item) || object == null || object == SCULK_VEIN) continue;
                 register(registry, (Item) object);
             } catch (Exception e) {
                 DeeperDepths.error(field, e);
