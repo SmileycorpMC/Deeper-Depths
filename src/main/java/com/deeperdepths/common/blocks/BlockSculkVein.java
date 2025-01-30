@@ -7,17 +7,15 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -27,12 +25,12 @@ public class BlockSculkVein extends BlockDeeperDepths implements IHoeEfficient {
     
     protected static final AxisAlignedBB EMPTY_AABB = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
     protected static final AxisAlignedBB[] AABBS = {
-            new AxisAlignedBB(0, 0.8125, 0, 1, 1, 1),
             new AxisAlignedBB(0, 0, 0, 1, 0.1875D, 1),
-            new AxisAlignedBB(0, 0, 0.8125, 1, 1, 1),
+            new AxisAlignedBB(0, 0.8125, 0, 1, 1, 1),
             new AxisAlignedBB(0, 0, 0, 1, 1, 0.1875D),
-            new AxisAlignedBB(0.8125, 0, 0, 1, 1, 1),
-            new AxisAlignedBB(0, 0, 0, 0.1875D, 1, 1)
+            new AxisAlignedBB(0, 0, 0.8125, 1, 1, 1),
+            new AxisAlignedBB(0, 0, 0, 0.1875D, 1, 1),
+            new AxisAlignedBB(0.8125, 0, 0, 1, 1, 1)
     };
     
     public static final PropertyBool DOWN = PropertyBool.create("down");
@@ -76,11 +74,6 @@ public class BlockSculkVein extends BlockDeeperDepths implements IHoeEfficient {
     }
     
     @Override
-    public void onBlockPlacedBy(World p_180633_1_, BlockPos p_180633_2_, IBlockState p_180633_3_, EntityLivingBase p_180633_4_, ItemStack p_180633_5_) {
-        super.onBlockPlacedBy(p_180633_1_, p_180633_2_, p_180633_3_, p_180633_4_, p_180633_5_);
-    }
-    
-    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof TileSculkVein) {
@@ -89,23 +82,6 @@ public class BlockSculkVein extends BlockDeeperDepths implements IHoeEfficient {
                 state = state.withProperty(getProperty(facing), true);
         }
         return state;
-    }
-    
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!player.isSneaking() && stack.getItem() instanceof ItemBlock && ((ItemBlock) stack.getItem()).getBlock() == state.getBlock()
-                && world.getTileEntity(pos) instanceof TileSculkVein) {
-            TileSculkVein vein = (TileSculkVein) world.getTileEntity(pos);
-            if (vein.hasFacing(facing)) return false;
-            player.swingArm(hand);
-            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, blockSoundType.getPlaceSound(),
-                    SoundCategory.BLOCKS, (blockSoundType.getVolume() + 1f) / 2f, blockSoundType.getPitch() * 0.8F);
-            vein.setFacing(facing, true);
-            if (!player.isCreative()) stack.shrink(1);
-            return true;
-        }
-        return false;
     }
     
     @Override
@@ -147,13 +123,28 @@ public class BlockSculkVein extends BlockDeeperDepths implements IHoeEfficient {
         if (te instanceof TileSculkVein) {
             TileSculkVein vein = (TileSculkVein) te;
             for (EnumFacing facing : EnumFacing.values()) if (vein.hasFacing(facing)) {
-                if (aabb != EMPTY_AABB) {
-                    aabb = FULL_BLOCK_AABB;
-                    break;
-                } else aabb = AABBS[facing.ordinal()];
+                if (aabb != EMPTY_AABB) return FULL_BLOCK_AABB;
+                else aabb = AABBS[facing.ordinal()];
             }
         }
         return aabb;
+    }
+    
+    @Override
+    public RayTraceResult collisionRayTrace(IBlockState blockState, World world, BlockPos pos, Vec3d start, Vec3d end) {
+        TileEntity te = world.getTileEntity(pos);
+        if (!(te instanceof TileSculkVein)) return null;
+        TileSculkVein vein = (TileSculkVein) te;
+        for (EnumFacing facing : EnumFacing.values()) if (vein.hasFacing(facing)) {
+            RayTraceResult result = rayTrace(pos, start, end, AABBS[facing.ordinal()]);
+            if (result != null) return result;
+        }
+        return null;
+    }
+    
+    @Override
+    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing facing) {
+        return world.isSideSolid(pos.offset(facing.getOpposite()), facing);
     }
     
     @Override
@@ -164,5 +155,20 @@ public class BlockSculkVein extends BlockDeeperDepths implements IHoeEfficient {
     public static PropertyBool getProperty(EnumFacing facing) {
         return PROPERTIES[facing.ordinal()];
    }
+   
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+    
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+    
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
     
 }
