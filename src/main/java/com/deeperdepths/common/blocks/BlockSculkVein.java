@@ -2,7 +2,9 @@ package com.deeperdepths.common.blocks;
 
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.items.DeeperDepthsItems;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -10,6 +12,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -21,9 +24,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Random;
+import java.util.*;
 
 //ok so goddamn I know this shit sucks
 //but 1.12 doesn't do this
@@ -98,6 +99,22 @@ public class BlockSculkVein extends BlockDeeperDepths implements IHoeEfficient {
         IBlockState state1 = getDefaultState();
         for (EnumFacing facing : getFacings(state)) state1 = state1.withProperty(getProperty(facing), true);
         return state1;
+    }
+    
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos from) {
+        boolean changed = false;
+        List<EnumFacing> facings = Lists.newArrayList(getFacings(state));
+        Iterator<EnumFacing> iterator = facings.iterator();
+        while (iterator.hasNext()) {
+            EnumFacing facing = iterator.next();
+            BlockPos pos1 = pos.offset(facing);
+            IBlockState state1 = world.getBlockState(pos1);
+            if (isSideSolid(state1, world, pos1, facing.getOpposite())) continue;
+            iterator.remove();
+            changed = true;
+        }
+        if (changed) world.setBlockState(pos, getBlockState(facings.toArray(new EnumFacing[facings.size()])));
     }
     
     @Override
@@ -221,7 +238,7 @@ public class BlockSculkVein extends BlockDeeperDepths implements IHoeEfficient {
     }
     
     public static IBlockState getBlockState(int meta) {
-        return DeeperDepthsBlocks.SCULK_VEINS[meta / 16].getDefaultState().withProperty(META, meta % 16);
+        return meta == 0 ? Blocks.AIR.getDefaultState() : DeeperDepthsBlocks.SCULK_VEINS[meta / 16].getDefaultState().withProperty(META, meta % 16);
     }
     
     public static IBlockState getBlockState(EnumFacing... facings) {
