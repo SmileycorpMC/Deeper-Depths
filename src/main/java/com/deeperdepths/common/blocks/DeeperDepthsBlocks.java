@@ -69,9 +69,10 @@ public class DeeperDepthsBlocks {
     public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
     
     //sculk
-    public static final Block SCULK = new BlockSculk("sculk");
+    public static final Block SCULK = new BlockSculk("sculk", 0.2f, 0.2f);
     public static final Block[] SCULK_VEINS = {new BlockSculkVein(0), new BlockSculkVein(1),
             new BlockSculkVein(2), new BlockSculkVein(3)};
+    public static final Block SCULK_CATALYST = new BlockSculkCatalyst();
     /*public static final Block SCULK_SHRIEKER = null;
     public static final Block SCULK_SENSOR = null;
     public static final Block CALIBRATED_SCULK_SENSOR = null;*/

@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class BlockSculk extends BlockDeeperDepths implements IHoeEfficient {
     
-    public BlockSculk(String name) {
+    public BlockSculk(String name, float h, float r) {
         super(name, Material.PLANTS, 0.2f, 0.2f);
         setSoundType(DeeperDepthsSoundTypes.SCULK);
     }
