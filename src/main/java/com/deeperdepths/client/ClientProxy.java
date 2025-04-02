@@ -26,6 +26,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -118,4 +119,15 @@ public class ClientProxy extends CommonProxy {
         World world = minecraft.world;
         minecraft.effectRenderer.addEffect(Constants.getFactory(particle).createParticle(0, world, posX, posY, posZ, speedX, speedY, speedZ, parameters));
     }
+    
+    @SubscribeEvent
+    public static void fovEvent(EntityViewRenderEvent.FOVModifier event) {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.gameSettings.thirdPersonView != 0) return;
+        EntityPlayerSP player = mc.player;
+        if (player.getItemInUseCount() <= 0) return;
+        if (player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS) return;
+        event.setFOV(0.1f);
+    }
+    
 }
