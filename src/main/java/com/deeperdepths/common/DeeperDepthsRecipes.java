@@ -49,10 +49,14 @@ public class DeeperDepthsRecipes {
         OreDictionary.registerOre("stoneCalcite", new ItemStack(DeeperDepthsBlocks.STONE, 1, 5));
         OreDictionary.registerOre("cobblestone", new ItemStack(DeeperDepthsBlocks.STONE, 1, 6));
         OreDictionary.registerOre("cobblestoneDeepslate", new ItemStack(DeeperDepthsBlocks.STONE, 1, 6));
-        OreDictionary.registerOre("oreCopper", new ItemStack(DeeperDepthsBlocks.COPPER_ORE, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("blockCopper", new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("blockCopperCut", new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("blockCopperChiseled", new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, OreDictionary.WILDCARD_VALUE));
+        for (int i = 0; i < DeeperDepthsBlocks.COPPER_ORE.getMaxMeta(); i++)
+            OreDictionary.registerOre("oreCopper", new ItemStack(DeeperDepthsBlocks.COPPER_ORE, 1, i));
+        for (int i = 0; i < DeeperDepthsBlocks.COPPER_BLOCK.getMaxMeta(); i++)
+            OreDictionary.registerOre("blockCopper", new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, i));
+        for (int i = 0; i < DeeperDepthsBlocks.CUT_COPPER.getMaxMeta(); i++)
+            OreDictionary.registerOre("blockCopperCut", new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, i));
+        for (int i = 0; i < DeeperDepthsBlocks.CHISELED_COPPER.getMaxMeta(); i++)
+            OreDictionary.registerOre("blockCopperChiseled", new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, i));
         OreDictionary.registerOre("blockGlass", new ItemStack(DeeperDepthsBlocks.TINTED_GLASS));
     }
     
