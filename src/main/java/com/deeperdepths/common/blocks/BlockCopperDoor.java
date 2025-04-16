@@ -130,17 +130,6 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
         return stage;
     }
     
-    public boolean isEdible(ItemStack stack) {
-        return stage != EnumWeatherStage.NORMAL;
-    }
-    
-    public ItemStack getPrevious(ItemStack stack) {
-        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_COPPER_DOORS : DeeperDepthsBlocks.COPPER_DOORS)
-                .get(stage.previous()).getItem(), stack.getCount(), stack.getMetadata());
-        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
-        return stack1;
-    }
-    
     @Override
     public IBlockState getScraped(IBlockState state) {
         return copyProperties(state, DeeperDepthsBlocks.COPPER_DOORS.get(waxed ? stage : stage.previous()).getDefaultState());
@@ -205,4 +194,47 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
         return true;
     }
     
+    @Override
+    public boolean isEdible(ItemStack stack) {
+        return stage != EnumWeatherStage.NORMAL;
+    }
+    
+    @Override
+    public ItemStack getPrevious(ItemStack stack) {
+        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_COPPER_DOORS : DeeperDepthsBlocks.COPPER_DOORS)
+                .get(stage.previous()).getItem(), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    @Override
+    public ItemStack getWaxed(ItemStack stack) {
+        if (waxed) return stack;
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stage).getItem(), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    @Override
+    public ItemStack getScraped(ItemStack stack) {
+        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.COPPER_DOORS.get(stage)
+                : DeeperDepthsBlocks.COPPER_DOORS.get(stage.previous())).getItem(), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    @Override
+    public boolean canWax(ItemStack stack) {
+        return !waxed;
+    }
+    
+    @Override
+    public boolean canScrape(ItemStack stack) {
+        return waxed || stage != EnumWeatherStage.NORMAL;
+    }
+    
+    @Override
+    public boolean isWaxed(ItemStack stack) {
+        return waxed;
+    }
 }

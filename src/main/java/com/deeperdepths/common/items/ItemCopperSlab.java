@@ -15,9 +15,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class ItemTastyCopperSlab<T extends BlockCutCopperSlab> extends ItemDDSlab<T> {
+public class ItemCopperSlab<T extends BlockCutCopperSlab> extends ItemDDSlab<T> implements ICopperItem {
     
-    public ItemTastyCopperSlab(T block) {
+    public ItemCopperSlab(T block) {
         super(block);
     }
     
@@ -49,7 +49,7 @@ public class ItemTastyCopperSlab<T extends BlockCutCopperSlab> extends ItemDDSla
             entityplayer.addStat(StatList.getObjectUseStats(this));
             if (entityplayer instanceof EntityPlayerMP) CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
         }
-        return getBlock().getPrevious(stack);
+        return getBlock().getScraped(stack);
     }
     
     @Override

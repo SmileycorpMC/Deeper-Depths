@@ -1,5 +1,6 @@
 package com.deeperdepths.common.blocks;
 
+import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.advancements.DeeperDepthsAdvancements;
@@ -112,13 +113,41 @@ public interface ICopperBlock {
     }
     
     default boolean isEdible(ItemStack stack) {
+        if (!Constants.FUNNY &! BlockConfig.tastyCopper) return false;
         return stack.getMetadata() % 4 > 0;
     }
     
     default ItemStack getPrevious(ItemStack stack) {
+        if (stack.getMetadata() % 4 == 0) return stack;
         ItemStack stack1 = new ItemStack((Block) this, stack.getCount(), stack.getMetadata() - 1);
         if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
         return stack1;
+    }
+    
+    default ItemStack getScraped(ItemStack stack) {
+        if (!canScrape(stack)) return stack;
+        ItemStack stack1 = new ItemStack((Block) this, stack.getCount(), stack.getMetadata() - (isWaxed(stack) ? 4 : 1));
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    default ItemStack getWaxed(ItemStack stack) {
+        if (isWaxed(stack)) return stack;
+        ItemStack stack1 = new ItemStack((Block) this, stack.getCount(), stack.getMetadata() + 4);
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    default boolean canWax(ItemStack stack) {
+        return stack.getMetadata() < 4;
+    }
+    
+    default boolean canScrape(ItemStack stack) {
+        return stack.getMetadata() > 0;
+    }
+    
+    default boolean isWaxed(ItemStack stack) {
+        return stack.getMetadata() >= 4;
     }
 
     /** Spawns particles to slide on the surfaces of the Copper block. */
@@ -140,5 +169,5 @@ public interface ICopperBlock {
             }
         }
     }
-    
+
 }

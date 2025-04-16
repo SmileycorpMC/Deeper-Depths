@@ -3,7 +3,6 @@ package com.deeperdepths.common.items;
 import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.blocks.*;
-import com.deeperdepths.config.BlockConfig;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -19,7 +18,6 @@ import java.util.Set;
 public class DeeperDepthsItems {
     
     public static final Set<Item> ITEMS = Sets.newHashSet();
-    public static final Set<Item> COPPER_ITEMBLOCKS = Sets.newHashSet();
     
     //materials
     public static final Item MATERIALS = new ItemDeeperDepthsMaterial();
@@ -43,10 +41,10 @@ public class DeeperDepthsItems {
         for (Block block : DeeperDepthsBlocks.BLOCKS) {
             if (block instanceof BlockCandle) register(registry, new ItemBlockCandle((BlockCandle) block));
             else if (block instanceof BlockCopperDoor) register(registry, ((BlockCopperDoor) block).getItem());
-            else if (!(block instanceof BlockDDSlab)) register(registry, (block instanceof ICopperBlock) &&
-                    (Constants.FUNNY || BlockConfig.tastyCopper) ? new ItemTastyCopper(block) : new ItemDDBlock(block));
-            else if (!((BlockDDSlab) block).isDouble()) register(registry, block instanceof BlockCutCopperSlab &&
-                    (Constants.FUNNY || BlockConfig.tastyCopper) ? new ItemTastyCopperSlab((BlockCutCopperSlab) block) : new ItemDDSlab((BlockDDSlab)block));
+            else if (!(block instanceof BlockDDSlab)) register(registry, (block instanceof ICopperBlock) ?
+                    new ItemBlockCopper(block) : new ItemDDBlock(block));
+            else if (!((BlockDDSlab) block).isDouble()) register(registry, block instanceof BlockCutCopperSlab ?
+                    new ItemCopperSlab((BlockCutCopperSlab) block) : new ItemDDSlab((BlockDDSlab)block));
         }
         for (Field field : DeeperDepthsItems.class.getDeclaredFields()) {
             try {

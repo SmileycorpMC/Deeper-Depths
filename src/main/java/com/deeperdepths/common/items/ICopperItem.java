@@ -1,15 +1,26 @@
 package com.deeperdepths.common.items;
 
+import com.deeperdepths.common.blocks.ICopperBlock;
 import net.minecraft.item.ItemStack;
 
 public interface ICopperItem {
     
-    ItemStack getWaxed();
+    ICopperBlock getBlock();
     
-    ItemStack getScraped();
+    default ItemStack getWaxed(ItemStack stack) {
+        return getBlock().getWaxed(stack);
+    }
     
-    boolean canWax();
+    default ItemStack getScraped(ItemStack stack) {
+        return getBlock().getScraped(stack);
+    }
     
-    boolean canScrape();
+    default boolean canWax(ItemStack stack) {
+        return getBlock().canWax(stack);
+    }
+    
+    default boolean canScrape(ItemStack stack) {
+        return getBlock().canScrape(stack);
+    }
     
 }

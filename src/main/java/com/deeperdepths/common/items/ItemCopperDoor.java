@@ -1,8 +1,6 @@
 package com.deeperdepths.common.items;
 
-import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.blocks.BlockCopperDoor;
-import com.deeperdepths.config.BlockConfig;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +17,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.smileycorp.atlas.api.item.IMetaItem;
 
-public class ItemCopperDoor<T extends BlockCopperDoor> extends ItemDoor implements IMetaItem {
+public class ItemCopperDoor<T extends BlockCopperDoor> extends ItemDoor implements IMetaItem, ICopperItem {
     
     public ItemCopperDoor(T block) {
         super(block);
@@ -28,13 +26,13 @@ public class ItemCopperDoor<T extends BlockCopperDoor> extends ItemDoor implemen
         setCreativeTab(block.getCreativeTabToDisplayOn());
     }
     public EnumAction getItemUseAction(ItemStack stack) {
-        return isEdible(stack) ? EnumAction.EAT : super.getItemUseAction(stack);
+        return getBlock().isEdible(stack) ? EnumAction.EAT : super.getItemUseAction(stack);
     }
     
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (isEdible(stack)) {
+        if (getBlock().isEdible(stack)) {
             player.setActiveHand(hand);
             return new ActionResult(EnumActionResult.SUCCESS, stack);
         }
@@ -43,11 +41,11 @@ public class ItemCopperDoor<T extends BlockCopperDoor> extends ItemDoor implemen
     
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
-        return isEdible(stack) ? 32 : 0;
+        return getBlock().isEdible(stack) ? 32 : 0;
     }
     
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
-        if (!isEdible(stack)) return stack;
+        if (!getBlock().isEdible(stack)) return stack;
         if (entity instanceof EntityPlayer) {
             EntityPlayer entityplayer = (EntityPlayer)entity;
             world.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
@@ -55,16 +53,11 @@ public class ItemCopperDoor<T extends BlockCopperDoor> extends ItemDoor implemen
             entityplayer.addStat(StatList.getObjectUseStats(this));
             if (entityplayer instanceof EntityPlayerMP) CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
         }
-        return getBlock().getPrevious(stack);
-    }
-    
-    private boolean isEdible(ItemStack stack) {
-        return (Constants.FUNNY || BlockConfig.tastyCopper) && getBlock().isEdible(stack);
+        return getBlock().getScraped(stack);
     }
     
     public T getBlock() {
         return (T) block;
     }
-    
     
 }
