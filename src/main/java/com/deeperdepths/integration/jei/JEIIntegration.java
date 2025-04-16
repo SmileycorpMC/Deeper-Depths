@@ -20,13 +20,14 @@ public class JEIIntegration implements IModPlugin {
     public static final String SCRAPING_ID = Constants.locStr("scraping");
     public static final String WAXING_ID = Constants.locStr("waxing");
     public static final String WEATHERING_ID = Constants.locStr("weathering");
+    public static List<ItemStack> axes = Lists.newArrayList();
     
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         IJeiHelpers helpers = registry.getJeiHelpers();
         IGuiHelper guiHelper = helpers.getGuiHelper();
         registry.addRecipeCategories(new SimpleRecipeCategory(guiHelper, "waxing", WAXING_ID));
-        registry.addRecipeCategories(new SimpleRecipeCategory(guiHelper, "scraping", SCRAPING_ID));
+        registry.addRecipeCategories(new ScrapingRecipeCategory(guiHelper));
         registry.addRecipeCategories(new SimpleRecipeCategory(guiHelper, "weathering", WEATHERING_ID));
     }
     
@@ -43,7 +44,7 @@ public class JEIIntegration implements IModPlugin {
             NonNullList<ItemStack> stacks = NonNullList.create();
             item.getSubItems(CreativeTabs.SEARCH, stacks);
             for (ItemStack stack : stacks) {
-                if (item.getToolClasses(stack).contains("axe")) registry.addRecipeCatalyst(stack, SCRAPING_ID);
+                if (item.getToolClasses(stack).contains("axe")) axes.add(stack); //registry.addRecipeCatalyst(stack, SCRAPING_ID);
                 if (!(item instanceof ICopperItem)) continue;
                 ICopperItem copper = (ICopperItem) item;
                 if (copper.canWax(stack)) waxing_recipes.add(new SimpleRecipeWrapper(stack, copper.getWaxed(stack)));
