@@ -24,7 +24,6 @@ import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -74,7 +73,8 @@ public class DeeperDepthsEventHandler {
         ICopperBlock copper = (ICopperBlock) state.getBlock();
         EntityLivingBase entity = event.getEntityLiving();
         if (copper.interactRequiresSneak() &! entity.isSneaking()) return;
-        if (stack.getItem() instanceof ItemAxe) copper.scrape(entity, world, stack, state, pos, event.getHand());
+        if (stack.getItem().getToolClasses(stack).contains("axe"))
+            copper.scrape(entity, world, stack, state, pos, event.getHand());
         if (stack.getItem() == Items.SLIME_BALL) copper.wax(entity, world, stack, state, pos, event.getHand());
     }
     
