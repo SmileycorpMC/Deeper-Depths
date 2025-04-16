@@ -19,6 +19,7 @@ import java.util.Set;
 public class DeeperDepthsItems {
     
     public static final Set<Item> ITEMS = Sets.newHashSet();
+    public static final Set<Item> COPPER_ITEMBLOCKS = Sets.newHashSet();
     
     //materials
     public static final Item MATERIALS = new ItemDeeperDepthsMaterial();

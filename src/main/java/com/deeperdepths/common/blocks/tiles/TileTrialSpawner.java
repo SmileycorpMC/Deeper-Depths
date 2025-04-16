@@ -7,7 +7,7 @@ import com.deeperdepths.common.DeeperDepthsLootTables;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
 import com.deeperdepths.common.entities.EntityOminousItemSpawner;
-import com.deeperdepths.common.integration.RaidsIntegration;
+import com.deeperdepths.integration.RaidsIntegration;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;

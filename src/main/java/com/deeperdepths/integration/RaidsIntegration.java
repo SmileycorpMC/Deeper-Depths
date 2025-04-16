@@ -1,4 +1,4 @@
-package com.deeperdepths.common.integration;
+package com.deeperdepths.integration;
 
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.minecraft.entity.player.EntityPlayer;
