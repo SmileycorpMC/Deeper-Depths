@@ -5,9 +5,9 @@ import com.deeperdepths.common.items.ICopperItem;
 import com.google.common.collect.Lists;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -40,12 +40,12 @@ public class JEIIntegration implements IModPlugin {
         List<SimpleRecipeWrapper> scraping_recipes = Lists.newArrayList();
         List<SimpleRecipeWrapper> weathering_recipes = Lists.newArrayList();
         for (Item item : ForgeRegistries.ITEMS) {
-            if (item instanceof ItemAxe) registry.addRecipeCatalyst(new ItemStack(item), SCRAPING_ID);
-            if (!(item instanceof ICopperItem)) continue;
-            ICopperItem copper = (ICopperItem) item;
             NonNullList<ItemStack> stacks = NonNullList.create();
-            item.getSubItems(item.getCreativeTab(), stacks);
+            item.getSubItems(CreativeTabs.SEARCH, stacks);
             for (ItemStack stack : stacks) {
+                if (item.getToolClasses(stack).contains("axe")) registry.addRecipeCatalyst(stack, SCRAPING_ID);
+                if (!(item instanceof ICopperItem)) continue;
+                ICopperItem copper = (ICopperItem) item;
                 if (copper.canWax(stack)) waxing_recipes.add(new SimpleRecipeWrapper(stack, copper.getWaxed(stack)));
                 if (copper.canScrape(stack)) scraping_recipes.add(new SimpleRecipeWrapper(stack, copper.getScraped(stack)));
                 if (copper.canWeather(stack)) weathering_recipes.add(new SimpleRecipeWrapper(stack, copper.getWeathered(stack)));
