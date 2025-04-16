@@ -224,6 +224,14 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
     }
     
     @Override
+    public ItemStack getWeathered(ItemStack stack) {
+        if (!canWeather(stack)) return stack;
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage.next()).getItem(), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    @Override
     public boolean canWax(ItemStack stack) {
         return !waxed;
     }
@@ -234,7 +242,13 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
     }
     
     @Override
+    public boolean canWeather(ItemStack stack) {
+        return !isWaxed(stack) && stage != EnumWeatherStage.OXIDIZED;
+    }
+    
+    @Override
     public boolean isWaxed(ItemStack stack) {
         return waxed;
     }
+    
 }

@@ -1,6 +1,7 @@
 package com.deeperdepths.integration.jei;
 
 import com.deeperdepths.common.Constants;
+import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -9,17 +10,19 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class SimpleRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper> {
 
 	public static final ResourceLocation TEXTURE = Constants.loc("textures/gui/simple_recipe.png");
 	
-	private final IDrawable background;
+	private final IDrawable background, icon;
 	private final String name, id;
 	
 	public SimpleRecipeCategory(IGuiHelper guiHelper, String name, String id) {
 		background = guiHelper.createDrawable(TEXTURE, 0, 0, 67, 28);
+		icon = guiHelper.createDrawableIngredient(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK));
 		this.name = name;
 		this.id = id;
 	}
@@ -27,6 +30,11 @@ public class SimpleRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper
 	@Override
 	public IDrawable getBackground() {
 		return background;
+	}
+	
+	@Override
+	public IDrawable getIcon() {
+		return icon;
 	}
 
 	@Override

@@ -124,6 +124,14 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
     }
     
     @Override
+    public ItemStack getWeathered(ItemStack stack) {
+        if (!canWeather(stack)) return stack;
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(stage.next()), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    @Override
     public boolean canWax(ItemStack stack) {
         return !waxed;
     }
@@ -131,6 +139,11 @@ public class BlockCopperTrapdoor extends BlockTrapDoor implements IBlockProperti
     @Override
     public boolean canScrape(ItemStack stack) {
         return waxed || stage != EnumWeatherStage.NORMAL;
+    }
+    
+    @Override
+    public boolean canWeather(ItemStack stack) {
+        return !isWaxed(stack) && stage != EnumWeatherStage.OXIDIZED;
     }
     
     @Override

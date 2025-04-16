@@ -15,12 +15,20 @@ public interface ICopperItem {
         return getBlock().getScraped(stack);
     }
     
+    default ItemStack getWeathered(ItemStack stack) {
+        return getBlock().getWeathered(stack);
+    }
+    
     default boolean canWax(ItemStack stack) {
         return getBlock().canWax(stack);
     }
     
     default boolean canScrape(ItemStack stack) {
         return getBlock().canScrape(stack);
+    }
+    
+    default boolean canWeather(ItemStack stack) {
+        return getBlock().canWeather(stack);
     }
     
 }

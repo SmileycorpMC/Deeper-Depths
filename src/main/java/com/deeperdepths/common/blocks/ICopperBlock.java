@@ -138,12 +138,23 @@ public interface ICopperBlock {
         return stack1;
     }
     
+    default ItemStack getWeathered(ItemStack stack) {
+        if (!canWeather(stack)) return stack;
+        ItemStack stack1 = new ItemStack((Block) this, stack.getCount(), stack.getMetadata() + 1);
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
     default boolean canWax(ItemStack stack) {
         return stack.getMetadata() < 4;
     }
     
     default boolean canScrape(ItemStack stack) {
         return stack.getMetadata() > 0;
+    }
+    
+    default boolean canWeather(ItemStack stack) {
+        return !isWaxed(stack) && stack.getMetadata() < 3;
     }
     
     default boolean isWaxed(ItemStack stack) {

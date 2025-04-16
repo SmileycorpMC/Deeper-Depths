@@ -19,6 +19,7 @@ public class JEIIntegration implements IModPlugin {
     
     public static final String SCRAPING_ID = Constants.locStr("scraping");
     public static final String WAXING_ID = Constants.locStr("waxing");
+    public static final String WEATHERING_ID = Constants.locStr("weathering");
     
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -26,15 +27,18 @@ public class JEIIntegration implements IModPlugin {
         IGuiHelper guiHelper = helpers.getGuiHelper();
         registry.addRecipeCategories(new SimpleRecipeCategory(guiHelper, "waxing", WAXING_ID));
         registry.addRecipeCategories(new SimpleRecipeCategory(guiHelper, "scraping", SCRAPING_ID));
+        registry.addRecipeCategories(new SimpleRecipeCategory(guiHelper, "weathering", WEATHERING_ID));
     }
     
     @Override
     public void register(IModRegistry registry) {
-        registry.addRecipeCatalyst(new ItemStack(Items.SLIME_BALL), WAXING_ID);
         registry.handleRecipes(SimpleRecipeWrapper.class, r -> r, WAXING_ID);
         registry.handleRecipes(SimpleRecipeWrapper.class, r -> r, SCRAPING_ID);
+        registry.handleRecipes(SimpleRecipeWrapper.class, r -> r, WEATHERING_ID);
+        registry.addRecipeCatalyst(new ItemStack(Items.SLIME_BALL), WAXING_ID);
         List<SimpleRecipeWrapper> waxing_recipes = Lists.newArrayList();
         List<SimpleRecipeWrapper> scraping_recipes = Lists.newArrayList();
+        List<SimpleRecipeWrapper> weathering_recipes = Lists.newArrayList();
         for (Item item : ForgeRegistries.ITEMS) {
             if (item instanceof ItemAxe) registry.addRecipeCatalyst(new ItemStack(item), SCRAPING_ID);
             if (!(item instanceof ICopperItem)) continue;
@@ -44,10 +48,12 @@ public class JEIIntegration implements IModPlugin {
             for (ItemStack stack : stacks) {
                 if (copper.canWax(stack)) waxing_recipes.add(new SimpleRecipeWrapper(stack, copper.getWaxed(stack)));
                 if (copper.canScrape(stack)) scraping_recipes.add(new SimpleRecipeWrapper(stack, copper.getScraped(stack)));
+                if (copper.canWeather(stack)) weathering_recipes.add(new SimpleRecipeWrapper(stack, copper.getWeathered(stack)));
             }
         }
         registry.addRecipes(waxing_recipes, WAXING_ID);
         registry.addRecipes(scraping_recipes, SCRAPING_ID);
+        registry.addRecipes(weathering_recipes, WEATHERING_ID);
     }
 
 
