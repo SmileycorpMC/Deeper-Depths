@@ -1,7 +1,7 @@
 package com.deeperdepths.common.potion;
 
 import com.deeperdepths.common.DeeperDepths;
-import com.deeperdepths.common.integration.RaidsIntegration;
+import com.deeperdepths.integration.RaidsIntegration;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.Loader;

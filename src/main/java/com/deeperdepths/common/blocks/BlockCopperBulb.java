@@ -178,4 +178,36 @@ public class BlockCopperBulb extends BlockDeeperDepths implements ICopperBlock  
         return state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).next());
     }
     
+    @Override
+    public boolean canWax(ItemStack stack) {
+        return !waxed;
+    }
+    
+    @Override
+    public boolean canScrape(ItemStack stack) {
+        return waxed || stack.getMetadata() > 0;
+    }
+    
+    @Override
+    public ItemStack getWaxed(ItemStack stack) {
+        if (waxed) return stack;
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 1, stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    @Override
+    public ItemStack getScraped(ItemStack stack) {
+        if (!canScrape(stack)) return stack;
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.COPPER_BULB, 1, (waxed ? stack.getMetadata()
+                : stack.getMetadata() - 1));
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+    
+    @Override
+    public boolean isWaxed(ItemStack stack) {
+        return waxed;
+    }
+    
 }

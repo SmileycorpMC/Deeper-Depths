@@ -1,4 +1,4 @@
-package com.deeperdepths.common.integration;
+package com.deeperdepths.integration;
 
 import com.deeperdepths.common.blocks.BlockDDStone;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;

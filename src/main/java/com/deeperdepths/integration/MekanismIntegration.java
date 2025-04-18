@@ -1,4 +1,4 @@
-package com.deeperdepths.common.integration;
+package com.deeperdepths.integration;
 
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
