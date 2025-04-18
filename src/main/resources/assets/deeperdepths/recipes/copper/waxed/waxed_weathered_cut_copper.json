@@ -1,0 +1,19 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "deeperdepths:cut_copper",
+      "data": 2
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "wax"
+    }
+  ],
+  "result": {
+    "item": "deeperdepths:cut_copper",
+    "data": 6,
+    "count": 1
+  }
+}

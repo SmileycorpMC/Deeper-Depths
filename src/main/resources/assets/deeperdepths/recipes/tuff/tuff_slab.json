@@ -1,0 +1,19 @@
+{
+  "group": "deeperdepths:tuff",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:stone",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "deeperdepths:stone_slab",
+    "data": 0,
+    "count": 6
+  }
+}
