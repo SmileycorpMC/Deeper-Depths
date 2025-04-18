@@ -1,10 +1,13 @@
 package com.deeperdepths.common;
 
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
-import com.deeperdepths.common.integration.ChiselIntegration;
-import com.deeperdepths.common.integration.MekanismIntegration;
+import com.deeperdepths.common.blocks.enums.EnumStoneType;
+import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
+import com.deeperdepths.config.BlockConfig;
+import com.deeperdepths.integration.ChiselIntegration;
+import com.deeperdepths.integration.MekanismIntegration;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
