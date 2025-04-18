@@ -1,0 +1,20 @@
+{
+  "group": "minecraft:amethyst",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "gemAmethyst"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:amethyst_block",
+    "data": 0,
+    "count": 1
+  }
+}

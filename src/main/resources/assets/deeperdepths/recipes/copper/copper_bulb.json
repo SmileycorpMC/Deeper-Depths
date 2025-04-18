@@ -1,0 +1,25 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    " M ",
+    "MBM",
+    " R "
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:copper_block",
+      "data": 0
+    },
+    "R": {
+      "type": "forge:ore_dict",
+      "ore": "dustRedstone"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:copper_bulb",
+    "data": 0,
+    "count": 4
+  }
+}

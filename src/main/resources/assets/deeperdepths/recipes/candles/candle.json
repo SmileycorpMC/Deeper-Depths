@@ -1,0 +1,24 @@
+{
+  "group": "deeperdepths:candles",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "S",
+    "W"
+  ],
+  "key": {
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "string"
+    },
+    "W": {
+      "type": "forge:ore_dict",
+      "ore": "wax"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:candle",
+    "data": 0,
+    "count": 1
+  }
+}
