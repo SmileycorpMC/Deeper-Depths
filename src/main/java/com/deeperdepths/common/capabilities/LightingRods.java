@@ -26,10 +26,12 @@ public class LightingRods extends WorldSavedData {
     
     public void add(BlockPos pos) {
         positions.add(pos);
+        markDirty();
     }
     
     public void remove(BlockPos pos) {
         positions.remove(pos);
+        markDirty();
     }
     
     public Optional<BlockPos> getClosest(WorldServer world, BlockPos pos, int radius) {
