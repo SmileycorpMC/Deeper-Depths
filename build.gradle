@@ -30,7 +30,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
-version = "1.12.2-1.0.2"
+version = "1.12.2-1.0.3"
 group = "com.deeperdepths"
 archivesBaseName = "Deeper-Depths"
 
@@ -118,6 +118,8 @@ jar {
 }
 
 sourceSets { main { output.resourcesDir = output.getClassesDirs().getAsPath() } }
+// Remove BEFORE A BUILD!!!!
+sourceSets { main { output.resourcesDir = output.classesDir } }
 
 shadowJar {
 	classifier = ''

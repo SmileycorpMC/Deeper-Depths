@@ -1,25 +1,20 @@
-Bug Fixes
+1.0.3
 
-~ fix axes and axelike tools not working to scrape copper if they don't extend ItemAxe
++ Added Future MC Stonecutter support for Deepslate, Tuffz and Copper Blocks
++ Added JEI categories for Waxing, Scraping, and Weathering
++ Added additional Weaving Effects:
+  + Cloud puff particles
+  + Placement sounds
 
-~ fix issues with recipes displaying error copper blocks caused by certain mods not liking wildcard oredicts
+~ Switched Recipes to .jsons instead of being hardcoded
+~ Updated `idylic 2` Painting Texture
+~ Changed Trial Spawner entity spawn position calculations to better reflect changes in 1.21.3
 
-~ fix issues with lightning rods not being saved to world data properly
-
-~ fix trial chamber painting pick result not getting the correct item
-
-~ fix trial spawners not correctly removing ominous state
-
-~ fix vaults forgetting participating players on chunk reloads
-
-Additions/Changes
-
-+ Add futuremc stonecutter support for deepslate, tuff and copper blocks
-
-+ Add JEI categories for waxing, scraping and weathering
-
-~ Switch recipes to use jsons instead of being hardcoded
-
-~ Update idylic 2 painting texture
-
-~ Change trial spawner entity position calculations to better reflect changes in 1.21.3
++ Fixed Stone Top Slabs getting replaced with Tuff Top Slabs upon reload
++ Fixed `ItemDeeperDepthsMaterial` causing a Crash if spawned in unsupported metadata values
++ Fixed Copper Scraping not working for Axes or Axelike tools not extending `ItemAxe`
++ Fixed wildcard OreDicts causing recipe display errors with certain mods
++ Fixed Lightning Rods not being saved to world data properly
++ Fixed Trial Painting pick result giving the wrong item
++ Fixed Trial Spawners not correctly removing ominous state
++ Fixed Trial and Ominous Vaults not saving previous players upon reload
