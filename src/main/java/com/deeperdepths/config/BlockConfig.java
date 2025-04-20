@@ -1,9 +1,13 @@
 package com.deeperdepths.config;
 
+import com.google.common.collect.Lists;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
+import java.util.List;
 
 public class BlockConfig {
     
@@ -30,6 +34,8 @@ public class BlockConfig {
     public static BlockStatEntry tuff;
     public static BlockStatEntry tuffBricks;
     
+    private static List<ItemStack> waxItems = null;
+    
     public static void syncConfig(FMLPreInitializationEvent event) {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/deeperdepths/blocks.cfg"));
         try{
@@ -40,7 +46,7 @@ public class BlockConfig {
             candle = new BlockStatEntry(config, "candle", 0.5, 0.5, 0);
             cobbledDeepslate = new BlockStatEntry(config, "cobbled deepslate", 3.5, 6, 0);
             copper = new BlockStatEntry(config, "copper", 3, 6, 1);
-            bulkCopper = config.get("copper", "bulkCopper", true, "Can copper items be crafted in bulk using blocks?").getBoolean();
+            //bulkCopper = config.get("copper", "bulkCopper", true, "Can copper items be crafted in bulk using blocks?").getBoolean();
             tastyCopper = config.get("copper", "tastyCopper", false, "Is copper tasty?").getBoolean();
             copperAges = config.get("copper", "copperAges", true, "Does copper age?").getBoolean();
             copperAgeChance = config.get("copper", "ageChance", 0.05688889, "Decimal chance for copper to attempt to age?").getDouble();
@@ -59,6 +65,22 @@ public class BlockConfig {
         } finally {
             if (config.hasChanged()) config.save();
         }
+    }
+    
+    public static boolean isWax(ItemStack stack) {
+        if (stack == null) return false;
+        for (ItemStack stack1 : getWaxItems()) {
+            if (stack1 == null) return false;
+            if (OreDictionary.itemMatches(stack1, stack, false)) return true;
+        }
+        return false;
+    }
+    
+    public static List<ItemStack> getWaxItems() {
+        if (waxItems == null) {
+            waxItems = Lists.newArrayList(OreDictionary.getOres("wax"));
+        }
+        return waxItems;
     }
     
 }

@@ -2,11 +2,11 @@ package com.deeperdepths.integration.jei;
 
 import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.items.ICopperItem;
+import com.deeperdepths.config.BlockConfig;
 import com.google.common.collect.Lists;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -36,7 +36,7 @@ public class JEIIntegration implements IModPlugin {
         registry.handleRecipes(SimpleRecipeWrapper.class, r -> r, WAXING_ID);
         registry.handleRecipes(SimpleRecipeWrapper.class, r -> r, SCRAPING_ID);
         registry.handleRecipes(SimpleRecipeWrapper.class, r -> r, WEATHERING_ID);
-        registry.addRecipeCatalyst(new ItemStack(Items.SLIME_BALL), WAXING_ID);
+        for (ItemStack stack : BlockConfig.getWaxItems()) registry.addRecipeCatalyst(stack, WAXING_ID);
         List<SimpleRecipeWrapper> waxing_recipes = Lists.newArrayList();
         List<SimpleRecipeWrapper> scraping_recipes = Lists.newArrayList();
         List<SimpleRecipeWrapper> weathering_recipes = Lists.newArrayList();

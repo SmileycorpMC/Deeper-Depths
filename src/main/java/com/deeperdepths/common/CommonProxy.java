@@ -69,6 +69,7 @@ public class CommonProxy {
                 return entitywindcharge;
             }
         });
+        DeeperDepthsRecipes.registerLateRecipes();
     }
     
     public void serverStart(FMLServerStartingEvent event) {

@@ -12,6 +12,7 @@ import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.items.ItemMace;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.common.potion.PotionDeeperDepths;
+import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -22,7 +23,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -75,7 +75,7 @@ public class DeeperDepthsEventHandler {
         if (copper.interactRequiresSneak() &! entity.isSneaking()) return;
         if (stack.getItem().getToolClasses(stack).contains("axe"))
             copper.scrape(entity, world, stack, state, pos, event.getHand());
-        if (stack.getItem() == Items.SLIME_BALL) copper.wax(entity, world, stack, state, pos, event.getHand());
+        if (BlockConfig.isWax(stack)) copper.wax(entity, world, stack, state, pos, event.getHand());
     }
     
     @SubscribeEvent

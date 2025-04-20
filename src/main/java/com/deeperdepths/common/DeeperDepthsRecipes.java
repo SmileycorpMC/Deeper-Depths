@@ -34,6 +34,11 @@ public class DeeperDepthsRecipes {
         if (Loader.isModLoaded("futuremc")) FutureMCIntegration.registerRecipes();
     }
     
+    public static void registerLateRecipes() {
+        for (ItemStack stack : OreDictionary.getOres("tallow")) OreDictionary.registerOre("wax", stack);
+        if (OreDictionary.getOres("wax").isEmpty()) OreDictionary.registerOre("wax", Items.SLIME_BALL);
+    }
+    
     private static void registerOreDictionary() {
         OreDictionary.registerOre("ingotCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 0));
         OreDictionary.registerOre("gemAmethyst", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 1));
@@ -52,7 +57,6 @@ public class DeeperDepthsRecipes {
         for (int i = 0; i < DeeperDepthsBlocks.CHISELED_COPPER.getMaxMeta(); i++)
             OreDictionary.registerOre("blockCopperChiseled", new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, i));
         OreDictionary.registerOre("blockGlass", new ItemStack(DeeperDepthsBlocks.TINTED_GLASS));
-        OreDictionary.registerOre("wax", new ItemStack(Items.SLIME_BALL));
     }
     
     private static void registerFurnaceRecipes() {
