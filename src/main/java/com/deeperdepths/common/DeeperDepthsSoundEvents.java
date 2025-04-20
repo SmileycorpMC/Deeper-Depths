@@ -254,7 +254,8 @@ public class DeeperDepthsSoundEvents {
     //bad omen
     public static final SoundEvent MOB_EFFECT_BAD_OMEN = readyForRegistry(Constants.loc("event.mob_effect.bad_omen"));
     public static final SoundEvent MOB_EFFECT_TRIAL_OMEN = readyForRegistry(Constants.loc("event.mob_effect.trial_omen"));
-    
+    public static final SoundEvent MOB_EFFECT_WEAVING_PLACE = readyForRegistry(Constants.loc("event.mob_effect.weaving.place"));
+
     //mace
     public static final SoundEvent MACE_SMASH_AIR = readyForRegistry(Constants.loc("item.mace.smash_air"));
     public static final SoundEvent MACE_SMASH_GROUND = readyForRegistry(Constants.loc("item.mace.smash_ground"));
