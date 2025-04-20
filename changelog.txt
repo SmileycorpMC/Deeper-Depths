@@ -4,7 +4,13 @@ Bug Fixes
 
 ~ fix issues with recipes displaying error copper blocks caused by certain mods not liking wildcard oredicts
 
-+ fix issues with lightning rods not being saved to world data properly
+~ fix issues with lightning rods not being saved to world data properly
+
+~ fix trial chamber painting pick result not getting the correct item
+
+~ fix trial spawners not correctly removing ominous state
+
+~ fix vaults forgetting participating players on chunk reloads
 
 Additions/Changes
 
@@ -16,4 +22,4 @@ Additions/Changes
 
 ~ Update idylic 2 painting texture
 
-+ Change trial spawner entity position calculations to better reflect changes in 1.21.3
+~ Change trial spawner entity position calculations to better reflect changes in 1.21.3
