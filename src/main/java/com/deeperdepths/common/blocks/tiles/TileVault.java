@@ -224,7 +224,7 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         }
         if (nbt.hasKey("rewarded_players")) {
             rewarded_players.clear();
-            for (NBTBase tag : nbt.getTagList("stored_items", 10)) rewarded_players.add(NBTUtil.getUUIDFromTag((NBTTagCompound) tag));
+            for (NBTBase tag : nbt.getTagList("rewarded_players", 10)) rewarded_players.add(NBTUtil.getUUIDFromTag((NBTTagCompound) tag));
         }
         if (nbt.hasKey("ejected_items")) ejected_items = nbt.getInteger("ejected_items");
     }
@@ -237,10 +237,12 @@ public class TileVault extends TileEntity implements ITickable, ILootContainer {
         if (!stored_items.isEmpty()) {
             NBTTagList items = new NBTTagList();
             for (ItemStack stack : stored_items) items.appendTag(stack.serializeNBT());
+            nbt.setTag("stored_items", items);
         }
         if (!rewarded_players.isEmpty()) {
             NBTTagList players = new NBTTagList();
             for (UUID uuid : rewarded_players) players.appendTag(NBTUtil.createUUIDTag(uuid));
+            nbt.setTag("rewarded_players", players);
         }
         nbt.setInteger("ejected_items", ejected_items);
         return nbt;
