@@ -72,16 +72,13 @@ public class BlockDDStoneSlab extends BlockDDSlab {
     }
     
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return (isDouble() ? getDefaultState() : getDefaultState().withProperty(HALF, meta >= 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM))
-                .withProperty(VARIANT, EnumStoneType.getShaped(meta));
-    }
+    public IBlockState getStateFromMeta(int meta)
+    { return (isDouble() ? getDefaultState() : getDefaultState().withProperty(HALF, meta >= 8 ? EnumBlockHalf.TOP : EnumBlockHalf.BOTTOM)).withProperty(VARIANT, EnumStoneType.getShaped(meta % 8)); }
     
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return (isDouble() ? 0 : (state.getValue(HALF) == EnumBlockHalf.TOP ? 8 : 0)) + state.getValue(VARIANT).getShapedMeta();
-    }
-    
+    public int getMetaFromState(IBlockState state)
+    {  return (isDouble() ? 0 : (state.getValue(HALF) == EnumBlockHalf.TOP ? 8 : 0)) + state.getValue(VARIANT).getShapedMeta();  }
+
     @Override
     public ItemStack getItem(World world, BlockPos pos, IBlockState state) {
         return new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 1, getMetaFromState(state) % 8);
