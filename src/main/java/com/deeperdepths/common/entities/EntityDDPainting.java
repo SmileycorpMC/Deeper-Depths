@@ -9,11 +9,13 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EntityDDPainting extends EntityHanging implements IEntityAdditionalSpawnData {
@@ -68,6 +70,10 @@ public class EntityDDPainting extends EntityHanging implements IEntityAdditional
         this.setPosition((double)this.hangingPosition.getX(), (double)this.hangingPosition.getY(), (double)this.hangingPosition.getZ());
     }
 
+    @Override
+    @Nonnull
+    public ItemStack getPickedResult(RayTraceResult target)
+    { return new ItemStack(DeeperDepthsItems.TRIAL_CHAMBERS_PAINTING); }
 
     @Override
     public void writeSpawnData(ByteBuf buf) {
