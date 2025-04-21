@@ -342,12 +342,13 @@ jei.category.deeperdepths.waxing=Waxing
 jei.category.deeperdepths.scraping=Scraping
 jei.category.deeperdepths.weathering=Weathering
 
-effect.deeperdepths.wind_charged.0.desc=Emit a Wind Charge when killed
-effect.deeperdepths.weaving.0.desc=Move faster in cobwebs, spawn some when killed
-effect.deeperdepths.infested.0.desc=Chance to spawn silverfish when killed
-effect.deeperdepths.oozing.0.desc=Spawn 2 slimes when killed
+effect.deeperdepths.bad_omen.0.desc = Causes an ominous event near Villages or Trial Spawners.
+effect.deeperdepths.infested.0.desc = 10% chance to spawn 1-2 Silverfish when hurt.
+effect.deeperdepths.oozing.0.desc = Spawns 2 Slimes upon death.
+effect.deeperdepths.trial_omen.0.desc = Transforms nearby Trial Spawners into Ominous Spawners.
+effect.deeperdepths.wind_charged.0.desc = Spawns a wind burst upon death.
+effect.deeperdepths.weaving.0.desc = Reduces Cobweb slowing; places 2-3 Cobwebs upon death. 
 
-description.effect.deeperdepths.wind_charged=Emit a Wind Charge when killed
-description.effect.deeperdepths.weaving=Move faster in cobwebs, spawn some when killed
-description.effect.deeperdepths.infested=Chance to spawn silverfish when killed
-description.effect.deeperdepths.oozing=Spawn 2 slimes when killed
+enchantment.deeperdepths.breach.desc = Smash Attacks ignores 15% of armor, pre level.
+enchantment.deeperdepths.density.desc = Increases Smash Attack damage by +0.5 per level.
+enchantment.deeperdepths.wind_burst.desc = Smash Attacks spawn a wind burst, launching the user up.
