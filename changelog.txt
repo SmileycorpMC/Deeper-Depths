@@ -1,14 +1,18 @@
 1.0.3
 
-+ Added Future MC Stonecutter support for Deepslate, Tuffz and Copper Blocks
++ Added Future MC Stonecutter support for Deepslate, Tuff and Copper Blocks
 + Added JEI categories for Waxing, Scraping, and Weathering
 + Added additional Weaving Effects:
   + Cloud puff particles
   + Placement sounds
++ Added support for Enchantment Descriptions
++ Added support for Potion Descriptions
++ Added FutureMC Honeycomb to the "wax" oredictionary if installed
 
 ~ Switched Recipes to .jsons instead of being hardcoded
 ~ Updated `idylic 2` Painting Texture
 ~ Changed Trial Spawner entity spawn position calculations to better reflect changes in 1.21.3
+~ Changed wax for Copper Waxing and Candle crafting use the "wax" ordictionary instead of being hardcoded to use slimeballs
 
 + Fixed Stone Top Slabs getting replaced with Tuff Top Slabs upon reload
 + Fixed `ItemDeeperDepthsMaterial` causing a Crash if spawned in unsupported metadata values
