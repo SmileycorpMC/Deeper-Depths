@@ -18,7 +18,7 @@ public class Constants {
 	
 	public static final String NAME = "Deeper Depths";
 	public static final String MODID = "deeperdepths";
-	public static final String VERSION = "1.0.3";
+	public static final String VERSION = "1.0.3a";
 	public static final String DEPENDENCIES = "required-after:atlaslib";
 	public static final String PATH = "com.deeperdepths.";
 	public static final String CLIENT = PATH + "client.ClientProxy";

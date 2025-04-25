@@ -1,24 +1,3 @@
-1.0.3
+1.0.3a
 
-+ Added Future MC Stonecutter support for Deepslate, Tuff and Copper Blocks
-+ Added JEI categories for Waxing, Scraping, and Weathering
-+ Added additional Weaving Effects:
-  + Cloud puff particles
-  + Placement sounds
-+ Added support for Enchantment Descriptions
-+ Added support for Potion Descriptions
-+ Added FutureMC Honeycomb to the "wax" oredictionary if installed
-
-~ Switched Recipes to .jsons instead of being hardcoded
-~ Updated `idylic 2` Painting Texture
-~ Changed Trial Spawner entity spawn position calculations to better reflect changes in 1.21.3
-~ Changed wax for Copper Waxing and Candle crafting to use the "wax" ordictionary instead of being hardcoded to use slimeballs
-
-+ Fixed Stone Top Slabs getting replaced with Tuff Top Slabs upon reload
-+ Fixed `ItemDeeperDepthsMaterial` causing a Crash if spawned in unsupported metadata values
-+ Fixed Copper Scraping not working for Axes or Axelike tools not extending `ItemAxe`
-+ Fixed wildcard OreDicts causing recipe display errors with certain mods
-+ Fixed Lightning Rods not being saved to world data properly
-+ Fixed Trial Painting pick result giving the wrong item
-+ Fixed Trial Spawners not correctly removing ominous state
-+ Fixed Trial and Ominous Vaults not saving previous players upon reload
+~ Fixed Copper Ore not having the oreCopper ore dictionary
