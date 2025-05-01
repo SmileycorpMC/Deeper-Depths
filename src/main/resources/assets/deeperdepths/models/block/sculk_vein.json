@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "deeperdepths:block/sculk_vein",
-        "sculk_vein": "deeperdepths:block/sculk_vein"
+        "particle": "deeperdepths:blocks/sculk_vein",
+        "sculk_vein": "deeperdepths:blocks/sculk_vein"
     },
     "elements": [
         {   "from": [ 0, 0, 0.1 ],
