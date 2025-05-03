@@ -74,8 +74,8 @@ public class DeeperDepthsBlocks {
     public static final Block[] SCULK_VEINS = {new BlockSculkVein(0), new BlockSculkVein(1),
             new BlockSculkVein(2), new BlockSculkVein(3)};
     public static final Block SCULK_CATALYST = new BlockSculkCatalyst();
-    /*public static final Block SCULK_SHRIEKER = null;
-    public static final Block SCULK_SENSOR = null;
+    public static final Block SCULK_SHRIEKER = new BlockSculkShrieker();
+    /*public static final Block SCULK_SENSOR = null;
     public static final Block CALIBRATED_SCULK_SENSOR = null;*/
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part

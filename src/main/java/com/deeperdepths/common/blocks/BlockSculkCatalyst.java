@@ -39,7 +39,10 @@ public class BlockSculkCatalyst extends BlockSculk implements ITileEntityProvide
         if (!world.isRemote && tile != null)
         {
             tile.activeSpreaders.add(new SculkCharge(world, pos.down(), 5));
-            DeeperDepths.proxy.spawnParticle(8, world, pos.getX() + 0.5f, pos.getY() + 1.1F, pos.getZ() + 0.5f, 0, 0.1, 0);
+
+            for (int i = 0; i < 10; i++)
+            { DeeperDepths.proxy.spawnParticle(8, world, pos.getX() + 0.5f, pos.getY() + 0.9F, pos.getZ() + 0.5f, 0, 0.1, 0, 5 * i); }
+
             world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,  DeeperDepthsSoundEvents.TRIAL_POT_INSERT, SoundCategory.BLOCKS, 1, 1);
         }
         return true;
