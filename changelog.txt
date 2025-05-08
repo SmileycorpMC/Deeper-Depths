@@ -4,7 +4,7 @@
 ~ Changed Copper recipes to be compatible with the blockCopper oredict
 ~ Fixed using pickblock on Deepslate in creative mode giving an error block
 ~ Fixed Copper Bulb recipes not loading correctly
-~ Fixed dropped paintings crashing servers
+~ Fixed destroying paintings crashing on servers
 ~ Fixed removed entity error message being added to logs when using Wind Charge
 ~ Renamed some recipe jsons to have better formatting and consistency
 - Removed debug statements left over from development
