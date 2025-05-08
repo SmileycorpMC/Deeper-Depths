@@ -9,8 +9,8 @@
   ],
   "key": {
     "M": {
-      "item": "deeperdepths:copper_block",
-      "data": 0
+      "type": "forge:ore_dict",
+      "ore": "blockCopper"
     }
   },
   "result": {
