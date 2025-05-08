@@ -1,3 +1,8 @@
-1.0.3a
+1.0.3b
 
-~ Fixed Copper Ore not having the oreCopper ore dictionary
++ Changed copper recipes to be compatible with the blockCopper oredict
++ Readded missing bulk and waxed crafting recipes
+~ Fixed using pickblock on Deepslate in creative mode giving an error block
+~ Fixed copper bulb recipes not loading correctly
+~ Renamde some recipe jsons to have better formatting and consistency
+- Removed debug statements left over from development
