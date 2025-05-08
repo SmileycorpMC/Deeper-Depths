@@ -102,7 +102,6 @@ public class DeeperDepthsEventHandler {
     public void remapItems(RegistryEvent.MissingMappings<Item> event) {
         if (Loader.isModLoaded("raids")) return;
         for (RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
-            DeeperDepths.info(mapping.key);
             if (mapping.key.equals(new ResourceLocation("raids:ominous_bottle"))) {
                 mapping.remap(DeeperDepthsItems.OMINOUS_BOTTLE);
                 return;
@@ -114,7 +113,6 @@ public class DeeperDepthsEventHandler {
     public void remapEffects(RegistryEvent.MissingMappings<Potion> event) {
         if (Loader.isModLoaded("raids")) return;
         for (RegistryEvent.MissingMappings.Mapping<Potion> mapping : event.getAllMappings()) {
-            DeeperDepths.info(mapping.key);
             if (mapping.key.equals(new ResourceLocation("raids:bad_omen"))) {
                 mapping.remap(DeeperDepthsPotions.BAD_OMEN);
                 return;
@@ -285,12 +283,9 @@ public class DeeperDepthsEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void livingHurt(LivingAttackEvent event) {
         DamageSource source = event.getSource();
-        if (source.getImmediateSource() instanceof EntityPlayerMP) {
-            if (((EntityPlayerMP) source.getImmediateSource()).getHeldItemMainhand().getItem() instanceof ItemMace) {
+        if (source.getImmediateSource() instanceof EntityPlayerMP)
+            if (((EntityPlayerMP) source.getImmediateSource()).getHeldItemMainhand().getItem() instanceof ItemMace)
                 if (ItemMace.CACHED_HEALTH == 0) ItemMace.CACHED_HEALTH = event.getEntityLiving().getHealth();
-                DeeperDepths.info(ItemMace.CACHED_HEALTH);
-            }
-        }
     }
 
     //extra jank but I wanna make sure the cache gets cleared if the damage is cancelled
