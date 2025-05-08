@@ -1,0 +1,21 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "MM",
+    "MM",
+    "MM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:copper_block",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "deeperdepths:exposed_copper_door",
+    "data": 0,
+    "count": 27
+  }
+}
