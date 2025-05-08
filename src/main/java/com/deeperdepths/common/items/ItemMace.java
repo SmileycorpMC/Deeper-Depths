@@ -128,9 +128,8 @@ public class ItemMace extends ItemDeeperDepths
         entitywindcharge.setBurstRange(10F);
         entitywindcharge.setBurstInteractRange(5F);
         entitywindcharge.forceSpawn = true;
-        entitywindcharge.forceExplode(null);
         spawnPoint.world.spawnEntity(entitywindcharge);
-        entitywindcharge.setDead();
+        entitywindcharge.forceExplode(null);
     }
 
     /** Pushes entities away from the struck target. */
