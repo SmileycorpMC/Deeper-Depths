@@ -15,6 +15,10 @@
     "R": {
       "type": "forge:ore_dict",
       "ore": "dustRedstone"
+    },
+	"B": {
+      "type": "forge:ore_dict",
+      "ore": "dustBlaze"
     }
   },
   "result": {
