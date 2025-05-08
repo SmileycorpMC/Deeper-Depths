@@ -4,26 +4,18 @@
   "mirror": false,
   "pattern": [
     " M ",
-    "MBM",
-    " R "
+    "M M",
+    " M "
   ],
   "key": {
     "M": {
       "item": "deeperdepths:copper_block",
       "data": 7
-    },
-    "R": {
-      "type": "forge:ore_dict",
-      "ore": "dustRedstone"
-    },
-	"B": {
-      "type": "forge:ore_dict",
-      "ore": "dustBlaze"
     }
   },
   "result": {
-    "item": "deeperdepths:waxed_copper_bulb",
-    "data": 3,
+    "item": "deeperdepths:copper_grate",
+    "data": 7,
     "count": 4
   }
 }
