@@ -51,7 +51,7 @@ public class EntityDDPainting extends EntityHanging implements IEntityAdditional
                 }
             }
         }
-        this.entityDropItem(new ItemStack(DeeperDepthsItems.TRIAL_CHAMBERS_PAINTING.getDefaultInstance().getItem(), 1), 0.0F);
+        this.entityDropItem(new ItemStack(DeeperDepthsItems.TRIAL_CHAMBERS_PAINTING, 1), 0.0F);
     }
 
     @Override
