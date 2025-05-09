@@ -2,7 +2,6 @@ package com.deeperdepths.common;
 
 import com.deeperdepths.client.particle.*;
 import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.ParticleBlockDust;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;

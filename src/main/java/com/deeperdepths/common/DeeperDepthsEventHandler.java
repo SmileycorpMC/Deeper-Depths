@@ -33,6 +33,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -44,6 +45,7 @@ import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -302,6 +304,14 @@ public class DeeperDepthsEventHandler {
             if (((EntityPlayerMP) source.getImmediateSource()).getHeldItemMainhand().getItem() instanceof ItemMace)
                 if (ItemMace.CACHED_HEALTH != 0) ItemMace.CACHED_HEALTH = 0;
         }
+    }
+    
+    //used for sculk sensors, could be useful for other stuff later
+    @SubscribeEvent
+    public void worldLoad(WorldEvent.Load event) {
+        World world = event.getWorld();
+        if (!(world instanceof WorldServer)) return;
+        world.addEventListener(new DeeperDepthsWorldListener((WorldServer) world));
     }
     
 }

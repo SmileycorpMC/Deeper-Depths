@@ -10,6 +10,7 @@ import com.deeperdepths.common.network.ParticleMessage;
 import com.deeperdepths.common.world.loot.functions.ApplyEnchantments;
 import com.deeperdepths.config.BlockConfig;
 import com.deeperdepths.config.EntityConfig;
+import com.deeperdepths.config.SensorSoundHandler;
 import com.deeperdepths.config.WorldConfig;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
@@ -41,6 +42,7 @@ public class CommonProxy {
         LootFunctionManager.registerFunction(new ApplyEnchantments.Serializer());
         DeeperDepthsAdvancements.init();
         DeeperDepthsSoundEvents.registerSounds();
+        SensorSoundHandler.init();
     }
     
     public void init(FMLInitializationEvent event)
