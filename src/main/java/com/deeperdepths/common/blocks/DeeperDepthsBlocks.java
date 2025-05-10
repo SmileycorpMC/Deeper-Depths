@@ -5,10 +5,7 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.blocks.enums.EnumClusterSize;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
-import com.deeperdepths.common.blocks.tiles.TileSculkCatalyst;
-import com.deeperdepths.common.blocks.tiles.TileTrialPot;
-import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
-import com.deeperdepths.common.blocks.tiles.TileVault;
+import com.deeperdepths.common.blocks.tiles.*;
 import com.deeperdepths.config.BlockConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -75,8 +72,8 @@ public class DeeperDepthsBlocks {
             new BlockSculkVein(2), new BlockSculkVein(3)};
     public static final Block SCULK_CATALYST = new BlockSculkCatalyst();
     public static final Block SCULK_SHRIEKER = new BlockSculkShrieker();
-    /*public static final Block SCULK_SENSOR = null;
-    public static final Block CALIBRATED_SCULK_SENSOR = null;*/
+    public static final Block SCULK_SENSOR = new BlockSculkSensor("sculk_sensor");
+    //public static final Block CALIBRATED_SCULK_SENSOR = null;
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
@@ -116,6 +113,7 @@ public class DeeperDepthsBlocks {
         GameRegistry.registerTileEntity(TileVault.class, Constants.loc("vault"));
         GameRegistry.registerTileEntity(TileTrialPot.class, Constants.loc("pot"));
         GameRegistry.registerTileEntity(TileSculkCatalyst.class, Constants.loc("sculk_catalyst"));
+        GameRegistry.registerTileEntity(TileSculkSensor.class, Constants.loc("sculk_sensor"));
     }
     
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

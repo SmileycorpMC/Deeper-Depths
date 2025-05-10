@@ -1,6 +1,6 @@
 package com.deeperdepths.common;
 
-import com.deeperdepths.common.capabilities.SculkSensors;
+import com.deeperdepths.common.capabilities.VibrationHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +23,7 @@ public class DeeperDepthsWorldListener implements IWorldEventListener {
     
     @Override
     public void playSoundToAllNearExcept(@Nullable EntityPlayer player, SoundEvent sound, SoundCategory category, double x, double y, double z, float volume, float pitch) {
-        if (sound != null && volume > 0) SculkSensors.get(world).playSound(sound, x, y, z);
+        if (sound != null && volume > 0) VibrationHandler.getInstance(world).playSound(sound, x, y, z);
     }
     
     @Override
