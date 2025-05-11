@@ -19,7 +19,7 @@ public class WorldConfig {
             copperOre = new WorldGenEntry(config, "copper ore", 10, 16, 0, 112, 0);
             tuff = new WorldGenEntry(config, "tuff", 33, 2, 0, 16, 0);
             deepslate = new WorldGenEntry(config, "deepslate", 33, 0, 0, 16, 0);
-            trial_chambers = new WorldGenEntry(config, "trial_chambers", 525, new int[]{0}, 22);
+            trial_chambers = new WorldGenEntry(config, "trial_chambers", 150, new int[]{0}, 22);
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();

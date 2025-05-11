@@ -1,5 +1,6 @@
 package com.deeperdepths.common;
 
+import com.deeperdepths.common.commands.CommandLocateDD;
 import com.deeperdepths.common.world.DDOreGen;
 import com.deeperdepths.common.world.DDRegisterStructures;
 import com.deeperdepths.common.world.DDWorldGen;
@@ -77,5 +78,12 @@ public class DeeperDepths {
         //  sendNonLocal(message, playerMP);
         //  }
         //network.sendToAll(message);
+    }
+
+    @Mod.EventHandler
+    public void serverLoad(FMLServerStartingEvent event)
+    {
+        // register server commands
+        event.registerServerCommand(new CommandLocateDD());
     }
 }

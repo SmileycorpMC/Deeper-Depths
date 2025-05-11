@@ -1,5 +1,7 @@
-package com.deeperdepths.common.world.chambers;
+package com.deeperdepths.common.world.ancient_cities;
 
+import com.deeperdepths.common.world.chambers.TrialChambers;
+import com.deeperdepths.common.world.chambers.WorldGenTrialChambers;
 import com.deeperdepths.config.WorldConfig;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -12,34 +14,26 @@ import net.minecraftforge.common.BiomeDictionary;
 
 import java.util.Random;
 
-public class WorldGenTrialChambers extends WorldGenerator {
+public class WorldGenAncientCities extends WorldGenerator {
 
     private int spacing;
 
     private int separation;
-    public WorldGenTrialChambers() {
 
-        this.spacing = WorldConfig.trial_chambers.getSpawnChances();
+    public WorldGenAncientCities() {
+        this.spacing = 50;
         this.separation = 16;
     }
 
-
-
     @Override
     public boolean generate(World world, Random random, BlockPos pos) {
-        /**
-         * MAKE THIS CONFIGURABLE, SPACING IS THE AMOUNT OF EACH TIME IT IS CAPAPABLE OF GENERATING
-         */
-        //old 525
-        if(WorldConfig.trial_chambers.getSpawnChances() == 0) {
-            return false;
-        }
 
         if(canSpawnStructureAtPos(world, pos.getX() >> 4, pos.getZ() >> 4)) {
-                getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
-                        .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
-                return true;
+            getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
+                    .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 200, pos.getZ() - 200, pos.getX() + 200, pos.getZ() + 200));
+            return true;
         }
+
         return false;
     }
 
@@ -59,7 +53,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
 
         int k = chunkX / this.spacing;
         int l = chunkZ / this.spacing;
-        Random random =  world.setRandomSeed(k, l, 19930381);
+        Random random =  world.setRandomSeed(k, l, 19220485);
         k = k * this.spacing;
         l = l * this.spacing;
         k = k + (random.nextInt(this.spacing - this.separation) + random.nextInt(this.spacing - this.separation)) / 2;
@@ -77,16 +71,15 @@ public class WorldGenTrialChambers extends WorldGenerator {
     }
 
     public static boolean isAbleToSpawnHere(BlockPos pos, World world) {
-            Biome biomeCurrently = world.provider.getBiomeForCoords(pos);
-            if(BiomeDictionary.hasType(biomeCurrently, BiomeDictionary.Type.OCEAN)) {
-                return false;
-            }
-        return true;
+        Biome biomeCurrently = world.provider.getBiomeForCoords(pos);
+        if(BiomeDictionary.hasType(biomeCurrently, BiomeDictionary.Type.MOUNTAIN)) {
+            return true;
+        }
+        return false;
     }
 
-
     protected StructureStart getStructureStart(World world, int chunkX, int chunkZ, Random rand) {
-        return new WorldGenTrialChambers.Start(world, rand , chunkX, chunkZ);
+        return new WorldGenAncientCities.Start(world, rand , chunkX, chunkZ);
     }
 
 
@@ -98,35 +91,34 @@ public class WorldGenTrialChambers extends WorldGenerator {
 
         public Start(World worldIn, Random rand, int chunkX, int chunkZ) {
             super(chunkX, chunkZ);
-            this.createChambers(worldIn, rand, chunkX, chunkZ);
+            this.createCity(worldIn, rand, chunkX, chunkZ);
         }
 
-
-        protected void createChambers(World world, Random rand, int chunkX, int chunkZ) {
+        protected void createCity(World world, Random rand, int chunkX, int chunkZ) {
             Random random = new Random(chunkX + chunkZ * 10387313L);
             int rand2 = random.nextInt(Rotation.values().length);
             BlockPos posI = new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8);
 
             //You can add more additional parameters or second checks to things before it starts the physical structure
-                for(int i = 0; i < 4; i++) {
-                    Rotation rotation = Rotation.values()[(rand2 + i) % Rotation.values().length];
-                    components.clear();
-                    //Set IAW with the best Position to spawn the first layer of the chambers at
-                    BlockPos blockpos = posI.add(0, WorldConfig.trial_chambers.getMinHeight(), 0);
-                    TrialChambers chambers = new TrialChambers(world, world.getSaveHandler().getStructureTemplateManager(), components);
-                    //Starts the first room within the Trial Chambers
-                    chambers.startChambers(blockpos, rotation);
-                    this.updateBoundingBox();
+            for(int i = 0; i < 4; i++) {
+                Rotation rotation = Rotation.values()[(rand2 + i) % Rotation.values().length];
+                components.clear();
+                //Set IAW with the best Position to spawn the Ancient City
+                BlockPos blockpos = posI.add(0, 7, 0);
+                AncientCities city = new AncientCities(world, world.getSaveHandler().getStructureTemplateManager(), components);
+
+                //Starts the centerPiece of the Ancient City
+              //  chambers.startChambers(blockpos, rotation);
+                this.updateBoundingBox();
 
 
 
-                    if (this.isSizeableStructure()) {
+                if (this.isSizeableStructure()) {
 
-                        break;
-                    }
+                    break;
                 }
+            }
         }
-
 
         @Override
         public void generateStructure(World worldIn, Random rand, StructureBoundingBox structurebb)
@@ -139,6 +131,7 @@ public class WorldGenTrialChambers extends WorldGenerator {
         public boolean isSizeableStructure() {
             return components.size() > 6;
         }
+
     }
 
 }
