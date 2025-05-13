@@ -1,8 +1,5 @@
 package com.deeperdepths.common.world.ancient_cities;
 
-import com.deeperdepths.common.world.chambers.TrialChambers;
-import com.deeperdepths.common.world.chambers.WorldGenTrialChambers;
-import com.deeperdepths.config.WorldConfig;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

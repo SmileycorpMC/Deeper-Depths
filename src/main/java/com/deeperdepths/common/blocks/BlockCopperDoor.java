@@ -196,6 +196,8 @@ public class BlockCopperDoor extends BlockDoor implements IBlockProperties, ICop
     
     @Override
     public boolean isEdible(ItemStack stack) {
+        //💀
+        if (!Constants.FUNNY &! BlockConfig.tastyCopper) return false;
         return stage != EnumWeatherStage.NORMAL;
     }
     
