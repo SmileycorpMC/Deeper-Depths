@@ -183,11 +183,6 @@ public class BlockLightningRod extends BlockDeeperDepths implements ICopperBlock
     }
 
     @Override
-    public boolean interactRequiresSneak() {
-        return true;
-    }
-
-    @Override
     public boolean isEdible(ItemStack stack) {
         //💀
         if (!Constants.FUNNY &! BlockConfig.tastyCopper) return false;

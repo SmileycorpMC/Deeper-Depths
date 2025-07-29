@@ -2,26 +2,26 @@
     "forge_marker": 1,
     "variants": {
 		"normal": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/exposed_lightning_rod"
             }
         },
         "facing=up,powered=false": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/exposed_lightning_rod"
             }
         },
         "facing=down,powered=false": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/exposed_lightning_rod"
             },
             "x": 180
         },
         "facing=east,powered=false": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/exposed_lightning_rod"
             },
@@ -29,7 +29,7 @@
             "x": 90
         },
         "facing=south,powered=false": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/exposed_lightning_rod"
             },
@@ -37,7 +37,7 @@
             "x": 90
         },
         "facing=west,powered=false": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/exposed_lightning_rod"
             },
@@ -45,7 +45,7 @@
             "x": 90
         },
         "facing=north,powered=false": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/exposed_lightning_rod"
             },
@@ -53,20 +53,20 @@
             "x": 90
         },
 		"facing=up,powered=true": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/lightning_rod_powered"
             }
         },
         "facing=down,powered=true": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/lightning_rod_powered"
             },
             "x": 180
         },
         "facing=east,powered=true": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/lightning_rod_powered"
             },
@@ -74,7 +74,7 @@
             "x": 90
         },
         "facing=south,powered=true": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/lightning_rod_powered"
             },
@@ -82,7 +82,7 @@
             "x": 90
         },
         "facing=west,powered=true": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/lightning_rod_powered"
             },
@@ -90,7 +90,7 @@
             "x": 90
         },
         "facing=north,powered=true": {
-            "model": "deeperdepths:exposed_lightning_rod",
+            "model": "deeperdepths:lightning_rod",
             "textures": {
                 "0": "deeperdepths:blocks/lightning_rod_powered"
             },

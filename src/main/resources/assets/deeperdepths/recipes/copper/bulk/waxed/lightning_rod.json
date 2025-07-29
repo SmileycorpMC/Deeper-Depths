@@ -1,0 +1,21 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "M",
+    "M",
+    "M"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:copper_block",
+      "data": 4
+    }
+  },
+  "result": {
+    "item": "deeperdepths:waxed_lightning_rod",
+    "data": 0,
+    "count": 9
+  }
+}
