@@ -54,7 +54,8 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperTrapdoor> WAXED_COPPER_TRAPDOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockCopperDoor> WAXED_COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
-    public static final BlockLightningRod LIGHTNING_ROD = new BlockLightningRod();
+    public static final Map<EnumWeatherStage, BlockLightningRod> LIGHTNING_RODS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final Map<EnumWeatherStage, BlockLightningRod> WAXED_LIGHTNING_RODS = Maps.newEnumMap(EnumWeatherStage.class);
     
     public static final BlockAmethyst AMETHYST_BLOCK = new BlockAmethyst("amethyst_block");
     public static final BlockBuddingAmethyst BUDDING_AMETHYST = new BlockBuddingAmethyst();
@@ -89,6 +90,8 @@ public class DeeperDepthsBlocks {
             WAXED_COPPER_TRAPDOORS.put(stage, new BlockCopperTrapdoor(stage, true));
             COPPER_DOORS.put(stage, new BlockCopperDoor(stage, false));
             WAXED_COPPER_DOORS.put(stage, new BlockCopperDoor(stage, true));
+            LIGHTNING_RODS.put(stage, new BlockLightningRod(stage, false));
+            WAXED_LIGHTNING_RODS.put(stage, new BlockLightningRod(stage, true));
         }
         for (EnumDyeColor color : EnumDyeColor.values()) CANDLES.put(color, new BlockCandle(color));
         for (EnumClusterSize size : EnumClusterSize.values()) AMETHYST_BUDS.put(size, new BlockAmethystBud(size));
