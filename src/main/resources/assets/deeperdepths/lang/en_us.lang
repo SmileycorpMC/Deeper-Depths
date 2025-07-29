@@ -8,6 +8,7 @@ description.deeperdepths.trial_chambers_painting.artist=Foreck
 description.deeperdepths.trial_chambers_painting.dimensions=3x2
 
 item.deeperdepths.copper_ingot.name=Copper Ingot
+item.deeperdepths.copper_nugget.name=Copper Nugget
 item.deeperdepths.amethyst_shard.name=Amethyst Shard
 item.deeperdepths.echo_shard.name=Echo Shard
 item.deeperdepths.breeze_rod.name=Breeze Rod
@@ -21,6 +22,16 @@ item.deeperdepths.spyglass.name=Spyglass
 item.deeperdepths.recovery_compass.name=Recovery Compass
 item.deeperdepths.mace.name=Mace
 item.deeperdepths.trial_chambers_painting.name=Trial Chambers Painting
+item.deeperdepths.copper_axe.name=Copper Axe
+item.deeperdepths.copper_hoe.name=Copper Hoe
+item.deeperdepths.copper_pickaxe.name=Copper Pickaxe
+item.deeperdepths.copper_shovel.name=Copper Shovel
+item.deeperdepths.copper_sword.name=Copper Sword
+item.deeperdepths.copper_helmet.name=Copper Helmet
+item.deeperdepths.copper_chestplate.name=Copper Chestplate
+item.deeperdepths.copper_leggings.name=Copper Leggings
+item.deeperdepths.copper_boots.name=Copper Boots
+item.deeperdepths.copper_horse_armour.name=Copper Horse Armor
 
 tile.deeperdepths.tuff.name=Tuff
 tile.deeperdepths.tuff_slab.name=Tuff Slab
@@ -166,6 +177,24 @@ tile.deeperdepths.waxed_exposed_lightning_rod.name=Waxed Exposed Lightning Rod
 tile.deeperdepths.waxed_weathered_lightning_rod.name=Waxed Weathered Lightning Rod
 tile.deeperdepths.waxed_oxidized_lightning_rod.name=Waxed Oxidized Lightning Rod
 
+tile.deeperdepths.copper_chest.name=Copper Chest
+tile.deeperdepths.exposed_copper_chest.name=Exposed Copper Chest
+tile.deeperdepths.weathered_copper_chest.name=Weathered Copper Chest
+tile.deeperdepths.oxidized_copper_chest.name=Oxidized Copper Chest
+tile.deeperdepths.waxed_copper_chest.name=Waxed Copper Chest
+tile.deeperdepths.waxed_exposed_copper_chest.name=Waxed Exposed Copper Chest
+tile.deeperdepths.waxed_weathered_copper_chest.name=Waxed Weathered Copper Chest
+tile.deeperdepths.waxed_oxidized_copper_chest.name=Waxed Oxidized Copper Chest
+
+tile.deeperdepths.copper_golem_statue.name=Copper Golem Statue
+tile.deeperdepths.exposed_copper_golem_statue.name=Exposed Copper Golem Statue
+tile.deeperdepths.weathered_copper_golem_statue.name=Weathered Copper Golem Statue
+tile.deeperdepths.oxidized_copper_golem_statue.name=Oxidized Copper Golem Statue
+tile.deeperdepths.waxed_copper_golem_statue.name=Waxed Copper Golem Statue
+tile.deeperdepths.waxed_exposed_copper_golem_statue.name=Waxed Exposed Copper Golem Statue
+tile.deeperdepths.waxed_weathered_copper_golem_statue.name=Waxed Weathered Copper Golem Statue
+tile.deeperdepths.waxed_oxidized_copper_golem_statue.name=Waxed Oxidized Copper Golem Statue
+
 tile.deeperdepths.candle.name=Candle
 tile.deeperdepths.white_candle.name=White Candle
 tile.deeperdepths.orange_candle.name=Orange Candle
@@ -206,6 +235,7 @@ entity.deeperdepths.bogged.name=Bogged
 entity.deeperdepths.breeze.name=Breeze
 entity.deeperdepths.bleeze.name=Bleeze
 entity.deeperdepths.warden.name=Warden
+entity.deeperdepths.copper_golem.name=Copper Golem
 
 potion.potency.3=IV
 potion.potency.4=V
@@ -347,7 +377,7 @@ effect.deeperdepths.infested.0.desc = 10% chance to spawn 1-2 Silverfish when hu
 effect.deeperdepths.oozing.0.desc = Spawns 2 Slimes upon death.
 effect.deeperdepths.trial_omen.0.desc = Transforms nearby Trial Spawners into Ominous Spawners.
 effect.deeperdepths.wind_charged.0.desc = Spawns a wind burst upon death.
-effect.deeperdepths.weaving.0.desc = Reduces Cobweb slowing; places 2-3 Cobwebs upon death. 
+effect.deeperdepths.weaving.0.desc = Reduces Cobweb slowing; places 2-3 Cobwebs upon death.
 
 enchantment.deeperdepths.breach.desc = Smash Attacks ignores 15% of armor, pre level.
 enchantment.deeperdepths.density.desc = Increases Smash Attack damage by +0.5 per level.

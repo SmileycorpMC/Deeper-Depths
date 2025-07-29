@@ -3,17 +3,17 @@
   "type": "minecraft:crafting_shaped",
   "mirror": false,
   "pattern": [
-    "M"
+    "M M",
+    "M M"
   ],
   "key": {
     "M": {
       "type": "forge:ore_dict",
-      "ore": "blockCopper"
+      "ore": "ingotCopper"
     }
   },
   "result": {
-    "item": "deeperdepths:material",
-    "data": 0,
-    "count": 9
+    "item": "deeperdepths:copper_boots",
+    "count": 1
   }
 }

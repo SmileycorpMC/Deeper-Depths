@@ -9,7 +9,7 @@ import net.minecraftforge.common.IRarity;
 
 public class ItemDeeperDepthsMaterial extends ItemDeeperDepths
 {
-    private final String[] variants = {"copper_ingot", "amethyst_shard", "echo_shard", "breeze_rod"};
+    private final String[] variants = {"copper_ingot", "amethyst_shard", "echo_shard", "breeze_rod", "copper_nugget"};
     
     public ItemDeeperDepthsMaterial()
     {
@@ -27,10 +27,12 @@ public class ItemDeeperDepthsMaterial extends ItemDeeperDepths
     }
     
     @Override
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
-    {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!isInCreativeTab(tab)) return;
-        for (int i = 0; i < variants.length; i++) if (i != 2) items.add(new ItemStack(this, 1, i));
+        items.add(new ItemStack(this, 1, 0));
+        items.add(new ItemStack(this, 1, 4));
+        items.add(new ItemStack(this, 1, 1));
+        items.add(new ItemStack(this, 1, 3));
     }
 
     @Override

@@ -79,6 +79,19 @@ public class DeeperDepthsTab extends CreativeTabs {
             stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage)));
             stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 1, stage.ordinal()));
         }
+        for (EnumWeatherStage stage : EnumWeatherStage.values()) {
+            stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal() + 4));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 1, stage.ordinal() + 4));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal() + 4));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_CUT_COPPER_STAIRS.get(stage)));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, stage.ordinal() + 4));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stage).getItem()));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage)));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 1, stage.ordinal()));
+        }
+        for (EnumWeatherStage stage : EnumWeatherStage.values()) stacks.add(new ItemStack(DeeperDepthsBlocks.LIGHTNING_RODS.get(stage)));
+        for (EnumWeatherStage stage : EnumWeatherStage.values()) stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_LIGHTNING_RODS.get(stage)));
         for (ItemStack stack : cached) if (!contains(stack, stacks)) stacks.add(stack);
     }
     

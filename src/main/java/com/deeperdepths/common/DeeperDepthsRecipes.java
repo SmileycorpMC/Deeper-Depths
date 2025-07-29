@@ -42,6 +42,7 @@ public class DeeperDepthsRecipes {
     private static void registerOreDictionary() {
         OreDictionary.registerOre("ingotCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 0));
         OreDictionary.registerOre("gemAmethyst", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 1));
+        OreDictionary.registerOre("nuggetCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4));
         OreDictionary.registerOre("stone", DeeperDepthsBlocks.DEEPSLATE);
         OreDictionary.registerOre("stoneDeepslate", DeeperDepthsBlocks.DEEPSLATE);
         OreDictionary.registerOre("stoneTuff", new ItemStack(DeeperDepthsBlocks.STONE, 1, 0));
@@ -67,6 +68,8 @@ public class DeeperDepthsRecipes {
                 new ItemStack(DeeperDepthsBlocks.STONE, 1, 10), 0.1f);
         GameRegistry.addSmelting(new ItemStack(DeeperDepthsBlocks.STONE, 1, 11),
                 new ItemStack(DeeperDepthsBlocks.STONE, 1, 12), 0.1f);
+        DeeperDepthsItems.COPPER_TOOLS.getItems().forEach(item ->
+                GameRegistry.addSmelting(item, new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4), 0.1F));
     }
 
     private static void registerBrewingRecipes() {

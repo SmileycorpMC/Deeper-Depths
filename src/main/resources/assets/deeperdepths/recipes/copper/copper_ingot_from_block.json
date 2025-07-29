@@ -1,0 +1,18 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "M"
+  ],
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+      "ore": "blockCopper"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:material",
+    "count": 9
+  }
+}

@@ -6,10 +6,12 @@ import com.deeperdepths.common.blocks.*;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.smileycorp.atlas.api.item.ToolSet;
 
 import java.lang.reflect.Field;
 import java.util.Set;
@@ -18,7 +20,7 @@ import java.util.Set;
 public class DeeperDepthsItems {
     
     public static final Set<Item> ITEMS = Sets.newHashSet();
-    
+
     //materials
     public static final Item MATERIALS = new ItemDeeperDepthsMaterial();
     //public static final Item TALLOW = null;
@@ -29,6 +31,9 @@ public class DeeperDepthsItems {
     public static final Item TRIAL_KEY = new ItemTrialKey();
     public static final Item MACE = new ItemMace();
     public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
+
+    public static final ToolSet COPPER_TOOLS = new ToolSet(Constants.MODID, "Copper",
+            EnumHelper.addToolMaterial("COPPER", 1, 190, 5, 1, 13), DeeperDepths.CREATIVE_TAB);
 
     //tools
     /*public static final Item SPYGLASS = null;
@@ -49,6 +54,7 @@ public class DeeperDepthsItems {
         for (Field field : DeeperDepthsItems.class.getDeclaredFields()) {
             try {
                 Object object = field.get(null);
+                if (object instanceof ToolSet) ((ToolSet)object).getItems().forEach(item -> register(registry, item));
                 if (!(object instanceof Item) || object == null) continue;
                 register(registry, (Item) object);
             } catch (Exception e) {
