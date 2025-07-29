@@ -30,6 +30,7 @@ public class EntityConfig {
             //breeze
             breeze = new EntityAttributesEntry(config, "breeze", 0.63, 24, 3, 30, 0, 0, 0);
             //warden = new EntityAttributesEntry(config, "warden", 0.3, 32, 30, 500, 0, 0, 1);
+            //copper_golem = new EntityAttributesEntry(config, "copper_golem", 0.2, 48, 0, 12, 0, 0, 0);
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();

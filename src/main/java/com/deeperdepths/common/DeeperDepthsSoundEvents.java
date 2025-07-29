@@ -268,6 +268,9 @@ public class DeeperDepthsSoundEvents {
     //ominous bottle
     public static final SoundEvent OMINOUS_BOTTLE_DISPOSE = readyForRegistry(Constants.loc("item.ominous_bottle.dispose"));
 
+    //copper armour
+    public static final SoundEvent ITEM_ARMOR_EQUIP_COPPER = readyForRegistry(Constants.loc("item.armor.equip_copper"));
+
     public static void registerSounds()
     { for (SoundEvent sounds : soundList) ForgeRegistries.SOUND_EVENTS.register(sounds); }
 

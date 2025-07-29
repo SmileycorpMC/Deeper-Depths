@@ -56,7 +56,11 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperDoor> WAXED_COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockLightningRod> LIGHTNING_RODS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockLightningRod> WAXED_LIGHTNING_RODS = Maps.newEnumMap(EnumWeatherStage.class);
-    
+    //public static final BlockCopperBulb COPPER_CHEST = new BlockCopperChest(false);
+    //public static final BlockCopperBulb WAXED_COPPER_CHEST = new BlockCopperChest(true);
+    //public static final BlockCopperGolemStatue GOLEM_STATUE = new BlockCopperGolemStatue(false);
+    //public static final BlockCopperGolemStatue WAXED_GOLEM_STATUE = new BlockCopperGolemStatue(true);
+
     public static final BlockAmethyst AMETHYST_BLOCK = new BlockAmethyst("amethyst_block");
     public static final BlockBuddingAmethyst BUDDING_AMETHYST = new BlockBuddingAmethyst();
     public static final Map<EnumClusterSize, BlockAmethystBud> AMETHYST_BUDS = Maps.newEnumMap(EnumClusterSize.class);
