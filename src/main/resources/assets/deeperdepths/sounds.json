@@ -2749,5 +2749,16 @@
             "deeperdepths:item/ominous_bottle_dispose"
         ],
         "subtitle": "subtitles.deeperdepths.item.ominous_bottle.dispose"
-    }
+    },
+	"item.armor.equip_copper": {
+		"sounds": [
+		  "deeperdepths:item/armor/equip_copper1",
+		  "deeperdepths:item/armor/equip_copper2",
+		  "deeperdepths:item/armor/equip_copper3",
+		  "deeperdepths:item/armor/equip_copper4",
+		  "deeperdepths:item/armor/equip_copper5",
+		  "deeperdepths:item/armor/equip_copper6"
+		],
+		"subtitle": "subtitles.deeperdepths.item.armor.equip_copper"
+	}
 }
