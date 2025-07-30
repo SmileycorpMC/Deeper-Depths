@@ -40,6 +40,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.item.IMetaItem;
 
@@ -47,6 +48,10 @@ import java.awt.*;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid= Constants.MODID)
 public class ClientProxy extends CommonProxy {
+
+    private static float FOV = 1;
+    private static float OLD_FOV = 1;
+    private static float SCOPE_SCALE = 1;
     
     public static ResourceLocation SPYGLASS_TEXTURE = Constants.loc("textures/misc/spyglass_scope.png");
     
@@ -128,56 +133,78 @@ public class ClientProxy extends CommonProxy {
         World world = minecraft.world;
         minecraft.effectRenderer.addEffect(Constants.getFactory(particle).createParticle(0, world, posX, posY, posZ, speedX, speedY, speedZ, parameters));
     }
+
+    @SubscribeEvent
+    public static void clientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.START) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayerSP player = mc.player;
+        if (player == null) return;
+        OLD_FOV = FOV;
+        if (player.getItemInUseCount() <= 0 && FOV == 1) return;
+        if ((player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS || mc.gameSettings.thirdPersonView != 0)
+                && FOV < 1) FOV = Math.min(FOV + (1 - FOV) * 0.5f, 1);
+        else if (mc.gameSettings.thirdPersonView == 0 && FOV > 0.1) {
+            FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
+        }
+    }
     
     @SubscribeEvent
     public static void fovEvent(EntityViewRenderEvent.FOVModifier event) {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (mc.gameSettings.thirdPersonView != 0) return;
-        EntityPlayerSP player = mc.player;
-        if (player.getItemInUseCount() <= 0) return;
-        if (player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS) return;
-        event.setFOV(0.1f * event.getFOV());
+        if (FOV >= 1) return;
+        event.setFOV((OLD_FOV + (FOV - OLD_FOV) * (float)event.getRenderPartialTicks()) * event.getFOV());
     }
     
     @SubscribeEvent
     public static void postRenderOverlay(RenderGameOverlayEvent.Pre event) {
         Minecraft mc = Minecraft.getMinecraft();
+        if (mc.gameSettings.thirdPersonView != 0) return;
         EntityPlayerSP player = mc.player;
         if (player == null || event.getType() != RenderGameOverlayEvent.ElementType.ALL) return;
-        if (player.getItemInUseCount() <= 0) return;
-        if (player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS) return;
+        if (player.getItemInUseCount() <= 0 || player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS) {
+            SCOPE_SCALE = 0.5f;
+            return;
+        }
         ScaledResolution resolution = event.getResolution();
-        int height = resolution.getScaledHeight();
-        int width = (resolution.getScaledWidth() - height) / 2;
+        SCOPE_SCALE = SCOPE_SCALE + (1.125f - SCOPE_SCALE) * event.getPartialTicks() * 0.5f;
+        double size = Math.min(resolution.getScaledHeight(), resolution.getScaledWidth()) * SCOPE_SCALE;
+        double x = (resolution.getScaledWidth() - size) / 2d;
+        double y = (resolution.getScaledHeight() - size) / 2d;
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.pushMatrix();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1, 1, 1, 1);
+        //top
+        drawBorder(0, 0, resolution.getScaledWidth(), y);
+        //bottom
+        drawBorder(0, y + size, resolution.getScaledWidth(), resolution.getScaledHeight());
+        //left
+        drawBorder(0, y, x, y + size);
+        //right
+        drawBorder(x + size, y, resolution.getScaledWidth(), y + size);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        mc.getTextureManager().bindTexture(SPYGLASS_TEXTURE);
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos(x, y + size, 0).tex(0, 1).endVertex();
+        bufferbuilder.pos(x + size, y + size, 0).tex(1, 1).endVertex();
+        bufferbuilder.pos(x + size, y, 0).tex(1, 0).endVertex();
+        bufferbuilder.pos(x, y, 0).tex(0, 0).endVertex();
+        tessellator.draw();
+        GlStateManager.popMatrix();
+        GlStateManager.disableBlend();
+    }
+
+    private static void drawBorder(double x0, double y0, double x1, double y1) {
+        if (x0 >= x1 || y0 >= y1) return;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        bufferbuilder.pos(0, height, 0).color(0, 0, 0, 1f).endVertex();
-        bufferbuilder.pos(width, height, 0).color(0, 0, 0, 1f).endVertex();
-        bufferbuilder.pos(width, 0, 0).color(0, 0, 0, 1f).endVertex();
-        bufferbuilder.pos(0, 0, 0).color(0, 0, 0, 1f).endVertex();
+        bufferbuilder.pos(x0, y1, 0).color(0, 0, 0, 1f).endVertex();
+        bufferbuilder.pos(x1, y1, 0).color(0, 0, 0, 1f).endVertex();
+        bufferbuilder.pos(x1, y0, 0).color(0, 0, 0, 1f).endVertex();
+        bufferbuilder.pos(x0, y0, 0).color(0, 0, 0, 1f).endVertex();
         tessellator.draw();
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        bufferbuilder.pos(width + height, height, 0).color(0, 0, 0, 1f).endVertex();
-        bufferbuilder.pos(resolution.getScaledWidth(), height, 0).color(0, 0, 0, 1f).endVertex();
-        bufferbuilder.pos(resolution.getScaledWidth(), 0, 0).color(0, 0, 0, 1f).endVertex();
-        bufferbuilder.pos(width + height, 0, 0).color(0, 0, 0, 1f).endVertex();
-        tessellator.draw();
-        mc.getTextureManager().bindTexture(SPYGLASS_TEXTURE);
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        bufferbuilder.pos(width, height, 0).tex(0, 1).endVertex();
-        bufferbuilder.pos(width + height, height, 0).tex(1, 1).endVertex();
-        bufferbuilder.pos(width + height, 0, 0).tex(1, 0).endVertex();
-        bufferbuilder.pos(width, 0, 0).tex(0, 0).endVertex();
-        tessellator.draw();
-        GlStateManager.popMatrix();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.disableBlend();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
     
 }
