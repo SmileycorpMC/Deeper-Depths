@@ -148,6 +148,19 @@ public class ClientProxy extends CommonProxy {
             FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
         }
     }
+
+    @SubscribeEvent
+    public static void renderTick(TickEvent.RenderTickEvent event) {
+        if (event.phase != TickEvent.Phase.START) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayerSP player = mc.player;
+        if (player == null) return;
+        if (player.getItemInUseCount() <= 0 || player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS) {
+            SCOPE_SCALE = 0.5f;
+            return;
+        }
+        SCOPE_SCALE = SCOPE_SCALE + (1.125f - SCOPE_SCALE) * event.renderTickTime * 0.5f;
+    }
     
     @SubscribeEvent
     public static void fovEvent(EntityViewRenderEvent.FOVModifier event) {
@@ -156,17 +169,13 @@ public class ClientProxy extends CommonProxy {
     }
     
     @SubscribeEvent
-    public static void postRenderOverlay(RenderGameOverlayEvent.Pre event) {
+    public static void preRenderOverlay(RenderGameOverlayEvent.Pre event) {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.gameSettings.thirdPersonView != 0) return;
         EntityPlayerSP player = mc.player;
         if (player == null || event.getType() != RenderGameOverlayEvent.ElementType.ALL) return;
-        if (player.getItemInUseCount() <= 0 || player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS) {
-            SCOPE_SCALE = 0.5f;
-            return;
-        }
+        if (player.getItemInUseCount() <= 0 || player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS) return;
         ScaledResolution resolution = event.getResolution();
-        SCOPE_SCALE = SCOPE_SCALE + (1.125f - SCOPE_SCALE) * event.getPartialTicks() * 0.5f;
         double size = Math.min(resolution.getScaledHeight(), resolution.getScaledWidth()) * SCOPE_SCALE;
         double x = (resolution.getScaledWidth() - size) / 2d;
         double y = (resolution.getScaledHeight() - size) / 2d;
