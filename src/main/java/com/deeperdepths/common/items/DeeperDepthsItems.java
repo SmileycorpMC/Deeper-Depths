@@ -2,6 +2,7 @@ package com.deeperdepths.common.items;
 
 import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepths;
+import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.blocks.*;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
@@ -11,6 +12,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.smileycorp.atlas.api.item.ArmourSet;
 import net.smileycorp.atlas.api.item.ToolSet;
 
 import java.lang.reflect.Field;
@@ -36,9 +38,9 @@ public class DeeperDepthsItems {
 
     public static final ToolSet COPPER_TOOLS = new ToolSet(Constants.MODID, "copper",
             EnumHelper.addToolMaterial("COPPER", 1, 190, 5, 1, 13), DeeperDepths.CREATIVE_TAB);
-    /*public static final ToolSet COPPER_ARMOR = new ArmourSet(Constants.MODID, "copper",
-            EnumHelper.addArmorMaterial("COPPER", "copper", 190, new int[] {1, 3, 4, 2, 4}, 8,
-                    DeeperDepthsSoundEvents.ITEM_ARMOR_EQUIP_COPPER, 0), DeeperDepths.CREATIVE_TAB, true);*/
+    public static final ArmourSet COPPER_ARMOR = new ArmourSet(Constants.MODID, "copper",
+            EnumHelper.addArmorMaterial("COPPER", "deeperdepths:copper", 190, new int[] {1, 3, 4, 2, 4}, 8,
+                    DeeperDepthsSoundEvents.ITEM_ARMOR_EQUIP_COPPER, 0), DeeperDepths.CREATIVE_TAB, 4);
     /*public static final Item SPYGLASS = null;
     public static final Item RECOVERY_COMPASS = null;*/
     
@@ -58,7 +60,7 @@ public class DeeperDepthsItems {
             try {
                 Object object = field.get(null);
                 if (object instanceof ToolSet) ((ToolSet)object).getItems().forEach(item -> register(registry, item));
-                //if (object instanceof ArmorSet) ((ArmorSet)object).getItems().forEach(item -> register(registry, item));
+                if (object instanceof ArmourSet) ((ArmourSet)object).getItems().forEach(item -> register(registry, item));
                 if (!(object instanceof Item) || object == null) continue;
                 register(registry, (Item) object);
             } catch (Exception e) {

@@ -70,8 +70,8 @@ public class DeeperDepthsRecipes {
                 new ItemStack(DeeperDepthsBlocks.STONE, 1, 12), 0.1f);
         DeeperDepthsItems.COPPER_TOOLS.getItems().forEach(item ->
                 GameRegistry.addSmelting(item, new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4), 0.1F));
-        /*DeeperDepthsItems.COPPER_ARMOR.getItems().forEach(item ->
-                GameRegistry.addSmelting(item, new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4), 0.1F));*/
+        DeeperDepthsItems.COPPER_ARMOR.getItems().forEach(item ->
+                GameRegistry.addSmelting(item, new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4), 0.1F));
     }
 
     private static void registerBrewingRecipes() {

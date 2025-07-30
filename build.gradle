@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
 		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
     }
 }
 
@@ -27,10 +26,9 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
-version = "1.12.2-1.0.3c"
+version = "1.12.2-1.1.0"
 group = "com.deeperdepths"
 archivesBaseName = "Deeper-Depths"
 
@@ -87,7 +85,7 @@ configurations {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 	implementation "org.spongepowered:mixin:0.8"
-    implementation "curse.maven:atlas-463826:3816069"
+    implementation "curse.maven:atlas-463826:6829008"
     implementation "curse.maven:chisel-235279:2535488"
     implementation "curse.maven:mekanism-268560:2835175"
     implementation "curse.maven:raids-977633:5626565"
@@ -120,22 +118,6 @@ jar {
 sourceSets { main { output.resourcesDir = output.getClassesDirs().getAsPath() } }
 // Remove BEFORE A BUILD!!!!
 sourceSets { main { output.resourcesDir = output.classesDir } }
-
-shadowJar {
-	classifier = ''
-	exclude 'LICENSE.txt'
-	dependencies {
-		include(dependency("org.spongepowered:mixin:0.8"))
-	}
-}
-
-build.dependsOn(shadowJar)
-
-reobf {
-    shadowJar {}
-}
-
-build.dependsOn(reobf)
 
 processResources {
     inputs.property "version", project.version
