@@ -1,0 +1,24 @@
+{
+  "group": "deeperdepths:mace",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "H",
+    "B"
+  ],
+  "key": {
+    "H": {
+      "item": "deeperdepths:heavy_core",
+      "data": 0
+    },
+    "B": {
+      "item": "deeperdepths:material",
+      "data": 3
+    }
+  },
+  "result": {
+    "item": "deeperdepths:mace",
+    "data": 0,
+    "count": 1
+  }
+}

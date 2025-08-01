@@ -3,6 +3,10 @@ itemGroup.deeperdepths.tab=§3Deeper Depths
 death.attack.deeperdepths.mace=%1$s was smashed by %2$s
 death.attack.deeperdepths.mace.item=%1$s was smashed by %2$s using %3$s
 
+description.deeperdepths.trial_chambers_painting.name=Idyllic #2
+description.deeperdepths.trial_chambers_painting.artist=Foreck
+description.deeperdepths.trial_chambers_painting.dimensions=3x2
+
 item.deeperdepths.copper_ingot.name=Copper Ingot
 item.deeperdepths.amethyst_shard.name=Amethyst Shard
 item.deeperdepths.echo_shard.name=Echo Shard
@@ -16,6 +20,7 @@ item.deeperdepths.ominous_key.name=Ominous Trial Key
 item.deeperdepths.spyglass.name=Spyglass
 item.deeperdepths.recovery_compass.name=Recovery Compass
 item.deeperdepths.mace.name=Mace
+item.deeperdepths.trial_chambers_painting.name=Trial Chambers Painting
 item.deeperdepths.configurator.name=Configurator
 item.deeperdepths.configurator.tooltip=Use on trial spawners or vaults to modify their configs.
 
@@ -323,3 +328,29 @@ subtitles.deeperdepths.item.mace.smash_ground_heavy=Mace smashes
 subtitles.deeperdepths.item.spyglass.stop_using=Spyglass retracts
 subtitles.deeperdepths.item.spyglass.use=Spyglass expands
 subtitles.deeperdepths.item.ominous_bottle.dispose=Bottle breaks
+
+advancements.deeperdepths.lets_go_gambling.title=Let's Go Gambling!
+advancements.deeperdepths.lets_go_gambling.description=Use an Ominous Trial Key to open an Ominous Vault
+advancements.deeperdepths.aw_dang_it.title=Aw Dang It
+advancements.deeperdepths.aw_dang_it.description=Open an ominous vault without getting a heavy core
+advancements.deeperdepths.wax_on.title=Wax On
+advancements.deeperdepths.wax_on.description=Apply wax to a Copper block
+advancements.deeperdepths.wax_off.title=Wax Off
+advancements.deeperdepths.wax_off.description=Scrape Wax off of a Copper block!
+advancements.deeperdepths.over_overkill.title=Over-Overkill
+advancements.deeperdepths.over_overkill.description=Deal 50 hearts of damage in a single hit using the Mace
+
+jei.category.deeperdepths.waxing=Waxing
+jei.category.deeperdepths.scraping=Scraping
+jei.category.deeperdepths.weathering=Weathering
+
+effect.deeperdepths.bad_omen.0.desc = Causes an ominous event near Villages or Trial Spawners.
+effect.deeperdepths.infested.0.desc = 10% chance to spawn 1-2 Silverfish when hurt.
+effect.deeperdepths.oozing.0.desc = Spawns 2 Slimes upon death.
+effect.deeperdepths.trial_omen.0.desc = Transforms nearby Trial Spawners into Ominous Spawners.
+effect.deeperdepths.wind_charged.0.desc = Spawns a wind burst upon death.
+effect.deeperdepths.weaving.0.desc = Reduces Cobweb slowing; places 2-3 Cobwebs upon death. 
+
+enchantment.deeperdepths.breach.desc = Smash Attacks ignores 15% of armor, pre level.
+enchantment.deeperdepths.density.desc = Increases Smash Attack damage by +0.5 per level.
+enchantment.deeperdepths.wind_burst.desc = Smash Attacks spawn a wind burst, launching the user up.

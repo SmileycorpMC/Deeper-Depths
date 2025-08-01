@@ -1,0 +1,5 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures":
+  { "layer0": "deeperdepths:items/chambers_painting_item" }
+}

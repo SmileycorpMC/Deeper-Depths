@@ -2672,6 +2672,11 @@
         ],
         "subtitle": "subtitles.deeperdepths.event.mob_effect.trial_omen"
     },
+    "event.mob_effect.weaving.place":
+    {
+        "sounds": [ "deeperdepths:event/mob_effects/weaving/place1", "deeperdepths:event/mob_effects/weaving/place2", "deeperdepths:event/mob_effects/weaving/place3", "deeperdepths:event/mob_effects/weaving/place4", "deeperdepths:event/mob_effects/weaving/place5", "deeperdepths:event/mob_effects/weaving/place6" ],
+        "subtitle": "subtitles.block.generic.place"
+    },
     "item.mace.smash_air": {
         "sounds": [
             "deeperdepths:item/mace/smash_air1",

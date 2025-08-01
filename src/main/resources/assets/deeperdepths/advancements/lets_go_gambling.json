@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:adventure/root",
+  "display": {
+    "icon": {
+      "item": "deeperdepths:trial_key",
+	  "data": 1
+	  },
+    "title": {
+      "translate": "advancements.deeperdepths.lets_go_gambling.title"
+    },
+    "description": {
+      "translate": "advancements.deeperdepths.lets_go_gambling.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hero_of_the_village": {
+      "trigger": "deeperdepths:lets_go_gambling",
+      "conditions": {}
+    }
+  },
+  "requirements": []
+}

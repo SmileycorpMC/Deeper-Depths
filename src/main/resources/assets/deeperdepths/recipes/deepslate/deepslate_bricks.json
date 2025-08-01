@@ -1,0 +1,20 @@
+{
+  "group": "deeperdepths:deepslate",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "MM",
+    "MM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:stone",
+      "data": 8
+    }
+  },
+  "result": {
+    "item": "deeperdepths:stone",
+    "data": 9,
+    "count": 4
+  }
+}

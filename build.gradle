@@ -30,8 +30,8 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
-version = "1.12.2-1.0.0"
-group = "net.smileycorp.deeperdepths"
+version = "1.12.2-1.0.3c"
+group = "com.deeperdepths"
 archivesBaseName = "Deeper-Depths"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -87,12 +87,12 @@ configurations {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 	implementation "org.spongepowered:mixin:0.8"
-	//implementation "curse.maven:futuremc-310059:5013081"
     implementation "curse.maven:atlas-463826:3816069"
-    //implementation "curse.maven:dynaores-1056043:5504933"
-    //implementation "curse.maven:chisel-235279:2535488"
-    //implementation "curse.maven:mekanism-268560:2835175"
-    //implementation "curse.maven:raids-977633:5386775"
+    implementation "curse.maven:chisel-235279:2535488"
+    implementation "curse.maven:mekanism-268560:2835175"
+    implementation "curse.maven:raids-977633:5626565"
+    implementation "curse.maven:jei-238222:4393461"
+    implementation "curse.maven:futuremc-310059:6162819"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 }
 
@@ -118,6 +118,8 @@ jar {
 }
 
 sourceSets { main { output.resourcesDir = output.getClassesDirs().getAsPath() } }
+// Remove BEFORE A BUILD!!!!
+sourceSets { main { output.resourcesDir = output.classesDir } }
 
 shadowJar {
 	classifier = ''

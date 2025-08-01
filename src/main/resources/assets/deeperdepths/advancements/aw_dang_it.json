@@ -1,0 +1,25 @@
+{
+  "parent": "deeperdepths:lets_go_gambling",
+  "display": {
+    "icon": {
+      "item": "deeperdepths:heavy_core"
+	},
+    "title": {
+      "translate": "advancements.deeperdepths.aw_dang_it.title"
+    },
+    "description": {
+      "translate": "advancements.deeperdepths.aw_dang_it.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "hero_of_the_village": {
+      "trigger": "deeperdepths:aw_dang_it",
+      "conditions": {}
+    }
+  },
+  "requirements": []
+}
