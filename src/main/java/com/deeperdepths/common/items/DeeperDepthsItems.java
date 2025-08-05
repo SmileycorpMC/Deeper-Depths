@@ -41,8 +41,8 @@ public class DeeperDepthsItems {
     public static final ArmourSet COPPER_ARMOR = new ArmourSet(Constants.MODID, "copper",
             EnumHelper.addArmorMaterial("COPPER", "deeperdepths:copper", 190, new int[] {1, 3, 4, 2}, 8,
                     DeeperDepthsSoundEvents.ITEM_ARMOR_EQUIP_COPPER, 0), DeeperDepths.CREATIVE_TAB, 4);
-    /*public static final Item SPYGLASS = null;
-    public static final Item RECOVERY_COMPASS = null;*/
+    public static final Item SPYGLASS = new ItemSpyglass();
+    //public static final Item RECOVERY_COMPASS = null;
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
