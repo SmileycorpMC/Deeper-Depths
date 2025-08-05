@@ -93,14 +93,9 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
                 ((IBlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
-            if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
-                ModelResourceLocation loc = new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i)));
-                ModelLoader.setCustomModelResourceLocation(item, i, loc);
-            }
-            else {
-                ModelResourceLocation loc = new ModelResourceLocation(item.getRegistryName().toString());
-                ModelLoader.setCustomModelResourceLocation(item, 0, loc);
-            }
+            if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++)
+                ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i))));
+            else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().toString()));
         }
         for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
                     new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
@@ -144,9 +139,7 @@ public class ClientProxy extends CommonProxy {
         if (player.getItemInUseCount() <= 0 && FOV == 1) return;
         if ((player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS || mc.gameSettings.thirdPersonView != 0)
                 && FOV < 1) FOV = Math.min(FOV + (1 - FOV) * 0.5f, 1);
-        else if (mc.gameSettings.thirdPersonView == 0 && FOV > 0.1) {
-            FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
-        }
+        else if (mc.gameSettings.thirdPersonView == 0 && FOV > 0.1) FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
     }
 
     @SubscribeEvent
