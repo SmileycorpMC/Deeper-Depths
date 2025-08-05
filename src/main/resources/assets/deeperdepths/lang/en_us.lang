@@ -237,6 +237,7 @@ tipped_arrow.effect.deeperdepths.infested=Arrow of Infested
 tipped_arrow.effect.deeperdepths.weaving=Arrow of Weaving
 tipped_arrow.effect.deeperdepths.wind_charged=Arrow of Wind Charged
 
+gui.deeperdepths.confirm=Confirm
 
 subtitles.deeperdepths.block.amethyst_block.chime=Amethyst chimes
 subtitles.deeperdepths.block.amethyst_block.resonate=Amethyst resonates

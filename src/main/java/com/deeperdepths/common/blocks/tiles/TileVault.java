@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.smileycorp.atlas.api.util.RecipeUtils;
 
 import javax.annotation.Nullable;
@@ -276,7 +277,12 @@ public class TileVault extends TileTrial implements ILootContainer {
         handleUpdateTag(pkt.getNbtCompound());
         world.markBlockRangeForRenderUpdate(pos, pos);
     }
-    
+
+    @Override
+    protected IMessage getConfigMessage() {
+        return null;
+    }
+
     public static class Config {
         
         private double activation_range = 4, deactivation_range = 4.5;

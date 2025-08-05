@@ -7,6 +7,7 @@ import com.deeperdepths.common.DeeperDepthsLootTables;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.blocks.enums.EnumTrialSpawnerState;
 import com.deeperdepths.common.entities.EntityOminousItemSpawner;
+import com.deeperdepths.common.network.SpawnerConfigMessage;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.integration.RaidsIntegration;
 import com.google.common.collect.ImmutableMap;
@@ -40,6 +41,7 @@ import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 
@@ -53,15 +55,15 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class TileTrialSpawner extends TileEntity implements ITickable {
+public class TileTrialSpawner extends TileTrial implements ITickable {
     
     private List<UUID> active_players = Lists.newArrayList();
     private List<WeakReference<Entity>> current_mobs = Lists.newArrayList();
     private final List<UUID> mob_cache = Lists.newArrayList();
     private EnumTrialSpawnerState state = EnumTrialSpawnerState.INACTIVE;
     private byte ominous_level;
-    private final Config config;
-    private final Config ominous_config;
+    private Config config;
+    private Config ominous_config;
     private float required_range = 14;
     private int cooldown = 0;
     private int ominous_projectile_cooldown  = 0;
@@ -479,6 +481,13 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
         rebuildCachedEntity();
         markDirty();
     }
+
+    public void modifyConfigs(Consumer<Config> action, Consumer<Config> action_ominous) {
+        action.accept(config);
+        action_ominous.accept(ominous_config);
+        rebuildCachedEntity();
+        markDirty();
+    }
     
     public Entity getCachedEntity() {
         return cached_entity;
@@ -497,6 +506,11 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
             if (cached_entity instanceof EntityLiving) ((EntityLiving) cached_entity).onInitialSpawn(world.getDifficultyForLocation(pos), null);
         }
     }
+
+    @Override
+    protected IMessage getConfigMessage() {
+        return new SpawnerConfigMessage(pos, config, ominous_config);
+    }
     
     public static class Config {
         
@@ -508,7 +522,7 @@ public class TileTrialSpawner extends TileEntity implements ITickable {
                 DeeperDepthsLootTables.TRIAL_SPAWNER_LOOT, 1));
         private long loot_table_seed;
         
-        private Config(boolean ominous) {
+        public Config(boolean ominous) {
             this.ominous = ominous;
         }
         

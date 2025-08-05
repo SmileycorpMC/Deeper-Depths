@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.item.IMetaItem;
+import com.deeperdepths.client.gui.GuiTrialSpawnerConfig;
 
 import java.awt.*;
 
@@ -118,4 +120,13 @@ public class ClientProxy extends CommonProxy {
         World world = minecraft.world;
         minecraft.effectRenderer.addEffect(Constants.getFactory(particle).createParticle(0, world, posX, posY, posZ, speedX, speedY, speedZ, parameters));
     }
+
+    public static void openSpawnerConfig(NBTTagCompound configNBT, NBTTagCompound ominousNBT) {
+        TileTrialSpawner.Config config = new TileTrialSpawner.Config(false);
+        config.readFromNBT(configNBT);
+        TileTrialSpawner.Config ominousConfig = new TileTrialSpawner.Config(true);
+        ominousConfig.readFromNBT(ominousNBT);
+        Minecraft.getMinecraft().displayGuiScreen(new GuiTrialSpawnerConfig(config, ominousConfig));
+    }
+
 }

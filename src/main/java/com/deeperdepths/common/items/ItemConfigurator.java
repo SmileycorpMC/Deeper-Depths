@@ -6,6 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -28,9 +29,10 @@ public class ItemConfigurator extends ItemDeeperDepths {
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         IBlockState state = world.getBlockState(pos);
-        if (player.isCreative() && player.canPlayerEdit(pos, facing, player.getHeldItem(hand))
-                && state.getBlock() instanceof BlockTrial && world.getTileEntity(pos) instanceof TileTrial) {
-            state.getBlock().
+        if (player instanceof EntityPlayerMP && player.isCreative() && player.canPlayerEdit(pos, facing, player.getHeldItem(hand))
+                && state.getBlock() instanceof BlockTrial && world.getTileEntity(pos) instanceof TileTrial)  {
+            ((TileTrial) world.getTileEntity(pos)).configure((EntityPlayerMP) player);
+            return EnumActionResult.SUCCESS;
         }
         return EnumActionResult.PASS;
     }
