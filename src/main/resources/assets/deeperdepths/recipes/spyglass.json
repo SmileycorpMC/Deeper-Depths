@@ -1,0 +1,24 @@
+{
+  "group": "deeperdepths:spyglass",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "A",
+    "M",
+	"M"
+  ],
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCopper"
+    },
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "gemAmethyst"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:spyglass",
+    "count": 1
+  }
+}
