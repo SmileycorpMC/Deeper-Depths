@@ -67,6 +67,7 @@ public class BlockLightningRod extends BlockDeeperDepths implements ICopperBlock
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         world.setBlockState(pos, state.withProperty(POWERED, false), 3);
+        tryWeather(world, pos, state, rand);
     }
     
     @Override
