@@ -132,9 +132,4 @@ public class BlockCopperBars extends BlockPane implements ICopperBlock, IBlockPr
         return waxed;
     }
 
-    @Override
-    public boolean usesCustomItemHandler(){
-        return true;
-    }
-
 }
