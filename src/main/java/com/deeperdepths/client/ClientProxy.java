@@ -3,6 +3,7 @@ package com.deeperdepths.client;
 import com.deeperdepths.animation.IAnimatedEntity;
 import com.deeperdepths.client.blocks.*;
 import com.deeperdepths.client.entity.*;
+import com.deeperdepths.client.tesr.TESRCopperChest;
 import com.deeperdepths.client.tesr.TESRTrialSpawner;
 import com.deeperdepths.client.tesr.TESRVault;
 import com.deeperdepths.common.CommonProxy;
@@ -10,6 +11,7 @@ import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.blocks.BlockTrialPot;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.IBlockProperties;
+import com.deeperdepths.common.blocks.tiles.TileCopperChest;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.entities.*;
@@ -97,10 +99,13 @@ public class ClientProxy extends CommonProxy {
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i))));
             else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().toString()));
         }
-        for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
+        for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
                     new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
         ClientRegistry.bindTileEntitySpecialRenderer(TileVault.class, new TESRVault());
         ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TESRTrialSpawner());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCopperChest.class, new TESRCopperChest());
+        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.Item());
+        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.WAXED_COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.Item());
         RenderingRegistry.registerEntityRenderingHandler(EntityBogged.class, RenderBogged::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityWindCharge.class, RenderWindCharge::new);

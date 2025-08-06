@@ -21,6 +21,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlockProperties {
 
     private final boolean waxed;
@@ -66,14 +68,14 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
         if (!north && !south && !west && !east) world.setBlockState(pos, state, 3);
         else if (enumfacing.getAxis() != EnumFacing.Axis.X || !north && !south) {
             if (enumfacing.getAxis() == EnumFacing.Axis.Z && (west || east)) {
-                if (west) world.setBlockState(posW, state, 3);
-                else world.setBlockState(posE, state, 3);
+                state = getInterpolatedState(state, world.getBlockState(west ? posW : posE));
+                world.setBlockState(west ? posW : posE, state, 3);
                 world.setBlockState(pos, state, 3);
             }
         }
         else {
-            if (north) world.setBlockState(posN, state, 3);
-            else world.setBlockState(posS, state, 3);
+            state = getInterpolatedState(state, world.getBlockState(north ? posN : posS));
+            world.setBlockState(north ? posN : posS, state, 3);
             world.setBlockState(pos, state, 3);
         }
         if (stack.hasDisplayName()) {
@@ -82,10 +84,16 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
         }
     }
 
+    private IBlockState getInterpolatedState(IBlockState state, IBlockState state1) {
+        IBlockState newState = (!((BlockCopperChest)state.getBlock()).isWaxed() || ((BlockCopperChest)state1.getBlock()).isWaxed() ?
+                DeeperDepthsBlocks.COPPER_CHEST : DeeperDepthsBlocks.WAXED_COPPER_CHEST).getDefaultState().withProperty(FACING, state.getValue(FACING));
+        return newState.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).getLowest(state1.getValue(WEATHER_STAGE)));
+    }
+
     private boolean canConnect(IBlockAccess world, BlockPos pos, BlockPos other) {
         IBlockState state = world.getBlockState(pos);
         IBlockState state1 = world.getBlockState(other);
-        if (!(state1.getBlock() instanceof BlockCopperChest)) return false;
+        if (!(state.getBlock() instanceof BlockCopperChest && state1.getBlock() instanceof BlockCopperChest)) return false;
         if (!(world.getTileEntity(pos) instanceof TileCopperChest && world.getTileEntity(other) instanceof TileCopperChest)) return false;
         if (!BlockConfig.sameTypeChests) return true;
         return state.getValue(WEATHER_STAGE) == state1.getValue(WEATHER_STAGE) && state.getBlock() == state1.getBlock();
@@ -109,6 +117,28 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
         if (canConnect(source, pos, pos.west())) return WEST_CHEST_AABB;
         return NOT_CONNECTED_AABB;
     }
+
+    //vanilla just uses normal chest names, I'm pretty sure that's a bug leaving this here just in case
+    /*
+    @Nullable
+    public ILockableContainer getContainer(World world, BlockPos pos, boolean allowBlocking) {
+        TileEntity tile = world.getTileEntity(pos);
+        if (!(tile instanceof TileCopperChest)) return null;
+        ILockableContainer chest = (TileCopperChest)tile;
+        if (!allowBlocking && isBlocked(world, pos)) return null;
+        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
+            BlockPos pos1 = pos.offset(enumfacing);
+            Block block = world.getBlockState(pos1).getBlock();
+            if (!(block instanceof BlockCopperChest)) continue;
+            if (!allowBlocking && isBlocked(world, pos1)) return null;
+            TileEntity tile1 = world.getTileEntity(pos1);
+            if (!(tile1 instanceof TileCopperChest)) continue;
+            chest = (enumfacing != EnumFacing.WEST && enumfacing != EnumFacing.NORTH) ?
+                new InventoryLargeChest(tile.getTranslationKey(), chest, (TileEntityChest)tile1)
+                : new InventoryLargeChest(tile.getTranslationKey(), (TileEntityChest)tile1, chest);
+        }
+        return chest;
+    }*/
 
     @Override
     public int getMetaFromState(IBlockState state) {
@@ -147,6 +177,47 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
     @Override
     public boolean interactRequiresSneak() {
         return true;
+    }
+
+    @Override
+    public boolean scrape(World world, IBlockState state, BlockPos pos) {
+        if (!isWaxed(state) && getStage(state) == EnumWeatherStage.NORMAL) return false;
+        Optional<BlockPos> other = getOtherChest(world, pos);
+        if (other.isPresent()) {
+            BlockPos pos1 = other.get();
+            ICopperBlock.super.scrape(world, world.getBlockState(pos1), pos1);
+        }
+        return ICopperBlock.super.scrape(world, state, pos);
+    }
+
+    @Override
+    public boolean wax(World world, IBlockState state, BlockPos pos) {
+        if (isWaxed(state)) return false;
+        Optional<BlockPos> other = getOtherChest(world, pos);
+        if (other.isPresent()) {
+            BlockPos pos1 = other.get();
+            ICopperBlock.super.wax(world, world.getBlockState(pos1), pos1);
+        }
+        return ICopperBlock.super.wax(world, state, pos);
+    }
+
+    @Override
+    public boolean weather(World world, IBlockState state, BlockPos pos) {
+        if (isWaxed(state)) return false;
+        Optional<BlockPos> other = getOtherChest(world, pos);
+        if (other.isPresent()) {
+            BlockPos pos1 = other.get();
+            ICopperBlock.super.weather(world, world.getBlockState(pos1), pos1);
+        }
+        return ICopperBlock.super.weather(world, state, pos);
+    }
+
+    private Optional<BlockPos> getOtherChest(World world, BlockPos pos) {
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+            BlockPos pos1 = pos.offset(facing);
+            if (canConnect(world, pos, pos1)) return Optional.of(pos1);
+        }
+        return Optional.empty();
     }
 
     public boolean isWaxed() {

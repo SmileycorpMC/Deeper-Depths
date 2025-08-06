@@ -1,13 +1,19 @@
 package com.deeperdepths.client.tesr;
 
 import com.deeperdepths.common.Constants;
+import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
+import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.blocks.tiles.TileCopperChest;
+import com.deeperdepths.common.items.ItemBlockCopper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> {
@@ -97,9 +103,20 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
 
     private ResourceLocation getTexture(TileCopperChest te, boolean large) {
         String name = te.getWeatherStage().getName();
-        if (te.isWaxed()) name = "waxed_" + name;
+        if (te.isWaxed()) name = "waxed/" + name;
         if (large) name += "_double";
         return Constants.loc("textures/entity/copper_chest/" + name + ".png");
     }
 
+    public static class Item extends TileEntityItemStackRenderer {
+
+        private final TileCopperChest tile = new TileCopperChest();
+
+        public void renderByItem(ItemStack stack, float partialTicks) {
+            tile.setupRenderProperties(EnumWeatherStage.values()[stack.getMetadata() % 4],
+                    stack.getItem() == ItemBlockCopper.getItemFromBlock(DeeperDepthsBlocks.WAXED_COPPER_CHEST));
+            TileEntityRendererDispatcher.instance.render(tile, 0, 0, 0, 0, partialTicks);
+        }
+
+    }
 }

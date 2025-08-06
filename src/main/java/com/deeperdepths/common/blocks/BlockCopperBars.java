@@ -5,7 +5,6 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.config.BlockConfig;
-import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

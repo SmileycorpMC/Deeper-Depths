@@ -14,6 +14,15 @@ import net.minecraft.world.World;
 
 public class TileCopperChest extends TileEntityChest {
 
+    private EnumWeatherStage stage = null;
+    private boolean waxed = false;
+
+    /*
+    @Override
+    public String getName() {
+        return this.hasCustomName() ? this.customName : getTranslationKey();
+    }*/
+
     @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         return false;
@@ -61,18 +70,38 @@ public class TileCopperChest extends TileEntityChest {
     }
 
     public EnumWeatherStage getWeatherStage() {
-        if (world == null || pos == null) return null;
+        if (world == null || pos == null) return stage;
         IBlockState state = world.getBlockState(pos);
         if (!(state.getBlock() instanceof BlockCopperChest)) return null;
         return world.getBlockState(pos).getValue(ICopperBlock.WEATHER_STAGE);
     }
 
     public boolean isWaxed() {
-        if (world == null || pos == null) return false;
+        if (world == null || pos == null) return waxed;
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         if (!(block instanceof BlockCopperChest)) return false;
         return ((BlockCopperChest) block).isWaxed();
+    }
+
+    public boolean isLarge() {
+        return adjacentChestXPos != null || adjacentChestXNeg != null ||
+                adjacentChestZPos != null || adjacentChestZNeg != null;
+    }
+
+    public void setupRenderProperties(EnumWeatherStage stage, boolean waxed) {
+        this.stage = stage;
+        this.waxed = waxed;
+    }
+
+    //maybe just copper chest vs large copper chest is better
+    public String getTranslationKey() {
+        StringBuilder builder = new StringBuilder("container.deeperdepths.");
+        if (isLarge()) builder.append("large_");
+        if (isWaxed()) builder.append("waxed_");
+        EnumWeatherStage stage = getWeatherStage();
+        if (stage != null && stage != EnumWeatherStage.NORMAL) builder.append(stage.getName() + "_");
+        return builder.append("copper_chest").toString();
     }
 
 }
