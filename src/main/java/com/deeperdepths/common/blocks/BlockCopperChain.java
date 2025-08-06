@@ -5,36 +5,38 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.config.BlockConfig;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.atlas.api.util.TextUtils;
 
 public class BlockCopperChain extends BlockRotatedPillar implements ICopperBlock, IBlockProperties
 {
-    private final EnumWeatherStage stage;
     private final boolean waxed;
 
     protected static final AxisAlignedBB CHAIN_AABB_Y = new AxisAlignedBB(0.6D, 0.0D, 0.6D, 0.4D, 1.0D, 0.4D);
     protected static final AxisAlignedBB CHAIN_AABB_X = new AxisAlignedBB(0.0D, 0.4D, 0.6D, 1.0D, 0.6D, 0.4D);
     protected static final AxisAlignedBB CHAIN_AABB_Z = new AxisAlignedBB(0.6D, 0.4D, 0.0D, 0.4D, 0.6D, 1.0D);
 
-    public BlockCopperChain(EnumWeatherStage stage, boolean waxed)
+    public BlockCopperChain(boolean waxed)
     {
         super(Material.ROCK);
-        String name = "Copper_Chain";
-        if (stage != EnumWeatherStage.NORMAL) name = TextUtils.toProperCase(stage.getName()) + "_" + name;
-        if (waxed) name = "Waxed_" + name;
-        this.stage = stage;
+        String name = (waxed ? "Waxed_" : "") + "Copper_Chain";
         this.waxed = waxed;
         setResistance(BlockConfig.copper.getResistance());
         setHardness(BlockConfig.copper.getHardness());
@@ -44,11 +46,6 @@ public class BlockCopperChain extends BlockRotatedPillar implements ICopperBlock
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         setSoundType(DeeperDepthsSoundTypes.COPPER);
         needsRandomTick = BlockConfig.copperAges;
-    }
-
-    @Override
-    public boolean isTopSolid(IBlockState state) {
-        return false;
     }
 
     @Override
@@ -68,142 +65,109 @@ public class BlockCopperChain extends BlockRotatedPillar implements ICopperBlock
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
+    public String byMeta(int meta)
     {
-        IBlockState state = this.getDefaultState();
-        switch (meta)
-        {
-            case 1:
-                state = state.withProperty(AXIS, EnumFacing.Axis.X);
-                break;
-            case 2:
-                state = state.withProperty(AXIS, EnumFacing.Axis.Z);
-                break;
-            default:
-                state = state.withProperty(AXIS, EnumFacing.Axis.Y);
-        }
-        return state;
+        StringBuilder builder = new StringBuilder();
+        if (waxed) builder.append("waxed_");
+        if ((meta & 3) != 0) builder.append(EnumWeatherStage.values()[meta & 3].getName() + "_");
+        return builder + "copper_chain";
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        switch (state.getValue(AXIS)) {
-            case X:
-                return 1;
-            case Y:
-                return 0;
-            case Z:
-                return 2;
-            default:
-                return 3;
-        }
-    }
+    public boolean isTopSolid(IBlockState state) { return false; }
+
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    public boolean isOpaqueCube(IBlockState state) { return false; }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
+    { return getStateFromMeta(placer.getHeldItem(hand).getMetadata()).withProperty(AXIS, facing.getAxis()); }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state) % 4;
     }
+
+    @Override
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items)
+    { for (int i = 0; i < 4; i++) items.add(new ItemStack(this, 1, i)); }
+
+    @Override
+    public int getMaxMeta()
+    { return 4; }
 
     /** Same shape as a fence if it is oriented straight up */
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
     { return state.getValue(AXIS) == EnumFacing.Axis.Y ? BlockFaceShape.MIDDLE_POLE : BlockFaceShape.UNDEFINED; }
 
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
+    public BlockRenderLayer getBlockLayer() { return BlockRenderLayer.CUTOUT;  }
 
     @Override
     public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
     { return false; }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
+    public boolean isFullCube(IBlockState state) { return false; }
+
+    public IBlockState getStateFromMeta(int meta)
+    {
+        EnumWeatherStage stage = EnumWeatherStage.values()[meta & 3];
+
+        int axisBits = (meta >> 2) & 3;
+        EnumFacing.Axis axis;
+        switch (axisBits) {
+            case 0: axis = EnumFacing.Axis.Y; break;
+            case 1: axis = EnumFacing.Axis.X; break;
+            case 2: axis = EnumFacing.Axis.Z; break;
+            default: axis = EnumFacing.Axis.Y; break;
+        }
+
+        return this.getDefaultState().withProperty(WEATHER_STAGE, stage).withProperty(AXIS, axis);
     }
 
     @Override
-    public boolean isWaxed(IBlockState state) {
-        return waxed;
+    public int getMetaFromState(IBlockState state)
+    {
+        int meta = 0;
+        meta |= state.getValue(WEATHER_STAGE).ordinal();
+
+        switch (state.getValue(AXIS))
+        {
+            case X: meta |= (1 << 2); break;
+            case Z: meta |= (2 << 2); break;
+        }
+        return meta;
     }
 
     @Override
-    public EnumWeatherStage getStage(IBlockState state) {
-        return stage;
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, AXIS, WEATHER_STAGE);
     }
+
+    public boolean isWaxed() { return waxed; }
+
+    @Override
+    public boolean isWaxed(IBlockState state) { return waxed; }
+
+    @Override
+    public EnumWeatherStage getStage(IBlockState state) { return state.getValue(WEATHER_STAGE); }
 
     @Override
     public IBlockState getScraped(IBlockState state)
-    { return copyProperties(state, DeeperDepthsBlocks.COPPER_CHAINS.get(waxed ? stage : stage.previous()).getDefaultState()); }
+    {
+        return waxed ? DeeperDepthsBlocks.COPPER_CHAINS.getDefaultState().withProperty(AXIS, state.getValue(AXIS)).withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE)) :
+                state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).previous());
+    }
 
     private IBlockState copyProperties(IBlockState oldState, IBlockState newState)
-    { return newState.withProperty(AXIS, oldState.getValue(AXIS)); }
+    { return newState.withProperty(AXIS, oldState.getValue(AXIS)).withProperty(WEATHER_STAGE, oldState.getValue(WEATHER_STAGE)); }
 
     @Override
     public IBlockState getWaxed(IBlockState state)
-    { return waxed ? state : copyProperties(state, DeeperDepthsBlocks.WAXED_COPPER_CHAINS.get(stage).getDefaultState()); }
+    { return waxed ? state : DeeperDepthsBlocks.WAXED_COPPER_CHAINS.getDefaultState().withProperty(AXIS, state.getValue(AXIS)).withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE)); }
 
     @Override
     public IBlockState getWeathered(IBlockState state)
-    { return waxed || stage == EnumWeatherStage.OXIDIZED ? state : copyProperties(state, DeeperDepthsBlocks.COPPER_CHAINS.get(stage.next()).getDefaultState()); }
-
-    @Override
-    public boolean isEdible(ItemStack stack)
-    {
-        if (!Constants.FUNNY &! BlockConfig.tastyCopper) return false;
-        return stage != EnumWeatherStage.NORMAL;
-    }
-
-    @Override
-    public ItemStack getPrevious(ItemStack stack)
-    {
-        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_COPPER_CHAINS : DeeperDepthsBlocks.COPPER_CHAINS).get(stage.previous()), stack.getCount(), stack.getMetadata());
-        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
-        return stack1;
-    }
-
-    @Override
-    public ItemStack getScraped(ItemStack stack)
-    {
-        if (!canScrape(stack)) return stack;
-        ItemStack stack1 = new ItemStack(waxed ? DeeperDepthsBlocks.COPPER_CHAINS.get(stage) : DeeperDepthsBlocks.COPPER_CHAINS.get(stage.previous()), stack.getCount(), stack.getMetadata());
-        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
-        return stack1;
-    }
-
-    @Override
-    public ItemStack getWaxed(ItemStack stack) {
-        if (isWaxed(stack)) return stack;
-        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_CHAINS.get(stage), stack.getCount(), stack.getMetadata());
-        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
-        return stack1;
-    }
-
-    @Override
-    public ItemStack getWeathered(ItemStack stack)
-    {
-        if (!canWeather(stack)) return stack;
-        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.COPPER_CHAINS.get(stage.next()), stack.getCount(), stack.getMetadata());
-        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
-        return stack1;
-    }
-
-    @Override
-    public boolean canWax(ItemStack stack) {
-        return !waxed;
-    }
-
-    @Override
-    public boolean canScrape(ItemStack stack) {
-        return waxed || stage != EnumWeatherStage.NORMAL;
-    }
-
-    @Override
-    public boolean canWeather(ItemStack stack) {
-        return !isWaxed(stack) && stage != EnumWeatherStage.OXIDIZED;
-    }
-
-    @Override
-    public boolean isWaxed(ItemStack stack) {
-        return waxed;
-    }
+    { return state.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).next()); }
 }

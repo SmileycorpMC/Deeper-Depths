@@ -61,8 +61,10 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperBars> WAXED_COPPER_BARS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final BlockCopperChest COPPER_CHEST = new BlockCopperChest(false);
     public static final BlockCopperChest WAXED_COPPER_CHEST = new BlockCopperChest(true);
-    public static final Map<EnumWeatherStage, BlockCopperChain> COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
-    public static final Map<EnumWeatherStage, BlockCopperChain> WAXED_COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final BlockCopperChain COPPER_CHAINS = new BlockCopperChain(false);
+    public static final BlockCopperChain WAXED_COPPER_CHAINS = new BlockCopperChain(true);
+    //public static final Map<EnumWeatherStage, BlockCopperChain> COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
+    //public static final Map<EnumWeatherStage, BlockCopperChain> WAXED_COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
     //public static final Map<EnumWeatherStage, BlockCopperLantern> COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
     //public static final Map<EnumWeatherStage, BlockCopperLantern> WAXED_COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
     //public static final BlockCopperGolemStatue GOLEM_STATUE = new BlockCopperGolemStatue(false);
@@ -106,8 +108,6 @@ public class DeeperDepthsBlocks {
             WAXED_LIGHTNING_RODS.put(stage, new BlockLightningRod(stage, true));
             COPPER_BARS.put(stage, new BlockCopperBars(stage, false));
             WAXED_COPPER_BARS.put(stage, new BlockCopperBars(stage, true));
-            COPPER_CHAINS.put(stage, new BlockCopperChain(stage, false));
-            WAXED_COPPER_CHAINS.put(stage, new BlockCopperChain(stage, true));
         }
         for (EnumDyeColor color : EnumDyeColor.values()) CANDLES.put(color, new BlockCandle(color));
         for (EnumClusterSize size : EnumClusterSize.values()) AMETHYST_BUDS.put(size, new BlockAmethystBud(size));
