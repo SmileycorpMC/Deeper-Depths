@@ -1,8 +1,0 @@
-{
-    "parent": "block/iron_bars_side",
-     "textures": {
-        "particle": "#all",
-        "bars": "#all",
-        "edge": "#all"
-    }
-}
