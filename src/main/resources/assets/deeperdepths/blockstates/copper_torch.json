@@ -1,9 +1,9 @@
 {
     "variants": {
-        "facing=up": { "model": "deeperdepths:blocks/copper_torch" },
-        "facing=east": { "model": "deeperdepths:blocks/copper_torch_wall" },
-        "facing=south": { "model": "deeperdepths:blocks/copper_torch_wall", "y": 90 },
-        "facing=west": { "model": "deeperdepths:blocks/copper_torch_wall", "y": 180 },
-        "facing=north": { "model": "deeperdepths:blocks/copper_torch_wall", "y": 270 }
+        "facing=up": { "model": "deeperdepths:copper_torch" },
+        "facing=east": { "model": "deeperdepths:copper_torch_wall" },
+        "facing=south": { "model": "deeperdepths:copper_torch_wall", "y": 90 },
+        "facing=west": { "model": "deeperdepths:copper_torch_wall", "y": 180 },
+        "facing=north": { "model": "deeperdepths:copper_torch_wall", "y": 270 }
     }
 }
