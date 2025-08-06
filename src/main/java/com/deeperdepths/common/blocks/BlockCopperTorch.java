@@ -34,13 +34,12 @@ public class BlockCopperTorch extends BlockTorch implements IBlockProperties {
         double z = (double)pos.getZ() + 0.5D;
         if (!enumfacing.getAxis().isVertical()) {
             ClientProxy.addParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, Color.WHITE);
-            //replace these with custom particles maybe later
-            ClientProxy.addParticle(EnumParticleTypes.FLAME, x, y, z, Color.GREEN);
+            DeeperDepths.proxy.spawnParticle(3, world, x, y, z, 0.0D, 0.0D, 0.0D, 2);
             return;
         }
         EnumFacing opposite = enumfacing.getOpposite();
         ClientProxy.addParticle(EnumParticleTypes.SMOKE_NORMAL, x + 0.27 * (double)opposite.getFrontOffsetX(), y + 0.22, z + 0.27 * (double)opposite.getFrontOffsetZ(), Color.WHITE);
-        ClientProxy.addParticle(EnumParticleTypes.FLAME, x + 0.27 * (double)opposite.getFrontOffsetX(), y + 0.22, z + 0.27 * (double)opposite.getFrontOffsetZ(), Color.GREEN);
+        DeeperDepths.proxy.spawnParticle(3, world, x + 0.27 * (double)opposite.getFrontOffsetX(), y + 0.22, z + 0.27 * (double)opposite.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, 2);
     }
 
 }

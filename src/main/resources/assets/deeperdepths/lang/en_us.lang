@@ -159,6 +159,15 @@ tile.deeperdepths.waxed_exposed_copper_trapdoor.name=Waxed Exposed Copper Trapdo
 tile.deeperdepths.waxed_weathered_copper_trapdoor.name=Waxed Weathered Copper Trapdoor
 tile.deeperdepths.waxed_oxidized_copper_trapdoor.name=Waxed Oxidized Copper Trapdoor
 
+tile.deeperdepths.copper_bars.name=Copper Bars
+tile.deeperdepths.exposed_copper_bars.name=Exposed Copper Bars
+tile.deeperdepths.weathered_copper_bars.name=Weathered Copper Bars
+tile.deeperdepths.oxidized_copper_bars.name=Oxidized Copper Bars
+tile.deeperdepths.waxed_copper_bars.name=Waxed Copper Bars
+tile.deeperdepths.waxed_exposed_copper_bars.name=Waxed Exposed Copper Bars
+tile.deeperdepths.waxed_weathered_copper_bars.name=Waxed Weathered Copper Bars
+tile.deeperdepths.waxed_oxidized_copper_bars.name=Waxed Oxidized Copper Bars
+
 tile.deeperdepths.copper_bulb.name=Copper Bulb
 tile.deeperdepths.exposed_copper_bulb.name=Exposed Copper Bulb
 tile.deeperdepths.weathered_copper_bulb.name=Weathered Copper Bulb
@@ -167,6 +176,26 @@ tile.deeperdepths.waxed_copper_bulb.name=Waxed Copper Bulb
 tile.deeperdepths.waxed_exposed_copper_bulb.name=Waxed Exposed Copper Bulb
 tile.deeperdepths.waxed_weathered_copper_bulb.name=Waxed Weathered Copper Bulb
 tile.deeperdepths.waxed_oxidized_copper_bulb.name=Waxed Oxidized Copper Bulb
+
+tile.deeperdepths.copper_chain.name=Copper Chain
+tile.deeperdepths.exposed_copper_chain.name=Exposed Copper Chain
+tile.deeperdepths.weathered_copper_chain.name=Weathered Copper Chain
+tile.deeperdepths.oxidized_copper_chain.name=Oxidized Copper Chain
+tile.deeperdepths.waxed_copper_chain.name=Waxed Copper Chain
+tile.deeperdepths.waxed_exposed_copper_chain.name=Waxed Exposed Copper Chain
+tile.deeperdepths.waxed_weathered_copper_chain.name=Waxed Weathered Copper Chain
+tile.deeperdepths.waxed_oxidized_copper_chain.name=Waxed Oxidized Copper Chain
+
+tile.deeperdepths.copper_lantern.name=Copper Lantern
+tile.deeperdepths.exposed_copper_lantern.name=Exposed Copper Lantern
+tile.deeperdepths.weathered_copper_lantern.name=Weathered Copper Lantern
+tile.deeperdepths.oxidized_copper_lantern.name=Oxidized Copper Lantern
+tile.deeperdepths.waxed_copper_lantern.name=Waxed Copper Lantern
+tile.deeperdepths.waxed_exposed_copper_lantern.name=Waxed Exposed Copper Lantern
+tile.deeperdepths.waxed_weathered_copper_lantern.name=Waxed Weathered Copper Lantern
+tile.deeperdepths.waxed_oxidized_copper_lantern.name=Waxed Oxidized Copper Lantern
+
+tile.deeperdepths.copper_torch.name=Copper Torch
 
 tile.deeperdepths.lightning_rod.name=Lightning Rod
 tile.deeperdepths.exposed_lightning_rod.name=Exposed Lightning Rod

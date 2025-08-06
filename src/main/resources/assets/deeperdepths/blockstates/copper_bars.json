@@ -1,32 +1,33 @@
 {
+    "forge_marker": 1,
     "multipart": [
-        {   "apply": { "model": "deeper_depths:copper_bars_post_ends" }},
+        {   "apply": { "model": "deeperdepths:copper_bars_post_ends", "textures": { "all": "deeperdepths:blocks/copper_bars"} }},
         {   "when": { "north": false, "east": false, "south": false, "west": false },
-            "apply": { "model": "deeper_depths:copper_bars_post" }
+            "apply": { "model": "deeperdepths:copper_bars_post", "textures": { "all": "deeperdepths:blocks/copper_bars"} }
         },
         {   "when": { "north": true, "east": false, "south": false, "west": false },
-            "apply": { "model": "deeper_depths:copper_bars_cap" }
+            "apply": { "model": "deeperdepths:copper_bars_cap", "textures": { "all": "deeperdepths:blocks/copper_bars"} }
         },
         {   "when": { "north": false, "east": true, "south": false, "west": false },
-            "apply": { "model": "deeper_depths:copper_bars_cap", "y": 90 }
+            "apply": { "model": "deeperdepths:copper_bars_cap", "textures": { "all": "deeperdepths:blocks/copper_bars"}, "y": 90 }
         },
         {   "when": { "north": false, "east": false, "south": true, "west": false },
-            "apply": { "model": "deeper_depths:copper_bars_cap_alt" }
+            "apply": { "model": "deeperdepths:copper_bars_cap_alt", "textures": { "all": "deeperdepths:blocks/copper_bars"} }
         },
         {   "when": { "north": false, "east": false, "south": false, "west": true },
-            "apply": { "model": "deeper_depths:copper_bars_cap_alt", "y": 90 }
+            "apply": { "model": "deeperdepths:copper_bars_cap_alt", "textures": { "all": "deeperdepths:blocks/copper_bars"}, "y": 90 }
         },
         {   "when": { "north": true },
-            "apply": { "model": "deeper_depths:copper_bars_side" }
+            "apply": { "model": "deeperdepths:copper_bars_side", "textures": { "all": "deeperdepths:blocks/copper_bars"} }
         },
         {   "when": { "east": true },
-            "apply": { "model": "deeper_depths:copper_bars_side", "y": 90 }
+            "apply": { "model": "deeperdepths:copper_bars_side", "textures": { "all": "deeperdepths:blocks/copper_bars"}, "y": 90 }
         },
         {   "when": { "south": true },
-            "apply": { "model": "deeper_depths:copper_bars_side_alt" }
+            "apply": { "model": "deeperdepths:copper_bars_side_alt", "textures": { "all": "deeperdepths:blocks/copper_bars"} }
         },
         {   "when": { "west": true },
-            "apply": { "model": "deeper_depths:copper_bars_side_alt", "y": 90 }
+            "apply": { "model": "deeperdepths:copper_bars_side_alt", "textures": { "all": "deeperdepths:blocks/copper_bars"}, "y": 90 }
         }
     ]
 }
