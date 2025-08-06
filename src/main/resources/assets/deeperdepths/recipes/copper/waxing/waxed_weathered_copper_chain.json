@@ -1,0 +1,17 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "deeperdepths:weathered_copper_chain"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "wax"
+    }
+  ],
+  "result": {
+    "item": "deeperdepths:weathered_copper_chain",
+    "count": 1
+  }
+}

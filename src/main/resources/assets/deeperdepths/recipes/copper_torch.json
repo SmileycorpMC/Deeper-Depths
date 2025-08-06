@@ -1,0 +1,34 @@
+{
+  "group": "deeperdepths:copper_torch",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "N",
+    "C",
+	"S"
+  ],
+  "key": {
+    "N": {
+      "type": "forge:ore_dict",
+      "ore": "nuggetCopper"
+    },
+	"C": [
+      {
+        "item": "minecraft:coal",
+        "data": 0
+      },
+      {
+        "item": "minecraft:coal",
+        "data": 1
+      }
+    ],
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:copper_torch",
+    "count": 4
+  }
+}

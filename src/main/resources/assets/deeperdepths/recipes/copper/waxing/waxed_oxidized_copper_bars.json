@@ -1,0 +1,17 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "deeperdepths:oxidized_copper_bars"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "wax"
+    }
+  ],
+  "result": {
+    "item": "deeperdepths:oxidized_copper_bars",
+    "count": 1
+  }
+}

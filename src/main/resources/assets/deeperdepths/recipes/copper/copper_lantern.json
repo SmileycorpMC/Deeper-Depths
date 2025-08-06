@@ -3,18 +3,21 @@
   "type": "minecraft:crafting_shaped",
   "mirror": false,
   "pattern": [
-    "MM",
-    "MM"
+    "NNN",
+    "NTN",
+	"NNN"
   ],
   "key": {
-    "M": {
+    "N": {
       "type": "forge:ore_dict",
-      "ore": "blockCopper"
+      "ore": "nuggetCopper"
+    },
+    "T": {
+      "item": "deeperdepths:copper_torch"
     }
   },
   "result": {
-    "item": "deeperdepths:copper_trapdoor",
-    "data": 0,
-    "count": 9
+    "item": "deeperdepths:copper_lantern",
+    "count": 1
   }
 }

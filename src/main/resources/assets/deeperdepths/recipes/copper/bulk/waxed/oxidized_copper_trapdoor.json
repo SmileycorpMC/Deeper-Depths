@@ -3,8 +3,8 @@
   "type": "minecraft:crafting_shaped",
   "mirror": false,
   "pattern": [
-    "MMM",
-    "MMM"
+    "MM",
+    "MM"
   ],
   "key": {
     "M": {
@@ -15,6 +15,6 @@
   "result": {
     "item": "deeperdepths:waxed_oxidized_copper_trapdoor",
     "data": 0,
-    "count": 18
+    "count": 9
   }
 }

@@ -3,18 +3,21 @@
   "type": "minecraft:crafting_shaped",
   "mirror": false,
   "pattern": [
-    "MM",
-    "MM"
+    "III",
+    "ICI",
+	"III"
   ],
   "key": {
-    "M": {
+    "I": {
       "type": "forge:ore_dict",
-      "ore": "blockCopper"
+      "ore": "nuggetCopper"
+    },
+    "C": {
+      "item": "minecraft:chest"
     }
   },
   "result": {
-    "item": "deeperdepths:copper_trapdoor",
-    "data": 0,
-    "count": 9
+    "item": "deeperdepths:copper_chest",
+    "count": 1
   }
 }
