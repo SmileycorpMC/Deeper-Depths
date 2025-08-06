@@ -55,33 +55,33 @@ public class BlockCopperBars extends BlockPane implements ICopperBlock, IBlockPr
 
     @Override
     public IBlockState getScraped(IBlockState state) {
-        return copyProperties(state, DeeperDepthsBlocks.LIGHTNING_RODS.get(waxed ? stage : stage.previous()).getDefaultState());
+        return copyProperties(state, DeeperDepthsBlocks.COPPER_BARS.get(waxed ? stage : stage.previous()).getDefaultState());
     }
 
     private IBlockState copyProperties(IBlockState oldState, IBlockState newState) {
-        return newState.withProperty(BlockDirectional.FACING, oldState.getValue(BlockDirectional.FACING));
+        return newState.withProperty(NORTH, oldState.getValue(NORTH)).withProperty(SOUTH, oldState.getValue(SOUTH))
+                .withProperty(EAST, oldState.getValue(EAST)).withProperty(WEST, oldState.getValue(WEST));
     }
 
     @Override
     public IBlockState getWaxed(IBlockState state) {
-        return waxed ? state : copyProperties(state, DeeperDepthsBlocks.WAXED_LIGHTNING_RODS.get(stage).getDefaultState());
+        return waxed ? state : copyProperties(state, DeeperDepthsBlocks.WAXED_COPPER_BARS.get(stage).getDefaultState());
     }
 
     @Override
     public IBlockState getWeathered(IBlockState state) {
-        return waxed || stage == EnumWeatherStage.OXIDIZED ? state : copyProperties(state, DeeperDepthsBlocks.LIGHTNING_RODS.get(stage.next()).getDefaultState());
+        return waxed || stage == EnumWeatherStage.OXIDIZED ? state : copyProperties(state, DeeperDepthsBlocks.COPPER_BARS.get(stage.next()).getDefaultState());
     }
 
     @Override
     public boolean isEdible(ItemStack stack) {
-        //💀
         if (!Constants.FUNNY &! BlockConfig.tastyCopper) return false;
         return stage != EnumWeatherStage.NORMAL;
     }
 
     @Override
     public ItemStack getPrevious(ItemStack stack) {
-        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_LIGHTNING_RODS : DeeperDepthsBlocks.LIGHTNING_RODS)
+        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_COPPER_BARS : DeeperDepthsBlocks.COPPER_BARS)
                 .get(stage.previous()), stack.getCount(), stack.getMetadata());
         if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
         return stack1;
@@ -90,8 +90,8 @@ public class BlockCopperBars extends BlockPane implements ICopperBlock, IBlockPr
     @Override
     public ItemStack getScraped(ItemStack stack) {
         if (!canScrape(stack)) return stack;
-        ItemStack stack1 = new ItemStack(waxed ? DeeperDepthsBlocks.LIGHTNING_RODS.get(stage)
-                : DeeperDepthsBlocks.LIGHTNING_RODS.get(stage.previous()), stack.getCount(), stack.getMetadata());
+        ItemStack stack1 = new ItemStack(waxed ? DeeperDepthsBlocks.COPPER_BARS.get(stage)
+                : DeeperDepthsBlocks.COPPER_BARS.get(stage.previous()), stack.getCount(), stack.getMetadata());
         if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
         return stack1;
     }
@@ -99,7 +99,7 @@ public class BlockCopperBars extends BlockPane implements ICopperBlock, IBlockPr
     @Override
     public ItemStack getWaxed(ItemStack stack) {
         if (isWaxed(stack)) return stack;
-        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.WAXED_LIGHTNING_RODS.get(stage), stack.getCount(), stack.getMetadata());
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BARS.get(stage), stack.getCount(), stack.getMetadata());
         if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
         return stack1;
     }
@@ -107,7 +107,7 @@ public class BlockCopperBars extends BlockPane implements ICopperBlock, IBlockPr
     @Override
     public ItemStack getWeathered(ItemStack stack) {
         if (!canWeather(stack)) return stack;
-        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.LIGHTNING_RODS.get(stage.next()), stack.getCount(), stack.getMetadata());
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.COPPER_BARS.get(stage.next()), stack.getCount(), stack.getMetadata());
         if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
         return stack1;
     }
