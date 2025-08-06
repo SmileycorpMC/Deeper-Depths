@@ -32,7 +32,8 @@ public class BlockCopperTorch extends BlockTorch implements IBlockProperties {
         double x = (double)pos.getX() + 0.5D;
         double y = (double)pos.getY() + 0.7D;
         double z = (double)pos.getZ() + 0.5D;
-        if (!enumfacing.getAxis().isVertical()) {
+        if (enumfacing.getAxis().isVertical())
+        {
             ClientProxy.addParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, Color.WHITE);
             DeeperDepths.proxy.spawnParticle(3, world, x, y, z, 0.0D, 0.0D, 0.0D, 2);
             return;
