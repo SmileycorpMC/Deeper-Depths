@@ -1,0 +1,7 @@
+{
+    "parent": "deeperdepths:block/copper_lantern/lantern_hanging",
+    "textures": {
+        "all": "deeperdepths:blocks/exposed_copper_lantern",
+        "particle": "deeperdepths:blocks/exposed_copper_lantern"
+    }
+}
