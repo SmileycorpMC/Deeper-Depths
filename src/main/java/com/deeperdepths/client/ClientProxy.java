@@ -138,16 +138,18 @@ public class ClientProxy extends CommonProxy {
     }
 
     @SubscribeEvent
-    public static void clientTick(TickEvent.ClientTickEvent event) {
+    public static void clientTick(TickEvent.ClientTickEvent event)
+    {
         if (event.phase != TickEvent.Phase.START) return;
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP player = mc.player;
         if (player == null) return;
         OLD_FOV = FOV;
-        if (player.getItemInUseCount() <= 0 && FOV == 1) return;
-        if ((player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS || mc.gameSettings.thirdPersonView != 0)
-                && FOV < 1) FOV = Math.min(FOV + (1 - FOV) * 0.5f, 1);
-        else if (mc.gameSettings.thirdPersonView == 0 && FOV > 0.1) FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
+
+        /* Adjusts FOV down when the Player is utilizing a Spyglass, in first person. Else it adjusts back to normal. */
+        boolean zoomin = player.isHandActive() && player.getActiveItemStack().getItem() == DeeperDepthsItems.SPYGLASS && mc.gameSettings.thirdPersonView == 0;
+        if (!zoomin) FOV = Math.min(FOV + (1 - FOV) * 0.5f, 1);
+        else FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
     }
 
     @SubscribeEvent
