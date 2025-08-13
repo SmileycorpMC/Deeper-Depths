@@ -50,6 +50,7 @@ public class DeeperDepthsItems {
         for (Block block : DeeperDepthsBlocks.BLOCKS) {
             if (block instanceof BlockCandle) register(registry, new ItemBlockCandle((BlockCandle) block));
             else if (block instanceof BlockCopperDoor) register(registry, ((BlockCopperDoor) block).getItem());
+            else if (block instanceof BlockCopperChest) register(registry, new ItemCopperChest((BlockCopperChest) block));
             else if (!(block instanceof BlockDDSlab)) register(registry, (block instanceof ICopperBlock) ?
                     new ItemBlockCopper(block) : new ItemDDBlock(block));
             else if (!((BlockDDSlab) block).isDouble()) register(registry, block instanceof BlockCutCopperSlab ?

@@ -11,6 +11,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -19,8 +20,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlockProperties {
@@ -54,91 +57,56 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        EnumFacing enumfacing = EnumFacing.getHorizontal(MathHelper.floor((double)(placer.rotationYaw * 4.f / 360f) + 0.5) & 3).getOpposite();
-        state = state.withProperty(FACING, enumfacing);
-        BlockPos posN = pos.north();
-        BlockPos posS = pos.south();
-        BlockPos posW = pos.west();
-        BlockPos posE = pos.east();
-        boolean north = canConnect(world, pos, posN);
-        boolean south = canConnect(world, pos, posS);
-        boolean west = canConnect(world, pos, posW);
-        boolean east = canConnect(world, pos, posE);
-        if (!north && !south && !west && !east) world.setBlockState(pos, state, 3);
-        else if (enumfacing.getAxis() != EnumFacing.Axis.X || !north && !south) {
-            if (enumfacing.getAxis() == EnumFacing.Axis.Z && (west || east)) {
-                state = getInterpolatedState(state, world.getBlockState(west ? posW : posE));
-                world.setBlockState(west ? posW : posE, state, 3);
-                world.setBlockState(pos, state, 3);
-            }
-        }
-        else {
-            state = getInterpolatedState(state, world.getBlockState(north ? posN : posS));
-            world.setBlockState(north ? posN : posS, state, 3);
-            world.setBlockState(pos, state, 3);
-        }
-        if (stack.hasDisplayName()) {
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof TileCopperChest) ((TileCopperChest)te).setCustomName(stack.getDisplayName());
-        }
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        return getDefaultState().withProperty(WEATHER_STAGE, EnumWeatherStage.values()[meta % 4])
+                .withProperty(FACING, EnumFacing.getHorizontal(MathHelper.floor((double)(placer.rotationYaw * 4f / 360f) + 0.5) & 3).getOpposite());
     }
 
-    private IBlockState getInterpolatedState(IBlockState state, IBlockState state1) {
-        IBlockState newState = (!((BlockCopperChest)state.getBlock()).isWaxed() || ((BlockCopperChest)state1.getBlock()).isWaxed() ?
-                DeeperDepthsBlocks.COPPER_CHEST : DeeperDepthsBlocks.WAXED_COPPER_CHEST).getDefaultState().withProperty(FACING, state.getValue(FACING));
-        return newState.withProperty(WEATHER_STAGE, state.getValue(WEATHER_STAGE).getLowest(state1.getValue(WEATHER_STAGE)));
-    }
+    //implementation needed in ItemCopperChest
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {}
 
-    private boolean canConnect(IBlockAccess world, BlockPos pos, BlockPos other) {
-        IBlockState state = world.getBlockState(pos);
-        IBlockState state1 = world.getBlockState(other);
-        if (!(state.getBlock() instanceof BlockCopperChest && state1.getBlock() instanceof BlockCopperChest)) return false;
-        if (!(world.getTileEntity(pos) instanceof TileCopperChest && world.getTileEntity(other) instanceof TileCopperChest)) return false;
-        if (!BlockConfig.sameTypeChests) return true;
-        return state.getValue(WEATHER_STAGE) == state1.getValue(WEATHER_STAGE) && state.getBlock() == state1.getBlock();
+    @Override
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {}
+
+    @Override
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+        return true;
     }
 
     @Override
-    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-        checkForSurroundingChests(world, pos, state);
-        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-            BlockPos blockpos = pos.offset(enumfacing);
-            IBlockState iblockstate = world.getBlockState(blockpos);
-            if (canConnect(world, pos, blockpos)) checkForSurroundingChests(world, blockpos, iblockstate);
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        TileEntity tile = world.getTileEntity(pos);
+        if (!(tile instanceof TileCopperChest)) return NOT_CONNECTED_AABB;
+        EnumFacing direction = ((TileCopperChest) tile).getOtherDirection();
+        if (direction == null) return NOT_CONNECTED_AABB;
+        switch (direction) {
+            case NORTH:
+                return NORTH_CHEST_AABB;
+            case SOUTH:
+                return SOUTH_CHEST_AABB;
+            case WEST:
+                return WEST_CHEST_AABB;
+            case EAST:
+                return EAST_CHEST_AABB;
+            default:
+                return NOT_CONNECTED_AABB;
         }
     }
 
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        if (canConnect(source, pos, pos.north())) return NORTH_CHEST_AABB;
-        if (canConnect(source, pos, pos.south())) return SOUTH_CHEST_AABB;
-        if (canConnect(source, pos, pos.east())) return EAST_CHEST_AABB;
-        if (canConnect(source, pos, pos.west())) return WEST_CHEST_AABB;
-        return NOT_CONNECTED_AABB;
-    }
-
-    //vanilla just uses normal chest names, I'm pretty sure that's a bug leaving this here just in case
-    /*
     @Nullable
     public ILockableContainer getContainer(World world, BlockPos pos, boolean allowBlocking) {
         TileEntity tile = world.getTileEntity(pos);
         if (!(tile instanceof TileCopperChest)) return null;
-        ILockableContainer chest = (TileCopperChest)tile;
+        TileCopperChest chest = (TileCopperChest)tile;
         if (!allowBlocking && isBlocked(world, pos)) return null;
-        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-            BlockPos pos1 = pos.offset(enumfacing);
-            Block block = world.getBlockState(pos1).getBlock();
-            if (!(block instanceof BlockCopperChest)) continue;
-            if (!allowBlocking && isBlocked(world, pos1)) return null;
-            TileEntity tile1 = world.getTileEntity(pos1);
-            if (!(tile1 instanceof TileCopperChest)) continue;
-            chest = (enumfacing != EnumFacing.WEST && enumfacing != EnumFacing.NORTH) ?
-                new InventoryLargeChest(tile.getTranslationKey(), chest, (TileEntityChest)tile1)
-                : new InventoryLargeChest(tile.getTranslationKey(), (TileEntityChest)tile1, chest);
-        }
-        return chest;
-    }*/
+        EnumFacing direction = chest.getOtherDirection();
+        if (direction == null) return chest;
+        TileCopperChest other = (TileCopperChest) world.getTileEntity(pos.offset(direction));
+        return direction == EnumFacing.WEST || direction == EnumFacing.NORTH ?
+                new InventoryLargeChest("container.chestDouble", chest, other)
+                : new InventoryLargeChest("container.chestDouble", other, chest);
+    }
 
     @Override
     public int getMetaFromState(IBlockState state) {
@@ -213,11 +181,10 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
     }
 
     private Optional<BlockPos> getOtherChest(World world, BlockPos pos) {
-        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-            BlockPos pos1 = pos.offset(facing);
-            if (canConnect(world, pos, pos1)) return Optional.of(pos1);
-        }
-        return Optional.empty();
+        TileEntity tile = world.getTileEntity(pos);
+        if (!(tile instanceof TileCopperChest)) return Optional.empty();
+        EnumFacing direction = ((TileCopperChest) tile).getOtherDirection();
+        return direction == null ? Optional.empty() : Optional.of(pos.offset(direction));
     }
 
     public boolean isWaxed() {

@@ -51,7 +51,7 @@ public class BlockConfig {
             tastyCopper = config.get("copper", "tastyCopper", false, "Is copper tasty?").getBoolean();
             copperAges = config.get("copper", "copperAges", true, "Does copper age?").getBoolean();
             copperAgeChance = config.get("copper", "ageChance", 0.05688889, "Decimal chance for copper to attempt to age?").getDouble();
-            sameTypeChests = config.get("copper", "sameTypeChests", true, "Do copper chests only connect to chests of the same oxidisation and wage states? (false behaves like vanilla.)").getBoolean();
+            sameTypeChests = config.get("copper chest", "sameTypeChests", true, "Do copper chests only connect to chests of the same oxidisation and wage states? (false behaves like vanilla.)").getBoolean();
             copperOre = new BlockStatEntry(config, "copper ore", 3, 3, 1);
             deepslate = new BlockStatEntry(config, "deepslate", 3, 6, 0);
             deepslateBricks = new BlockStatEntry(config, "deepslate bricks", 3.5, 6, 0);

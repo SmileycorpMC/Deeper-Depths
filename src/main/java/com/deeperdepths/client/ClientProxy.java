@@ -107,8 +107,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileVault.class, new TESRVault());
         ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TESRTrialSpawner());
         ClientRegistry.bindTileEntitySpecialRenderer(TileCopperChest.class, new TESRCopperChest());
-        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.Item());
-        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.WAXED_COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.Item());
+        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.ItemRenderer());
+        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.WAXED_COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.ItemRenderer());
         RenderingRegistry.registerEntityRenderingHandler(EntityBogged.class, RenderBogged::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityWindCharge.class, RenderWindCharge::new);
