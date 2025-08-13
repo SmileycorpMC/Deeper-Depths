@@ -42,6 +42,13 @@ public class DeeperDepthsSoundEvents {
     public static final SoundEvent CANDLE_HIT = readyForRegistry(Constants.loc("block.candle.hit"));
     public static final SoundEvent CANDLE_PLACE = readyForRegistry(Constants.loc("block.candle.place"));
     public static final SoundEvent CANDLE_STEP = readyForRegistry(Constants.loc("block.candle.step"));
+
+    //chains
+    public static final SoundEvent CHAIN_BREAK = readyForRegistry(Constants.loc("block.chain.break"));
+    public static final SoundEvent CHAIN_FALL = readyForRegistry(Constants.loc("block.chain.fall"));
+    public static final SoundEvent CHAIN_HIT = readyForRegistry(Constants.loc("block.chain.hit"));
+    public static final SoundEvent CHAIN_PLACE = readyForRegistry(Constants.loc("block.chain.place"));
+    public static final SoundEvent CHAIN_STEP = readyForRegistry(Constants.loc("block.chain.step"));
     
     //copper
     public static final SoundEvent COPPER_BREAK = readyForRegistry(Constants.loc("block.copper.break"));
@@ -61,7 +68,15 @@ public class DeeperDepthsSoundEvents {
     public static final SoundEvent COPPER_BULB_STEP = readyForRegistry(Constants.loc("block.copper_bulb.step"));
     public static final SoundEvent COPPER_BULB_TURN_OFF = readyForRegistry(Constants.loc("block.copper_bulb.turn_off"));
     public static final SoundEvent COPPER_BULB_TURN_ON = readyForRegistry(Constants.loc("block.copper_bulb.turn_on"));
-    
+
+    //copper chest
+    public static final SoundEvent COPPER_CHEST_CLOSE = readyForRegistry(Constants.loc("block.copper_chest.close"));
+    public static final SoundEvent COPPER_CHEST_OPEN = readyForRegistry(Constants.loc("block.copper_chest.open"));
+    public static final SoundEvent COPPER_CHEST_OXIDIZED_CLOSE = readyForRegistry(Constants.loc("block.copper_chest_oxidized.close"));
+    public static final SoundEvent COPPER_CHEST_OXIDIZED_OPEN = readyForRegistry(Constants.loc("block.copper_chest_oxidized.open"));
+    public static final SoundEvent COPPER_CHEST_WEATHERED_CLOSE = readyForRegistry(Constants.loc("block.copper_chest_weathered.close"));
+    public static final SoundEvent COPPER_CHEST_WEATHERED_OPEN = readyForRegistry(Constants.loc("block.copper_chest_weathered.open"));
+
     //copper door
     public static final SoundEvent COPPER_DOOR_CLOSE = readyForRegistry(Constants.loc("block.copper_door.close"));
     public static final SoundEvent COPPER_DOOR_OPEN = readyForRegistry(Constants.loc("block.copper_door.open"));
@@ -72,10 +87,24 @@ public class DeeperDepthsSoundEvents {
     public static final SoundEvent COPPER_GRATE_HIT = readyForRegistry(Constants.loc("block.copper_grate.hit"));
     public static final SoundEvent COPPER_GRATE_PLACE = readyForRegistry(Constants.loc("block.copper_grate.place"));
     public static final SoundEvent COPPER_GRATE_STEP = readyForRegistry(Constants.loc("block.copper_grate.step"));
+
+    //copper golem statue
+    public static final SoundEvent COPPER_GOLEM_STATUE_BREAK = readyForRegistry(Constants.loc("block.copper_golem_statue.break"));
+    public static final SoundEvent COPPER_GOLEM_STATUE_FALL = readyForRegistry(Constants.loc("block.copper_golem_statue.fall"));
+    public static final SoundEvent COPPER_GOLEM_STATUE__HIT = readyForRegistry(Constants.loc("block.copper_golem_statue.hit"));
+    public static final SoundEvent COPPER_GOLEM_STATUE__PLACE = readyForRegistry(Constants.loc("block.copper_golem_statue.place"));
+    public static final SoundEvent COPPER_GOLEM_STATUE__STEP = readyForRegistry(Constants.loc("block.copper_golem_statue.step"));
     
     //copper trapdoor
     public static final SoundEvent COPPER_TRAPDOOR_CLOSE = readyForRegistry(Constants.loc("block.copper_trapdoor.close"));
     public static final SoundEvent COPPER_TRAPDOOR_OPEN = readyForRegistry(Constants.loc("block.copper_trapdoor.open"));
+
+    //lantern
+    public static final SoundEvent LANTERN_BREAK = readyForRegistry(Constants.loc("block.lantern.break"));
+    public static final SoundEvent LANTERN_FALL = readyForRegistry(Constants.loc("block.lantern.fall"));
+    public static final SoundEvent LANTERN_HIT = readyForRegistry(Constants.loc("block.lantern.hit"));
+    public static final SoundEvent LANTERN_PLACE = readyForRegistry(Constants.loc("block.lantern.place"));
+    public static final SoundEvent LANTERN_STEP = readyForRegistry(Constants.loc("block.lantern.step"));
     
     //trial pot
     public static final SoundEvent TRIAL_POT_BREAK = readyForRegistry(Constants.loc("block.trial_pot.break"));

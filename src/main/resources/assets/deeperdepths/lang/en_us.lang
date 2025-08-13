@@ -299,25 +299,32 @@ tipped_arrow.effect.deeperdepths.wind_charged=Arrow of Wind Charged
 
 subtitles.deeperdepths.block.amethyst_block.chime=Amethyst chimes
 subtitles.deeperdepths.block.amethyst_block.resonate=Amethyst resonates
+
 subtitles.deeperdepths.block.candle.crackle=Candle crackles
 subtitles.deeperdepths.block.candle.extinguish=Candle extinguishes
+
 subtitles.deeperdepths.block.copper_bulb.turn_off=Copper Bulb turns off
 subtitles.deeperdepths.block.copper_bulb.turn_on=Copper Bulb turns on
+subtitles.deeperdepths.block.copper_chest.close=Chest closes
+subtitles.deeperdepths.block.copper_chest.open=Chest opens
 subtitles.deeperdepths.block.door.toggle=Door creaks
 subtitles.deeperdepths.block.copper_trapdoor.close=Trapdoor closes
 subtitles.deeperdepths.block.copper_trapdoor.open=Trapdoor opens
 subtitles.deeperdepths.block.copper.scrape=Axe scrapes
 subtitles.deeperdepths.block.copper.wax_off=Wax off
 subtitles.deeperdepths.block.copper.wax_on=Wax on
+
 subtitles.deeperdepths.block.trial_pot.insert=Trial Pot fills
 subtitles.deeperdepths.block.trial_pot.insert_fail=Trial Pot wobbles
 subtitles.deeperdepths.block.trial_pot.shatter=Trial Pot shatters
+
 subtitles.deeperdepths.block.sculk.charge=Sculk bubbles
 subtitles.deeperdepths.block.sculk.spread=Sculk spreads
 subtitles.deeperdepths.block.sculk_catalyst.bloom=Sculk Catalyst blooms
 subtitles.deeperdepths.block.sculk_sensor.clicking=Sculk Sensor clicks
 subtitles.deeperdepths.block.sculk_sensor.clicking_stop=Sculk Sensor stops clicking
 subtitles.deeperdepths.block.sculk_shrieker.shriek=Sculk Shrieker shrieks
+
 subtitles.deeperdepths.block.trial_spawner.about_to_spawn_item=Ominous item prepares
 subtitles.deeperdepths.block.trial_spawner.ambient=Trial Spawner crackles
 subtitles.deeperdepths.block.trial_spawner.ambient_ominous=Ominous crackling
@@ -329,6 +336,7 @@ subtitles.deeperdepths.block.trial_spawner.open_shutter=Trial Spawner opens
 subtitles.deeperdepths.block.trial_spawner.spawn_item=Ominous item drops
 subtitles.deeperdepths.block.trial_spawner.spawn_item_begin=Ominous item appears
 subtitles.deeperdepths.block.trial_spawner.spawn_mob=Trial Spawner spawns a mob
+
 subtitles.deeperdepths.block.vault.activate=Vault ignites
 subtitles.deeperdepths.block.vault.ambient=Vault crackles
 subtitles.deeperdepths.block.vault.close_shutter=Vault closes
@@ -343,6 +351,7 @@ subtitles.deeperdepths.entity.bogged.ambient=Bogged rattles
 subtitles.deeperdepths.entity.bogged.death=Bogged dies
 subtitles.deeperdepths.entity.bogged.hurt=Bogged hurts
 subtitles.deeperdepths.item.shears.shear=Shears click
+
 subtitles.deeperdepths.entity.breeze.charge=Breeze charges
 subtitles.deeperdepths.entity.breeze.death=Breeze dies
 subtitles.deeperdepths.entity.breeze.deflect=Breeze deflects
@@ -356,6 +365,23 @@ subtitles.deeperdepths.entity.breeze.shoot=Breeze shoots
 subtitles.deeperdepths.entity.breeze.slide=Breeze slides
 subtitles.deeperdepths.entity.breeze.whirl=Breeze whirls
 subtitles.deeperdepths.entity.breeze.wind_burst=Wind Charge bursts
+
+subtitles.deeperdepths.entity.copper_golem_become_statue=Copper Golem is petrified
+subtitles.deeperdepths.entity.copper_golem_oxidized.death=Copper Golem dies
+subtitles.deeperdepths.entity.copper_golem_oxidized.hurt=Copper Golem hurts
+subtitles.deeperdepths.entity.copper_golem_oxidized.spin=Copper Golem's head spins
+subtitles.deeperdepths.entity.copper_golem_weathered.death=Copper Golem dies
+subtitles.deeperdepths.entity.copper_golem_weathered.hurt=Copper Golem hurts
+subtitles.deeperdepths.entity.copper_golem_weathered.spin=Copper Golem's head spins
+subtitles.deeperdepths.entity.copper_golem.death=Copper Golem dies
+subtitles.deeperdepths.entity.copper_golem.hurt=Copper Golem hurts
+subtitles.deeperdepths.entity.copper_golem.item_drop=Copper Golem is placing an item
+subtitles.deeperdepths.entity.copper_golem.item_no_drop=Copper Golem can't place item
+subtitles.deeperdepths.entity.copper_golem.no_item_get=Copper Golem is picking up item
+subtitles.deeperdepths.entity.copper_golem.no_item_no_get=Copper Golem can't pick up item
+subtitles.deeperdepths.entity.copper_golem.spawn=Copper Golem appears
+subtitles.deeperdepths.entity.copper_golem.spin=Copper Golem's head spins
+
 subtitles.deeperdepths.entity.warden.agitated=Warden groans angrily
 subtitles.deeperdepths.entity.warden.ambient=Warden whines
 subtitles.deeperdepths.entity.warden.angry=Warden rages
@@ -375,6 +401,7 @@ subtitles.deeperdepths.entity.warden.sniff=Warden sniffs
 subtitles.deeperdepths.entity.warden.sonic_boom=Warden booms
 subtitles.deeperdepths.entity.warden.sonic_charge=Warden charges
 subtitles.deeperdepths.entity.warden.tendril_clicks=Warden tendrils click
+
 subtitles.deeperdepths.entity.wind_charge.throw=Wind Charge flies
 subtitles.deeperdepths.entity.wind_charge.wind_burst=Wind Charge bursts
 
@@ -404,13 +431,13 @@ jei.category.deeperdepths.waxing=Waxing
 jei.category.deeperdepths.scraping=Scraping
 jei.category.deeperdepths.weathering=Weathering
 
-effect.deeperdepths.bad_omen.0.desc = Causes an ominous event near Villages or Trial Spawners.
-effect.deeperdepths.infested.0.desc = 10% chance to spawn 1-2 Silverfish when hurt.
-effect.deeperdepths.oozing.0.desc = Spawns 2 Slimes upon death.
-effect.deeperdepths.trial_omen.0.desc = Transforms nearby Trial Spawners into Ominous Spawners.
-effect.deeperdepths.wind_charged.0.desc = Spawns a wind burst upon death.
-effect.deeperdepths.weaving.0.desc = Reduces Cobweb slowing; places 2-3 Cobwebs upon death.
+effect.deeperdepths.bad_omen.0.desc=Causes an ominous event near Villages or Trial Spawners.
+effect.deeperdepths.infested.0.desc=10% chance to spawn 1-2 Silverfish when hurt.
+effect.deeperdepths.oozing.0.desc=Spawns 2 Slimes upon death.
+effect.deeperdepths.trial_omen.0.desc=Transforms nearby Trial Spawners into Ominous Spawners.
+effect.deeperdepths.wind_charged.0.desc=Spawns a wind burst upon death.
+effect.deeperdepths.weaving.0.desc=Reduces Cobweb slowing; places 2-3 Cobwebs upon death.
 
-enchantment.deeperdepths.breach.desc = Smash Attacks ignores 15% of armor, pre level.
-enchantment.deeperdepths.density.desc = Increases Smash Attack damage by +0.5 per level.
-enchantment.deeperdepths.wind_burst.desc = Smash Attacks spawn a wind burst, launching the user up.
+enchantment.deeperdepths.breach.desc=Smash Attacks ignores 15% of armor, pre level.
+enchantment.deeperdepths.density.desc=Increases Smash Attack damage by +0.5 per level.
+enchantment.deeperdepths.wind_burst.desc=Smash Attacks spawn a wind burst, launching the user up.
