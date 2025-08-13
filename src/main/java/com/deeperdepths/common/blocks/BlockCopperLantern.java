@@ -1,7 +1,5 @@
 package com.deeperdepths.common.blocks;
 
-import com.deeperdepths.common.Constants;
-import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.config.BlockConfig;

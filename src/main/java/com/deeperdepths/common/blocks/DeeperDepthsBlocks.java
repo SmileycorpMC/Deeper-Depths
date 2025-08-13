@@ -119,7 +119,7 @@ public class DeeperDepthsBlocks {
                     for (Object o : ((Map)object).values()) if (o instanceof Block) register(registry, (Block) o);
                     continue;
                 }
-                if (!(object instanceof Block) || object == null) continue;
+                if (!(object instanceof Block)) continue;
                 register(registry, (Block) object);
             } catch (Exception e) {
                 DeeperDepths.error(field, e);
