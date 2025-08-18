@@ -71,10 +71,10 @@ public class DeeperDepthsTab extends CreativeTabs {
             stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(stage)));
             stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_BULB, 1, stage.ordinal()));
             stacks.add(new ItemStack(DeeperDepthsBlocks.LIGHTNING_RODS.get(stage)));
-            //stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_CHEST, 1, stage.ordinal()));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_CHEST, 1, stage.ordinal()));
             stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_BARS.get(stage)));
-            //stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_CHAINS.get(stage)));
-            //stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_LANTERNS.get(stage)));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_CHAINS, 1, stage.ordinal()));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_LANTERN, 1, stage.ordinal()));
             //stacks.add(new ItemStack(DeeperDepthsBlocks.GOLEM_STATUE, 1, stage.ordinal()));
         }
         for (EnumWeatherStage stage : EnumWeatherStage.values()) {
@@ -88,10 +88,10 @@ public class DeeperDepthsTab extends CreativeTabs {
             stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage)));
             stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 1, stage.ordinal()));
             stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_LIGHTNING_RODS.get(stage)));
-            //stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_CHEST, 1, stage.ordinal()));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_CHEST, 1, stage.ordinal()));
             stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BARS.get(stage)));
-            //stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_CHAINS.get(stage)));
-            //stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_LANTERNS.get(stage)));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_CHAINS, 1, stage.ordinal()));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_LANTERN, 1, stage.ordinal() + 4));
             //stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_GOLEM_STATUE, 1, stage.ordinal()));
         }
 
