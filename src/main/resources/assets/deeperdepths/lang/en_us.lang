@@ -426,6 +426,12 @@ advancements.deeperdepths.wax_off.title=Wax Off
 advancements.deeperdepths.wax_off.description=Scrape Wax off of a Copper block!
 advancements.deeperdepths.over_overkill.title=Over-Overkill
 advancements.deeperdepths.over_overkill.description=Deal 50 hearts of damage in a single hit using the Mace
+advancements.deeperdepths.is_it_a_bird.title=Is It a Bird?
+advancements.deeperdepths.is_it_a_bird.description=Look at a Parrot through a Spyglass
+advancements.deeperdepths.is_it_a_balloon.title=Is It a Balloon?
+advancements.deeperdepths.is_it_a_balloon.description=Look at a Ghast through a Spyglass
+advancements.deeperdepths.is_it_a_plane.title=Is It a Plane?
+advancements.deeperdepths.is_it_a_plane.description=Look at the Ender Dragon through a Spyglass
 
 jei.category.deeperdepths.waxing=Waxing
 jei.category.deeperdepths.scraping=Scraping

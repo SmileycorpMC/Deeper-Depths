@@ -1,0 +1,29 @@
+{
+    "parent": "deeperdepths:is_it_a_bird",
+    "display": {
+        "icon": {
+            "item": "deeperdepths:spyglass"
+        },
+        "title": {
+            "translate": "advancements.deeperdepths.is_it_a_balloon.title"
+        },
+        "description": {
+            "translate": "advancements.deeperdepths.is_it_a_balloon.description"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "spyglass": {
+            "trigger": "deeperdepths:spyglass",
+            "conditions": {
+                "entity": {
+                    "type": "ghast"
+                }
+            }
+        }
+    },
+    "requirements": []
+}
