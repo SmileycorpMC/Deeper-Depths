@@ -16,7 +16,7 @@
     "hidden": false
   },
   "criteria": {
-    "hero_of_the_village": {
+    "scrape": {
       "trigger": "deeperdepths:wax_off",
       "conditions": {}
     }
