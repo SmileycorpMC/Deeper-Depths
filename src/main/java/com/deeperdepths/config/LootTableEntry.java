@@ -39,7 +39,8 @@ public class LootTableEntry {
 
     public void addEntry(LootTable table) {
         table.getPool(pool).addEntry(new LootEntryItem(item, weight, 1,
-                new LootFunction[]{new SetMetadata(new LootCondition[0], new RandomValueRange(metadata))}, new LootCondition[0], item.getRegistryName().toString()));
+                new LootFunction[]{new SetMetadata(new LootCondition[0], new RandomValueRange(metadata))}, new LootCondition[0],
+                item.getRegistryName() + "_" + metadata));
     }
 
 }
