@@ -10,6 +10,7 @@ import com.deeperdepths.common.network.ParticleMessage;
 import com.deeperdepths.common.world.loot.functions.ApplyEnchantments;
 import com.deeperdepths.config.BlockConfig;
 import com.deeperdepths.config.EntityConfig;
+import com.deeperdepths.config.LootTablesConfig;
 import com.deeperdepths.config.WorldConfig;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
@@ -30,9 +31,10 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class CommonProxy {
     
     public void preInit(FMLPreInitializationEvent event) {
-        EntityConfig.syncConfig(event);
-        WorldConfig.syncConfig(event);
         BlockConfig.syncConfig(event);
+        EntityConfig.syncConfig(event);
+        LootTablesConfig.syncConfig(event);
+        WorldConfig.syncConfig(event);
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
         DeeperDepthsEntities.registerEntities();
         //Registers Entity Spawns even though I think we'll only have one lmao

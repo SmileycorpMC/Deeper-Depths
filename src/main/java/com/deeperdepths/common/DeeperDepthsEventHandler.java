@@ -13,6 +13,8 @@ import com.deeperdepths.common.items.ItemMace;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.common.potion.PotionDeeperDepths;
 import com.deeperdepths.config.BlockConfig;
+import com.deeperdepths.config.LootTableEntry;
+import com.deeperdepths.config.LootTablesConfig;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -34,6 +36,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -297,6 +300,12 @@ public class DeeperDepthsEventHandler {
             if (((EntityPlayerMP) source.getImmediateSource()).getHeldItemMainhand().getItem() instanceof ItemMace)
                 if (ItemMace.CACHED_HEALTH != 0) ItemMace.CACHED_HEALTH = 0;
         }
+    }
+
+    //yeah, now this is gaming
+    @SubscribeEvent
+    public void addLoot(LootTableLoadEvent event) {
+        for (LootTableEntry entry : LootTablesConfig.ENTRIES) if (entry.canApply(event.getName())) entry.addEntry(event.getTable());
     }
     
 }
