@@ -338,6 +338,8 @@ advancements.deeperdepths.wax_off.description=Scrape Wax off of a Copper block!
 advancements.deeperdepths.over_overkill.title=Over-Overkill
 advancements.deeperdepths.over_overkill.description=Deal 50 hearts of damage in a single hit using the Mace
 
+stat.deeperdepths.duped_copper=Duped Copper
+
 jei.category.deeperdepths.waxing=Waxing
 jei.category.deeperdepths.scraping=Scraping
 jei.category.deeperdepths.weathering=Weathering

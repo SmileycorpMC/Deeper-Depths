@@ -4,11 +4,18 @@ import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.items.ICopperItem;
+import com.deeperdepths.common.items.ItemCopperSlab;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.oredict.OreDictionary;
+import thedarkcolour.futuremc.container.StonecutterContainer;
+import thedarkcolour.futuremc.recipe.SimpleRecipe;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 import thedarkcolour.futuremc.registry.FItems;
+
+import java.util.List;
 
 public class FutureMCIntegration {
 
@@ -84,6 +91,10 @@ public class FutureMCIntegration {
     private static void addCopperRecipe(ItemStack input, ItemStack output) {
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(input), output);
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(((ICopperItem)input.getItem()).getWaxed(input)), ((ICopperItem)output.getItem()).getWaxed(output));
+    }
+
+    public static boolean isStonecutter(Container container) {
+        return container instanceof StonecutterContainer;
     }
 
 }
