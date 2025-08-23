@@ -3,8 +3,8 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "deeperdepths:copper_chain",
-	  "data": 2
+      "item": "deeperdepths:copper_chest",
+      "data": 1
     },
     {
       "type": "forge:ore_dict",
@@ -12,8 +12,8 @@
     }
   ],
   "result": {
-    "item": "deeperdepths:waxed_copper_chain",
-	"data": 2,
+    "item": "deeperdepths:waxed_copper_chest",
+    "data": 1,
     "count": 1
   }
 }

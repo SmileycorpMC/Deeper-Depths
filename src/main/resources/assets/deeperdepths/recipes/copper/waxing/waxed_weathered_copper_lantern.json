@@ -3,7 +3,8 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "deeperdepths:weathered_copper_lantern"
+      "item": "deeperdepths:copper_lantern",
+	  "data": 2
     },
     {
       "type": "forge:ore_dict",
@@ -11,7 +12,8 @@
     }
   ],
   "result": {
-    "item": "deeperdepths:weathered_copper_lantern",
+    "item": "deeperdepths:copper_lantern",
+	"data": 6,
     "count": 1
   }
 }
