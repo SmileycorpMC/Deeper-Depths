@@ -1,5 +1,6 @@
 package com.deeperdepths.common.blocks;
 
+import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -16,6 +17,7 @@ public class BlockHeavyCore extends BlockDeeperDepths
     public BlockHeavyCore()
     {
         super("heavy_core", Material.IRON, BlockConfig.heavyCore.getHardness(), BlockConfig.heavyCore.getResistance(), BlockConfig.heavyCore.getHarvestLevel());
+        setSoundType(DeeperDepthsSoundTypes.HEAVY_CORE);
     }
 
     @Override

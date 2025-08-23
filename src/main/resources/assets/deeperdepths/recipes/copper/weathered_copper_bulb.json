@@ -10,7 +10,7 @@
   "key": {
     "M": {
       "item": "deeperdepths:copper_block",
-      "data": 6
+      "data": 2
     },
     "R": {
       "type": "forge:ore_dict",
@@ -18,11 +18,11 @@
     },
 	"B": {
       "type": "forge:ore_dict",
-      "ore": "dustBlaze"
+      "ore": "rodBlaze"
     }
   },
   "result": {
-    "item": "deeperdepths:waxed_copper_bulb",
+    "item": "deeperdepths:copper_bulb",
     "data": 2,
     "count": 4
   }

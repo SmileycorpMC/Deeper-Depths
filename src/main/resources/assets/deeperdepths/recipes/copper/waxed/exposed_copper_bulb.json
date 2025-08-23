@@ -18,7 +18,7 @@
     },
 	"B": {
       "type": "forge:ore_dict",
-      "ore": "dustBlaze"
+      "ore": "rodBlaze"
     }
   },
   "result": {

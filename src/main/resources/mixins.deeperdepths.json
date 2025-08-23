@@ -3,6 +3,7 @@
   "package": "com.deeperdepths.mixin",
   "refmap": "mixins.deeperdepths.refmap.json",
   "mixins": [
+    "MixinContainer",
     "MixinEntity",
     "MixinEntityLivingBase",
     "MixinWorldServer"

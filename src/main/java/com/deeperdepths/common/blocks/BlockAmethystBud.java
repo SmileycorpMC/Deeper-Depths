@@ -1,5 +1,6 @@
 package com.deeperdepths.common.blocks;
 
+import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumClusterSize;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import net.minecraft.block.Block;
@@ -29,6 +30,7 @@ public class BlockAmethystBud extends BlockAmethyst {
     public BlockAmethystBud(EnumClusterSize size) {
         super(size == EnumClusterSize.CLUSTER ? "amethyst_cluster" : size.getName() + "_amethyst_bud");
         this.size = size;
+        setSoundType(DeeperDepthsSoundTypes.AMETHYST_CLUSTER);
     }
     
     @Override

@@ -433,6 +433,8 @@ advancements.deeperdepths.is_it_a_balloon.description=Look at a Ghast through a 
 advancements.deeperdepths.is_it_a_plane.title=Is It a Plane?
 advancements.deeperdepths.is_it_a_plane.description=Look at the Ender Dragon through a Spyglass
 
+stat.deeperdepths.duped_copper=Duped Copper
+
 jei.category.deeperdepths.waxing=Waxing
 jei.category.deeperdepths.scraping=Scraping
 jei.category.deeperdepths.weathering=Weathering

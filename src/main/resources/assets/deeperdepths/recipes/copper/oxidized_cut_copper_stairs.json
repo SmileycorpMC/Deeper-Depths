@@ -1,19 +1,21 @@
 {
   "group": "deeperdepths:copper",
   "type": "minecraft:crafting_shaped",
-  "mirror": false,
+  "mirror": true,
   "pattern": [
+	"M  ",
+	"MM ",
     "MMM"
   ],
   "key": {
     "M": {
       "item": "deeperdepths:cut_copper",
-      "data": 7
+      "data": 3
     }
   },
   "result": {
-    "item": "deeperdepths:cut_copper_slab",
-    "data": 7,
-    "count": 6
+    "item": "deeperdepths:oxidized_cut_copper_stairs",
+    "data": 0,
+    "count": 4
   }
 }

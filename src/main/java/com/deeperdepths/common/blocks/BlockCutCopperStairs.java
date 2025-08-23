@@ -1,5 +1,6 @@
 package com.deeperdepths.common.blocks;
 
+import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.config.BlockConfig;
@@ -67,6 +68,7 @@ public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock 
     
     @Override
     public boolean isEdible(ItemStack stack) {
+        if (!Constants.FUNNY &! BlockConfig.tastyCopper) return false;
         return stage != EnumWeatherStage.NORMAL;
     }
     

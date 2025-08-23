@@ -4,11 +4,18 @@ import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.items.ICopperItem;
+import com.deeperdepths.common.items.ItemCopperSlab;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.oredict.OreDictionary;
+import thedarkcolour.futuremc.container.StonecutterContainer;
+import thedarkcolour.futuremc.recipe.SimpleRecipe;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 import thedarkcolour.futuremc.registry.FItems;
+
+import java.util.List;
 
 public class FutureMCIntegration {
 
@@ -34,7 +41,7 @@ public class FutureMCIntegration {
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.STONE, 1, 6)),
                 new ItemStack(DeeperDepthsBlocks.STONE, 1, 7));
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.STONE, 1, 6)),
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 7));
+                new ItemStack(DeeperDepthsBlocks.STONE, 1, 8));
         for (EnumWeatherStage stage : EnumWeatherStage.values()) addCopperRecipes(stage);
     }
     
@@ -47,7 +54,7 @@ public class FutureMCIntegration {
                 new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 2, type.getShapedMeta()));
     }
     
-    private static void addSubStoneRecipes(EnumStoneType type, EnumStoneType main) {
+    private static void addSubStoneRecipes(EnumStoneType main, EnumStoneType type) {
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.STONE, 1, main.ordinal())),
                 new ItemStack(DeeperDepthsBlocks.STONE, 1, type.ordinal()));
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.STONE, 1, main.ordinal())),
@@ -59,6 +66,9 @@ public class FutureMCIntegration {
     }
     
     private static void addCopperRecipes(EnumWeatherStage stage) {
+        //somehow cut blocks giving quad output is not a bug?
+        //at least not on our end
+        //mojank intended? (it's probably still a bug but fuck it you can't uncraft them)
         addCopperRecipe(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal()),
                 new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 4, stage.ordinal()));
         addCopperRecipe(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal()),
@@ -71,8 +81,9 @@ public class FutureMCIntegration {
                 new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 4, stage.ordinal()));
         addCopperRecipe(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal()),
                 new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 2, stage.ordinal()));
+        //except you, you were actually bugged
         addCopperRecipe(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal()),
-                new ItemStack(DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(stage), 4));
+                new ItemStack(DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(stage), 1));
         addCopperRecipe(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal()),
                 new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal()));
     }
@@ -80,6 +91,10 @@ public class FutureMCIntegration {
     private static void addCopperRecipe(ItemStack input, ItemStack output) {
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(input), output);
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(((ICopperItem)input.getItem()).getWaxed(input)), ((ICopperItem)output.getItem()).getWaxed(output));
+    }
+
+    public static boolean isStonecutter(Container container) {
+        return container instanceof StonecutterContainer;
     }
 
 }
