@@ -46,6 +46,7 @@ public class ItemTrialKey extends ItemDeeperDepths {
     //vanilla doesn't do this, but I'm kinda confused why it doesn't, all other ominous items are uncommon in vanilla
     //why are the ominous keys common, it just doesn't make sense
     //ngl I fully expect this to get changed in another snapshot after 24w33a
+    //they didn't lmao, I'm not changing it though because I'm pretty sure it's still a bug or oversight
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
         return isOminous(stack) ? EnumRarity.UNCOMMON : super.getForgeRarity(stack);
