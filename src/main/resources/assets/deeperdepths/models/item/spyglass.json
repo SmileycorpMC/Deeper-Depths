@@ -2,5 +2,11 @@
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "deeperdepths:items/spyglass"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": { "model": 1 },
+      "model": "deeperdepths:item/spyglass_model"
+    }
+  ]
 }

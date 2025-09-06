@@ -1,11 +1,6 @@
-Spyglass model and animations
+Spyglass animations
 
 Fix copper horse armour worn texture
-
-Missing textures
- - Spyglass scope
- - Spyglass model
- - Copper chests
 
 Trial configurator potentially?
 

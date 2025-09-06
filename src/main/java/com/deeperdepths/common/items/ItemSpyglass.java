@@ -5,20 +5,36 @@ import com.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.atlas.api.util.DirectionUtils;
+
+import javax.annotation.Nullable;
 
 public class ItemSpyglass extends ItemDeeperDepths {
     
-    public ItemSpyglass() {
+    public ItemSpyglass()
+    {
         super("spyglass");
         setMaxStackSize(1);
+
+        this.addPropertyOverride(new ResourceLocation("model"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+            {
+                return entityIn != null && worldIn != null ? 1.0F : 0.0F;
+            }
+        });
     }
     
     @Override

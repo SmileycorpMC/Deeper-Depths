@@ -103,7 +103,7 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
         String name = stage == null ? "normal" : te.getWeatherStage().getName();
         if (te.isWaxed()) name = "waxed/" + name;
         if (te.isLarge()) name += "_double";
-        return Constants.loc("textures/entity/copper_chest/" + name + ".png");
+        return Constants.loc("textures/entities/copper_chest/" + name + ".png");
     }
 
     public static class ItemRenderer extends TileEntityItemStackRenderer {
