@@ -9,7 +9,9 @@
     "MixinWorldServer"
   ],
   "client": [
-    "MixinInventoryEffectRenderer"
+    "MixinInventoryEffectRenderer",
+    "MixinLayerHeldItem",
+    "MixinModelBiped"
   ],
   "server": []
 }
