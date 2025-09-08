@@ -40,8 +40,11 @@ public class DeeperDepthsRecipes {
     }
     
     private static void registerOreDictionary() {
+        OreDictionary.registerOre("rodBlaze", Items.BLAZE_ROD);
         OreDictionary.registerOre("ingotCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 0));
         OreDictionary.registerOre("gemAmethyst", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 1));
+        OreDictionary.registerOre("gemEcho", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 2));
+        OreDictionary.registerOre("rodBreeze", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3));
         OreDictionary.registerOre("nuggetCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4));
         OreDictionary.registerOre("stone", DeeperDepthsBlocks.DEEPSLATE);
         OreDictionary.registerOre("stoneDeepslate", DeeperDepthsBlocks.DEEPSLATE);

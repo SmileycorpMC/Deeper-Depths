@@ -5,6 +5,7 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.blocks.enums.EnumClusterSize;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import com.deeperdepths.common.blocks.tiles.TileCopperChest;
 import com.deeperdepths.common.blocks.tiles.TileTrialPot;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
@@ -56,8 +57,17 @@ public class DeeperDepthsBlocks {
     public static final Map<EnumWeatherStage, BlockCopperDoor> WAXED_COPPER_DOORS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockLightningRod> LIGHTNING_RODS = Maps.newEnumMap(EnumWeatherStage.class);
     public static final Map<EnumWeatherStage, BlockLightningRod> WAXED_LIGHTNING_RODS = Maps.newEnumMap(EnumWeatherStage.class);
-    //public static final BlockCopperBulb COPPER_CHEST = new BlockCopperChest(false);
-    //public static final BlockCopperBulb WAXED_COPPER_CHEST = new BlockCopperChest(true);
+    public static final Map<EnumWeatherStage, BlockCopperBars> COPPER_BARS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final Map<EnumWeatherStage, BlockCopperBars> WAXED_COPPER_BARS = Maps.newEnumMap(EnumWeatherStage.class);
+    public static final BlockCopperChest COPPER_CHEST = new BlockCopperChest(false);
+    public static final BlockCopperChest WAXED_COPPER_CHEST = new BlockCopperChest(true);
+    public static final BlockCopperChain COPPER_CHAINS = new BlockCopperChain(false);
+    public static final BlockCopperChain WAXED_COPPER_CHAINS = new BlockCopperChain(true);
+    public static final BlockCopperLantern COPPER_LANTERN = new BlockCopperLantern();
+    //public static final Map<EnumWeatherStage, BlockCopperChain> COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
+    //public static final Map<EnumWeatherStage, BlockCopperChain> WAXED_COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
+    //public static final Map<EnumWeatherStage, BlockCopperLantern> COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
+    //public static final Map<EnumWeatherStage, BlockCopperLantern> WAXED_COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
     //public static final BlockCopperGolemStatue GOLEM_STATUE = new BlockCopperGolemStatue(false);
     //public static final BlockCopperGolemStatue WAXED_GOLEM_STATUE = new BlockCopperGolemStatue(true);
 
@@ -72,6 +82,7 @@ public class DeeperDepthsBlocks {
     public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
     public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
     public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
+    public static final BlockCopperTorch COPPER_TORCH = new BlockCopperTorch();
     
     //sculk
     /*public static final Block SCULK = null;
@@ -96,6 +107,8 @@ public class DeeperDepthsBlocks {
             WAXED_COPPER_DOORS.put(stage, new BlockCopperDoor(stage, true));
             LIGHTNING_RODS.put(stage, new BlockLightningRod(stage, false));
             WAXED_LIGHTNING_RODS.put(stage, new BlockLightningRod(stage, true));
+            COPPER_BARS.put(stage, new BlockCopperBars(stage, false));
+            WAXED_COPPER_BARS.put(stage, new BlockCopperBars(stage, true));
         }
         for (EnumDyeColor color : EnumDyeColor.values()) CANDLES.put(color, new BlockCandle(color));
         for (EnumClusterSize size : EnumClusterSize.values()) AMETHYST_BUDS.put(size, new BlockAmethystBud(size));
@@ -106,7 +119,7 @@ public class DeeperDepthsBlocks {
                     for (Object o : ((Map)object).values()) if (o instanceof Block) register(registry, (Block) o);
                     continue;
                 }
-                if (!(object instanceof Block) || object == null) continue;
+                if (!(object instanceof Block)) continue;
                 register(registry, (Block) object);
             } catch (Exception e) {
                 DeeperDepths.error(field, e);
@@ -115,6 +128,7 @@ public class DeeperDepthsBlocks {
         GameRegistry.registerTileEntity(TileTrialSpawner.class, Constants.loc("trial_spawner"));
         GameRegistry.registerTileEntity(TileVault.class, Constants.loc("vault"));
         GameRegistry.registerTileEntity(TileTrialPot.class, Constants.loc("pot"));
+        GameRegistry.registerTileEntity(TileCopperChest.class, Constants.loc("copper_chest"));
     }
     
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

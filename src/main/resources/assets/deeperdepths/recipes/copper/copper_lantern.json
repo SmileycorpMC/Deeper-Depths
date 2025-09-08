@@ -1,0 +1,24 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "NNN",
+    "NTN",
+	"NNN"
+  ],
+  "key": {
+    "N": {
+      "type": "forge:ore_dict",
+      "ore": "nuggetCopper"
+    },
+    "T": {
+      "item": "deeperdepths:copper_torch"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:copper_lantern",
+	"data": 0,
+    "count": 1
+  }
+}

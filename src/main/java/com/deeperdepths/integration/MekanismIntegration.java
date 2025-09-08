@@ -2,6 +2,7 @@ package com.deeperdepths.integration;
 
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import com.deeperdepths.common.items.DeeperDepthsItems;
 import mekanism.api.MekanismAPI;
 import mekanism.api.MekanismRecipeHelper;
 import mekanism.common.MekanismFluids;
@@ -42,6 +43,8 @@ public class MekanismIntegration {
             addCopperRecipes(helper, new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem()),
                     new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage.next()).getItem()));
         }
+        helper.addCrusherRecipe(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3),
+                new ItemStack(DeeperDepthsItems.WIND_CHARGE, 6));
     }
 
     private static void addUnwaxingRecipe(MekanismRecipeHelper helper, EnumWeatherStage stage, Block block) {

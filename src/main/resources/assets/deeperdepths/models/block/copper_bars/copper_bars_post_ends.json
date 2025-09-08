@@ -1,0 +1,7 @@
+{
+    "parent": "block/iron_bars_post_ends",
+     "textures": {
+        "particle": "deeperdepths:blocks/copper_bars",
+        "edge": "deeperdepths:blocks/copper_bars"
+    }
+}

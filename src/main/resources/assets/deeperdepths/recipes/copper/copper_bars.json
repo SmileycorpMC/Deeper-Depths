@@ -1,0 +1,20 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCopper"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:copper_bars",
+    "data": 0,
+    "count": 16
+  }
+}

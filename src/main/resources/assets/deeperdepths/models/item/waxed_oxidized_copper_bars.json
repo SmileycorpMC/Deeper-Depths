@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": { "layer0": "deeperdepths:blocks/oxidized_copper_bars" }
+}

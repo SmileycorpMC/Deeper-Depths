@@ -31,6 +31,7 @@ public class DeeperDepths {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
+        DeeperDepthsStats.init();
         proxy.preInit(event);
 
         //registers the World Generator for all structures that we add

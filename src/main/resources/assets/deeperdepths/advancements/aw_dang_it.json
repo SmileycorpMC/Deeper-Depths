@@ -16,7 +16,7 @@
     "hidden": true
   },
   "criteria": {
-    "hero_of_the_village": {
+    "gambling": {
       "trigger": "deeperdepths:aw_dang_it",
       "conditions": {}
     }

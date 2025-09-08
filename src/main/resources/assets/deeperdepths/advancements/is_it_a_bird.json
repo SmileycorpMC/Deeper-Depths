@@ -1,0 +1,29 @@
+{
+    "parent": "adventure/root",
+    "display": {
+        "icon": {
+            "item": "deeperdepths:spyglass"
+        },
+        "title": {
+            "translate": "advancements.deeperdepths.is_it_a_bird.title"
+        },
+        "description": {
+            "translate": "advancements.deeperdepths.is_it_a_bird.description"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "spyglass": {
+            "trigger": "deeperdepths:spyglass",
+            "conditions": {
+                "entity": {
+                    "type": "parrot"
+                }
+            }
+        }
+    },
+    "requirements": []
+}

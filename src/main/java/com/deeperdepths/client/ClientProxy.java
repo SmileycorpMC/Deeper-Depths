@@ -3,6 +3,7 @@ package com.deeperdepths.client;
 import com.deeperdepths.animation.IAnimatedEntity;
 import com.deeperdepths.client.blocks.*;
 import com.deeperdepths.client.entity.*;
+import com.deeperdepths.client.tesr.TESRCopperChest;
 import com.deeperdepths.client.tesr.TESRTrialSpawner;
 import com.deeperdepths.client.tesr.TESRVault;
 import com.deeperdepths.common.CommonProxy;
@@ -10,6 +11,7 @@ import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.blocks.BlockTrialPot;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.IBlockProperties;
+import com.deeperdepths.common.blocks.tiles.TileCopperChest;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.entities.*;
@@ -78,9 +80,12 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_BLOCK, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CUT_COPPER, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CHISELED_COPPER, new MetaStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_CHAINS, new CopperChainStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.WAXED_COPPER_CHAINS, new CopperChainStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_GRATE, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_BULB, new CopperBulbStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.WAXED_COPPER_BULB, new CopperBulbStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_LANTERN, new CopperLanternStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_STONE_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CUT_COPPER_SLAB, new SlabStateMapper());
@@ -97,10 +102,13 @@ public class ClientProxy extends CommonProxy {
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i))));
             else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().toString()));
         }
-        for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
+        for (int i = 0; i < DeeperDepthsBlocks.STONE_WALL.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.STONE_WALL), i,
                     new ModelResourceLocation(Constants.locStr(DeeperDepthsBlocks.STONE_WALL.byMeta(i)), "inventory"));
         ClientRegistry.bindTileEntitySpecialRenderer(TileVault.class, new TESRVault());
         ClientRegistry.bindTileEntitySpecialRenderer(TileTrialSpawner.class, new TESRTrialSpawner());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCopperChest.class, new TESRCopperChest());
+        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.ItemRenderer());
+        net.minecraft.item.Item.getItemFromBlock(DeeperDepthsBlocks.WAXED_COPPER_CHEST).setTileEntityItemStackRenderer(new TESRCopperChest.ItemRenderer());
         RenderingRegistry.registerEntityRenderingHandler(EntityBogged.class, RenderBogged::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityBreeze.class, RenderBreeze::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityWindCharge.class, RenderWindCharge::new);
@@ -130,16 +138,18 @@ public class ClientProxy extends CommonProxy {
     }
 
     @SubscribeEvent
-    public static void clientTick(TickEvent.ClientTickEvent event) {
+    public static void clientTick(TickEvent.ClientTickEvent event)
+    {
         if (event.phase != TickEvent.Phase.START) return;
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP player = mc.player;
         if (player == null) return;
         OLD_FOV = FOV;
-        if (player.getItemInUseCount() <= 0 && FOV == 1) return;
-        if ((player.getActiveItemStack().getItem() != DeeperDepthsItems.SPYGLASS || mc.gameSettings.thirdPersonView != 0)
-                && FOV < 1) FOV = Math.min(FOV + (1 - FOV) * 0.5f, 1);
-        else if (mc.gameSettings.thirdPersonView == 0 && FOV > 0.1) FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
+
+        /* Adjusts FOV down when the Player is utilizing a Spyglass, in first person. Else it adjusts back to normal. */
+        boolean zoomin = player.isHandActive() && player.getActiveItemStack().getItem() == DeeperDepthsItems.SPYGLASS && mc.gameSettings.thirdPersonView == 0;
+        if (!zoomin) FOV = Math.min(FOV + (1 - FOV) * 0.5f, 1);
+        else FOV = Math.max(FOV + (0.1f - FOV) * 0.5f, 0.1f);
     }
 
     @SubscribeEvent

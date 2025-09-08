@@ -33,16 +33,15 @@ public class DeeperDepthsItems {
     public static final Item TRIAL_KEY = new ItemTrialKey();
 
     //tools
-    public static final Item MACE = new ItemMace();
-    public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
-
     public static final ToolSet COPPER_TOOLS = new ToolSet(Constants.MODID, "copper",
             EnumHelper.addToolMaterial("COPPER", 1, 190, 5, 1, 13), DeeperDepths.CREATIVE_TAB);
     public static final ArmourSet COPPER_ARMOR = new ArmourSet(Constants.MODID, "copper",
             EnumHelper.addArmorMaterial("COPPER", "deeperdepths:copper", 190, new int[] {1, 3, 4, 2}, 8,
                     DeeperDepthsSoundEvents.ITEM_ARMOR_EQUIP_COPPER, 0), DeeperDepths.CREATIVE_TAB, 4);
     public static final Item SPYGLASS = new ItemSpyglass();
+    public static final Item MACE = new ItemMace();
     //public static final Item RECOVERY_COMPASS = null;
+    public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
@@ -51,6 +50,7 @@ public class DeeperDepthsItems {
         for (Block block : DeeperDepthsBlocks.BLOCKS) {
             if (block instanceof BlockCandle) register(registry, new ItemBlockCandle((BlockCandle) block));
             else if (block instanceof BlockCopperDoor) register(registry, ((BlockCopperDoor) block).getItem());
+            else if (block instanceof BlockCopperChest) register(registry, new ItemCopperChest((BlockCopperChest) block));
             else if (!(block instanceof BlockDDSlab)) register(registry, (block instanceof ICopperBlock) ?
                     new ItemBlockCopper(block) : new ItemDDBlock(block));
             else if (!((BlockDDSlab) block).isDouble()) register(registry, block instanceof BlockCutCopperSlab ?
