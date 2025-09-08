@@ -86,11 +86,12 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 	implementation "org.spongepowered:mixin:0.8"
     implementation "curse.maven:atlas-463826:6829008"
-    implementation "curse.maven:chisel-235279:2535488"
-    implementation "curse.maven:mekanism-268560:2835175"
     implementation "curse.maven:raids-977633:5626565"
+    implementation "curse.maven:chisel-235279:2535488"
     implementation "curse.maven:jei-238222:4393461"
     implementation "curse.maven:futuremc-310059:6162819"
+    implementation "curse.maven:mekanism-268560:2835175"
+    implementation 'curse.maven:thermalexpansion-69163:2926431'
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 }
 
