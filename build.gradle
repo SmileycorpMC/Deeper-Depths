@@ -92,6 +92,7 @@ dependencies {
     implementation "curse.maven:futuremc-310059:6162819"
     implementation "curse.maven:mekanism-268560:2835175"
     implementation 'curse.maven:thermalexpansion-69163:2926431'
+    implementation "curse.maven:tconstruct-74072:2902483"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 }
 
