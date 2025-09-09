@@ -75,6 +75,7 @@ public class ClientProxy extends CommonProxy {
     
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DEEPSLATE, new DeepslateStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_WALL, new WallStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_BLOCK, new MetaStateMapper());

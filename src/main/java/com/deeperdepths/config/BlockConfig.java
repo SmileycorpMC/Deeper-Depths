@@ -28,6 +28,7 @@ public class BlockConfig {
     public static BlockStatEntry deepslateBricks;
     public static BlockStatEntry deepslateTiles;
     public static BlockStatEntry heavyCore;
+    public static BlockStatEntry infestedDeepslate;
     public static BlockStatEntry reinforcedDeepslate;
     public static BlockStatEntry tintedGlass;
     public static BlockStatEntry trialPot;
@@ -57,6 +58,7 @@ public class BlockConfig {
             deepslateBricks = new BlockStatEntry(config, "deepslate bricks", 3.5, 6, 0);
             deepslateTiles = new BlockStatEntry(config, "deepslate tiles", 3, 6, 0);
             heavyCore = new BlockStatEntry(config, "heavy core", 10, 50, 0);
+            infestedDeepslate = new BlockStatEntry(config, "infestedDeepslate ", 1.5, 0.75, 0);
             reinforcedDeepslate = new BlockStatEntry(config, "reinforced deepslate", 55, 1200, 4);
             tintedGlass = new BlockStatEntry(config, "tinted glass", 0.3, 0.3, 0);
             trialPot = new BlockStatEntry(config, "trial pot", 0, 0, 0);

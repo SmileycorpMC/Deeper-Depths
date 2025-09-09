@@ -2,7 +2,6 @@ package com.deeperdepths.integration;
 
 import cofh.core.util.helpers.ItemHelper;
 import cofh.thermalexpansion.util.managers.device.FactorizerManager;
-import cofh.thermalexpansion.util.managers.machine.CompactorManager;
 import cofh.thermalexpansion.util.managers.machine.PulverizerManager;
 import cofh.thermalexpansion.util.managers.machine.SmelterManager;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
