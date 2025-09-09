@@ -8,7 +8,6 @@ import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.smileycorp.atlas.api.item.ArmourSet;
 
 public class ThermalExpansionIntegration {
 
@@ -17,15 +16,15 @@ public class ThermalExpansionIntegration {
         ItemStack copperIngot = ItemHelper.getOre("ingotCopper");
         for (Item item : DeeperDepthsItems.COPPER_TOOLS.getItems()) SmelterManager.addRecycleRecipe(smelterEnergy,
                 new ItemStack(item), copperIngot, 1);
-        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HELMET)),
+        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getHelmet()),
                 copperIngot, 2);
-        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.CHESTPLATE)),
+        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getChestplate()),
                 copperIngot, 4);
-        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.LEGGINGS)),
+        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getLeggings()),
                 copperIngot, 3);
-        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.BOOTS)),
+        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getBoots()),
                 copperIngot, 2);
-        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE)),
+        SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getHorseArmour()),
                 copperIngot, 2, false);
         PulverizerManager.addRecipe(75, ItemHelper.getOre("rodBreeze"), ItemHelper.getOre("dustBreeze", 6),
                 ItemHelper.getOre("dustSaltpeter", 1), 50);

@@ -13,7 +13,6 @@ import com.deeperdepths.common.items.ItemMace;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.common.potion.PotionDeeperDepths;
 import com.deeperdepths.config.BlockConfig;
-import com.deeperdepths.config.LootTableEntry;
 import com.deeperdepths.config.LootTablesConfig;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -49,6 +48,7 @@ import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.smileycorp.atlas.api.config.LootTableEntry;
 
 import java.util.Random;
 

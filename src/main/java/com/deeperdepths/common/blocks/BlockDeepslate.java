@@ -5,7 +5,6 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.config.BlockConfig;
-import com.deeperdepths.config.BlockStatEntry;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -26,6 +25,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.smileycorp.atlas.api.config.BlockStatEntry;
 
 import javax.annotation.Nullable;
 import java.util.Random;

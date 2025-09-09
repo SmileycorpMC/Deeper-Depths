@@ -2,6 +2,7 @@ package com.deeperdepths.config;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.smileycorp.atlas.api.config.EntityAttributesEntry;
 
 import java.io.File;
 
@@ -13,7 +14,7 @@ public class EntityConfig {
     public static double boggedAttackCooldownNormal = 3.5;
     public static double boggedAttackCooldownHard = 2.5;
     public static EntityAttributesEntry breeze;
-    public static EntityAttributesEntry warden;
+    //public static EntityAttributesEntry warden;
     //public static EntityAttributesEntry glare;
     //public static EntityAttributesEntry copper_golem;
     

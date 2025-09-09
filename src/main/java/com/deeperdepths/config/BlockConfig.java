@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import net.smileycorp.atlas.api.config.BlockStatEntry;
 
 import java.io.File;
 import java.util.List;
