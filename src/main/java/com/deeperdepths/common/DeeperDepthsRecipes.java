@@ -3,9 +3,7 @@ package com.deeperdepths.common;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
-import com.deeperdepths.integration.ChiselIntegration;
-import com.deeperdepths.integration.FutureMCIntegration;
-import com.deeperdepths.integration.MekanismIntegration;
+import com.deeperdepths.integration.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -29,9 +27,11 @@ public class DeeperDepthsRecipes {
         registerOreDictionary();
         registerFurnaceRecipes();
         registerBrewingRecipes();
-        if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
         if (Loader.isModLoaded("chisel")) ChiselIntegration.registerRecipes();
         if (Loader.isModLoaded("futuremc")) FutureMCIntegration.registerRecipes();
+        if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
+        if (Loader.isModLoaded("thermalexpansion")) ThermalExpansionIntegration.registerRecipes();
+        if (Loader.isModLoaded("tconstruct")) TinkersConstructIntegration.registerRecipes();
     }
     
     public static void registerLateRecipes() {
