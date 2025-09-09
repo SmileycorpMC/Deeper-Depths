@@ -16,7 +16,7 @@ public abstract class MixinEntityLivingBase {
     public abstract ItemStack getActiveItemStack();
     
     @Inject(method = "onItemUseFinish", at = @At("HEAD"), cancellable = true)
-    public void onItemUseFinish(CallbackInfo callback) {
+    public void deeperdepths$onItemUseFinish(CallbackInfo callback) {
         if (getActiveItemStack().getItem() == DeeperDepthsItems.SPYGLASS) callback.cancel();
     }
     

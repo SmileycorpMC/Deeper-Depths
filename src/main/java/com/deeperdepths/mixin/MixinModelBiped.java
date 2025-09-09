@@ -29,7 +29,7 @@ public class MixinModelBiped {
     public ModelRenderer bipedHead;
     
     @Inject(method = "setRotationAngles", at = @At("HEAD"))
-    public void setRotationAngles$HEAD(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity, CallbackInfo ci) {
+    public void deeperdepths$setRotationAngles$HEAD(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity, CallbackInfo ci) {
         if (!(entity instanceof EntityPlayer)) return;
         EntityPlayer player = (EntityPlayer) entity;
         if (!(player.getActiveItemStack().getItem() instanceof ItemSpyglass)) return;
@@ -38,7 +38,7 @@ public class MixinModelBiped {
     }
     
     @Inject(method = "setRotationAngles", at = @At("TAIL"))
-    public void setRotationAngles$TAIL(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity, CallbackInfo ci) {
+    public void deeperdepths$setRotationAngles$TAIL(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity, CallbackInfo ci) {
         if (!(entity instanceof EntityPlayer)) return;
         EntityPlayer player = (EntityPlayer) entity;
         if (!(player.getActiveItemStack().getItem() instanceof ItemSpyglass)) return;
