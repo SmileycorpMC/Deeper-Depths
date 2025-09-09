@@ -1,8 +1,11 @@
 package com.deeperdepths.integration;
 
 import cofh.core.util.helpers.ItemHelper;
+import cofh.thermalexpansion.util.managers.device.FactorizerManager;
+import cofh.thermalexpansion.util.managers.machine.CompactorManager;
 import cofh.thermalexpansion.util.managers.machine.PulverizerManager;
 import cofh.thermalexpansion.util.managers.machine.SmelterManager;
+import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,6 +30,7 @@ public class ThermalExpansionIntegration {
                 copperIngot, 2, false);
         PulverizerManager.addRecipe(75, ItemHelper.getOre("rodBreeze"), ItemHelper.getOre("dustBreeze", 6),
                 ItemHelper.getOre("dustSaltpeter", 1), 50);
+        FactorizerManager.addRecipe(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 1), new ItemStack(DeeperDepthsBlocks.AMETHYST_BLOCK), true);
     }
 
 }

@@ -49,6 +49,7 @@ public class DeeperDepthsRecipes {
         OreDictionary.registerOre("nuggetCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4));
         OreDictionary.registerOre("stone", DeeperDepthsBlocks.DEEPSLATE);
         OreDictionary.registerOre("stoneDeepslate", DeeperDepthsBlocks.DEEPSLATE);
+        OreDictionary.registerOre("stone", EnumStoneType.TUFF.getStack());
         OreDictionary.registerOre("stoneTuff", EnumStoneType.TUFF.getStack());
         OreDictionary.registerOre("stoneCalcite", EnumStoneType.CALCITE.getStack());
         OreDictionary.registerOre("cobblestone", EnumStoneType.COBBLED_DEEPSLATE.getStack());
