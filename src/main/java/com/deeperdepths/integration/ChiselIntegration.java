@@ -3,7 +3,6 @@ package com.deeperdepths.integration;
 import com.deeperdepths.common.blocks.BlockDDStone;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
-import net.minecraft.item.ItemStack;
 import team.chisel.api.carving.CarvingUtils;
 import team.chisel.api.carving.ICarvingGroup;
 import team.chisel.api.carving.ICarvingRegistry;
