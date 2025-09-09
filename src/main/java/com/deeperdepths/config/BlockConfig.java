@@ -25,6 +25,7 @@ public class BlockConfig {
     public static boolean sameTypeChests;
     public static BlockStatEntry copperOre;
     public static BlockStatEntry deepslate;
+    public static boolean silverfishInfestDeepslate;
     public static BlockStatEntry deepslateBricks;
     public static BlockStatEntry deepslateTiles;
     public static BlockStatEntry heavyCore;
@@ -55,6 +56,7 @@ public class BlockConfig {
             sameTypeChests = config.get("copper chest", "sameTypeChests", true, "Do copper chests only connect to chests of the same oxidisation and wage states? (false behaves like vanilla.)").getBoolean();
             copperOre = new BlockStatEntry(config, "copper ore", 3, 3, 1);
             deepslate = new BlockStatEntry(config, "deepslate", 3, 6, 0);
+            silverfishInfestDeepslate = config.get("deepslate", "silverfishInfestDeepslate", true, "Can silverfish hide in and infest deepslate?").getBoolean();
             deepslateBricks = new BlockStatEntry(config, "deepslate bricks", 3.5, 6, 0);
             deepslateTiles = new BlockStatEntry(config, "deepslate tiles", 3, 6, 0);
             heavyCore = new BlockStatEntry(config, "heavy core", 10, 50, 0);
