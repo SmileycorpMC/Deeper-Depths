@@ -1,13 +1,8 @@
 package com.deeperdepths.integration;
 
-import com.deeperdepths.common.DeeperDepths;
-import com.deeperdepths.common.blocks.BlockCopperDoor;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.items.DeeperDepthsItems;
-import crazypants.enderio.base.recipe.Recipe;
-import crazypants.enderio.base.recipe.sagmill.SagMillRecipeManager;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.smileycorp.atlas.api.item.ArmourSet;
 import slimeknights.tconstruct.library.TinkerRegistry;
@@ -52,7 +47,7 @@ public class TinkersConstructIntegration {
                     TinkerFluids.copper, Material.VALUE_Ingot / 4);
             TinkerRegistry.registerMelting(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage),
                     TinkerFluids.copper, Material.VALUE_Ingot / 4);
-            TinkerRegistry.registerMelting(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stageu).getItem(),
+            TinkerRegistry.registerMelting(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stage).getItem(),
                     TinkerFluids.copper, Material.VALUE_Ingot * 2);
             if (stage != EnumWeatherStage.NORMAL) TinkerRegistry.registerMelting(DeeperDepthsBlocks.COPPER_BARS.get(stage),
                     TinkerFluids.copper, (int)(Material.VALUE_Ingot * 0.375f));

@@ -4,7 +4,6 @@ import cofh.core.util.helpers.ItemHelper;
 import cofh.thermalexpansion.util.managers.machine.PulverizerManager;
 import cofh.thermalexpansion.util.managers.machine.SmelterManager;
 import com.deeperdepths.common.items.DeeperDepthsItems;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.smileycorp.atlas.api.item.ArmourSet;
