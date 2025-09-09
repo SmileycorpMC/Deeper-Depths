@@ -22,7 +22,7 @@ public class ChiselIntegration {
         registry.addGroup(group);
         int i = 0;
         for (EnumStoneType.Material material : materials) for (EnumStoneType type : material.getTypes())
-            registry.addVariation(name, CarvingUtils.variationFor(new ItemStack(DeeperDepthsBlocks.STONE, 1, type.ordinal()),
+            registry.addVariation(name, CarvingUtils.variationFor(type.getStack(),
                     DeeperDepthsBlocks.STONE.getDefaultState().withProperty(BlockDDStone.VARIANT, type), i++));
     }
 

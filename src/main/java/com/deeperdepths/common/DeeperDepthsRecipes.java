@@ -1,6 +1,7 @@
 package com.deeperdepths.common;
 
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
+import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.integration.*;
@@ -48,10 +49,10 @@ public class DeeperDepthsRecipes {
         OreDictionary.registerOre("nuggetCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4));
         OreDictionary.registerOre("stone", DeeperDepthsBlocks.DEEPSLATE);
         OreDictionary.registerOre("stoneDeepslate", DeeperDepthsBlocks.DEEPSLATE);
-        OreDictionary.registerOre("stoneTuff", new ItemStack(DeeperDepthsBlocks.STONE, 1, 0));
-        OreDictionary.registerOre("stoneCalcite", new ItemStack(DeeperDepthsBlocks.STONE, 1, 5));
-        OreDictionary.registerOre("cobblestone", new ItemStack(DeeperDepthsBlocks.STONE, 1, 6));
-        OreDictionary.registerOre("cobblestoneDeepslate", new ItemStack(DeeperDepthsBlocks.STONE, 1, 6));
+        OreDictionary.registerOre("stoneTuff", EnumStoneType.TUFF.getStack());
+        OreDictionary.registerOre("stoneCalcite", EnumStoneType.CALCITE.getStack());
+        OreDictionary.registerOre("cobblestone", EnumStoneType.COBBLED_DEEPSLATE.getStack());
+        OreDictionary.registerOre("cobblestoneDeepslate", EnumStoneType.COBBLED_DEEPSLATE.getStack());
         OreDictionary.registerOre("oreCopper", new ItemStack(DeeperDepthsBlocks.COPPER_ORE));
         for (int i = 0; i < DeeperDepthsBlocks.COPPER_BLOCK.getMaxMeta(); i++)
             OreDictionary.registerOre("blockCopper", new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, i));

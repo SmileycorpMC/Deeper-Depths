@@ -1,11 +1,13 @@
 package com.deeperdepths.common.blocks.enums;
 
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
+import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.config.BlockConfig;
 import com.deeperdepths.config.BlockStatEntry;
 import com.google.common.collect.Lists;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 
 import java.util.List;
@@ -89,7 +91,11 @@ public enum EnumStoneType implements IStringSerializable {
     public boolean hasVariants() {
         return hasVariants;
     }
-    
+
+    public ItemStack getStack() {
+        return new ItemStack(DeeperDepthsBlocks.STONE, 1, ordinal());
+    }
+
     public enum Material {
         
         DEEPSLATE(MapColor.GRAY, BlockConfig.cobbledDeepslate, DeeperDepthsSoundTypes.DEEPSLATE),
