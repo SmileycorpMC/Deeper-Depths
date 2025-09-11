@@ -8,6 +8,7 @@
     "MixinBlockSilverfish",
     "MixinContainer",
     "MixinEntity",
+    "MixinEntityLiving",
     "MixinEntityLivingBase",
     "MixinWorldServer"
   ],
