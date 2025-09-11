@@ -64,10 +64,6 @@ public class DeeperDepthsBlocks {
     public static final BlockCopperChain COPPER_CHAINS = new BlockCopperChain(false);
     public static final BlockCopperChain WAXED_COPPER_CHAINS = new BlockCopperChain(true);
     public static final BlockCopperLantern COPPER_LANTERN = new BlockCopperLantern();
-    //public static final Map<EnumWeatherStage, BlockCopperChain> COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
-    //public static final Map<EnumWeatherStage, BlockCopperChain> WAXED_COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
-    //public static final Map<EnumWeatherStage, BlockCopperLantern> COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
-    //public static final Map<EnumWeatherStage, BlockCopperLantern> WAXED_COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
     //public static final BlockCopperGolemStatue GOLEM_STATUE = new BlockCopperGolemStatue(false);
     //public static final BlockCopperGolemStatue WAXED_GOLEM_STATUE = new BlockCopperGolemStatue(true);
 
