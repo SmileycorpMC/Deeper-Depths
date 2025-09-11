@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.Random;
 
 public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlockProperties {
 
@@ -44,6 +45,11 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
         setHarvestLevel("pickaxe", BlockConfig.copper.getHarvestLevel());
         useNeighborBrightness = true;
         needsRandomTick = BlockConfig.copperAges &! waxed;
+    }
+
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
 
     @Override

@@ -24,6 +24,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Random;
+
 public class BlockCopperChain extends BlockRotatedPillar implements ICopperBlock, IBlockProperties
 {
     private final boolean waxed;
@@ -45,6 +47,11 @@ public class BlockCopperChain extends BlockRotatedPillar implements ICopperBlock
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         setSoundType(DeeperDepthsSoundTypes.CHAIN);
         needsRandomTick = BlockConfig.copperAges;
+    }
+
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
 
     @Override

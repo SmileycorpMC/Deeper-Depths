@@ -26,6 +26,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Random;
+
 public class BlockCopperLantern extends BlockDeeperDepths implements ICopperBlock
 {
     public static final PropertyBool HANGING = PropertyBool.create("hanging");
@@ -37,6 +39,11 @@ public class BlockCopperLantern extends BlockDeeperDepths implements ICopperBloc
         super("copper_lantern", Material.ROCK, BlockConfig.copper.getHardness(), BlockConfig.copper.getResistance(), BlockConfig.copper.getHarvestLevel());
         setSoundType(DeeperDepthsSoundTypes.LANTERN);
         needsRandomTick = BlockConfig.copperAges;
+    }
+
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        tryWeather(world, pos, state, random);
     }
 
     @Override
