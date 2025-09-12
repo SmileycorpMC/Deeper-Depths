@@ -22,12 +22,9 @@ public class ItemCopperChest extends ItemBlockCopper<BlockCopperChest> {
 
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState state) {
-        System.out.println("bing");
         if (!super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, state)) return false;
-        System.out.println("bong");
         TileEntity tile = world.getTileEntity(pos);
         if (!(tile instanceof TileCopperChest)) return true;
-        System.out.println("wom");
         TileCopperChest chest = (TileCopperChest) tile;
         if (stack.hasDisplayName()) chest.setCustomName(stack.getDisplayName());
         if (chest.canConnect(pos.offset(side.getOpposite()))) {
