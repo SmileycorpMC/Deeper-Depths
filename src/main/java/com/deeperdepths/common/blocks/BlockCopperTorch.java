@@ -20,6 +20,7 @@ public class BlockCopperTorch extends BlockTorch implements IBlockProperties {
         setUnlocalizedName(Constants.name(name));
         setRegistryName(Constants.loc(name));
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
+        setLightLevel(0.9375f);
     }
 
     @Override

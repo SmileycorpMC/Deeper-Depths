@@ -38,6 +38,7 @@ public class BlockCopperLantern extends BlockDeeperDepths implements ICopperBloc
     {
         super("copper_lantern", Material.ROCK, BlockConfig.copper.getHardness(), BlockConfig.copper.getResistance(), BlockConfig.copper.getHarvestLevel());
         setSoundType(DeeperDepthsSoundTypes.LANTERN);
+        setLightLevel(1);
         needsRandomTick = BlockConfig.copperAges;
     }
 
