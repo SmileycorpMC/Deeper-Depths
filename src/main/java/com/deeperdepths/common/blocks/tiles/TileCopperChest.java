@@ -13,6 +13,8 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
@@ -35,6 +37,7 @@ public class TileCopperChest extends TileEntityChest {
     private boolean waxed = false;
     private EnumFacing other = null;
     private int ticksSinceSync;
+    private boolean refresh = true;
 
     /*
     @Override
@@ -43,15 +46,41 @@ public class TileCopperChest extends TileEntityChest {
     }*/
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-        if (compound.hasKey("OtherChest")) other = EnumFacing.getHorizontal(compound.getByte("OtherChest"));
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        if (nbt.hasKey("OtherChest")) other = EnumFacing.getHorizontal(nbt.getByte("OtherChest"));
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        if (other != null) compound.setByte("OtherChest", (byte) other.getHorizontalIndex());
-        return super.writeToNBT(compound);
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+        if (other != null) nbt.setByte("OtherChest", (byte) other.getHorizontalIndex());
+        return super.writeToNBT(nbt);
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        NBTTagCompound nbt = super.getUpdateTag();
+        if (other != null) nbt.setByte("OtherChest", (byte) other.getHorizontalIndex());
+        return nbt;
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound nbt) {
+        super.handleUpdateTag(nbt);
+        if (nbt.hasKey("OtherChest")) other = EnumFacing.getHorizontal(nbt.getByte("OtherChest"));
+    }
+
+    @Override
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        super.onDataPacket(net, pkt);
+        handleUpdateTag(pkt.getNbtCompound());
+        world.markBlockRangeForRenderUpdate(pos, pos);
     }
 
     @Override
@@ -108,10 +137,13 @@ public class TileCopperChest extends TileEntityChest {
 
     public void setNeighbor(EnumFacing side) {
         other = side;
+        markDirty();
+        world.markBlockRangeForRenderUpdate(pos, pos);
     }
 
     public boolean canConnect(BlockPos pos) {
         if (world == null) return false;
+        if (!refresh) return true;
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         if (!(block instanceof BlockCopperChest)) return false;
@@ -122,7 +154,7 @@ public class TileCopperChest extends TileEntityChest {
         if (direction != null) if (!pos.offset(direction).equals(this.pos)) return false;
         if (BlockConfig.sameTypeChests) {
             if (state.getValue(ICopperBlock.WEATHER_STAGE) != getWeatherStage()) return false;
-            if (((BlockCopperChest) block).isWaxed() != isWaxed()) return false;
+            return ((BlockCopperChest) block).isWaxed() == isWaxed();
         }
         return true;
     }
@@ -135,6 +167,7 @@ public class TileCopperChest extends TileEntityChest {
 
     @Override
     public void checkForAdjacentChests() {
+        if (isInvalid()) return;
         if (other != null) {
             if (canConnect(pos.offset(other))) return;
             else other = null;
@@ -164,6 +197,13 @@ public class TileCopperChest extends TileEntityChest {
         }
         return super.getCapability(capability, facing);
     }
+
+    @Override
+    public void setWorld(World world) {
+        super.setWorld(world);
+        world.markBlockRangeForRenderUpdate(pos, pos);
+    }
+
 
     public EnumWeatherStage getWeatherStage() {
         if (world == null || pos == null) return stage;
@@ -197,6 +237,14 @@ public class TileCopperChest extends TileEntityChest {
         EnumWeatherStage stage = getWeatherStage();
         if (stage != null && stage != EnumWeatherStage.NORMAL) builder.append(stage.getName() + "_");
         return builder.append("copper_chest").toString();
+    }
+
+    public void enableRefresh() {
+        refresh = true;
+    }
+
+    public void disableRefresh() {
+        refresh = false;
     }
 
 }

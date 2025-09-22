@@ -15,6 +15,7 @@ import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -29,6 +30,7 @@ import java.util.Random;
 
 public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlockProperties {
 
+    private static boolean dropInventory = true;
     private final boolean waxed;
 
     protected BlockCopperChest(boolean waxed) {
@@ -63,12 +65,12 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return getDefaultState().withProperty(WEATHER_STAGE, EnumWeatherStage.values()[meta % 4])
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        ItemStack stack = placer.getHeldItem(hand);
+        return getDefaultState().withProperty(WEATHER_STAGE, EnumWeatherStage.values()[stack.getMetadata() % 4])
                 .withProperty(FACING, EnumFacing.getHorizontal(MathHelper.floor((double)(placer.rotationYaw * 4f / 360f) + 0.5) & 3).getOpposite());
     }
 
-    //implementation needed in ItemCopperChest
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {}
 
@@ -115,13 +117,19 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(WEATHER_STAGE).ordinal() + state.getValue(FACING).getHorizontalIndex() * 4;
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        if (!dropInventory) return;
+        super.breakBlock(world, pos, state);
     }
 
     @Override
     public int damageDropped(IBlockState state) {
         return getMetaFromState(state) % 4;
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(WEATHER_STAGE).ordinal() + state.getValue(FACING).getHorizontalIndex() * 4;
     }
 
     @Override
@@ -156,34 +164,50 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
     @Override
     public boolean scrape(World world, IBlockState state, BlockPos pos) {
         if (!isWaxed(state) && getStage(state) == EnumWeatherStage.NORMAL) return false;
-        Optional<BlockPos> other = getOtherChest(world, pos);
-        if (other.isPresent()) {
-            BlockPos pos1 = other.get();
-            ICopperBlock.super.scrape(world, world.getBlockState(pos1), pos1);
-        }
-        return ICopperBlock.super.scrape(world, state, pos);
+        return setBlockStates(world, getScraped(state), pos);
     }
 
     @Override
     public boolean wax(World world, IBlockState state, BlockPos pos) {
         if (isWaxed(state)) return false;
-        Optional<BlockPos> other = getOtherChest(world, pos);
-        if (other.isPresent()) {
-            BlockPos pos1 = other.get();
-            ICopperBlock.super.wax(world, world.getBlockState(pos1), pos1);
-        }
-        return ICopperBlock.super.wax(world, state, pos);
+        return setBlockStates(world, getWaxed(state), pos);
     }
 
     @Override
     public boolean weather(World world, IBlockState state, BlockPos pos) {
         if (isWaxed(state)) return false;
-        Optional<BlockPos> other = getOtherChest(world, pos);
-        if (other.isPresent()) {
-            BlockPos pos1 = other.get();
-            ICopperBlock.super.weather(world, world.getBlockState(pos1), pos1);
+        return setBlockStates(world, getWeathered(state), pos);
+    }
+
+    private boolean setBlockStates(World world, IBlockState state, BlockPos pos) {
+        Optional<BlockPos> optional = getOtherChest(world, pos);
+        TileEntity tile1 = world.getTileEntity(pos);
+        TileEntity tile2 = null;
+        if (tile1 instanceof TileCopperChest) ((TileCopperChest) tile1).disableRefresh();
+        if (optional.isPresent()) {
+            BlockPos other = optional.get();
+            tile2 = world.getTileEntity(other);
+            if (tile2 instanceof TileCopperChest) ((TileCopperChest) tile2).disableRefresh();
+            setBlockState(world, state, other);
         }
-        return ICopperBlock.super.weather(world, state, pos);
+        boolean flag = setBlockState(world, state, pos);
+        if (tile1 instanceof TileCopperChest) ((TileCopperChest) tile1).enableRefresh();
+        if (tile2 instanceof TileCopperChest) ((TileCopperChest) tile2).enableRefresh();
+        return flag;
+    }
+
+    private static boolean setBlockState(World world, IBlockState state, BlockPos pos) {
+        if (world.isRemote) return true;
+        dropInventory = false;
+        TileEntity tile = world.getTileEntity(pos);
+        boolean flag = world.setBlockState(pos, state);
+        dropInventory = true;
+        if (!flag) return false;
+        if (tile != null) {
+            tile.validate();
+            world.setTileEntity(pos, tile);
+        }
+        return true;
     }
 
     private Optional<BlockPos> getOtherChest(World world, BlockPos pos) {

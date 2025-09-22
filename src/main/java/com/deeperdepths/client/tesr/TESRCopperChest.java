@@ -1,10 +1,12 @@
 package com.deeperdepths.client.tesr;
 
 import com.deeperdepths.common.Constants;
+import com.deeperdepths.common.blocks.BlockCopperChest;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.blocks.tiles.TileCopperChest;
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.GlStateManager;
@@ -66,21 +68,24 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
         GlStateManager.translate(0.5f, 0.5f, 0.5f);
         int rotation = 0;
         if (te.getWorld() != null) {
-            EnumFacing facing = world.getBlockState(te.getPos()).getValue(BlockHorizontal.FACING);
-            switch (facing) {
-                case NORTH:
-                    rotation = 180;
-                    break;
-                case WEST:
-                    rotation = 90;
-                    break;
-                case EAST:
-                    rotation = -90;
-                    break;
-            }
-            if (direction != null) {
-                if (facing == EnumFacing.EAST) GlStateManager.translate(0, 0, -1);
-                else if (facing == EnumFacing.NORTH) GlStateManager.translate(1, 0, 0);
+            IBlockState state = world.getBlockState(te.getPos());
+            if (state.getBlock() instanceof BlockCopperChest) {
+                EnumFacing facing = state.getValue(BlockHorizontal.FACING);
+                switch (facing) {
+                    case NORTH:
+                        rotation = 180;
+                        break;
+                    case WEST:
+                        rotation = 90;
+                        break;
+                    case EAST:
+                        rotation = -90;
+                        break;
+                }
+                if (direction != null) {
+                    if (facing == EnumFacing.EAST) GlStateManager.translate(0, 0, -1);
+                    else if (facing == EnumFacing.NORTH) GlStateManager.translate(1, 0, 0);
+                }
             }
         }
         GlStateManager.rotate(rotation, 0, 1, 0);
