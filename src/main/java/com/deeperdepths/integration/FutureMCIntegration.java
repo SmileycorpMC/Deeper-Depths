@@ -22,6 +22,7 @@ public class FutureMCIntegration {
         addSubStoneRecipes(EnumStoneType.POLISHED_TUFF, EnumStoneType.TUFF_BRICK);
         addSubStoneRecipes(EnumStoneType.COBBLED_DEEPSLATE, EnumStoneType.POLISHED_DEEPSLATE);
         addSubStoneRecipes(EnumStoneType.COBBLED_DEEPSLATE, EnumStoneType.DEEPSLATE_BRICK);
+        addSubStoneRecipes(EnumStoneType.COBBLED_DEEPSLATE, EnumStoneType.DEEPSLATE_TILE);
         addSubStoneRecipes(EnumStoneType.POLISHED_DEEPSLATE, EnumStoneType.DEEPSLATE_BRICK);
         addSubStoneRecipes(EnumStoneType.POLISHED_DEEPSLATE, EnumStoneType.DEEPSLATE_TILE);
         addSubStoneRecipes(EnumStoneType.DEEPSLATE_BRICK, EnumStoneType.DEEPSLATE_TILE);
@@ -30,7 +31,6 @@ public class FutureMCIntegration {
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.POLISHED_TUFF.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.TUFF_BRICK.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.COBBLED_DEEPSLATE.getStack()), EnumStoneType.CHISELED_DEEPSLATE.getStack());
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.COBBLED_DEEPSLATE.getStack()), EnumStoneType.POLISHED_DEEPSLATE.getStack());
         for (EnumWeatherStage stage : EnumWeatherStage.values()) addCopperRecipes(stage);
     }
     
