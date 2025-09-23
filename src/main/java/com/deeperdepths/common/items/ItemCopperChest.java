@@ -27,11 +27,11 @@ public class ItemCopperChest extends ItemBlockCopper<BlockCopperChest> {
         if (!(tile instanceof TileCopperChest)) return true;
         TileCopperChest chest = (TileCopperChest) tile;
         if (stack.hasDisplayName()) chest.setCustomName(stack.getDisplayName());
-        if (chest.canConnect(pos.offset(side.getOpposite()))) {
+        if (chest.canConnect(side.getOpposite())) {
             EnumFacing direction = side.getOpposite();
             BlockPos other = pos.offset(direction);
             IBlockState otherState = world.getBlockState(other);
-            if (otherState.getValue(BlockHorizontal.FACING) != side.getOpposite()) {
+            if (otherState.getValue(BlockHorizontal.FACING).getAxis() != side.getAxis()) {
                 ((TileCopperChest) tile).setNeighbor(direction);
                 ((TileCopperChest) world.getTileEntity(other)).setNeighbor(side);
                 placeDoubleChest(world, state.withProperty(BlockHorizontal.FACING, otherState.getValue(BlockHorizontal.FACING)), pos, direction);
@@ -39,7 +39,7 @@ public class ItemCopperChest extends ItemBlockCopper<BlockCopperChest> {
             }
         }
         if (!player.isSneaking()) {
-            chest.checkForAdjacentChests();
+            chest.findOtherChest();
             EnumFacing direction = chest.getOtherDirection();
             if (direction != null) {
                 placeDoubleChest(world, state, pos, direction);

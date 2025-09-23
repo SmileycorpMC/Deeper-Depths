@@ -118,7 +118,10 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        if (!dropInventory) return;
+        if (!dropInventory) {
+            world.removeTileEntity(pos);
+            return;
+        }
         super.breakBlock(world, pos, state);
     }
 

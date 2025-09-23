@@ -141,9 +141,11 @@ public class TileCopperChest extends TileEntityChest {
         world.markBlockRangeForRenderUpdate(pos, pos);
     }
 
-    public boolean canConnect(BlockPos pos) {
+    public boolean canConnect(EnumFacing dir) {
         if (world == null) return false;
+        if (dir.getAxis() == EnumFacing.Axis.Y) return false;
         if (!refresh) return true;
+        BlockPos pos = this.pos.offset(dir);
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         if (!(block instanceof BlockCopperChest)) return false;
@@ -161,24 +163,25 @@ public class TileCopperChest extends TileEntityChest {
 
     public EnumFacing getOtherDirection() {
         if (world == null || other == null) return null;
-        if (!canConnect(pos.offset(other))) other = null;
+        if (!canConnect(other)) other = null;
         return other;
     }
 
     @Override
-    public void checkForAdjacentChests() {
+    public void checkForAdjacentChests() {}
+
+    public void findOtherChest() {
         if (isInvalid()) return;
         if (other != null) {
-            if (canConnect(pos.offset(other))) return;
+            if (canConnect(other)) return;
             else other = null;
         }
         EnumFacing direction = world.getBlockState(pos).getValue(BlockHorizontal.FACING);
         for (EnumFacing facing : EnumFacing.HORIZONTALS) {
             if (facing.getAxis() == direction.getAxis()) continue;
-            BlockPos blockpos = pos.offset(facing);
-            if (!canConnect(blockpos)) continue;
+            if (!canConnect(facing)) continue;
             setNeighbor(facing);
-            ((TileCopperChest)world.getTileEntity(blockpos)).setNeighbor(facing.getOpposite());
+            ((TileCopperChest)world.getTileEntity(pos.offset(facing))).setNeighbor(facing.getOpposite());
             return;
         }
     }
