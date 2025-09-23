@@ -31,8 +31,8 @@ public class DeeperDepthsRecipes {
         if (Loader.isModLoaded("chisel")) ChiselIntegration.registerRecipes();
         if (Loader.isModLoaded("futuremc")) FutureMCIntegration.registerRecipes();
         if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
-        if (Loader.isModLoaded("thermalexpansion")) ThermalExpansionIntegration.registerRecipes();
         if (Loader.isModLoaded("tconstruct")) TinkersConstructIntegration.registerRecipes();
+        if (Loader.isModLoaded("thermalexpansion")) ThermalExpansionIntegration.registerRecipes();
     }
     
     public static void registerLateRecipes() {

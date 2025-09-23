@@ -13,7 +13,7 @@ public class ThermalExpansionIntegration {
 
     public static void registerRecipes() {
         int smelterEnergy = SmelterManager.DEFAULT_ENERGY * 3 / 2;
-        ItemStack copperIngot = ItemHelper.getOre("ingotCopper");
+        ItemStack copperIngot =  ItemHelper.getOre("ingotCopper", 1);
         for (Item item : DeeperDepthsItems.COPPER_TOOLS.getItems()) SmelterManager.addRecycleRecipe(smelterEnergy,
                 new ItemStack(item), copperIngot, 1);
         SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getHelmet()),
@@ -26,9 +26,9 @@ public class ThermalExpansionIntegration {
                 copperIngot, 2);
         SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getHorseArmour()),
                 copperIngot, 2, false);
-        PulverizerManager.addRecipe(75, ItemHelper.getOre("rodBreeze"), ItemHelper.getOre("dustBreeze", 6),
+        PulverizerManager.addRecipe(75, new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3), new ItemStack(DeeperDepthsItems.WIND_CHARGE, 6),
                 ItemHelper.getOre("dustSaltpeter", 1), 50);
-        FactorizerManager.addRecipe(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 1), new ItemStack(DeeperDepthsBlocks.AMETHYST_BLOCK), true);
+        FactorizerManager.addRecipe(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4), new ItemStack(DeeperDepthsBlocks.AMETHYST_BLOCK), true);
     }
 
 }
