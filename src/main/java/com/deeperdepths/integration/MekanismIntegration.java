@@ -71,6 +71,10 @@ public class MekanismIntegration {
             addCopperRecipes(helper, stage, DeeperDepthsBlocks.COPPER_TRAPDOORS);
             addCopperRecipes(helper, new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem()),
                     new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage.next()).getItem()));
+            addCopperRecipes(helper, stage, DeeperDepthsBlocks.COPPER_BARS);
+            addCopperRecipes(helper, stage, DeeperDepthsBlocks.COPPER_CHEST);
+            addCopperRecipes(helper, stage, DeeperDepthsBlocks.COPPER_CHAINS);
+            addCopperRecipes(helper, stage, DeeperDepthsBlocks.COPPER_LANTERN);
         }
         //breeze rods
         helper.addCrusherRecipe(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3),
