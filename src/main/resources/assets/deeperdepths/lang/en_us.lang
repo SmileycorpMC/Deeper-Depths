@@ -250,7 +250,8 @@ tile.deeperdepths.trial_spawner.name=Trial Spawner
 tile.deeperdepths.vault.name=Vault
 tile.deeperdepths.ominous_vault.name=Ominous Vault
 
-container.deeperdepths.copper_chest.name=Copper Chest
+container.deeperdepths.copper_chest=Copper Chest
+container.deeperdepths.copper_double_chest=Copper Double Chest
 
 effect.deeperdepths.bad_omen=Bad Omen
 effect.deeperdepths.trial_omen=Trial Omen

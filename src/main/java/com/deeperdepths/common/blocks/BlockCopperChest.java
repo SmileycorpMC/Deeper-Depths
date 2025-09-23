@@ -112,8 +112,8 @@ public class BlockCopperChest extends BlockChest implements ICopperBlock, IBlock
         if (direction == null) return chest;
         TileCopperChest other = (TileCopperChest) world.getTileEntity(pos.offset(direction));
         return direction == EnumFacing.WEST || direction == EnumFacing.NORTH ?
-                new InventoryLargeChest("container.chestDouble", chest, other)
-                : new InventoryLargeChest("container.chestDouble", other, chest);
+                new InventoryLargeChest("container.deeperdepths.copper_double_chest", chest, other)
+                : new InventoryLargeChest("container.deeperdepths.copper_double_chest", other, chest);
     }
 
     @Override

@@ -39,11 +39,11 @@ public class TileCopperChest extends TileEntityChest {
     private int ticksSinceSync;
     private boolean refresh = true;
 
-    /*
+
     @Override
     public String getName() {
-        return this.hasCustomName() ? this.customName : getTranslationKey();
-    }*/
+        return hasCustomName() ? customName : "container.deeperdepths.copper_chest";
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
@@ -230,13 +230,14 @@ public class TileCopperChest extends TileEntityChest {
     }
 
     //maybe just copper chest vs large copper chest is better
+    //vanilla actually does copper chest vs large copper chest now
+    //leaving this method in case it changes, or we decide to enable it
     public String getTranslationKey() {
         StringBuilder builder = new StringBuilder("container.deeperdepths.");
-        if (isLarge()) builder.append("large_");
         if (isWaxed()) builder.append("waxed_");
         EnumWeatherStage stage = getWeatherStage();
         if (stage != null && stage != EnumWeatherStage.NORMAL) builder.append(stage.getName() + "_");
-        return builder.append("copper_chest").toString();
+        return builder.append(isLarge() ? "copper_double_chest" : "copper_chest").toString();
     }
 
     public void enableRefresh() {
