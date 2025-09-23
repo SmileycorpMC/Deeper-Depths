@@ -8,6 +8,7 @@ import com.deeperdepths.client.tesr.TESRTrialSpawner;
 import com.deeperdepths.client.tesr.TESRVault;
 import com.deeperdepths.common.CommonProxy;
 import com.deeperdepths.common.Constants;
+import com.deeperdepths.common.blocks.BlockCopperChest;
 import com.deeperdepths.common.blocks.BlockTrialPot;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.IBlockProperties;
@@ -96,6 +97,8 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.TRIAL_SPAWNER, new TrialSpawnerStateMapper());
         for (Block block : DeeperDepthsBlocks.COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         for (Block block : DeeperDepthsBlocks.WAXED_COPPER_DOORS.values()) ModelLoader.setCustomStateMapper(block, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_CHEST, new StateMap.Builder().ignore(BlockCopperChest.FACING).build());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.WAXED_COPPER_CHEST, new StateMap.Builder().ignore(BlockCopperChest.FACING).build());
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
                 ((IBlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
