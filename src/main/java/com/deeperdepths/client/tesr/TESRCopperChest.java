@@ -28,8 +28,10 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
     public void render(TileCopperChest te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         EnumFacing direction = te.getOtherDirection();
         if ((direction == EnumFacing.NORTH || direction == EnumFacing.WEST) && destroyStage < 0) return;
-        if (te.isInvalid()) return;
         World world = getWorld();
+        if (te.isInvalid() || world == null || te.getPos() == null) return;
+        IBlockState state = world.getBlockState(te.getPos());
+        if (!(state.getBlock() instanceof BlockCopperChest)) return;
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
@@ -68,28 +70,23 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
         GlStateManager.scale(1, -1, -1);
         GlStateManager.translate(0.5f, 0.5f, 0.5f);
         int rotation = 0;
-        if (te.getWorld() != null) {
-            IBlockState state = world.getBlockState(te.getPos());
-            if (state.getBlock() instanceof BlockCopperChest) {
-                EnumFacing facing = state.getValue(BlockHorizontal.FACING);
-                switch (facing) {
-                    case NORTH:
-                        rotation = 180;
-                        break;
-                    case WEST:
-                        rotation = 90;
-                        break;
-                    case EAST:
-                        rotation = -90;
-                        break;
-                }
-                if (direction != null) {
-                    if (facing == EnumFacing.EAST && direction == EnumFacing.SOUTH) GlStateManager.translate(0, 0, -1);
-                    else if (facing == EnumFacing.WEST && direction == EnumFacing.NORTH) GlStateManager.translate(0, 0, 1);
-                    else if (facing == EnumFacing.NORTH && direction == EnumFacing.EAST) GlStateManager.translate(1, 0, 0);
-                    else if (facing == EnumFacing.SOUTH && direction == EnumFacing.WEST) GlStateManager.translate(-1, 0, 0);
-                }
-            }
+        EnumFacing facing = state.getValue(BlockHorizontal.FACING);
+        switch (facing) {
+            case NORTH:
+                rotation = 180;
+                break;
+            case WEST:
+                rotation = 90;
+                break;
+            case EAST:
+                rotation = -90;
+                break;
+        }
+        if (direction != null) {
+            if (facing == EnumFacing.EAST && direction == EnumFacing.SOUTH) GlStateManager.translate(0, 0, -1);
+            else if (facing == EnumFacing.WEST && direction == EnumFacing.NORTH) GlStateManager.translate(0, 0, 1);
+            else if (facing == EnumFacing.NORTH && direction == EnumFacing.EAST) GlStateManager.translate(1, 0, 0);
+            else if (facing == EnumFacing.SOUTH && direction == EnumFacing.WEST) GlStateManager.translate(-1, 0, 0);
         }
         GlStateManager.rotate(rotation, 0, 1, 0);
         GlStateManager.translate(-0.5f, -0.5f, -0.5f);
