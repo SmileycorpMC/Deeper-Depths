@@ -39,7 +39,6 @@ public class TileCopperChest extends TileEntityChest {
     private int ticksSinceSync;
     private boolean refresh = true;
 
-
     @Override
     public String getName() {
         return hasCustomName() ? customName : "container.deeperdepths.copper_chest";
