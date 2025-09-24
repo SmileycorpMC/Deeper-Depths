@@ -43,6 +43,7 @@ public class BlockDeepslate extends BlockRotatedPillar implements IBlockProperti
         setHarvestLevel("pickaxe", BlockConfig.deepslate.getHarvestLevel());
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         setSoundType(DeeperDepthsSoundTypes.DEEPSLATE);
+        setDefaultState(blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.Y).withProperty(INFESTED, false));
     }
 
     @Override
