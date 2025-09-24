@@ -27,7 +27,8 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
     @Override
     public void render(TileCopperChest te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         EnumFacing direction = te.getOtherDirection();
-        if (direction == EnumFacing.NORTH || direction == EnumFacing.WEST) return;
+        if ((direction == EnumFacing.NORTH || direction == EnumFacing.WEST) && destroyStage < 0) return;
+        if (te.isInvalid()) return;
         World world = getWorld();
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);
@@ -54,12 +55,12 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
                 GlStateManager.scale(8, 4, 1);
                 GlStateManager.translate(0.0625f, 0.0625f, 0.0625f);
                 GlStateManager.matrixMode(5888);
-            };
+            }
             TileCopperChest other = (TileCopperChest) world.getTileEntity(te.getPos().offset(direction));
             float otherLidAngle = other.prevLidAngle + (other.lidAngle - other.prevLidAngle) * partialTicks;
             if (otherLidAngle > lidAngle) lidAngle = otherLidAngle;
         }
-        bindTexture(getTexture(te));
+        if (destroyStage < 0) bindTexture(getTexture(te));
         GlStateManager.pushMatrix();
         GlStateManager.enableRescaleNormal();
         if (destroyStage < 0) GlStateManager.color(1, 1, 1, alpha);
@@ -83,8 +84,10 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
                         break;
                 }
                 if (direction != null) {
-                    if (facing == EnumFacing.EAST) GlStateManager.translate(0, 0, -1);
-                    else if (facing == EnumFacing.NORTH) GlStateManager.translate(1, 0, 0);
+                    if (facing == EnumFacing.EAST && direction == EnumFacing.SOUTH) GlStateManager.translate(0, 0, -1);
+                    else if (facing == EnumFacing.WEST && direction == EnumFacing.NORTH) GlStateManager.translate(0, 0, 1);
+                    else if (facing == EnumFacing.NORTH && direction == EnumFacing.EAST) GlStateManager.translate(1, 0, 0);
+                    else if (facing == EnumFacing.SOUTH && direction == EnumFacing.WEST) GlStateManager.translate(-1, 0, 0);
                 }
             }
         }
