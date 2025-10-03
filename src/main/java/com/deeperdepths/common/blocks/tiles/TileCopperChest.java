@@ -189,13 +189,13 @@ public class TileCopperChest extends TileEntityChest {
     @Nullable
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if(doubleChestHandler == null || doubleChestHandler.needsRefresh()) {
-                EnumFacing direction = getOtherDirection();
+            EnumFacing direction = getOtherDirection();
+            if (direction != null && (doubleChestHandler == null || doubleChestHandler.needsRefresh())) {
                 doubleChestHandler = new VanillaDoubleChestItemHandler(this, (TileEntityChest) world.getTileEntity(pos.offset(direction)),
                                 direction == EnumFacing.SOUTH || direction == EnumFacing.EAST);
             }
-            return (T) ((doubleChestHandler != null && doubleChestHandler != VanillaDoubleChestItemHandler.NO_ADJACENT_CHESTS_INSTANCE)
-                    ? (itemHandler == null ? (itemHandler = createUnSidedHandler()) : itemHandler) :  doubleChestHandler);
+            return (T) ((doubleChestHandler != null && doubleChestHandler != VanillaDoubleChestItemHandler.NO_ADJACENT_CHESTS_INSTANCE) ?
+                doubleChestHandler : itemHandler == null ? (itemHandler = createUnSidedHandler()) : itemHandler);
         }
         return super.getCapability(capability, facing);
     }

@@ -28,7 +28,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 
-version = "1.12.2-1.1.0b"
+version = "1.12.2-1.1.0c"
 group = "com.deeperdepths"
 archivesBaseName = "Deeper-Depths"
 
