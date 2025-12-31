@@ -1,4 +1,5 @@
 {
+  "required": true,
   "compatibilityLevel": "JAVA_8",
   "package": "com.deeperdepths.mixin",
   "refmap": "mixins.deeperdepths.refmap.json",
@@ -13,10 +14,13 @@
     "MixinWorldServer"
   ],
   "client": [
+    "MixinBlockFluidRenderer",
+    "MixinBlockRenderDispatcher",
     "MixinEntityRenderer",
     "MixinInventoryEffectRenderer",
     "MixinLayerHeldItem",
-    "MixinModelBiped"
+    "MixinModelBiped",
+    "MixinRenderChunk"
   ],
   "server": []
 }
