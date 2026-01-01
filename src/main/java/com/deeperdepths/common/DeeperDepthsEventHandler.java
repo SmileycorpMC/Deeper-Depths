@@ -328,11 +328,8 @@ public class DeeperDepthsEventHandler {
         BlockPos pos = ray.getBlockPos();
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        System.out.println(world.isRemote ? "client" : "server");
-        System.out.println(state);
         if (!(block instanceof IWaterloggable)) return;
         ItemStack bucket = event.getEmptyBucket();
-        System.out.println(bucket);
         if (!bucket.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) return;
         IWaterloggable loggableBlock = (IWaterloggable) block;
         IFluidHandlerItem cap = bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
@@ -359,10 +356,7 @@ public class DeeperDepthsEventHandler {
         } else return;
         player.addStat(StatList.getObjectUseStats(bucket.getItem()));
         ItemStack container = cap.getContainer().copy();
-        System.out.println(container);
         event.setFilledBucket(container);
-        //if (!player.isCreative()) bucket.shrink(1);
-        //if (!world.isRemote &!player.addItemStackToInventory(container)) player.dropItem(container, false);
         event.setResult(Event.Result.ALLOW);
     }
     
