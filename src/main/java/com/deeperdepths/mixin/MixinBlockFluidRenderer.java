@@ -1,6 +1,6 @@
 package com.deeperdepths.mixin;
 
-import com.deeperdepths.common.blocks.IWaterloggable;
+import com.deeperdepths.common.blocks.IFluidloggable;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.Block;
@@ -9,8 +9,11 @@ import net.minecraft.client.renderer.BlockFluidRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fluids.Fluid;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+
+import java.util.Optional;
 
 @Mixin(BlockFluidRenderer.class)
 public class MixinBlockFluidRenderer {
@@ -21,8 +24,9 @@ public class MixinBlockFluidRenderer {
     private IBlockState deeperdepths$getFluidHeight$getBlockState(IBlockAccess world, BlockPos pos, Operation<IBlockState> operation) {
         IBlockState state = operation.call(world, pos);
         Block block = state.getBlock();
-        if (!(block instanceof IWaterloggable)) return state;
-        return ((IWaterloggable) block).isWaterLogged(world, pos, state) ? WATER : state;
+        if (!(block instanceof IFluidloggable)) return state;
+        Optional<Fluid> optional = ((IFluidloggable) block).getContainedFluid(world, pos, state);
+        return optional.isPresent() ? optional.get().getBlock().getDefaultState() : state;
     }
 
 }

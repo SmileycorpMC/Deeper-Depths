@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCopperGrate extends BlockCopper implements IWaterloggable {
+public class BlockCopperGrate extends BlockCopper implements IFluidloggable {
 
     public BlockCopperGrate() {
         super("Copper_Grate");
