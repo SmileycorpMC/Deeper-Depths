@@ -3,7 +3,6 @@ package com.deeperdepths.common;
 import com.deeperdepths.common.blocks.BlockCandle;
 import com.deeperdepths.common.blocks.BlockLightningRod;
 import com.deeperdepths.common.blocks.ICopperBlock;
-import com.deeperdepths.common.blocks.IFluidloggable;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
@@ -320,53 +319,4 @@ public class DeeperDepthsEventHandler {
     public void addLoot(LootTableLoadEvent event) {
         for (LootTableEntry entry : LootTablesConfig.ENTRIES) if (entry.canApply(event.getName())) entry.addEntry(event.getTable());
     }
-
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void fillBucket(FillBucketEvent event) {
-        World world = event.getWorld();
-        RayTraceResult ray = event.getTarget();
-        if (ray == null) return;
-        if (ray.typeOfHit != RayTraceResult.Type.BLOCK) return;
-        BlockPos pos = ray.getBlockPos();
-        IBlockState state = world.getBlockState(pos);
-        Block block = state.getBlock();
-        if (!(block instanceof IFluidloggable)) return;
-        ItemStack bucket = event.getEmptyBucket();
-        if (!bucket.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) return;
-        IFluidloggable loggableBlock = (IFluidloggable) block;
-        IFluidHandlerItem cap = bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-        EntityPlayer player = event.getEntityPlayer();
-        FluidStack fluidStack = FluidUtil.getFluidContained(bucket);
-        if (loggableBlock.isFluidLogged(world, pos, state)) {
-            if (fluidStack != null) return;
-            Optional<Fluid> optional = loggableBlock.getContainedFluid(world, pos, state);
-            if (!optional.isPresent()) return;
-            Fluid fluid = optional.get();
-            fluidStack = new FluidStack(fluid, 1000);
-            if (cap.fill(fluidStack, false) < 1000) return;
-            player.playSound(fluid.getFillSound(fluidStack), 1, 1);
-            loggableBlock.empty(world, pos, state);
-            if (!player.isCreative()) cap.fill(fluidStack, true);
-        } else  {
-            if (fluidStack == null) return;
-            if (fluidStack.amount < 1000 |! loggableBlock.canContainFluid(world, pos, state, fluidStack.getFluid())) return;
-            FluidStack drained = cap.drain(fluidStack, false);
-            if (drained == null) return;
-            if (drained.amount < 1000 || drained.getFluid() != fluidStack.getFluid()) return;
-            if (world.provider.doesWaterVaporize()) {
-                world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
-                for (int k = 0; k < 8; ++k)
-                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random(), 0, 0, 0);
-            } else {
-                world.playSound(player, pos, fluidStack.getFluid().getEmptySound(fluidStack), SoundCategory.BLOCKS, 1, 1);
-                loggableBlock.fillWithFluid(world, pos, state, fluidStack.getFluid());
-            }
-            if (!player.isCreative()) cap.drain(fluidStack, true);
-        }
-        player.addStat(StatList.getObjectUseStats(bucket.getItem()));
-        ItemStack container = cap.getContainer().copy();
-        event.setFilledBucket(container);
-        event.setResult(Event.Result.ALLOW);
-    }
-    
 }
