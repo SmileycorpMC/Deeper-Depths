@@ -8,6 +8,7 @@
     "MixinAISummonSilverfish",
     "MixinBlockSilverfish",
     "MixinContainer",
+    "MixinDispenseFluidBehaviour",
     "MixinEntity",
     "MixinEntityLiving",
     "MixinEntityLivingBase",
