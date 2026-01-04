@@ -84,6 +84,7 @@ configurations {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+    compileOnly "curse.maven:fluidlogged-api-485654:7212988"
 	implementation "org.spongepowered:mixin:0.8"
     implementation "curse.maven:atlas-463826:6981034"
     implementation "curse.maven:raids-977633:5626565"

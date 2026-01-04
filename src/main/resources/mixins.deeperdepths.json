@@ -8,20 +8,16 @@
     "MixinAISummonSilverfish",
     "MixinBlockSilverfish",
     "MixinContainer",
-    "MixinDispenseFluidBehaviour",
     "MixinEntity",
     "MixinEntityLiving",
     "MixinEntityLivingBase",
     "MixinWorldServer"
   ],
   "client": [
-    "MixinBlockFluidRenderer",
-    "MixinBlockRenderDispatcher",
     "MixinEntityRenderer",
     "MixinInventoryEffectRenderer",
     "MixinLayerHeldItem",
-    "MixinModelBiped",
-    "MixinRenderChunk"
+    "MixinModelBiped"
   ],
   "server": []
 }
