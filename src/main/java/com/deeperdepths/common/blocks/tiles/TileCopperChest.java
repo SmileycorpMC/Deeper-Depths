@@ -186,6 +186,14 @@ public class TileCopperChest extends TileEntityChest {
     }
 
     @Override
+    public void closeInventory(EntityPlayer player) {
+        if (player.isSpectator() |! (getBlockType() instanceof BlockCopperChest)) return;
+        numPlayersUsing--;
+        world.addBlockEvent(pos, getBlockType(), 1, numPlayersUsing);
+        world.notifyNeighborsOfStateChange(pos, getBlockType(), false);
+    }
+
+    @Override
     @Nullable
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -205,7 +213,6 @@ public class TileCopperChest extends TileEntityChest {
         super.setWorld(world);
         world.markBlockRangeForRenderUpdate(pos, pos);
     }
-
 
     public EnumWeatherStage getWeatherStage() {
         if (world == null || pos == null) return stage;

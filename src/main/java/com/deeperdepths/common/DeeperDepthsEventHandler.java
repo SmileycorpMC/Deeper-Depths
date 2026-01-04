@@ -3,6 +3,7 @@ package com.deeperdepths.common;
 import com.deeperdepths.common.blocks.BlockCandle;
 import com.deeperdepths.common.blocks.BlockLightningRod;
 import com.deeperdepths.common.blocks.ICopperBlock;
+import com.deeperdepths.common.blocks.IFluidloggable;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
@@ -14,6 +15,7 @@ import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.common.potion.PotionDeeperDepths;
 import com.deeperdepths.config.BlockConfig;
 import com.deeperdepths.config.LootTablesConfig;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -24,13 +26,16 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -42,14 +47,22 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.smileycorp.atlas.api.config.LootTableEntry;
 
+import java.util.Optional;
 import java.util.Random;
 
 public class DeeperDepthsEventHandler {
@@ -306,6 +319,54 @@ public class DeeperDepthsEventHandler {
     @SubscribeEvent
     public void addLoot(LootTableLoadEvent event) {
         for (LootTableEntry entry : LootTablesConfig.ENTRIES) if (entry.canApply(event.getName())) entry.addEntry(event.getTable());
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void fillBucket(FillBucketEvent event) {
+        World world = event.getWorld();
+        RayTraceResult ray = event.getTarget();
+        if (ray == null) return;
+        if (ray.typeOfHit != RayTraceResult.Type.BLOCK) return;
+        BlockPos pos = ray.getBlockPos();
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        if (!(block instanceof IFluidloggable)) return;
+        ItemStack bucket = event.getEmptyBucket();
+        if (!bucket.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) return;
+        IFluidloggable loggableBlock = (IFluidloggable) block;
+        IFluidHandlerItem cap = bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+        EntityPlayer player = event.getEntityPlayer();
+        FluidStack fluidStack = FluidUtil.getFluidContained(bucket);
+        if (loggableBlock.isFluidLogged(world, pos, state)) {
+            if (fluidStack != null) return;
+            Optional<Fluid> optional = loggableBlock.getContainedFluid(world, pos, state);
+            if (!optional.isPresent()) return;
+            Fluid fluid = optional.get();
+            fluidStack = new FluidStack(fluid, 1000);
+            if (cap.fill(fluidStack, false) < 1000) return;
+            player.playSound(fluid.getFillSound(fluidStack), 1, 1);
+            loggableBlock.empty(world, pos, state);
+            if (!player.isCreative()) cap.fill(fluidStack, true);
+        } else  {
+            if (fluidStack == null) return;
+            if (fluidStack.amount < 1000 |! loggableBlock.canContainFluid(world, pos, state, fluidStack.getFluid())) return;
+            FluidStack drained = cap.drain(fluidStack, false);
+            if (drained == null) return;
+            if (drained.amount < 1000 || drained.getFluid() != fluidStack.getFluid()) return;
+            if (world.provider.doesWaterVaporize()) {
+                world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
+                for (int k = 0; k < 8; ++k)
+                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random(), 0, 0, 0);
+            } else {
+                world.playSound(player, pos, fluidStack.getFluid().getEmptySound(fluidStack), SoundCategory.BLOCKS, 1, 1);
+                loggableBlock.fillWithFluid(world, pos, state, fluidStack.getFluid());
+            }
+            if (!player.isCreative()) cap.drain(fluidStack, true);
+        }
+        player.addStat(StatList.getObjectUseStats(bucket.getItem()));
+        ItemStack container = cap.getContainer().copy();
+        event.setFilledBucket(container);
+        event.setResult(Event.Result.ALLOW);
     }
     
 }
