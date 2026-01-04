@@ -26,8 +26,8 @@ public class Constants {
     public static final boolean FUNNY = isFunny();
 
 	/** The damage source used by Maces. */
-	public static DamageSource causeMaceDamage(Entity source)
-	{ return (new EntityDamageSource(MODID + "." + "mace", source)); }
+	public static DamageSource causeMaceDamage(Entity source, float breachPercent)
+	{ return (new EntityMaceDamageSource(MODID + "." + "mace", source, breachPercent)); }
 
 	public static String name(String name) {
 		return MODID + "." + name.toLowerCase(Locale.US);
