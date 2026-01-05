@@ -32,12 +32,8 @@ public class MixinBlockRenderDispatcher {
         if (!((IFluidloggable) block).isFluidLogged(world, pos, state)) return;
         Optional<Fluid> optional = ((IFluidloggable) block).getContainedFluid(world, pos, state);
         if (!optional.isPresent()) return;
-        double x = buffer.xOffset;
-        double y = buffer.yOffset;
-        double z = buffer.zOffset;
-        buffer.setTranslation(x, y + 0.001, z);
+        buffer.setTranslation(buffer.xOffset, buffer.yOffset + 0.001, buffer.zOffset);
         fluidRenderer.renderFluid(world, optional.get().getBlock().getDefaultState(), pos, buffer);
-        //buffer.setTranslation(0, 0, 0);
         callback.setReturnValue(false);
     }
 
