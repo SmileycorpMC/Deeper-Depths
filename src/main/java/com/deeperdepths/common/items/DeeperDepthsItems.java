@@ -42,6 +42,7 @@ public class DeeperDepthsItems {
     public static final Item MACE = new ItemMace();
     //public static final Item RECOVERY_COMPASS = null;
     public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
+    public static final Item EXPLORER_MAP = new ItemExplorerMap();
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
