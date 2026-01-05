@@ -50,7 +50,7 @@ public class CommandLocateDD implements ICommand {
         } else {
             String s = args[0];
             if(s.equals("TrialChambers")) {
-                BlockPos blockpos = findNearestPos(sender);
+                BlockPos blockpos = findNearestPos(sender.getEntityWorld(), sender.getPosition());
 
                 if (blockpos != null) {
                     sender.sendMessage(new TextComponentTranslation("commands.locate.success", new Object[]{s, blockpos.getX(), blockpos.getZ()}));
@@ -58,7 +58,7 @@ public class CommandLocateDD implements ICommand {
                     throw new CommandException("commands.locate.failure", s);
                 }
             } else if(s.equals("AncientCity")) {
-                BlockPos blockpos = findNearestPosAncientCity(sender);
+                BlockPos blockpos = findNearestPosAncientCity(sender.getEntityWorld(), sender.getPosition());
 
                 if (blockpos != null) {
                     sender.sendMessage(new TextComponentTranslation("commands.locate.success", new Object[]{s, blockpos.getX(), blockpos.getZ()}));
@@ -69,10 +69,8 @@ public class CommandLocateDD implements ICommand {
         }
     }
 
-    public static BlockPos findNearestPos(ICommandSender sender) {
+    public static BlockPos findNearestPos(World world, BlockPos pos) {
         BlockPos resultpos = null;
-        BlockPos pos = sender.getPosition();
-        World world = sender.getEntityWorld();
         Chunk chunk = world.getChunkFromBlockCoords(pos);
         //probably laggy as hell but hey it works
         for (int i = -190; i < 190 + 1; i++) {
@@ -87,10 +85,8 @@ public class CommandLocateDD implements ICommand {
         return resultpos;
     }
 
-    public static BlockPos findNearestPosAncientCity(ICommandSender sender) {
+    public static BlockPos findNearestPosAncientCity(World world, BlockPos pos) {
         BlockPos resultpos = null;
-        BlockPos pos = sender.getPosition();
-        World world = sender.getEntityWorld();
         Chunk chunk = world.getChunkFromBlockCoords(pos);
         //probably laggy as hell but hey it works
         for (int i = -190; i < 190 + 1; i++) {
