@@ -20,7 +20,7 @@ public class BlockCopperGrate extends BlockCopper implements IFluidloggable {
     public BlockCopperGrate() {
         super("Copper_Grate");
         setSoundType(DeeperDepthsSoundTypes.COPPER_GRATE);
-        //setDefaultState(getBlockState().getBaseState().withProperty(BlockFluidBase.LEVEL, 15));
+        setDefaultState(getBlockState().getBaseState().withProperty(WATERLOGGED, false));
     }
 
     @Override
@@ -71,16 +71,6 @@ public class BlockCopperGrate extends BlockCopper implements IFluidloggable {
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-
-    /*@Override
-    public Material getMaterial(IBlockState state) {
-        return state.getValue(WATERLOGGED) ? Material.WATER : super.getMaterial(state);
-    }
-
-    @Override
-    public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
-        return false;
-    }*/
 
     @Override
     public String byState(IBlockState state) {
