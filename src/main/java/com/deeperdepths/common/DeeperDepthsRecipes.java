@@ -5,6 +5,8 @@ import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.integration.*;
+import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -13,12 +15,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class DeeperDepthsRecipes {
@@ -28,12 +36,14 @@ public class DeeperDepthsRecipes {
         registerOreDictionary();
         registerFurnaceRecipes();
         registerBrewingRecipes();
+        registerTrades();
         if (Loader.isModLoaded("chisel")) ChiselIntegration.registerRecipes();
         if (Loader.isModLoaded("futuremc")) FutureMCIntegration.registerRecipes();
         if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
         if (Loader.isModLoaded("tconstruct")) TinkersConstructIntegration.registerRecipes();
         if (Loader.isModLoaded("thermalexpansion")) ThermalExpansionIntegration.registerRecipes();
     }
+
     
     public static void registerLateRecipes() {
         for (ItemStack stack : OreDictionary.getOres("tallow")) OreDictionary.registerOre("wax", stack);
@@ -84,6 +94,40 @@ public class DeeperDepthsRecipes {
         PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.SLIME_BLOCK), DeeperDepthsPotions.OOZING_POTION);
         PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.WEB), DeeperDepthsPotions.WEAVING_POTION);
         PotionHelper.addMix(PotionTypes.AWKWARD, Ingredient.fromStacks(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)), DeeperDepthsPotions.WIND_CHARGED_POTION);
+    }
+
+    public static void registerTrades() {
+        ForgeRegistries.VILLAGER_PROFESSIONS.getValue(new ResourceLocation("minecraft:librarian")).getCareer(1)
+                .addTrade(2, explorerMap(0, new EntityVillager.PriceInfo(12, 12)));
+    }
+
+    public static ItemForItemAndEmeralds explorerMap(int id, EntityVillager.PriceInfo price) {
+        return new ItemForItemAndEmeralds(price, new ItemStack(Items.COMPASS), new EntityVillager.PriceInfo(1, 1),
+                new ItemStack(DeeperDepthsItems.EXPLORER_MAP, 1, id), new EntityVillager.PriceInfo(1, 1));
+    }
+
+    public static class ItemForItemAndEmeralds implements EntityVillager.ITradeList {
+
+        private final ItemStack buy, sell;
+        private final EntityVillager.PriceInfo emeraldPrice, buyPrice, sellPrice;
+
+        public ItemForItemAndEmeralds( EntityVillager.PriceInfo emeraldPrice, ItemStack buy, EntityVillager.PriceInfo buyPrice, ItemStack sell, EntityVillager.PriceInfo sellPrice) {
+            this.emeraldPrice = emeraldPrice;
+            this.buy = buy;
+            this.buyPrice = buyPrice;
+            this.sell = sell;
+            this.sellPrice = sellPrice;
+        }
+
+        @Override
+        public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random rand) {
+            ItemStack buy = this.buy.copy();
+            buy.setCount(buyPrice.getPrice(rand));
+            ItemStack sell = this.sell.copy();
+            sell.setCount(sellPrice.getPrice(rand));
+            recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, emeraldPrice.getPrice(rand)), buy, sell));
+        }
+
     }
     
 }
