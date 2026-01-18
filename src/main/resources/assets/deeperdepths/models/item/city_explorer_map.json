@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "deeperdepths:items/city_explorer_map"
+	"layer0": "minecraft:items/map_empty",
+    "layer1": "deeperdepths:items/city_explorer_map"
   }
 }

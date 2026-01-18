@@ -12,6 +12,7 @@
     "MixinEntity",
     "MixinEntityLiving",
     "MixinEntityLivingBase",
+    "MixinItemMap",
     "MixinWorldServer"
   ],
   "client": [
@@ -19,6 +20,8 @@
     "MixinBlockRenderDispatcher",
     "MixinEntityRenderer",
     "MixinInventoryEffectRenderer",
+    "MixinItemModelMesher",
+    "MixinItemRenderer",
     "MixinLayerHeldItem",
     "MixinModelBiped",
     "MixinRenderChunk"

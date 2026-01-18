@@ -32,7 +32,9 @@ item.deeperdepths.copper_chestplate.name=Copper Chestplate
 item.deeperdepths.copper_leggings.name=Copper Leggings
 item.deeperdepths.copper_boots.name=Copper Boots
 item.deeperdepths.copper_horse_armour.name=Copper Horse Armor
+item.deeperdepths.explorer_map.name=Explorer Map
 item.deeperdepths.trial_explorer_map.name=Trial Explorer Map
+item.deeperdepths.geode_explorer_map.name=Geode Explorer Map
 item.deeperdepths.city_explorer_map.name=City Explorer Map
 
 tile.deeperdepths.tuff.name=Tuff

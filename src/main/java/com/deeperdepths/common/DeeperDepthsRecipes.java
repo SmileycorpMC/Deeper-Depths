@@ -103,7 +103,7 @@ public class DeeperDepthsRecipes {
 
     public static ItemForItemAndEmeralds explorerMap(int id, EntityVillager.PriceInfo price) {
         return new ItemForItemAndEmeralds(price, new ItemStack(Items.COMPASS), new EntityVillager.PriceInfo(1, 1),
-                new ItemStack(DeeperDepthsItems.EXPLORER_MAP, 1, id), new EntityVillager.PriceInfo(1, 1));
+                new ItemStack(DeeperDepthsItems.EXPLORER_MAP, 3, id), new EntityVillager.PriceInfo(1, 1));
     }
 
     public static class ItemForItemAndEmeralds implements EntityVillager.ITradeList {

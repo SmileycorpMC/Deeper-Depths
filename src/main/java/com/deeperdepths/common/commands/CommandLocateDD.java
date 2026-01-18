@@ -50,7 +50,7 @@ public class CommandLocateDD implements ICommand {
         } else {
             String s = args[0];
             if(s.equals("TrialChambers")) {
-                BlockPos blockpos = findNearestPos(sender.getEntityWorld(), sender.getPosition());
+                BlockPos blockpos = findNearestTrialChamber(sender.getEntityWorld(), sender.getPosition());
 
                 if (blockpos != null) {
                     sender.sendMessage(new TextComponentTranslation("commands.locate.success", new Object[]{s, blockpos.getX(), blockpos.getZ()}));
@@ -58,7 +58,7 @@ public class CommandLocateDD implements ICommand {
                     throw new CommandException("commands.locate.failure", s);
                 }
             } else if(s.equals("AncientCity")) {
-                BlockPos blockpos = findNearestPosAncientCity(sender.getEntityWorld(), sender.getPosition());
+                BlockPos blockpos = findNearestAncientCity(sender.getEntityWorld(), sender.getPosition());
 
                 if (blockpos != null) {
                     sender.sendMessage(new TextComponentTranslation("commands.locate.success", new Object[]{s, blockpos.getX(), blockpos.getZ()}));
@@ -69,7 +69,7 @@ public class CommandLocateDD implements ICommand {
         }
     }
 
-    public static BlockPos findNearestPos(World world, BlockPos pos) {
+    public static BlockPos findNearestTrialChamber(World world, BlockPos pos) {
         BlockPos resultpos = null;
         Chunk chunk = world.getChunkFromBlockCoords(pos);
         //probably laggy as hell but hey it works
@@ -85,7 +85,7 @@ public class CommandLocateDD implements ICommand {
         return resultpos;
     }
 
-    public static BlockPos findNearestPosAncientCity(World world, BlockPos pos) {
+    public static BlockPos findNearestAncientCity(World world, BlockPos pos) {
         BlockPos resultpos = null;
         Chunk chunk = world.getChunkFromBlockCoords(pos);
         //probably laggy as hell but hey it works
