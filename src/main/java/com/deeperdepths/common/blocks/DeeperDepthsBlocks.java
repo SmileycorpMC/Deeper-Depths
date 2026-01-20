@@ -70,14 +70,14 @@ public class DeeperDepthsBlocks {
     public static final BlockAmethyst AMETHYST_BLOCK = new BlockAmethyst("amethyst_block");
     public static final BlockBuddingAmethyst BUDDING_AMETHYST = new BlockBuddingAmethyst();
     public static final Map<EnumClusterSize, BlockAmethystBud> AMETHYST_BUDS = Maps.newEnumMap(EnumClusterSize.class);
-    
+
+    public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
     public static final BlockCandle CANDLE = new BlockCandle(null);
     public static final Map<EnumDyeColor, BlockCandle> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
     public static final BlockTrialSpawner TRIAL_SPAWNER = new BlockTrialSpawner();
     public static final BlockVault VAULT = new BlockVault();
     public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
     public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
-    public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
     public static final BlockCopperTorch COPPER_TORCH = new BlockCopperTorch();
     
     //sculk

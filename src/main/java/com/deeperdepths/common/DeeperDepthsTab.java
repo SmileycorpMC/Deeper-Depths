@@ -96,6 +96,7 @@ public class DeeperDepthsTab extends CreativeTabs {
             stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_LANTERN, 1, stage.ordinal() + 4));
             //stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_GOLEM_STATUE, 1, stage.ordinal()));
         }
+        stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_TORCH));
         stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_ORE));
         for (ItemStack stack : cached) if (!contains(stack, stacks)) stacks.add(stack);
     }
