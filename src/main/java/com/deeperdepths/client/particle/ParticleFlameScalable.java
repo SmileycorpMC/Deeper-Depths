@@ -18,6 +18,7 @@ public class ParticleFlameScalable extends ParticleDeeperDepths
 {
     private static final ResourceLocation FLAME_TEXTURE1 = new ResourceLocation(Constants.MODID, "textures/particles/flame_candle.png");
     private static final ResourceLocation FLAME_TEXTURE2 = new ResourceLocation(Constants.MODID, "textures/particles/flame_soul.png");
+    private static final ResourceLocation FLAME_TEXTURE3 = new ResourceLocation(Constants.MODID, "textures/particles/flame_copper.png");
     private final float flameScale;
 
     protected ParticleFlameScalable(TextureManager textureManager, World worldIn, double x, double y, double z, double movementX, double movementY, double movementZ)
@@ -28,13 +29,13 @@ public class ParticleFlameScalable extends ParticleDeeperDepths
 
     protected ParticleFlameScalable(TextureManager textureManager, World worldIn, double x, double y, double z, double movementX, double movementY, double movementZ, int textureNum, int scale)
     {
-        super(textureManager, worldIn, x, y, z, movementX, movementY, movementZ, textureNum == 0 ? FLAME_TEXTURE1 : FLAME_TEXTURE2, 0);
+        super(textureManager, worldIn, x, y, z, movementX, movementY, movementZ, textureNum == 0 ? FLAME_TEXTURE1 : textureNum == 1 ? FLAME_TEXTURE2: FLAME_TEXTURE3, 0);
         this.motionX = this.motionX * 0.009999999776482582D + movementX;
         this.motionY = this.motionY * 0.009999999776482582D + movementY;
         this.motionZ = this.motionZ * 0.009999999776482582D + movementZ;
-        this.posX += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
-        this.posY += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
-        this.posZ += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
+        this.posX += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
+        this.posY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
+        this.posZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
         this.flameScale = (scale * 0.1F);
 
         this.particleMaxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 4;

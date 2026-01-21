@@ -1,0 +1,20 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:cut_copper_slab",
+      "data": 2
+    }
+  },
+  "result": {
+    "item": "deeperdepths:chiseled_copper",
+    "data": 2,
+    "count": 1
+  }
+}

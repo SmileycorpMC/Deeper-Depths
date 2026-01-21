@@ -1,15 +1,32 @@
 {
+  "required": true,
   "compatibilityLevel": "JAVA_8",
   "package": "com.deeperdepths.mixin",
   "refmap": "mixins.deeperdepths.refmap.json",
   "mixins": [
+    "MixinAIHideInStone",
+    "MixinAISummonSilverfish",
+    "MixinBlockSilverfish",
+    "MixinContainer",
+    "MixinDispenseFluidBehaviour",
     "MixinEntity",
-    "MixinItem",
-    "MixinSoundEvent",
+    "MixinEntityLiving",
+    "MixinEntityLivingBase",
+	"MixinItem",
+    "MixinItemMap",
+	"MixinSoundEvent",
     "MixinWorldServer"
   ],
   "client": [
-    "MixinInventoryEffectRenderer"
+    "MixinBlockFluidRenderer",
+    "MixinBlockRenderDispatcher",
+    "MixinEntityRenderer",
+    "MixinInventoryEffectRenderer",
+    "MixinItemModelMesher",
+    "MixinItemRenderer",
+    "MixinLayerHeldItem",
+    "MixinModelBiped",
+    "MixinRenderChunk"
   ],
   "server": []
 }

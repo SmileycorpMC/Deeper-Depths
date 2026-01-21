@@ -1,0 +1,21 @@
+{
+  "group": "deeperdepths:copper",
+  "type": "minecraft:crafting_shaped",
+  "mirror": true,
+  "pattern": [
+	"M  ",
+	"MM ",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:cut_copper",
+      "data": 6
+    }
+  },
+  "result": {
+    "item": "deeperdepths:waxed_weathered_cut_copper_stairs",
+    "data": 0,
+    "count": 4
+  }
+}

@@ -28,10 +28,9 @@ public class DDWorldGen implements IWorldGenerator {
         //Dimension iterator List
         if(isAllowedDimensionTooSpawnIn(world.provider.getDimension())) {
             //What starts the process for seeing the chambers can generate
+            //Trial Chambers
+            chambers.generate(world, random, pos);
             if(world.getBiomeForCoordsBody(pos) != Biomes.OCEAN && world.getBiomeForCoordsBody(pos) != Biomes.DEEP_OCEAN) {
-                //Trial Chambers
-                chambers.generate(world, random, pos);
-
                 //Geodes
                 //Awaiting Structures and Textures
                 WorldGenCustomStructure genGeode = ModRand.choice(geodes);

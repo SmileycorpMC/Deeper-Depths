@@ -4,17 +4,23 @@ import com.deeperdepths.config.WorldConfig;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureStart;
+import net.minecraftforge.common.BiomeDictionary;
 
 import java.util.Random;
 
 public class WorldGenTrialChambers extends WorldGenerator {
 
-    private int spacing = 1;
+    private int spacing;
+
+    private int separation;
     public WorldGenTrialChambers() {
 
+        this.spacing = WorldConfig.trial_chambers.getSpawnChances();
+        this.separation = 16;
     }
 
 
@@ -29,18 +35,57 @@ public class WorldGenTrialChambers extends WorldGenerator {
             return false;
         }
 
-        if((spacing / 12) > WorldConfig.trial_chambers.getSpawnChances()) {
-            getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
-                    .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
-            return true;
+        if(canSpawnStructureAtPos(world, pos.getX() >> 4, pos.getZ() >> 4)) {
+                getStructureStart(world, pos.getX() >> 4, pos.getZ() >> 4, random)
+                        .generateStructure(world, random, new StructureBoundingBox(pos.getX() - 150, pos.getZ() - 150, pos.getX() + 150, pos.getZ() + 150));
+                return true;
         }
-        spacing++;
         return false;
+    }
+
+    protected boolean canSpawnStructureAtPos(World world, int chunkX, int chunkZ) {
+        int i = chunkX;
+        int j = chunkZ;
+
+        if (chunkX < 0)
+        {
+            chunkX -= this.spacing - 1;
+        }
+
+        if (chunkZ < 0)
+        {
+            chunkZ -= this.spacing - 1;
+        }
+
+        int k = chunkX / this.spacing;
+        int l = chunkZ / this.spacing;
+        Random random =  world.setRandomSeed(k, l, 19930381);
+        k = k * this.spacing;
+        l = l * this.spacing;
+        k = k + (random.nextInt(this.spacing - this.separation) + random.nextInt(this.spacing - this.separation)) / 2;
+        l = l + (random.nextInt(this.spacing - this.separation) + random.nextInt(this.spacing - this.separation)) / 2;
+
+        if (i == k && j == l)
+        {
+            BlockPos pos = new BlockPos(i << 4, 0, j << 4);
+            return isAbleToSpawnHere(pos, world);
+        } else {
+
+            return false;
+        }
+
+    }
+
+    public static boolean isAbleToSpawnHere(BlockPos pos, World world) {
+            Biome biomeCurrently = world.provider.getBiomeForCoords(pos);
+            if(BiomeDictionary.hasType(biomeCurrently, BiomeDictionary.Type.OCEAN)) {
+                return false;
+            }
+        return true;
     }
 
 
     protected StructureStart getStructureStart(World world, int chunkX, int chunkZ, Random rand) {
-        spacing = 1;
         return new WorldGenTrialChambers.Start(world, rand , chunkX, chunkZ);
     }
 

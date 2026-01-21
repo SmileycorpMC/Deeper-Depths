@@ -1,0 +1,25 @@
+{
+  "group": "minecraft:glass",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    " A ",
+    "AGA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "gemAmethyst"
+    },
+    "G": {
+      "type": "forge:ore_dict",
+      "ore": "blockGlassColorless"
+    }
+  },
+  "result": {
+    "item": "deeperdepths:tinted_glass",
+    "data": 0,
+    "count": 2
+  }
+}

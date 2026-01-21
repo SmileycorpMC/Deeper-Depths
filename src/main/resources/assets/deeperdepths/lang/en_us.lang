@@ -8,6 +8,7 @@ description.deeperdepths.trial_chambers_painting.artist=Foreck
 description.deeperdepths.trial_chambers_painting.dimensions=3x2
 
 item.deeperdepths.copper_ingot.name=Copper Ingot
+item.deeperdepths.copper_nugget.name=Copper Nugget
 item.deeperdepths.amethyst_shard.name=Amethyst Shard
 item.deeperdepths.echo_shard.name=Echo Shard
 item.deeperdepths.breeze_rod.name=Breeze Rod
@@ -22,6 +23,21 @@ item.deeperdepths.recovery_compass.name=Recovery Compass
 item.deeperdepths.mace.name=Mace
 item.deeperdepths.trial_chambers_painting.name=Trial Chambers Painting
 item.deeperdepths.sculk_vein.name=Sculk Vein
+
+item.deeperdepths.copper_axe.name=Copper Axe
+item.deeperdepths.copper_hoe.name=Copper Hoe
+item.deeperdepths.copper_pickaxe.name=Copper Pickaxe
+item.deeperdepths.copper_shovel.name=Copper Shovel
+item.deeperdepths.copper_sword.name=Copper Sword
+item.deeperdepths.copper_helmet.name=Copper Helmet
+item.deeperdepths.copper_chestplate.name=Copper Chestplate
+item.deeperdepths.copper_leggings.name=Copper Leggings
+item.deeperdepths.copper_boots.name=Copper Boots
+item.deeperdepths.copper_horse_armour.name=Copper Horse Armor
+item.deeperdepths.explorer_map.name=Explorer Map
+item.deeperdepths.trial_explorer_map.name=Trial Explorer Map
+item.deeperdepths.geode_explorer_map.name=Geode Explorer Map
+item.deeperdepths.city_explorer_map.name=City Explorer Map
 
 tile.deeperdepths.tuff.name=Tuff
 tile.deeperdepths.tuff_slab.name=Tuff Slab
@@ -47,6 +63,7 @@ tile.deeperdepths.large_amethyst_bud.name=Large Amethyst Bud
 tile.deeperdepths.amethyst_cluster.name=Amethyst Cluster
 
 tile.deeperdepths.deepslate.name=Deepslate
+tile.deeperdepths.infested_deepslate.name=Infested Deepslate
 tile.deeperdepths.cobbled_deepslate.name=Cobbled Deepslate
 tile.deeperdepths.cobbled_deepslate_slab.name=Cobbled Deepslate Slab
 tile.deeperdepths.cobbled_deepslate_stairs.name=Cobbled Deepslate Stairs
@@ -149,6 +166,15 @@ tile.deeperdepths.waxed_exposed_copper_trapdoor.name=Waxed Exposed Copper Trapdo
 tile.deeperdepths.waxed_weathered_copper_trapdoor.name=Waxed Weathered Copper Trapdoor
 tile.deeperdepths.waxed_oxidized_copper_trapdoor.name=Waxed Oxidized Copper Trapdoor
 
+tile.deeperdepths.copper_bars.name=Copper Bars
+tile.deeperdepths.exposed_copper_bars.name=Exposed Copper Bars
+tile.deeperdepths.weathered_copper_bars.name=Weathered Copper Bars
+tile.deeperdepths.oxidized_copper_bars.name=Oxidized Copper Bars
+tile.deeperdepths.waxed_copper_bars.name=Waxed Copper Bars
+tile.deeperdepths.waxed_exposed_copper_bars.name=Waxed Exposed Copper Bars
+tile.deeperdepths.waxed_weathered_copper_bars.name=Waxed Weathered Copper Bars
+tile.deeperdepths.waxed_oxidized_copper_bars.name=Waxed Oxidized Copper Bars
+
 tile.deeperdepths.copper_bulb.name=Copper Bulb
 tile.deeperdepths.exposed_copper_bulb.name=Exposed Copper Bulb
 tile.deeperdepths.weathered_copper_bulb.name=Weathered Copper Bulb
@@ -158,6 +184,26 @@ tile.deeperdepths.waxed_exposed_copper_bulb.name=Waxed Exposed Copper Bulb
 tile.deeperdepths.waxed_weathered_copper_bulb.name=Waxed Weathered Copper Bulb
 tile.deeperdepths.waxed_oxidized_copper_bulb.name=Waxed Oxidized Copper Bulb
 
+tile.deeperdepths.copper_chain.name=Copper Chain
+tile.deeperdepths.exposed_copper_chain.name=Exposed Copper Chain
+tile.deeperdepths.weathered_copper_chain.name=Weathered Copper Chain
+tile.deeperdepths.oxidized_copper_chain.name=Oxidized Copper Chain
+tile.deeperdepths.waxed_copper_chain.name=Waxed Copper Chain
+tile.deeperdepths.waxed_exposed_copper_chain.name=Waxed Exposed Copper Chain
+tile.deeperdepths.waxed_weathered_copper_chain.name=Waxed Weathered Copper Chain
+tile.deeperdepths.waxed_oxidized_copper_chain.name=Waxed Oxidized Copper Chain
+
+tile.deeperdepths.copper_lantern.name=Copper Lantern
+tile.deeperdepths.exposed_copper_lantern.name=Exposed Copper Lantern
+tile.deeperdepths.weathered_copper_lantern.name=Weathered Copper Lantern
+tile.deeperdepths.oxidized_copper_lantern.name=Oxidized Copper Lantern
+tile.deeperdepths.waxed_copper_lantern.name=Waxed Copper Lantern
+tile.deeperdepths.waxed_exposed_copper_lantern.name=Waxed Exposed Copper Lantern
+tile.deeperdepths.waxed_weathered_copper_lantern.name=Waxed Weathered Copper Lantern
+tile.deeperdepths.waxed_oxidized_copper_lantern.name=Waxed Oxidized Copper Lantern
+
+tile.deeperdepths.copper_torch.name=Copper Torch
+
 tile.deeperdepths.lightning_rod.name=Lightning Rod
 tile.deeperdepths.exposed_lightning_rod.name=Exposed Lightning Rod
 tile.deeperdepths.weathered_lightning_rod.name=Weathered Lightning Rod
@@ -166,6 +212,24 @@ tile.deeperdepths.waxed_lightning_rod.name=Waxed Lightning Rod
 tile.deeperdepths.waxed_exposed_lightning_rod.name=Waxed Exposed Lightning Rod
 tile.deeperdepths.waxed_weathered_lightning_rod.name=Waxed Weathered Lightning Rod
 tile.deeperdepths.waxed_oxidized_lightning_rod.name=Waxed Oxidized Lightning Rod
+
+tile.deeperdepths.copper_chest.name=Copper Chest
+tile.deeperdepths.exposed_copper_chest.name=Exposed Copper Chest
+tile.deeperdepths.weathered_copper_chest.name=Weathered Copper Chest
+tile.deeperdepths.oxidized_copper_chest.name=Oxidized Copper Chest
+tile.deeperdepths.waxed_copper_chest.name=Waxed Copper Chest
+tile.deeperdepths.waxed_exposed_copper_chest.name=Waxed Exposed Copper Chest
+tile.deeperdepths.waxed_weathered_copper_chest.name=Waxed Weathered Copper Chest
+tile.deeperdepths.waxed_oxidized_copper_chest.name=Waxed Oxidized Copper Chest
+
+tile.deeperdepths.copper_golem_statue.name=Copper Golem Statue
+tile.deeperdepths.exposed_copper_golem_statue.name=Exposed Copper Golem Statue
+tile.deeperdepths.weathered_copper_golem_statue.name=Weathered Copper Golem Statue
+tile.deeperdepths.oxidized_copper_golem_statue.name=Oxidized Copper Golem Statue
+tile.deeperdepths.waxed_copper_golem_statue.name=Waxed Copper Golem Statue
+tile.deeperdepths.waxed_exposed_copper_golem_statue.name=Waxed Exposed Copper Golem Statue
+tile.deeperdepths.waxed_weathered_copper_golem_statue.name=Waxed Weathered Copper Golem Statue
+tile.deeperdepths.waxed_oxidized_copper_golem_statue.name=Waxed Oxidized Copper Golem Statue
 
 tile.deeperdepths.candle.name=Candle
 tile.deeperdepths.white_candle.name=White Candle
@@ -199,6 +263,10 @@ tile.deeperdepths.sculk_sensor.name=Sculk Sensor
 tile.deeperdepths.calibrated_sculk_sensor.name=Calibrated Sculk Sensor
 tile.deeperdepths.sculk_shrieker.name=Sculk Shrieker
 
+
+container.deeperdepths.copper_chest=Copper Chest
+container.deeperdepths.copper_double_chest=Copper Double Chest
+
 effect.deeperdepths.bad_omen=Bad Omen
 effect.deeperdepths.trial_omen=Trial Omen
 effect.deeperdepths.oozing=Oozing
@@ -214,6 +282,7 @@ entity.deeperdepths.bogged.name=Bogged
 entity.deeperdepths.breeze.name=Breeze
 entity.deeperdepths.bleeze.name=Bleeze
 entity.deeperdepths.warden.name=Warden
+entity.deeperdepths.copper_golem.name=Copper Golem
 
 potion.potency.3=IV
 potion.potency.4=V
@@ -246,25 +315,32 @@ tipped_arrow.effect.deeperdepths.wind_charged=Arrow of Wind Charged
 
 subtitles.deeperdepths.block.amethyst_block.chime=Amethyst chimes
 subtitles.deeperdepths.block.amethyst_block.resonate=Amethyst resonates
+
 subtitles.deeperdepths.block.candle.crackle=Candle crackles
 subtitles.deeperdepths.block.candle.extinguish=Candle extinguishes
+
 subtitles.deeperdepths.block.copper_bulb.turn_off=Copper Bulb turns off
 subtitles.deeperdepths.block.copper_bulb.turn_on=Copper Bulb turns on
+subtitles.deeperdepths.block.copper_chest.close=Chest closes
+subtitles.deeperdepths.block.copper_chest.open=Chest opens
 subtitles.deeperdepths.block.door.toggle=Door creaks
 subtitles.deeperdepths.block.copper_trapdoor.close=Trapdoor closes
 subtitles.deeperdepths.block.copper_trapdoor.open=Trapdoor opens
 subtitles.deeperdepths.block.copper.scrape=Axe scrapes
 subtitles.deeperdepths.block.copper.wax_off=Wax off
 subtitles.deeperdepths.block.copper.wax_on=Wax on
+
 subtitles.deeperdepths.block.trial_pot.insert=Trial Pot fills
 subtitles.deeperdepths.block.trial_pot.insert_fail=Trial Pot wobbles
 subtitles.deeperdepths.block.trial_pot.shatter=Trial Pot shatters
+
 subtitles.deeperdepths.block.sculk.charge=Sculk bubbles
 subtitles.deeperdepths.block.sculk.spread=Sculk spreads
 subtitles.deeperdepths.block.sculk_catalyst.bloom=Sculk Catalyst blooms
 subtitles.deeperdepths.block.sculk_sensor.clicking=Sculk Sensor clicks
 subtitles.deeperdepths.block.sculk_sensor.clicking_stop=Sculk Sensor stops clicking
 subtitles.deeperdepths.block.sculk_shrieker.shriek=Sculk Shrieker shrieks
+
 subtitles.deeperdepths.block.trial_spawner.about_to_spawn_item=Ominous item prepares
 subtitles.deeperdepths.block.trial_spawner.ambient=Trial Spawner crackles
 subtitles.deeperdepths.block.trial_spawner.ambient_ominous=Ominous crackling
@@ -276,6 +352,7 @@ subtitles.deeperdepths.block.trial_spawner.open_shutter=Trial Spawner opens
 subtitles.deeperdepths.block.trial_spawner.spawn_item=Ominous item drops
 subtitles.deeperdepths.block.trial_spawner.spawn_item_begin=Ominous item appears
 subtitles.deeperdepths.block.trial_spawner.spawn_mob=Trial Spawner spawns a mob
+
 subtitles.deeperdepths.block.vault.activate=Vault ignites
 subtitles.deeperdepths.block.vault.ambient=Vault crackles
 subtitles.deeperdepths.block.vault.close_shutter=Vault closes
@@ -290,6 +367,7 @@ subtitles.deeperdepths.entity.bogged.ambient=Bogged rattles
 subtitles.deeperdepths.entity.bogged.death=Bogged dies
 subtitles.deeperdepths.entity.bogged.hurt=Bogged hurts
 subtitles.deeperdepths.item.shears.shear=Shears click
+
 subtitles.deeperdepths.entity.breeze.charge=Breeze charges
 subtitles.deeperdepths.entity.breeze.death=Breeze dies
 subtitles.deeperdepths.entity.breeze.deflect=Breeze deflects
@@ -303,6 +381,23 @@ subtitles.deeperdepths.entity.breeze.shoot=Breeze shoots
 subtitles.deeperdepths.entity.breeze.slide=Breeze slides
 subtitles.deeperdepths.entity.breeze.whirl=Breeze whirls
 subtitles.deeperdepths.entity.breeze.wind_burst=Wind Charge bursts
+
+subtitles.deeperdepths.entity.copper_golem_become_statue=Copper Golem is petrified
+subtitles.deeperdepths.entity.copper_golem_oxidized.death=Copper Golem dies
+subtitles.deeperdepths.entity.copper_golem_oxidized.hurt=Copper Golem hurts
+subtitles.deeperdepths.entity.copper_golem_oxidized.spin=Copper Golem's head spins
+subtitles.deeperdepths.entity.copper_golem_weathered.death=Copper Golem dies
+subtitles.deeperdepths.entity.copper_golem_weathered.hurt=Copper Golem hurts
+subtitles.deeperdepths.entity.copper_golem_weathered.spin=Copper Golem's head spins
+subtitles.deeperdepths.entity.copper_golem.death=Copper Golem dies
+subtitles.deeperdepths.entity.copper_golem.hurt=Copper Golem hurts
+subtitles.deeperdepths.entity.copper_golem.item_drop=Copper Golem is placing an item
+subtitles.deeperdepths.entity.copper_golem.item_no_drop=Copper Golem can't place item
+subtitles.deeperdepths.entity.copper_golem.no_item_get=Copper Golem is picking up item
+subtitles.deeperdepths.entity.copper_golem.no_item_no_get=Copper Golem can't pick up item
+subtitles.deeperdepths.entity.copper_golem.spawn=Copper Golem appears
+subtitles.deeperdepths.entity.copper_golem.spin=Copper Golem's head spins
+
 subtitles.deeperdepths.entity.warden.agitated=Warden groans angrily
 subtitles.deeperdepths.entity.warden.ambient=Warden whines
 subtitles.deeperdepths.entity.warden.angry=Warden rages
@@ -322,6 +417,7 @@ subtitles.deeperdepths.entity.warden.sniff=Warden sniffs
 subtitles.deeperdepths.entity.warden.sonic_boom=Warden booms
 subtitles.deeperdepths.entity.warden.sonic_charge=Warden charges
 subtitles.deeperdepths.entity.warden.tendril_clicks=Warden tendrils click
+
 subtitles.deeperdepths.entity.wind_charge.throw=Wind Charge flies
 subtitles.deeperdepths.entity.wind_charge.wind_burst=Wind Charge bursts
 
@@ -334,6 +430,7 @@ subtitles.deeperdepths.item.mace.smash_ground_heavy=Mace smashes
 subtitles.deeperdepths.item.spyglass.stop_using=Spyglass retracts
 subtitles.deeperdepths.item.spyglass.use=Spyglass expands
 subtitles.deeperdepths.item.ominous_bottle.dispose=Bottle breaks
+subtitles.deeperdepths.item.armor.equip_copper=Copper armor clonks
 
 advancements.deeperdepths.lets_go_gambling.title=Let's Go Gambling!
 advancements.deeperdepths.lets_go_gambling.description=Use an Ominous Trial Key to open an Ominous Vault
@@ -345,3 +442,26 @@ advancements.deeperdepths.wax_off.title=Wax Off
 advancements.deeperdepths.wax_off.description=Scrape Wax off of a Copper block!
 advancements.deeperdepths.over_overkill.title=Over-Overkill
 advancements.deeperdepths.over_overkill.description=Deal 50 hearts of damage in a single hit using the Mace
+advancements.deeperdepths.is_it_a_bird.title=Is It a Bird?
+advancements.deeperdepths.is_it_a_bird.description=Look at a Parrot through a Spyglass
+advancements.deeperdepths.is_it_a_balloon.title=Is It a Balloon?
+advancements.deeperdepths.is_it_a_balloon.description=Look at a Ghast through a Spyglass
+advancements.deeperdepths.is_it_a_plane.title=Is It a Plane?
+advancements.deeperdepths.is_it_a_plane.description=Look at the Ender Dragon through a Spyglass
+
+stat.deeperdepths.duped_copper=Duped Copper
+
+jei.category.deeperdepths.waxing=Waxing
+jei.category.deeperdepths.scraping=Scraping
+jei.category.deeperdepths.weathering=Weathering
+
+effect.deeperdepths.bad_omen.0.desc=Causes an ominous event near Villages or Trial Spawners.
+effect.deeperdepths.infested.0.desc=10% chance to spawn 1-2 Silverfish when hurt.
+effect.deeperdepths.oozing.0.desc=Spawns 2 Slimes upon death.
+effect.deeperdepths.trial_omen.0.desc=Transforms nearby Trial Spawners into Ominous Spawners.
+effect.deeperdepths.wind_charged.0.desc=Spawns a wind burst upon death.
+effect.deeperdepths.weaving.0.desc=Reduces Cobweb slowing; places 2-3 Cobwebs upon death.
+
+enchantment.deeperdepths.breach.desc=Smash Attacks ignores 15% of armor, pre level.
+enchantment.deeperdepths.density.desc=Increases Smash Attack damage by +0.5 per level.
+enchantment.deeperdepths.wind_burst.desc=Smash Attacks spawn a wind burst, launching the user up.

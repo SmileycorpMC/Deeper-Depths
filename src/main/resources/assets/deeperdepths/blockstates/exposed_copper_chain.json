@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "axis=y":  { "model": "deeperdepths:copper_chain/exposed_copper_chain" },
+    "axis=z":   { "model": "deeperdepths:copper_chain/exposed_copper_chain", "x": 90 },
+    "axis=x":   { "model": "deeperdepths:copper_chain/exposed_copper_chain", "x": 90, "y": 90 },
+    "axis=none": { "model": "deeperdepths:copper_chain/exposed_copper_chain" }
+  }
+}

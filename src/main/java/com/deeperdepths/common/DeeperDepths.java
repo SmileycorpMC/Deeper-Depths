@@ -1,5 +1,6 @@
 package com.deeperdepths.common;
 
+import com.deeperdepths.common.commands.CommandLocateDD;
 import com.deeperdepths.common.world.DDOreGen;
 import com.deeperdepths.common.world.DDRegisterStructures;
 import com.deeperdepths.common.world.DDWorldGen;
@@ -30,6 +31,7 @@ public class DeeperDepths {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
+        DeeperDepthsStats.init();
         proxy.preInit(event);
 
         //registers the World Generator for all structures that we add
@@ -77,5 +79,12 @@ public class DeeperDepths {
         //  sendNonLocal(message, playerMP);
         //  }
         //network.sendToAll(message);
+    }
+
+    @Mod.EventHandler
+    public void serverLoad(FMLServerStartingEvent event)
+    {
+        // register server commands
+        event.registerServerCommand(new CommandLocateDD());
     }
 }

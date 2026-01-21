@@ -1,10 +1,13 @@
 package com.deeperdepths.common.potion;
 
+import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -76,6 +79,8 @@ public class PotionWeaving extends PotionDeeperDepths
             {
                 BlockPos webPos = validPositions.get(i);
                 entity.world.setBlockState(webPos, block.getDefaultState());
+                entity.world.playSound((EntityPlayer)null, webPos, DeeperDepthsSoundEvents.MOB_EFFECT_WEAVING_PLACE, SoundCategory.BLOCKS, 1.0F, 0.8F);
+                ((WorldServer)entity.world).spawnParticle(EnumParticleTypes.CLOUD, webPos.getX() + 0.5F, webPos.getY() + 0.5F, webPos.getZ() + 0.5F, 10, 0.5, 0.5, 0.5, 0.0);
             }
         }
 

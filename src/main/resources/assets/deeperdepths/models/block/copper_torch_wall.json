@@ -1,0 +1,4 @@
+{
+  "parent": "block/torch_wall",
+  "textures": { "torch": "deeperdepths:blocks/copper_torch" }
+}

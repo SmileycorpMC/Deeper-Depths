@@ -1,0 +1,15 @@
+{
+  "group": "deeperdepths:wind_charges",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "rodBreeze"
+    }
+  ],
+  "result": {
+    "item": "deeperdepths:wind_charge",
+    "data": 0,
+    "count": 4
+  }
+}

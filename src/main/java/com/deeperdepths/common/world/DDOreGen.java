@@ -28,6 +28,9 @@ public class DDOreGen implements IWorldGenerator {
         //deepslate
         genOre(DeeperDepthsBlocks.DEEPSLATE.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y),
                 WorldConfig.deepslate, world, random, chunkX, chunkZ);
+        //calcite
+        genOre(DeeperDepthsBlocks.STONE.getDefaultState().withProperty(BlockDDStone.VARIANT, EnumStoneType.CALCITE),
+                WorldConfig.calcite, world, random, chunkX, chunkZ);
     }
     
     private void genOre(IBlockState block, WorldGenEntry entry, World world, Random rand, int chunkX, int chunkZ) {

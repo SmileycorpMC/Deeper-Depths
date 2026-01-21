@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "block",
+    "textures": {
+      "particle": "deeperdepths:blocks/copper_block"
+    }
+  },
+  "variants": {
+		"weather_stage=normal": [{"textures": {"particle": "deeperdepths:blocks/copper_block"}}],
+		"weather_stage=exposed": [{"textures": {"particle": "deeperdepths:blocks/exposed_copper"}}],
+		"weather_stage=weathered": [{"textures": {"particle": "deeperdepths:blocks/weathered_copper"}}],
+		"weather_stage=oxidized": [{"textures": {"particle": "deeperdepths:blocks/oxidized_copper"}}]
+	}
+}

@@ -2,30 +2,31 @@ package com.deeperdepths.common;
 
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
-import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
-import com.deeperdepths.common.integration.ChiselIntegration;
-import com.deeperdepths.common.integration.MekanismIntegration;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
-import com.deeperdepths.config.BlockConfig;
+import com.deeperdepths.integration.*;
+import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.OreIngredient;
-import net.smileycorp.atlas.api.util.TextUtils;
+
+import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class DeeperDepthsRecipes {
@@ -34,25 +35,42 @@ public class DeeperDepthsRecipes {
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         registerOreDictionary();
         registerFurnaceRecipes();
-        registerCraftingRecipes();
         registerBrewingRecipes();
-        if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
+        registerTrades();
         if (Loader.isModLoaded("chisel")) ChiselIntegration.registerRecipes();
+        if (Loader.isModLoaded("futuremc")) FutureMCIntegration.registerRecipes();
+        if (Loader.isModLoaded("mekanism")) MekanismIntegration.registerRecipes();
+        if (Loader.isModLoaded("tconstruct")) TinkersConstructIntegration.registerRecipes();
+        if (Loader.isModLoaded("thermalexpansion")) ThermalExpansionIntegration.registerRecipes();
+    }
+
+    
+    public static void registerLateRecipes() {
+        for (ItemStack stack : OreDictionary.getOres("tallow")) OreDictionary.registerOre("wax", stack);
+        if (OreDictionary.getOres("wax").isEmpty()) OreDictionary.registerOre("wax", Items.SLIME_BALL);
     }
     
     private static void registerOreDictionary() {
+        OreDictionary.registerOre("rodBlaze", Items.BLAZE_ROD);
         OreDictionary.registerOre("ingotCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 0));
         OreDictionary.registerOre("gemAmethyst", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 1));
+        OreDictionary.registerOre("gemEcho", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 2));
+        OreDictionary.registerOre("rodBreeze", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3));
+        OreDictionary.registerOre("nuggetCopper", new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4));
         OreDictionary.registerOre("stone", DeeperDepthsBlocks.DEEPSLATE);
         OreDictionary.registerOre("stoneDeepslate", DeeperDepthsBlocks.DEEPSLATE);
-        OreDictionary.registerOre("stoneTuff", new ItemStack(DeeperDepthsBlocks.STONE, 1, 0));
-        OreDictionary.registerOre("stoneCalcite", new ItemStack(DeeperDepthsBlocks.STONE, 1, 5));
-        OreDictionary.registerOre("cobblestone", new ItemStack(DeeperDepthsBlocks.STONE, 1, 6));
-        OreDictionary.registerOre("cobblestoneDeepslate", new ItemStack(DeeperDepthsBlocks.STONE, 1, 6));
-        OreDictionary.registerOre("oreCopper", new ItemStack(DeeperDepthsBlocks.COPPER_ORE, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("blockCopper", new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("blockCopperCut", new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("blockCopperChiseled", new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("stone", EnumStoneType.TUFF.getStack());
+        OreDictionary.registerOre("stoneTuff", EnumStoneType.TUFF.getStack());
+        OreDictionary.registerOre("stoneCalcite", EnumStoneType.CALCITE.getStack());
+        OreDictionary.registerOre("cobblestone", EnumStoneType.COBBLED_DEEPSLATE.getStack());
+        OreDictionary.registerOre("cobblestoneDeepslate", EnumStoneType.COBBLED_DEEPSLATE.getStack());
+        OreDictionary.registerOre("oreCopper", new ItemStack(DeeperDepthsBlocks.COPPER_ORE));
+        for (int i = 0; i < DeeperDepthsBlocks.COPPER_BLOCK.getMaxMeta(); i++)
+            OreDictionary.registerOre("blockCopper", new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, i));
+        for (int i = 0; i < DeeperDepthsBlocks.CUT_COPPER.getMaxMeta(); i++)
+            OreDictionary.registerOre("blockCopperCut", new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, i));
+        for (int i = 0; i < DeeperDepthsBlocks.CHISELED_COPPER.getMaxMeta(); i++)
+            OreDictionary.registerOre("blockCopperChiseled", new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, i));
         OreDictionary.registerOre("blockGlass", new ItemStack(DeeperDepthsBlocks.TINTED_GLASS));
     }
     
@@ -65,179 +83,51 @@ public class DeeperDepthsRecipes {
                 new ItemStack(DeeperDepthsBlocks.STONE, 1, 10), 0.1f);
         GameRegistry.addSmelting(new ItemStack(DeeperDepthsBlocks.STONE, 1, 11),
                 new ItemStack(DeeperDepthsBlocks.STONE, 1, 12), 0.1f);
-    }
-    
-    //this should be done with jsons probably, but I'm lazy, I may switch them over to be json files eventually
-    private static void registerCraftingRecipes() {
-        //tuff
-        GameRegistry.addShapedRecipe(Constants.loc("polished_tuff"), Constants.loc("tuff"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 4, 1), "MM", "MM", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 0));
-        GameRegistry.addShapedRecipe(Constants.loc("chiseled_tuff"), Constants.loc("tuff"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 2), "M", "M", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 1, 0));
-        GameRegistry.addShapedRecipe(Constants.loc("tuff_bricks"), Constants.loc("tuff"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 4, 3), "MM", "MM", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 1));
-        GameRegistry.addShapedRecipe(Constants.loc("chiseled_tuff_bricks"), Constants.loc("tuff"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 4), "M", "M", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 1, 2));
-        //deepslate
-        GameRegistry.addShapedRecipe(Constants.loc("chiseled_deepslate"), Constants.loc("deepslate"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 7), "M", "M", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 1, 3));
-        GameRegistry.addShapedRecipe(Constants.loc("polished_deepslate"), Constants.loc("deepslate"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 4, 8), "MM", "MM", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 6));
-        GameRegistry.addShapedRecipe(Constants.loc("deepslate_bricks"), Constants.loc("deepslate"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 4, 9), "MM", "MM", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 8));
-        GameRegistry.addShapedRecipe(Constants.loc("deepslate_tiles"), Constants.loc("deepslate"),
-                new ItemStack(DeeperDepthsBlocks.STONE, 4, 11), "MM", "MM", 'M',
-                new ItemStack(DeeperDepthsBlocks.STONE, 1, 9));
-        //shaped stone items
-        for (EnumStoneType variant : EnumStoneType.SHAPED_TYPES) {
-            GameRegistry.addShapedRecipe(Constants.loc(variant.getName() + "_slab"), Constants.loc(variant.getName()),
-                    new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 6, variant.getShapedMeta()), "MMM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.STONE, 1, variant.ordinal()));
-            GameRegistry.addShapedRecipe(Constants.loc(variant.getName() + "_stairs"), Constants.loc(variant.getName()),
-                    new ItemStack(DeeperDepthsBlocks.STONE_STAIRS.get(variant), 4), true, "M  ", "MM ", "MMM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.STONE, 1, variant.ordinal()));
-            GameRegistry.addShapedRecipe(Constants.loc(variant.getName() + "_wall"), Constants.loc(variant.getName()),
-                    new ItemStack(DeeperDepthsBlocks.STONE_WALL, 6, variant.getShapedMeta()), "MMM", "MMM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.STONE, 1, variant.ordinal()));
-        }
-        //copper
-        GameRegistry.addShapedRecipe(Constants.loc("copper_block"), Constants.loc("copper"),
-                new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, 0), "MMM", "MMM", "MMM", 'M',
-                "ingotCopper");
-        GameRegistry.addShapedRecipe(Constants.loc("copper_ingot"), Constants.loc("copper"),
-                new ItemStack(DeeperDepthsItems.MATERIALS, 9, 0), "M", 'M',
-                "blockCopper");
-        for (EnumWeatherStage stage : EnumWeatherStage.values()) {
-            String name = stage == EnumWeatherStage.NORMAL ? "" : stage.getName() + "_";
-            GameRegistry.addShapedRecipe(Constants.loc(name + "cut_copper"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 4, stage.ordinal()), "MM", "MM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal()));
-            GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "cut_copper"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 4, stage.ordinal() + 4), "MM", "MM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4));
-            GameRegistry.addShapedRecipe(Constants.loc(stage.getName() + "cut_copper_slab"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 6, stage.ordinal()),"MMM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal()));
-            GameRegistry.addShapedRecipe(Constants.loc("waxed_" + stage.getName() + "cut_copper_slab"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 6, stage.ordinal() + 4),"MMM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal() + 4));
-            GameRegistry.addShapedRecipe(Constants.loc(stage.getName() + "cut_copper_stairs"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(stage), 4), true,"M  ", "MM ", "MMM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal()));
-            GameRegistry.addShapedRecipe(Constants.loc("waxed_" + stage.getName() + "cut_copper_stairs"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.WAXED_CUT_COPPER_STAIRS.get(stage), 4), true,"M  ", "MM ", "MMM", 'M',
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal() + 4));
-            GameRegistry.addShapedRecipe(Constants.loc(name + "chiseled_copper"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal()), "M", "M", 'M',
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, stage.ordinal()));
-            GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "chiseled_copper"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal() + 4), "M", "M", 'M',
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, stage.ordinal() + 4));
-            GameRegistry.addShapedRecipe(Constants.loc(name + "copper_grate"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 4, stage.ordinal()), " M ", "M M", " M ", 'M',
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal()));
-            GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "copper_grate"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 4, stage.ordinal() + 4), " M ", "M M", " M ", 'M',
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4));
-            GameRegistry.addShapedRecipe(Constants.loc(name + "copper_bulb"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BULB, 4, stage.ordinal()), " M ", "MBM", " R ", 'M',
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal()), 'B', Items.BLAZE_ROD, 'R', "dustRedstone");
-            GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "copper_bulb"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 4, stage.ordinal()), " M ", "MBM", " R ", 'M',
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4), 'B', Items.BLAZE_ROD, 'R', "dustRedstone");
-            //waxing
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "copper"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal())),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "cut_copper"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal() + 4),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal())),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "cut_copper_slab"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, stage.ordinal() + 4),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CUT_COPPER_SLAB, 1, stage.ordinal())),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "chiseled_copper"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal() + 4),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CHISELED_COPPER, 1, stage.ordinal())),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "copper_grate"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 1, stage.ordinal() + 4),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_GRATE, 1, stage.ordinal())),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "copper_bulb"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_BULB, 1, stage.ordinal()),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BULB, 1, stage.ordinal())),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "cut_copper_stairs"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.WAXED_CUT_COPPER_STAIRS.get(stage)),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CUT_COPPER_STAIRS.get(stage))),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "copper_trapdoor"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage)),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(stage))),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            GameRegistry.addShapelessRecipe(Constants.loc("waxed_" + name + "copper_door"), Constants.loc("copper"),
-                    new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stage).getItem()),
-                    Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem())),
-                    Ingredient.fromItem(Items.SLIME_BALL));
-            if (BlockConfig.bulkCopper) {
-                GameRegistry.addShapedRecipe(Constants.loc(name + "_copper_trapdoor_"), Constants.loc("copper"),
-                        new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(stage), 18), "MMM", "MMM", 'M',
-                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal())));
-                GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "_copper_trapdoor"), Constants.loc("copper"),
-                        new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_TRAPDOORS.get(stage), 18), "MMM", "MMM", 'M',
-                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4)));
-                GameRegistry.addShapedRecipe(Constants.loc(name + "_copper_door"), Constants.loc("copper"),
-                        new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(stage).getItem(), 27), "MM", "MM", "MM", 'M',
-                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal())));
-                GameRegistry.addShapedRecipe(Constants.loc("waxed_" + name + "_copper_door"), Constants.loc("copper"),
-                        new ItemStack(DeeperDepthsBlocks.WAXED_COPPER_DOORS.get(stage).getItem(), 27), "MM", "MM", "MM", 'M',
-                        Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.COPPER_BLOCK, 1, stage.ordinal() + 4)));
-            }
-        }
-        GameRegistry.addShapedRecipe(Constants.loc("copper_trapdoor"), Constants.loc("copper"),
-                new ItemStack(DeeperDepthsBlocks.COPPER_TRAPDOORS.get(EnumWeatherStage.NORMAL), 2, 0), "MMM", "MMM", 'M',
-                "ingotCopper");
-        GameRegistry.addShapedRecipe(Constants.loc("copper_door"), Constants.loc("copper"),
-                new ItemStack(DeeperDepthsBlocks.COPPER_DOORS.get(EnumWeatherStage.NORMAL).getItem(), 3, 0), "MM", "MM", "MM", 'M',
-                "ingotCopper");
-        GameRegistry.addShapedRecipe(Constants.loc("lightning_rod"), Constants.loc("copper"),
-                new ItemStack(DeeperDepthsBlocks.LIGHTNING_ROD), "M", "M", "M", 'M', "ingotCopper");
-
-        GameRegistry.addShapelessRecipe(Constants.loc("wind_charges"), null, new ItemStack(DeeperDepthsItems.WIND_CHARGE, 4),
-                Ingredient.fromStacks(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)));
-
-        GameRegistry.addShapedRecipe(Constants.loc("mace"), null, new ItemStack(DeeperDepthsItems.MACE),
-                "H", "B", 'H', Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.HEAVY_CORE)), 'B', Ingredient.fromStacks(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)));
-        
-        //candles
-        for (EnumDyeColor color : EnumDyeColor.values()) GameRegistry.addShapelessRecipe(Constants.loc((
-                color == EnumDyeColor.SILVER ? "light_gray" : color.getName()) + "_candle"), Constants.loc("candles"),
-                new ItemStack(DeeperDepthsBlocks.CANDLES.get(color)), Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.CANDLE)),
-                new OreIngredient("dye" + (color == EnumDyeColor.SILVER ? "LightGray" : TextUtils.toProperCase(color.getUnlocalizedName()))));
-        
-        //tinted glass
-        GameRegistry.addShapedRecipe(Constants.loc("tinted_glass"), new ResourceLocation("glass"), new ItemStack(DeeperDepthsBlocks.TINTED_GLASS, 2),
-                " A ", "AGA", " A ", 'A', "gemAmethyst", 'G', "blockGlassColorless");
-        //amethyst block
-        GameRegistry.addShapedRecipe(Constants.loc("amethyst_block"), new ResourceLocation("amethyst"), new ItemStack(DeeperDepthsBlocks.AMETHYST_BLOCK),
-                "AA", "AA", 'A', "gemAmethyst");
+        DeeperDepthsItems.COPPER_TOOLS.getItems().forEach(item ->
+                GameRegistry.addSmelting(item, new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4), 0.1F));
+        DeeperDepthsItems.COPPER_ARMOR.getItems().forEach(item ->
+                GameRegistry.addSmelting(item, new ItemStack(DeeperDepthsItems.MATERIALS, 1, 4), 0.1F));
     }
 
-    private static void registerBrewingRecipes()
-    {
+    private static void registerBrewingRecipes() {
         PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.STONE), DeeperDepthsPotions.INFESTED_POTION);
         PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.SLIME_BLOCK), DeeperDepthsPotions.OOZING_POTION);
         PotionHelper.addMix(PotionTypes.AWKWARD, Item.getItemFromBlock(Blocks.WEB), DeeperDepthsPotions.WEAVING_POTION);
-        PotionHelper.addMix(PotionTypes.AWKWARD, Ingredient.fromStacks(new ItemStack[]{new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)}), DeeperDepthsPotions.WIND_CHARGED_POTION);
+        PotionHelper.addMix(PotionTypes.AWKWARD, Ingredient.fromStacks(new ItemStack(DeeperDepthsItems.MATERIALS, 1, 3)), DeeperDepthsPotions.WIND_CHARGED_POTION);
     }
+
+    public static void registerTrades() {
+        ForgeRegistries.VILLAGER_PROFESSIONS.getValue(new ResourceLocation("minecraft:librarian")).getCareer(1)
+                .addTrade(2, explorerMap(0, new EntityVillager.PriceInfo(12, 12)));
+    }
+
+    public static ItemForItemAndEmeralds explorerMap(int id, EntityVillager.PriceInfo price) {
+        return new ItemForItemAndEmeralds(price, new ItemStack(Items.COMPASS), new EntityVillager.PriceInfo(1, 1),
+                new ItemStack(DeeperDepthsItems.EXPLORER_MAP, 3, id), new EntityVillager.PriceInfo(1, 1));
+    }
+
+    public static class ItemForItemAndEmeralds implements EntityVillager.ITradeList {
+
+        private final ItemStack buy, sell;
+        private final EntityVillager.PriceInfo emeraldPrice, buyPrice, sellPrice;
+
+        public ItemForItemAndEmeralds( EntityVillager.PriceInfo emeraldPrice, ItemStack buy, EntityVillager.PriceInfo buyPrice, ItemStack sell, EntityVillager.PriceInfo sellPrice) {
+            this.emeraldPrice = emeraldPrice;
+            this.buy = buy;
+            this.buyPrice = buyPrice;
+            this.sell = sell;
+            this.sellPrice = sellPrice;
+        }
+
+        @Override
+        public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random rand) {
+            ItemStack buy = this.buy.copy();
+            buy.setCount(buyPrice.getPrice(rand));
+            ItemStack sell = this.sell.copy();
+            sell.setCount(sellPrice.getPrice(rand));
+            recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, emeraldPrice.getPrice(rand)), buy, sell));
+        }
+
+    }
+    
 }
