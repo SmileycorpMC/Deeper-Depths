@@ -15,6 +15,7 @@ public class NetworkHandler {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
         network.registerMessage(AnimationMessage.Handler.class, AnimationMessage.class, packetId++, Side.SERVER);
         network.registerMessage(ParticleMessage.Handler.class, ParticleMessage.class, packetId++, Side.CLIENT);
+        network.registerMessage(SyncDeathLocationMessage::process, SyncDeathLocationMessage.class, packetId++, Side.CLIENT);
     }
     
 }

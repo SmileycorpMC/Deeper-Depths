@@ -42,8 +42,7 @@ public class DeeperDepthsItems {
     public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
     public static final Item OMINOUS_BOTTLE = new ItemOminousBottle();
     public static final Item MACE = new ItemMace();
-    //public static final Item RECOVERY_COMPASS = null;
-    
+    public static final Item RECOVERY_COMPASS = new ItemRecoveryCompass();
     //skull emoji
     public static final Item SCULK_VEIN = new ItemSculkVein();
     

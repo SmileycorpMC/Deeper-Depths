@@ -7,10 +7,12 @@ import com.deeperdepths.common.blocks.IFluidloggable;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
+import com.deeperdepths.common.capabilities.DeathLocation;
 import com.deeperdepths.common.entities.EntityBreeze;
 import com.deeperdepths.common.entities.EntityWindCharge;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.items.ItemMace;
+import com.deeperdepths.common.network.SyncDeathLocationMessage;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.common.potion.PotionDeeperDepths;
 import com.deeperdepths.config.BlockConfig;
@@ -49,6 +51,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
@@ -241,11 +244,10 @@ public class DeeperDepthsEventHandler {
     }
 
     @SubscribeEvent
-    public void attachCapabilities(AttachCapabilitiesEvent<Entity> event)
-    {
-        if (event.getObject() instanceof EntityPlayer)
-        {
+    public void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(CapabilityWindChargeFall.ID, new CapabilityWindChargeFall.Provider(new CapabilityWindChargeFall.WindChargeHorn(), CapabilityWindChargeFall.WINDBURSTHEIGHT_CAP, null));
+            event.addCapability(Constants.loc("death_location"), new DeathLocation.Provider());
         }
     }
 
@@ -378,5 +380,47 @@ public class DeeperDepthsEventHandler {
         if (!(world instanceof WorldServer)) return;
         world.addEventListener(new DeeperDepthsWorldListener((WorldServer) world));
     }
-    
+
+    @SubscribeEvent
+    public void clone(PlayerEvent.Clone event) {
+        EntityPlayer original = event.getOriginal();
+        EntityPlayer player = event.getEntityPlayer();
+        if (!player.hasCapability(DeathLocation.CAPABILITY, null)) return;
+        if (event.isWasDeath()) {
+            System.out.println(original.getEntityId() + ", " + player.getEntityId());
+            player.getCapability(DeathLocation.CAPABILITY, null)
+                    .setDeathInformation(original.world.provider.getDimension(), original.getPosition());
+            SyncDeathLocationMessage.send(original, original.world.provider.getDimension(), original.getPosition());
+            SyncDeathLocationMessage.sendTracking(original, original.world.provider.getDimension(), original.getPosition());
+            return;
+        }
+        if (!original.hasCapability(DeathLocation.CAPABILITY, null)) return;
+        Tuple<Integer, BlockPos> data = original.getCapability(DeathLocation.CAPABILITY, null).getDeathInformation();
+        if (data == null) return;
+        player.getCapability(DeathLocation.CAPABILITY, null).setDeathInformation(data.getFirst(), data.getSecond());
+        SyncDeathLocationMessage.send(original, data.getFirst(), data.getSecond());
+        SyncDeathLocationMessage.sendTracking(original, data.getFirst(), data.getSecond());
+    }
+
+    @SubscribeEvent
+    public void logIn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+        EntityPlayer player = event.player;
+        if (player == null) return;
+        if (!(player instanceof EntityPlayerMP)) return;
+        if (!player.hasCapability(DeathLocation.CAPABILITY, null)) return;
+        Tuple<Integer, BlockPos> data = player.getCapability(DeathLocation.CAPABILITY, null).getDeathInformation();
+        if (data == null) return;
+        SyncDeathLocationMessage.send(player, data.getFirst(), data.getSecond());
+        SyncDeathLocationMessage.sendTracking(player, data.getFirst(), data.getSecond());
+    }
+
+    @SubscribeEvent
+    public void startTrackingEntity(PlayerEvent.StartTracking event) {
+        Entity entity = event.getTarget();
+        if (!entity.hasCapability(DeathLocation.CAPABILITY, null)) return;
+        Tuple<Integer, BlockPos> data = entity.getCapability(DeathLocation.CAPABILITY, null).getDeathInformation();
+        if (data == null) return;
+        SyncDeathLocationMessage.send(event.getEntityPlayer(), data.getFirst(), data.getSecond());
+    }
+
 }

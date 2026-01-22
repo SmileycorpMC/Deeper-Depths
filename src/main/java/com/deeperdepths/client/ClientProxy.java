@@ -15,6 +15,7 @@ import com.deeperdepths.common.blocks.IBlockProperties;
 import com.deeperdepths.common.blocks.tiles.TileCopperChest;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
+import com.deeperdepths.common.capabilities.DeathLocation;
 import com.deeperdepths.common.entities.*;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import net.minecraft.block.Block;
@@ -29,10 +30,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -57,7 +60,7 @@ public class ClientProxy extends CommonProxy {
     private static float SCOPE_SCALE = 1;
     
     public static ResourceLocation SPYGLASS_TEXTURE = Constants.loc("textures/misc/spyglass_scope.png");
-    
+
     @Override
     public void handleAnimationPacket(int entityId, int index) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
@@ -141,6 +144,15 @@ public class ClientProxy extends CommonProxy {
         Minecraft minecraft = Minecraft.getMinecraft();
         World world = minecraft.world;
         minecraft.effectRenderer.addEffect(Constants.getFactory(particle).createParticle(0, world, posX, posY, posZ, speedX, speedY, speedZ, parameters));
+    }
+
+    public static void syncDeathLocation(int player, int dimension, BlockPos pos) {
+        System.out.println(player + ", " + dimension + ", " + pos);
+        Entity entity = Minecraft.getMinecraft().world.getEntityByID(player);
+        if (entity == null) return;
+        System.out.println(entity);
+        if (!entity.hasCapability(DeathLocation.CAPABILITY, null)) return;
+        entity.getCapability(DeathLocation.CAPABILITY, null).setDeathInformation(dimension, pos);
     }
 
     @SubscribeEvent

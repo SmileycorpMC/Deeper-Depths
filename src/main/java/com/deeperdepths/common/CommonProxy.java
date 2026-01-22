@@ -2,17 +2,14 @@ package com.deeperdepths.common;
 
 import com.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
+import com.deeperdepths.common.capabilities.DeathLocation;
 import com.deeperdepths.common.entities.DeeperDepthsEntities;
 import com.deeperdepths.common.entities.EntityWindCharge;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.network.NetworkHandler;
 import com.deeperdepths.common.network.ParticleMessage;
 import com.deeperdepths.common.world.loot.functions.ApplyEnchantments;
-import com.deeperdepths.config.BlockConfig;
-import com.deeperdepths.config.EntityConfig;
-import com.deeperdepths.config.LootTablesConfig;
-import com.deeperdepths.config.SensorSoundHandler;
-import com.deeperdepths.config.WorldConfig;
+import com.deeperdepths.config.*;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
@@ -53,6 +50,7 @@ public class CommonProxy {
     {
         NetworkHandler.init();
         CapabilityManager.INSTANCE.register(CapabilityWindChargeFall.ICapabilityWindChargeFall.class, new CapabilityWindChargeFall.Storage(), CapabilityWindChargeFall.WindChargeHorn::new);
+        CapabilityManager.INSTANCE.register(DeathLocation.class, new DeathLocation.Storage(), DeathLocation.Impl::new);
     }
     
     public void postInit(FMLPostInitializationEvent event)

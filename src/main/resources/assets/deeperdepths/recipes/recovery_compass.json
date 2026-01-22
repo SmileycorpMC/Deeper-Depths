@@ -1,0 +1,24 @@
+{
+  "group": "deeperdepths:recovery_compass",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "EEE",
+    "ECE",
+	"EEE"
+  ],
+  "key": {
+    "E": {
+      "type": "forge:ore_dict",
+      "ore": "gemEcho"
+    },
+    "C": {
+      "item": "minecraft:compass",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "deeperdepths:recovery_compass",
+    "count": 1
+  }
+}

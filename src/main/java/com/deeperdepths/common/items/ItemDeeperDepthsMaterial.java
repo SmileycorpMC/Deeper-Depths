@@ -33,6 +33,7 @@ public class ItemDeeperDepthsMaterial extends ItemDeeperDepths
         items.add(new ItemStack(this, 1, 4));
         items.add(new ItemStack(this, 1, 1));
         items.add(new ItemStack(this, 1, 3));
+        items.add(new ItemStack(this, 1, 2));
     }
 
     @Override
