@@ -2,6 +2,7 @@ package com.deeperdepths.common.blocks;
 
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,8 +31,11 @@ public class BlockCopperGrate extends BlockCopper implements IFluidloggable {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand)
-                .withProperty(WATERLOGGED, world.getBlockState(pos).getBlock() == Blocks.WATER);
+        IBlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
+        IBlockState replaced = world.getBlockState(pos);
+        if (replaced.getBlock() != Blocks.WATER) return state;
+        if (replaced.getValue(BlockLiquid.LEVEL) != 0) return state;
+        return state.withProperty(WATERLOGGED, world.getBlockState(pos).getBlock() == Blocks.WATER);
     }
 
     @Override

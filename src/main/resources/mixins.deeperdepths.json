@@ -18,6 +18,7 @@
     "MixinWorldServer"
   ],
   "client": [
+    "MixinBlock",
     "MixinBlockFluidRenderer",
     "MixinBlockRenderDispatcher",
     "MixinEntityRenderer",
@@ -25,8 +26,7 @@
     "MixinItemModelMesher",
     "MixinItemRenderer",
     "MixinLayerHeldItem",
-    "MixinModelBiped",
-    "MixinRenderChunk"
+    "MixinModelBiped"
   ],
   "server": []
 }
