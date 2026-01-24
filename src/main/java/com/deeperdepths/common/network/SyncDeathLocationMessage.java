@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
-import net.smileycorp.raids.common.network.PacketHandler;
 
 public class SyncDeathLocationMessage implements IMessage {
 
@@ -40,14 +39,16 @@ public class SyncDeathLocationMessage implements IMessage {
     }
 
     public IMessage process(MessageContext ctx) {
-        System.out.println(ctx);
-        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() ->
-                ClientProxy.syncDeathLocation(player, dimension, pos));
+        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() -> ClientProxy.syncDeathLocation(player, dimension, pos));
         return null;
     }
 
     public static void send(EntityPlayer player, int dimension, BlockPos pos) {
-        NetworkHandler.network.sendTo(new SyncDeathLocationMessage(player.getEntityId(), dimension, pos),
+        send(player, -1, dimension, pos);
+    }
+
+    public static void send(EntityPlayer player, int id, int dimension, BlockPos pos) {
+        NetworkHandler.network.sendTo(new SyncDeathLocationMessage(id, dimension, pos),
                 (EntityPlayerMP) player);
     }
 

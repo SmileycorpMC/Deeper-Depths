@@ -387,19 +387,15 @@ public class DeeperDepthsEventHandler {
         EntityPlayer player = event.getEntityPlayer();
         if (!player.hasCapability(DeathLocation.CAPABILITY, null)) return;
         if (event.isWasDeath()) {
-            System.out.println(original.getEntityId() + ", " + player.getEntityId());
             player.getCapability(DeathLocation.CAPABILITY, null)
                     .setDeathInformation(original.world.provider.getDimension(), original.getPosition());
             SyncDeathLocationMessage.send(original, original.world.provider.getDimension(), original.getPosition());
             SyncDeathLocationMessage.sendTracking(original, original.world.provider.getDimension(), original.getPosition());
             return;
         }
-        if (!original.hasCapability(DeathLocation.CAPABILITY, null)) return;
-        Tuple<Integer, BlockPos> data = original.getCapability(DeathLocation.CAPABILITY, null).getDeathInformation();
+        Tuple<Integer, BlockPos> data = DeathLocation.getDeathInformation(original);
         if (data == null) return;
         player.getCapability(DeathLocation.CAPABILITY, null).setDeathInformation(data.getFirst(), data.getSecond());
-        SyncDeathLocationMessage.send(original, data.getFirst(), data.getSecond());
-        SyncDeathLocationMessage.sendTracking(original, data.getFirst(), data.getSecond());
     }
 
     @SubscribeEvent
@@ -407,20 +403,18 @@ public class DeeperDepthsEventHandler {
         EntityPlayer player = event.player;
         if (player == null) return;
         if (!(player instanceof EntityPlayerMP)) return;
-        if (!player.hasCapability(DeathLocation.CAPABILITY, null)) return;
-        Tuple<Integer, BlockPos> data = player.getCapability(DeathLocation.CAPABILITY, null).getDeathInformation();
+        Tuple<Integer, BlockPos> data = DeathLocation.getDeathInformation(player);
         if (data == null) return;
         SyncDeathLocationMessage.send(player, data.getFirst(), data.getSecond());
-        SyncDeathLocationMessage.sendTracking(player, data.getFirst(), data.getSecond());
     }
 
     @SubscribeEvent
     public void startTrackingEntity(PlayerEvent.StartTracking event) {
         Entity entity = event.getTarget();
-        if (!entity.hasCapability(DeathLocation.CAPABILITY, null)) return;
-        Tuple<Integer, BlockPos> data = entity.getCapability(DeathLocation.CAPABILITY, null).getDeathInformation();
+        if (!(entity instanceof EntityPlayer)) return;
+        Tuple<Integer, BlockPos> data = DeathLocation.getDeathInformation((EntityPlayer) entity);
         if (data == null) return;
-        SyncDeathLocationMessage.send(event.getEntityPlayer(), data.getFirst(), data.getSecond());
+        SyncDeathLocationMessage.send(event.getEntityPlayer(), entity.getEntityId(), data.getFirst(), data.getSecond());
     }
 
 }

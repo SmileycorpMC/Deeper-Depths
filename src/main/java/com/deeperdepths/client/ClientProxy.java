@@ -31,10 +31,12 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -58,8 +60,9 @@ public class ClientProxy extends CommonProxy {
     private static float FOV = 1;
     private static float OLD_FOV = 1;
     private static float SCOPE_SCALE = 1;
-    
     public static ResourceLocation SPYGLASS_TEXTURE = Constants.loc("textures/misc/spyglass_scope.png");
+
+    public static Tuple<Integer, BlockPos> DEATH_DATA = null;
 
     @Override
     public void handleAnimationPacket(int entityId, int index) {
@@ -147,10 +150,9 @@ public class ClientProxy extends CommonProxy {
     }
 
     public static void syncDeathLocation(int player, int dimension, BlockPos pos) {
-        System.out.println(player + ", " + dimension + ", " + pos);
+        if (player < 0) DEATH_DATA = new Tuple<>(dimension, pos);
         Entity entity = Minecraft.getMinecraft().world.getEntityByID(player);
         if (entity == null) return;
-        System.out.println(entity);
         if (!entity.hasCapability(DeathLocation.CAPABILITY, null)) return;
         entity.getCapability(DeathLocation.CAPABILITY, null).setDeathInformation(dimension, pos);
     }
@@ -235,6 +237,10 @@ public class ClientProxy extends CommonProxy {
         bufferbuilder.pos(x1, y0, 0).color(0, 0, 0, 1f).endVertex();
         bufferbuilder.pos(x0, y0, 0).color(0, 0, 0, 1f).endVertex();
         tessellator.draw();
+    }
+
+    public static boolean isLocalPlayer(EntityPlayer player) {
+        return player == Minecraft.getMinecraft().player;
     }
     
 }

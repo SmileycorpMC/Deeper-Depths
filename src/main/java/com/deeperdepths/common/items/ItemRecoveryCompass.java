@@ -40,15 +40,14 @@ public class ItemRecoveryCompass extends ItemDeeperDepths {
         if (world == null) world = entity.world;
         if (world == null || entity == null) return 0;
         BlockPos pos = getPos(world, entity);
-        return MathHelper.positiveModulo((float) wobble(world, pos == null ? MathHelper.positiveModulo((float) Math.random(), 1) :
-            0.5 - (MathHelper.positiveModulo(entity.rotationYaw / 360d, 1) - 0.25
-                    - Math.atan2(pos.getZ() - entity.posZ, pos.getX() - entity.posX) / (Math.PI * 2d))), 1);
+        return (float) wobble(world, pos == null ? Math.random() : MathHelper.wrapDegrees(90 + entity.rotationYaw -
+                Math.toDegrees(Math.atan2(pos.getZ() + 0.5 - entity.posZ, pos.getX() + 0.5 - entity.posX))) / 360d);
     }
 
     @SideOnly(Side.CLIENT)
     private BlockPos getPos(World world, Entity entity) {
-        if (!(entity instanceof EntityPlayer) | !entity.hasCapability(DeathLocation.CAPABILITY, null)) return null;
-        Tuple<Integer, BlockPos> data = entity.getCapability(DeathLocation.CAPABILITY, null).getDeathInformation();
+        if (!(entity instanceof EntityPlayer)) return null;
+        Tuple<Integer, BlockPos> data = DeathLocation.getDeathInformation((EntityPlayer) entity);
         if (data == null) return null;
         return data.getFirst() == world.provider.getDimension() ? data.getSecond() : null;
     }
@@ -57,8 +56,8 @@ public class ItemRecoveryCompass extends ItemDeeperDepths {
     private double wobble(World world, double angle) {
         if (world.getTotalWorldTime() == lastUpdateTick) return prevAngle;
         lastUpdateTick = world.getTotalWorldTime();
-        change = 0.8 * (change + MathHelper.positiveModulo(angle - prevAngle + 0.5, 1.0) - 0.5 * 0.1);
-        prevAngle = MathHelper.positiveModulo(prevAngle + change, 1.0);
+        change = 0.8 * (change + (MathHelper.positiveModulo(angle - prevAngle + 0.5, 1) - 0.5) * 0.1);
+        prevAngle = MathHelper.positiveModulo(prevAngle + change, 1);
         return prevAngle;
     }
 

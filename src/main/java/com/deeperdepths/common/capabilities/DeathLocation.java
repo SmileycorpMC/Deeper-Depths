@@ -1,6 +1,7 @@
 package com.deeperdepths.common.capabilities;
 
-import com.deeperdepths.common.network.SyncDeathLocationMessage;
+import com.deeperdepths.client.ClientProxy;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -9,7 +10,6 @@ import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 import javax.annotation.Nullable;
@@ -38,7 +38,6 @@ public interface DeathLocation {
         public void setDeathInformation(int dimension, BlockPos pos) {
             this.dimension = dimension;
             this.pos = pos;
-            System.out.println(dimension + ", " + pos);
         }
 
     }
@@ -90,6 +89,12 @@ public interface DeathLocation {
             CAPABILITY.getStorage().readNBT(CAPABILITY, instance, null, nbt);
         }
 
+    }
+
+    static Tuple<Integer, BlockPos> getDeathInformation(EntityPlayer player) {
+        if (player == null) return null;
+        if (player.world.isRemote && ClientProxy.isLocalPlayer(player)) return ClientProxy.DEATH_DATA;
+        return player.hasCapability(CAPABILITY, null) ? player.getCapability(CAPABILITY, null).getDeathInformation() : null;
     }
 
 }
