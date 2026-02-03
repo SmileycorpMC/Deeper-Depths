@@ -1,6 +1,8 @@
 package com.deeperdepths.common.blocks;
 
+import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepths;
+import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.capabilities.LightingRods;
 import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.BlockDirectional;
@@ -22,21 +24,34 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.atlas.api.util.TextUtils;
 
 import java.util.Random;
 
-public class BlockLightningRod extends BlockDeeperDepths {
+public class BlockLightningRod extends BlockDeeperDepths implements ICopperBlock {
     
     public static final PropertyBool POWERED = PropertyBool.create("powered");
     
     protected static final AxisAlignedBB[] AABBS = {new AxisAlignedBB(0.0, 0.375, 0.375, 1.0, 0.625, 0.625),
         new AxisAlignedBB(0.375, 0.0, 0.375, 0.625, 1.0, 0.625), new AxisAlignedBB(0.375, 0.375, 0.0, 0.625, 0.625, 1.0)};
-    
-    public BlockLightningRod() {
-        super("lightning_rod", Material.IRON, BlockConfig.copper.getHardness(), BlockConfig.copper.getResistance(), BlockConfig.copper.getHarvestLevel());
+
+    private final EnumWeatherStage stage;
+    private final boolean waxed;
+
+    public BlockLightningRod(EnumWeatherStage stage, boolean waxed) {
+        super(getName(stage, waxed), Material.IRON, BlockConfig.copper.getHardness(), BlockConfig.copper.getResistance(), BlockConfig.copper.getHarvestLevel());
+        this.stage = stage;
+        this.waxed = waxed;
         setDefaultState(getBlockState().getBaseState().withProperty(BlockDirectional.FACING, EnumFacing.UP).withProperty(POWERED, false));
     }
-    
+
+    private static String getName(EnumWeatherStage stage, boolean waxed) {
+        String name = "Lightning_Rod";
+        if (stage != EnumWeatherStage.NORMAL) name = TextUtils.toProperCase(stage.getName()) + "_" + name;
+        if (waxed) name = "Waxed_" + name;
+        return name;
+    }
+
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, BlockDirectional.FACING, POWERED);
@@ -52,6 +67,7 @@ public class BlockLightningRod extends BlockDeeperDepths {
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         world.setBlockState(pos, state.withProperty(POWERED, false), 3);
+        tryWeather(world, pos, state, rand);
     }
     
     @Override
@@ -136,5 +152,95 @@ public class BlockLightningRod extends BlockDeeperDepths {
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float lookX, float lookY, float lookZ, int meta, EntityLivingBase player) {
         return this.getDefaultState().withProperty(BlockDirectional.FACING, facing);
     }
-    
+
+    @Override
+    public boolean isWaxed(IBlockState state) {
+        return waxed;
+    }
+
+    @Override
+    public EnumWeatherStage getStage(IBlockState state) {
+        return stage;
+    }
+
+    @Override
+    public IBlockState getScraped(IBlockState state) {
+        return copyProperties(state, DeeperDepthsBlocks.LIGHTNING_RODS.get(waxed ? stage : stage.previous()).getDefaultState());
+    }
+
+    private IBlockState copyProperties(IBlockState oldState, IBlockState newState) {
+        return newState.withProperty(BlockDirectional.FACING, oldState.getValue(BlockDirectional.FACING))
+                .withProperty(POWERED, oldState.getValue(POWERED));
+    }
+
+    @Override
+    public IBlockState getWaxed(IBlockState state) {
+        return waxed ? state : copyProperties(state, DeeperDepthsBlocks.WAXED_LIGHTNING_RODS.get(stage).getDefaultState());
+    }
+
+    @Override
+    public IBlockState getWeathered(IBlockState state) {
+        return waxed || stage == EnumWeatherStage.OXIDIZED ? state : copyProperties(state, DeeperDepthsBlocks.LIGHTNING_RODS.get(stage.next()).getDefaultState());
+    }
+
+    @Override
+    public boolean isEdible(ItemStack stack) {
+        //💀
+        if (!Constants.FUNNY &! BlockConfig.tastyCopper) return false;
+        return stage != EnumWeatherStage.NORMAL;
+    }
+
+    @Override
+    public ItemStack getPrevious(ItemStack stack) {
+        ItemStack stack1 = new ItemStack((waxed ? DeeperDepthsBlocks.WAXED_LIGHTNING_RODS : DeeperDepthsBlocks.LIGHTNING_RODS)
+                .get(stage.previous()), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+
+    @Override
+    public ItemStack getScraped(ItemStack stack) {
+        if (!canScrape(stack)) return stack;
+        ItemStack stack1 = new ItemStack(waxed ? DeeperDepthsBlocks.LIGHTNING_RODS.get(stage)
+                : DeeperDepthsBlocks.LIGHTNING_RODS.get(stage.previous()), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+
+    @Override
+    public ItemStack getWaxed(ItemStack stack) {
+        if (isWaxed(stack)) return stack;
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.WAXED_LIGHTNING_RODS.get(stage), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+
+    @Override
+    public ItemStack getWeathered(ItemStack stack) {
+        if (!canWeather(stack)) return stack;
+        ItemStack stack1 = new ItemStack(DeeperDepthsBlocks.LIGHTNING_RODS.get(stage.next()), stack.getCount(), stack.getMetadata());
+        if (stack.hasTagCompound()) stack1.setTagCompound(stack.getTagCompound());
+        return stack1;
+    }
+
+    @Override
+    public boolean canWax(ItemStack stack) {
+        return !waxed;
+    }
+
+    @Override
+    public boolean canScrape(ItemStack stack) {
+        return waxed || stage != EnumWeatherStage.NORMAL;
+    }
+
+    @Override
+    public boolean canWeather(ItemStack stack) {
+        return !isWaxed(stack) && stage != EnumWeatherStage.OXIDIZED;
+    }
+
+    @Override
+    public boolean isWaxed(ItemStack stack) {
+        return waxed;
+    }
+
 }

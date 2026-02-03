@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -66,14 +67,14 @@ public class ItemMace extends ItemDeeperDepths
             int density_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.DENSITY, attacker.getHeldItemMainhand());
             int wind_level = EnchantmentHelper.getEnchantmentLevel(DeeperDepthsEnchantments.WIND_BURST, attacker.getHeldItemMainhand());
 
-            float fallDamage = calculateDamage(attacker);
-            float breachArmorIgnorePercent = breach_level * 0.15F;
-            float breachDamage = fallDamage * breachArmorIgnorePercent;
+            float fallDamage = ItemMace.calculateFallDamage(attacker);
             float densityAdditionalDamage = attacker.fallDistance * density_level * 0.5F;
+            float damageResult = calculateDamageAlterations(fallDamage + densityAdditionalDamage, attacker, target);
 
-            target.attackEntityFrom(Constants.causeMaceDamage(attacker), (fallDamage - breachDamage) + densityAdditionalDamage);
-            target.attackEntityFrom(Constants.causeMaceDamage(attacker).setDamageBypassesArmor(), breachDamage + densityAdditionalDamage);
-            if (attacker instanceof EntityPlayerMP) {
+            target.attackEntityFrom(Constants.causeMaceDamage(attacker, breach_level * 0.15F), damageResult);
+
+            if (attacker instanceof EntityPlayerMP)
+            {
                 if (CACHED_HEALTH - target.getHealth() >= 100) DeeperDepthsAdvancements.OVER_OVERKILL.trigger((EntityPlayerMP) attacker);
                 CACHED_HEALTH = 0;
             }
@@ -98,7 +99,7 @@ public class ItemMace extends ItemDeeperDepths
     }
 
     /** Calculates the additional Damage for the Mace attack, before any enchantments. */
-    private static float calculateDamage(EntityLivingBase entity)
+    public static float calculateFallDamage(EntityLivingBase entity)
     {
         float fall = entity.fallDistance;
         float damageResult = 0;
@@ -117,6 +118,20 @@ public class ItemMace extends ItemDeeperDepths
             }
         }
         return damageResult;
+    }
+
+    /** AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */
+    public static float calculateDamageAlterations(float damage, EntityLivingBase attacker, EntityLivingBase target)
+    {
+        float f = (float)attacker.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        float f1;
+
+        if (target instanceof EntityLivingBase)
+        { f1 = EnchantmentHelper.getModifierForCreature(attacker.getHeldItemMainhand(), target.getCreatureAttribute()); }
+        else
+        { f1 = EnchantmentHelper.getModifierForCreature(attacker.getHeldItemMainhand(), EnumCreatureAttribute.UNDEFINED); }
+
+        return damage + f + f1;
     }
 
     /** Spawns a Wind Charge directly inside the Mace Wielder, for the Wind Charged enchantment. */

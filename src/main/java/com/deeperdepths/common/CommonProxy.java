@@ -10,17 +10,20 @@ import com.deeperdepths.common.network.ParticleMessage;
 import com.deeperdepths.common.world.loot.functions.ApplyEnchantments;
 import com.deeperdepths.config.BlockConfig;
 import com.deeperdepths.config.EntityConfig;
+import com.deeperdepths.config.LootTablesConfig;
 import com.deeperdepths.config.WorldConfig;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.fluids.DispenseFluidContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -30,9 +33,10 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class CommonProxy {
     
     public void preInit(FMLPreInitializationEvent event) {
-        EntityConfig.syncConfig(event);
-        WorldConfig.syncConfig(event);
         BlockConfig.syncConfig(event);
+        EntityConfig.syncConfig(event);
+        LootTablesConfig.syncConfig(event);
+        WorldConfig.syncConfig(event);
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
         DeeperDepthsEntities.registerEntities();
         //Registers Entity Spawns even though I think we'll only have one lmao
@@ -69,6 +73,8 @@ public class CommonProxy {
                 return entitywindcharge;
             }
         });
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Items.LAVA_BUCKET, DispenseFluidContainer.getInstance());
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Items.WATER_BUCKET, DispenseFluidContainer.getInstance());
         DeeperDepthsRecipes.registerLateRecipes();
     }
     

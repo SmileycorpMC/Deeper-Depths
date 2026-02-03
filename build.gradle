@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
 		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
     }
 }
 
@@ -27,10 +26,10 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
-version = "1.12.2-1.0.3c"
+version = "1.12.2-1.1.1b" +
+        ""
 group = "com.deeperdepths"
 archivesBaseName = "Deeper-Depths"
 
@@ -87,13 +86,17 @@ configurations {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 	implementation "org.spongepowered:mixin:0.8"
-    implementation "curse.maven:atlas-463826:3816069"
-    implementation "curse.maven:chisel-235279:2535488"
-    implementation "curse.maven:mekanism-268560:2835175"
+    implementation "curse.maven:atlas-463826:6981034"
     implementation "curse.maven:raids-977633:5626565"
+    implementation "curse.maven:chisel-235279:2535488"
     implementation "curse.maven:jei-238222:4393461"
     implementation "curse.maven:futuremc-310059:6162819"
+    implementation "curse.maven:mekanism-268560:2835175"
+    implementation 'curse.maven:cofhcore-69162:2920433'
+    implementation 'curse.maven:thermalexpansion-69163:2926431'
+    implementation "curse.maven:tconstruct-74072:2902483"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    annotationProcessor 'io.github.llamalad7:mixinextras-common:0.5.0'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -120,22 +123,6 @@ jar {
 sourceSets { main { output.resourcesDir = output.getClassesDirs().getAsPath() } }
 // Remove BEFORE A BUILD!!!!
 sourceSets { main { output.resourcesDir = output.classesDir } }
-
-shadowJar {
-	classifier = ''
-	exclude 'LICENSE.txt'
-	dependencies {
-		include(dependency("org.spongepowered:mixin:0.8"))
-	}
-}
-
-build.dependsOn(shadowJar)
-
-reobf {
-    shadowJar {}
-}
-
-build.dependsOn(reobf)
 
 processResources {
     inputs.property "version", project.version

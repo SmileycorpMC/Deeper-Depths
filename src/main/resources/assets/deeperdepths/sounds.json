@@ -688,6 +688,42 @@
         ],
         "subtitle": "subtitles.deeperdepths.block.copper_bulb.turn_on"
     },
+    "block.copper_chest.close": {
+        "sounds": [
+            "deeperdepths:block/copper_chest/copper_chest_close"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_chest.close"
+    },
+    "block.copper_chest.open": {
+        "sounds": [
+            "deeperdepths:block/copper_chest/copper_chest_open"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_chest.open"
+    },
+    "block.copper_chest_oxidized.close": {
+        "sounds": [
+            "deeperdepths:block/copper_chest/copper_chest_oxidized_close"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_chest.close"
+    },
+    "block.copper_chest_oxidized.open": {
+        "sounds": [
+            "deeperdepths:block/copper_chest/copper_chest_oxidized_open"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_chest.open"
+    },
+    "block.copper_chest_weathered.close": {
+        "sounds": [
+            "deeperdepths:block/copper_chest/copper_chest_weathered_close"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_chest.close"
+    },
+    "block.copper_chest_weathered.open": {
+        "sounds": [
+            "deeperdepths:block/copper_chest/copper_chest_weathered_open"
+        ],
+        "subtitle": "subtitles.deeperdepths.block.copper_chest.open"
+    },
     "block.copper_door.close": {
         "sounds": [
             "deeperdepths:block/copper_door/toggle1",
@@ -766,6 +802,50 @@
         ],
         "subtitle": "subtitles.block.generic.footsteps"
     },
+	"block.copper_golem_statue.break": {
+    "sounds": [
+      "deeperdepths:block/copper_statue/break1",
+      "deeperdepths:block/copper_statue/break2",
+      "deeperdepths:block/copper_statue/break3"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.copper_golem_statue.fall": {
+    "sounds": [
+      "deeperdepths:block/copper_statue/hit1",
+      "deeperdepths:block/copper_statue/hit2",
+      "deeperdepths:block/copper_statue/hit3",
+      "deeperdepths:block/copper_statue/hit4"
+    ],
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.copper_golem_statue.hit": {
+    "sounds": [
+      "deeperdepths:block/copper_statue/hit1",
+      "deeperdepths:block/copper_statue/hit2",
+      "deeperdepths:block/copper_statue/hit3",
+      "deeperdepths:block/copper_statue/hit4"
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.copper_golem_statue.place": {
+    "sounds": [
+      "deeperdepths:block/copper_statue/place1",
+      "deeperdepths:block/copper_statue/place2",
+      "deeperdepths:block/copper_statue/place3",
+      "deeperdepths:block/copper_statue/place4"
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.copper_golem_statue.step": {
+    "sounds": [
+      "deeperdepths:block/copper_statue/hit1",
+      "deeperdepths:block/copper_statue/hit2",
+      "deeperdepths:block/copper_statue/hit3",
+      "deeperdepths:block/copper_statue/hit4"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
     "block.copper_trapdoor.close": {
         "sounds": [
             "deeperdepths:block/copper_trapdoor/toggle1",
@@ -879,6 +959,172 @@
             }
         ],
         "subtitle": "subtitles.deeperdepths.block.copper.wax_on"
+    },
+    "block.chain.break": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/chain/break1",
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:block/chain/break2",
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:block/chain/break3",
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:block/chain/break4",
+                "volume": 0.5
+            }
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.chain.fall": {
+        "sounds": [
+            "deeperdepths:block/chain/step1",
+            "deeperdepths:block/chain/step2",
+            "deeperdepths:block/chain/step3",
+            "deeperdepths:block/chain/step4",
+            "deeperdepths:block/chain/step5",
+            "deeperdepths:block/chain/step6"
+        ],
+        "subtitle": "subtitles.block.generic.fall"
+    },
+    "block.chain.hit": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/chain/step1",
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/chain/step2",
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/chain/step3",
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/chain/step4",
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/chain/step5",
+                "volume": 0.8
+            },
+            {
+                "name": "deeperdepths:block/chain/step6",
+                "volume": 0.8
+            }
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.chain.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/chain/break1",
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:block/chain/break2",
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:block/chain/break3",
+                "volume": 0.5
+            },
+            {
+                "name": "deeperdepths:block/chain/break4",
+                "volume": 0.5
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.chain.step": {
+        "sounds": [
+            "deeperdepths:block/chain/step1",
+            "deeperdepths:block/chain/step2",
+            "deeperdepths:block/chain/step3",
+            "deeperdepths:block/chain/step4",
+            "deeperdepths:block/chain/step5",
+            "deeperdepths:block/chain/step6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
+    },
+    "block.lantern.break": {
+        "sounds": [
+            "deeperdepths:block/lantern/break1",
+            "deeperdepths:block/lantern/break2",
+            "deeperdepths:block/lantern/break3",
+            "deeperdepths:block/lantern/break4",
+            "deeperdepths:block/lantern/break5",
+            "deeperdepths:block/lantern/break6"
+        ],
+        "subtitle": "subtitles.block.generic.break"
+    },
+    "block.lantern.fall": {
+        "sounds": [
+            "deeperdepths:block/lantern/break1",
+            "deeperdepths:block/lantern/break2",
+            "deeperdepths:block/lantern/break3",
+            "deeperdepths:block/lantern/break4",
+            "deeperdepths:block/lantern/break5",
+            "deeperdepths:block/lantern/break6"
+        ],
+        "subtitle": "subtitles.block.generic.fall"
+    },
+    "block.lantern.hit": {
+        "sounds": [
+            "deeperdepths:block/lantern/place1",
+            "deeperdepths:block/lantern/place2",
+            "deeperdepths:block/lantern/place3",
+            "deeperdepths:block/lantern/place4",
+            "deeperdepths:block/lantern/place5",
+            "deeperdepths:block/lantern/place6"
+        ],
+        "subtitle": "subtitles.block.generic.hit"
+    },
+    "block.lantern.place": {
+        "sounds": [
+            {
+                "name": "deeperdepths:block/lantern/place1",
+                "pitch": 1.1
+            },
+            {
+                "name": "deeperdepths:block/lantern/place2",
+                "pitch": 1.1
+            },
+            {
+                "name": "deeperdepths:block/lantern/place3",
+                "pitch": 1.1
+            },
+            {
+                "name": "deeperdepths:block/lantern/place4",
+                "pitch": 1.1
+            },
+            {
+                "name": "deeperdepths:block/lantern/place5",
+                "pitch": 1.1
+            },
+            {
+                "name": "deeperdepths:block/lantern/place6",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "subtitles.block.generic.place"
+    },
+    "block.lantern.step": {
+        "sounds": [
+            "deeperdepths:block/lantern/break1",
+            "deeperdepths:block/lantern/break2",
+            "deeperdepths:block/lantern/break3",
+            "deeperdepths:block/lantern/break4",
+            "deeperdepths:block/lantern/break5",
+            "deeperdepths:block/lantern/break6"
+        ],
+        "subtitle": "subtitles.block.generic.footsteps"
     },
     "block.trial_pot.break": {
         "sounds": [
@@ -2660,6 +2906,168 @@
         ],
         "subtitle": "subtitles.deeperdepths.entity.wind_charge.wind_burst"
     },
+	"entity.copper_golem.death": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/regular/death"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.death"
+  },
+  "entity.copper_golem.hurt": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/regular/hurt1",
+      "deeperdepths:mob/coppergolem/regular/hurt2",
+      "deeperdepths:mob/coppergolem/regular/hurt3",
+      "deeperdepths:mob/coppergolem/regular/hurt4"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.hurt"
+  },
+  "entity.copper_golem.item_drop": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/item_drop"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.item_drop"
+  },
+  "entity.copper_golem.item_no_drop": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/item_no_drop"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.item_no_drop"
+  },
+  "entity.copper_golem.no_item_get": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/no_item_get"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.no_item_get"
+  },
+  "entity.copper_golem.no_item_no_get": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/no_item_no_get"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.no_item_no_get"
+  },
+  "entity.copper_golem.spawn": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/spawn"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.spawn"
+  },
+  "entity.copper_golem.spin": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/regular/spin1",
+      "deeperdepths:mob/coppergolem/regular/spin2",
+      "deeperdepths:mob/coppergolem/regular/spin3",
+      "deeperdepths:mob/coppergolem/regular/spin4",
+      "deeperdepths:mob/coppergolem/regular/spin5",
+      "deeperdepths:mob/coppergolem/regular/spin6",
+      "deeperdepths:mob/coppergolem/regular/spin7"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.spin"
+  },
+  "entity.copper_golem.step": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/regular/step1",
+      "deeperdepths:mob/coppergolem/regular/step2",
+      "deeperdepths:mob/coppergolem/regular/step3",
+      "deeperdepths:mob/coppergolem/regular/step4",
+      "deeperdepths:mob/coppergolem/regular/step5",
+      "deeperdepths:mob/coppergolem/regular/step6",
+      "deeperdepths:mob/coppergolem/regular/step7",
+      "deeperdepths:mob/coppergolem/regular/step8",
+      "deeperdepths:mob/coppergolem/regular/step9"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "entity.copper_golem_become_statue": {
+    "sounds": [
+      "deeperdepths:block/copper_statue/become_statue1",
+      "deeperdepths:block/copper_statue/become_statue2",
+      "deeperdepths:block/copper_statue/become_statue3",
+      "deeperdepths:block/copper_statue/become_statue4"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem_become_statue"
+  },
+  "entity.copper_golem_oxidized.death": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/oxidized/death"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.death"
+  },
+  "entity.copper_golem_oxidized.hurt": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/oxidized/hurt1",
+      "deeperdepths:mob/coppergolem/oxidized/hurt2",
+      "deeperdepths:mob/coppergolem/oxidized/hurt3",
+      "deeperdepths:mob/coppergolem/oxidized/hurt4"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.hurt"
+  },
+  "entity.copper_golem_oxidized.spin": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/oxidized/spin1",
+      "deeperdepths:mob/coppergolem/oxidized/spin2",
+      "deeperdepths:mob/coppergolem/oxidized/spin3",
+      "deeperdepths:mob/coppergolem/oxidized/spin4",
+      "deeperdepths:mob/coppergolem/oxidized/spin5",
+      "deeperdepths:mob/coppergolem/oxidized/spin6",
+      "deeperdepths:mob/coppergolem/oxidized/spin7"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.spin"
+  },
+  "entity.copper_golem_oxidized.step": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/oxidized/step1",
+      "deeperdepths:mob/coppergolem/oxidized/step2",
+      "deeperdepths:mob/coppergolem/oxidized/step3",
+      "deeperdepths:mob/coppergolem/oxidized/step4",
+      "deeperdepths:mob/coppergolem/oxidized/step5",
+      "deeperdepths:mob/coppergolem/oxidized/step6",
+      "deeperdepths:mob/coppergolem/oxidized/step7",
+      "deeperdepths:mob/coppergolem/oxidized/step8",
+      "deeperdepths:mob/coppergolem/oxidized/step9"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "entity.copper_golem_weathered.death": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/weathered/death"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.death"
+  },
+  "entity.copper_golem_weathered.hurt": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/weathered/hurt1",
+      "deeperdepths:mob/coppergolem/weathered/hurt2",
+      "deeperdepths:mob/coppergolem/weathered/hurt3",
+      "deeperdepths:mob/coppergolem/weathered/hurt4"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.hurt"
+  },
+  "entity.copper_golem_weathered.spin": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/weathered/spin1",
+      "deeperdepths:mob/coppergolem/weathered/spin2",
+      "deeperdepths:mob/coppergolem/weathered/spin3",
+      "deeperdepths:mob/coppergolem/weathered/spin4",
+      "deeperdepths:mob/coppergolem/weathered/spin5",
+      "deeperdepths:mob/coppergolem/weathered/spin6",
+      "deeperdepths:mob/coppergolem/weathered/spin7"
+    ],
+    "subtitle": "subtitles.deeperdepths.entity.copper_golem.spin"
+  },
+  "entity.copper_golem_weathered.step": {
+    "sounds": [
+      "deeperdepths:mob/coppergolem/weathered/step1",
+      "deeperdepths:mob/coppergolem/weathered/step2",
+      "deeperdepths:mob/coppergolem/weathered/step3",
+      "deeperdepths:mob/coppergolem/weathered/step4",
+      "deeperdepths:mob/coppergolem/weathered/step5",
+      "deeperdepths:mob/coppergolem/weathered/step6",
+      "deeperdepths:mob/coppergolem/weathered/step7",
+      "deeperdepths:mob/coppergolem/weathered/step8",
+      "deeperdepths:mob/coppergolem/weathered/step9"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
     "event.mob_effect.bad_omen": {
         "sounds": [
             "deeperdepths:event/mob_effects/bad_omen"
@@ -2672,9 +3080,15 @@
         ],
         "subtitle": "subtitles.deeperdepths.event.mob_effect.trial_omen"
     },
-    "event.mob_effect.weaving.place":
-    {
-        "sounds": [ "deeperdepths:event/mob_effects/weaving/place1", "deeperdepths:event/mob_effects/weaving/place2", "deeperdepths:event/mob_effects/weaving/place3", "deeperdepths:event/mob_effects/weaving/place4", "deeperdepths:event/mob_effects/weaving/place5", "deeperdepths:event/mob_effects/weaving/place6" ],
+    "event.mob_effect.weaving.place": {
+        "sounds": [
+            "deeperdepths:event/mob_effects/weaving/place1",
+            "deeperdepths:event/mob_effects/weaving/place2",
+            "deeperdepths:event/mob_effects/weaving/place3",
+            "deeperdepths:event/mob_effects/weaving/place4",
+            "deeperdepths:event/mob_effects/weaving/place5",
+            "deeperdepths:event/mob_effects/weaving/place6"
+        ],
         "subtitle": "subtitles.block.generic.place"
     },
     "item.mace.smash_air": {
@@ -2749,5 +3163,16 @@
             "deeperdepths:item/ominous_bottle_dispose"
         ],
         "subtitle": "subtitles.deeperdepths.item.ominous_bottle.dispose"
+    },
+    "item.armor.equip_copper": {
+        "sounds": [
+            "deeperdepths:item/armor/equip_copper1",
+            "deeperdepths:item/armor/equip_copper2",
+            "deeperdepths:item/armor/equip_copper3",
+            "deeperdepths:item/armor/equip_copper4",
+            "deeperdepths:item/armor/equip_copper5",
+            "deeperdepths:item/armor/equip_copper6"
+        ],
+        "subtitle": "subtitles.deeperdepths.item.armor.equip_copper"
     }
 }

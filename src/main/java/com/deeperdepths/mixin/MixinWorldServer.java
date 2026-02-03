@@ -14,7 +14,7 @@ import java.util.Optional;
 public class MixinWorldServer {
     
     @Inject(at = @At("HEAD"), method = "adjustPosToNearbyEntity", cancellable = true)
-    public void adjustPosToNearbyEntity(BlockPos pos, CallbackInfoReturnable<BlockPos> callback) {
+    public void deeperdepths$adjustPosToNearbyEntity(BlockPos pos, CallbackInfoReturnable<BlockPos> callback) {
         Optional<BlockPos> optional = LightingRods.get((WorldServer)(Object)this).getClosest((WorldServer)(Object)this, pos, 128);
         if (optional.isPresent()) callback.setReturnValue(optional.get().up());
     }

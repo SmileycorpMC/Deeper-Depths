@@ -1,0 +1,7 @@
+{
+    "parent": "deeperdepths:block/copper_chain/chain",
+    "textures": {
+        "all": "deeperdepths:blocks/oxidized_copper_chain",
+        "particle": "deeperdepths:blocks/oxidized_copper_chain"
+    }
+}

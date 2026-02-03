@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "hanging=false": {"model": "deeperdepths:copper_lantern/exposed_copper_lantern"},
+    "hanging=true": {"model": "deeperdepths:copper_lantern/exposed_copper_lantern_hanging"}
+  }
+}

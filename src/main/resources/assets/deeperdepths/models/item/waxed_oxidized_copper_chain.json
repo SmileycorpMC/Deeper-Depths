@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": { "layer0": "deeperdepths:items/oxidized_copper_chain" }
+}

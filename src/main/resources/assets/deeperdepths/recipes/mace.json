@@ -12,8 +12,8 @@
       "data": 0
     },
     "B": {
-      "item": "deeperdepths:material",
-      "data": 3
+      "type": "forge:ore_dict",
+      "ore": "rodBreeze"
     }
   },
   "result": {

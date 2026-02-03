@@ -1,0 +1,21 @@
+{
+  "group": "deeperdepths:tuff",
+  "type": "minecraft:crafting_shaped",
+  "mirror": true,
+  "pattern": [
+	"M  ",
+	"MM ",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:stone",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "deeperdepths:tuff_stairs",
+    "data": 0,
+    "count": 4
+  }
+}

@@ -3,7 +3,6 @@ package com.deeperdepths.integration;
 import com.deeperdepths.common.blocks.BlockDDStone;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
-import net.minecraft.item.ItemStack;
 import team.chisel.api.carving.CarvingUtils;
 import team.chisel.api.carving.ICarvingGroup;
 import team.chisel.api.carving.ICarvingRegistry;
@@ -22,7 +21,7 @@ public class ChiselIntegration {
         registry.addGroup(group);
         int i = 0;
         for (EnumStoneType.Material material : materials) for (EnumStoneType type : material.getTypes())
-            registry.addVariation(name, CarvingUtils.variationFor(new ItemStack(DeeperDepthsBlocks.STONE, 1, type.ordinal()),
+            registry.addVariation(name, CarvingUtils.variationFor(type.getStack(),
                     DeeperDepthsBlocks.STONE.getDefaultState().withProperty(BlockDDStone.VARIANT, type), i++));
     }
 

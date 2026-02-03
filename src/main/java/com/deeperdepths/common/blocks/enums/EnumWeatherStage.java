@@ -49,5 +49,8 @@ public enum EnumWeatherStage implements IStringSerializable {
         for (EnumWeatherStage stage : values()) if (stage.name.equals(name)) return stage;
         return null;
     }
-    
+
+    public EnumWeatherStage getLowest(EnumWeatherStage value) {
+        return compareTo(value) < 0 ? this : value;
+    }
 }

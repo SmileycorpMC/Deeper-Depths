@@ -16,7 +16,10 @@ public class DeeperDepthsSoundTypes {
     
     public static final SoundType CANDLE = new SoundType(1, 1, DeeperDepthsSoundEvents.CANDLE_BREAK, DeeperDepthsSoundEvents.CANDLE_STEP,
             DeeperDepthsSoundEvents.CANDLE_PLACE, DeeperDepthsSoundEvents.CANDLE_HIT, DeeperDepthsSoundEvents.CANDLE_FALL);
-    
+
+    public static final SoundType CHAIN = new SoundType(1, 1, DeeperDepthsSoundEvents.CHAIN_BREAK, DeeperDepthsSoundEvents.CHAIN_STEP,
+            DeeperDepthsSoundEvents.CHAIN_PLACE, DeeperDepthsSoundEvents.CHAIN_HIT, DeeperDepthsSoundEvents.CHAIN_FALL);
+
     public static final SoundType COPPER = new SoundType(1, 1, DeeperDepthsSoundEvents.COPPER_BREAK, DeeperDepthsSoundEvents.COPPER_STEP,
             DeeperDepthsSoundEvents.COPPER_PLACE, DeeperDepthsSoundEvents.COPPER_HIT, DeeperDepthsSoundEvents.COPPER_FALL);
     
@@ -42,7 +45,10 @@ public class DeeperDepthsSoundTypes {
     
     public static final SoundType HEAVY_CORE = new SoundType(1, 1, DeeperDepthsSoundEvents.HEAVY_CORE_BREAK, DeeperDepthsSoundEvents.HEAVY_CORE_STEP,
             DeeperDepthsSoundEvents.HEAVY_CORE_PLACE, DeeperDepthsSoundEvents.HEAVY_CORE_HIT, DeeperDepthsSoundEvents.HEAVY_CORE_FALL);
-    
+
+    public static final SoundType LANTERN = new SoundType(1, 1, DeeperDepthsSoundEvents.LANTERN_BREAK, DeeperDepthsSoundEvents.LANTERN_STEP,
+            DeeperDepthsSoundEvents.LANTERN_PLACE, DeeperDepthsSoundEvents.LANTERN_HIT, DeeperDepthsSoundEvents.LANTERN_FALL);
+
     public static final SoundType SCULK = new SoundType(1, 1, DeeperDepthsSoundEvents.SCULK_BREAK, DeeperDepthsSoundEvents.SCULK_STEP,
             DeeperDepthsSoundEvents.SCULK_PLACE, DeeperDepthsSoundEvents.SCULK_HIT, DeeperDepthsSoundEvents.SCULK_STEP);
     

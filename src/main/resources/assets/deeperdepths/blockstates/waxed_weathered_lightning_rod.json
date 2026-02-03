@@ -1,0 +1,101 @@
+{
+    "forge_marker": 1,
+    "variants": {
+		"normal": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/weathered_lightning_rod"
+            }
+        },
+        "facing=up,powered=false": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/weathered_lightning_rod"
+            }
+        },
+        "facing=down,powered=false": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/weathered_lightning_rod"
+            },
+            "x": 180
+        },
+        "facing=east,powered=false": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/weathered_lightning_rod"
+            },
+            "y": 90,
+            "x": 90
+        },
+        "facing=south,powered=false": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/weathered_lightning_rod"
+            },
+            "y": 180,
+            "x": 90
+        },
+        "facing=west,powered=false": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/weathered_lightning_rod"
+            },
+            "y": 270,
+            "x": 90
+        },
+        "facing=north,powered=false": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/weathered_lightning_rod"
+            },
+            "y": 0,
+            "x": 90
+        },
+		"facing=up,powered=true": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/lightning_rod_powered"
+            }
+        },
+        "facing=down,powered=true": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/lightning_rod_powered"
+            },
+            "x": 180
+        },
+        "facing=east,powered=true": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/lightning_rod_powered"
+            },
+            "y": 90,
+            "x": 90
+        },
+        "facing=south,powered=true": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/lightning_rod_powered"
+            },
+            "y": 180,
+            "x": 90
+        },
+        "facing=west,powered=true": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/lightning_rod_powered"
+            },
+            "y": 270,
+            "x": 90
+        },
+        "facing=north,powered=true": {
+            "model": "deeperdepths:lightning_rod",
+            "textures": {
+                "0": "deeperdepths:blocks/lightning_rod_powered"
+            },
+            "y": 0,
+            "x": 90
+        }
+    }
+}

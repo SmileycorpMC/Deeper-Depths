@@ -28,7 +28,7 @@ public class MixinEntity
 
     /** Places this directly before web movement is handles in `Entity.class`, basically hijacking it */
     @Inject(method = "move", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;isInWeb:Z", shift = At.Shift.BEFORE))
-    public void modifyWebMovementSpeed(MoverType type, double x, double y, double z, CallbackInfo ci)
+    public void deeperdepths$modifyWebMovementSpeed(MoverType type, double x, double y, double z, CallbackInfo ci)
     {
         Entity entity = (Entity) (Object) this;
         if (this.isInWeb)

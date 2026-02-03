@@ -1,0 +1,21 @@
+{
+  "group": "deeperdepths:polished_deepslate",
+  "type": "minecraft:crafting_shaped",
+  "mirror": true,
+  "pattern": [
+	"M  ",
+	"MM ",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:stone",
+      "data": 8
+    }
+  },
+  "result": {
+    "item": "deeperdepths:polished_deepslate_stairs",
+    "data": 0,
+    "count": 4
+  }
+}
