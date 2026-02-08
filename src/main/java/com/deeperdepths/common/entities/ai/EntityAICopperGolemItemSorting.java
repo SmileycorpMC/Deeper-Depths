@@ -63,7 +63,7 @@ public class EntityAICopperGolemItemSorting extends EntityAIBase
         /* Every 7 seconds, attempt to search for a target chest. */
         if (stageTicks >= 7 * 20)
         {
-            System.out.print("Looking for a chest!");
+            //System.out.print("Looking for a chest!");
             findNextTaskPositions();
             stageTicks = 0;
         }
@@ -106,7 +106,7 @@ public class EntityAICopperGolemItemSorting extends EntityAIBase
 
                 if (golem.getDistanceSqToCenter(moveTarget) < 1D)
                 {
-                    System.out.print("CLOSE ENOUGJH");
+                    //System.out.print("CLOSE ENOUGJH");
                     golem.getNavigator().clearPath();
 
 
@@ -131,7 +131,7 @@ public class EntityAICopperGolemItemSorting extends EntityAIBase
                     {
                         if (!golem.getNavigator().tryMoveToXYZ(moveTarget.getX() + 0.5, moveTarget.getY(), moveTarget.getZ() + 0.5, 1.0))
                         {
-                            System.out.print(" PATHFINDING FAILED! OH NOOOOOO");
+                            //System.out.print(" PATHFINDING FAILED! OH NOOOOOO");
                         }
                     }
                 }
