@@ -114,6 +114,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityWindCharge.class, RenderWindCharge::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityOminousItemSpawner.class, RenderOminousItemSpawner::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityDDPainting.class, RenderDDPainting::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityCopperGolem.class, RenderCopperGolem::new);
     }
     
     public static void addParticle(EnumParticleTypes type, double x, double y, double z, Color color) {
