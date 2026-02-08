@@ -49,9 +49,11 @@ public class DeeperDepthsTab extends CreativeTabs {
         List<ItemStack> cached = Lists.newArrayList(stacks);
         stacks.clear();
         stacks.add(new ItemStack(DeeperDepthsBlocks.DEEPSLATE));
+        stacks.add(new ItemStack(DeeperDepthsBlocks.DEEPSLATE, 1, 1));
         for (EnumStoneType.Material material : EnumStoneType.Material.values()) {
+            if (material == EnumStoneType.Material.CALCITE) continue;
             for (EnumStoneType type : material.getTypes()) {
-                stacks.add(new ItemStack(DeeperDepthsBlocks.STONE, 1, type.ordinal()));
+                stacks.add(type.getStack());
                 if (type.hasVariants()) {
                     stacks.add(new ItemStack(DeeperDepthsBlocks.STONE_STAIRS.get(type)));
                     stacks.add(new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 1, type.getShapedMeta()));
@@ -94,7 +96,8 @@ public class DeeperDepthsTab extends CreativeTabs {
             stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_LANTERN, 1, stage.ordinal() + 4));
             //stacks.add(new ItemStack(DeeperDepthsBlocks.WAXED_GOLEM_STATUE, 1, stage.ordinal()));
         }
-
+        stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_TORCH));
+        stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_ORE));
         for (ItemStack stack : cached) if (!contains(stack, stacks)) stacks.add(stack);
     }
 

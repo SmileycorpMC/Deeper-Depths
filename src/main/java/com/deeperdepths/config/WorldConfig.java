@@ -9,6 +9,7 @@ public class WorldConfig {
     
     public static WorldGenEntry copperOre;
     public static WorldGenEntry tuff;
+    public static WorldGenEntry calcite;
     public static WorldGenEntry deepslate;
     public static WorldGenEntry trial_chambers;
     
@@ -18,6 +19,7 @@ public class WorldConfig {
             config.load();
             copperOre = new WorldGenEntry(config, "copper ore", 10, 16, 0, 112, 0);
             tuff = new WorldGenEntry(config, "tuff", 33, 2, 0, 16, 0);
+            calcite = new WorldGenEntry(config, "calcite", 33, 0, 80, 90, 0);
             deepslate = new WorldGenEntry(config, "deepslate", 33, 0, 0, 16, 0);
             trial_chambers = new WorldGenEntry(config, "trial_chambers", 150, new int[]{0}, 22);
         } catch(Exception e) {

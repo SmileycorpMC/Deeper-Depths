@@ -1,7 +1,7 @@
 {
     "parent": "block/iron_bars_cap",
      "textures": {
-        "particle": "deeperdepths:blocks/exposed_exposed_copper_bars",
+        "particle": "deeperdepths:blocks/exposed_copper_bars",
         "bars": "deeperdepths:blocks/exposed_copper_bars",
         "edge": "deeperdepths:blocks/exposed_copper_bars"
     }

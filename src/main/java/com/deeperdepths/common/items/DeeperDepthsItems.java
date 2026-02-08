@@ -29,19 +29,20 @@ public class DeeperDepthsItems {
     
     //useable items
     public static final Item WIND_CHARGE = new ItemWindCharge();
-    public static final Item OMINOUS_BOTTLE = new ItemOminousBottle();
-    public static final Item TRIAL_KEY = new ItemTrialKey();
+    public static final Item EXPLORER_MAP = new ItemExplorerMap();
 
-    //tools
     public static final ToolSet COPPER_TOOLS = new ToolSet(Constants.MODID, "copper",
             EnumHelper.addToolMaterial("COPPER", 1, 190, 5, 1, 13), DeeperDepths.CREATIVE_TAB);
     public static final ArmourSet COPPER_ARMOR = new ArmourSet(Constants.MODID, "copper",
             EnumHelper.addArmorMaterial("COPPER", "deeperdepths:copper", 190, new int[] {1, 3, 4, 2}, 8,
                     DeeperDepthsSoundEvents.ITEM_ARMOR_EQUIP_COPPER, 0), DeeperDepths.CREATIVE_TAB, 4);
+
     public static final Item SPYGLASS = new ItemSpyglass();
+    public static final Item TRIAL_KEY = new ItemTrialKey();
+    public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
+    public static final Item OMINOUS_BOTTLE = new ItemOminousBottle();
     public static final Item MACE = new ItemMace();
     //public static final Item RECOVERY_COMPASS = null;
-    public static final Item TRIAL_CHAMBERS_PAINTING = new ItemCustomPainting();
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent

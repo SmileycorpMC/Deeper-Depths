@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.smileycorp.atlas.api.item.ArmourSet;
+import net.smileycorp.atlas.api.config.LootTableEntry;
 
 import java.io.File;
 import java.util.List;
@@ -26,20 +26,20 @@ public class LootTablesConfig {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/deeperdepths/loot_tables.cfg"));
         try{
             config.load();
-            dungeonHorseArmor = new LootTableEntry(config, "dungeonHorseArmor", LootTableList.CHESTS_SIMPLE_DUNGEON, "main", 15,
-                    DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE));
-            desertTempleHorseArmor = new LootTableEntry(config, "desertTempleHorseArmor", LootTableList.CHESTS_DESERT_PYRAMID, "main", 15,
-                    DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE));
-            endCityHorseArmor = new LootTableEntry(config, "endCityHorseArmor", LootTableList.CHESTS_END_CITY_TREASURE, "main", 1,
-                    DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE));
-            jungleTempleHorseArmor = new LootTableEntry(config, "jungleTempleHorseArmor", LootTableList.CHESTS_JUNGLE_TEMPLE, "main", 1,
-                    DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE));
-            netherFortressHorseArmor = new LootTableEntry(config, "netherFortressHorseArmor", LootTableList.CHESTS_NETHER_BRIDGE, "main", 5,
-                    DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE));
-            strongholdHorseArmor = new LootTableEntry(config, "strongholdHorseArmor", LootTableList.CHESTS_STRONGHOLD_CORRIDOR, "main", 1,
-                    DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE));
-            villageBlacksmithHorseArmor = new LootTableEntry(config, "villageBlacksmithHorseArmor", LootTableList.CHESTS_VILLAGE_BLACKSMITH, "main", 1,
-                    DeeperDepthsItems.COPPER_ARMOR.getItem(ArmourSet.ArmorType.HORSE));
+            dungeonHorseArmor = new LootTableEntry(config, ENTRIES, "dungeonHorseArmor", LootTableList.CHESTS_SIMPLE_DUNGEON, "main", 15,
+                    DeeperDepthsItems.COPPER_ARMOR.getHorseArmour());
+            desertTempleHorseArmor = new LootTableEntry(config, ENTRIES, "desertTempleHorseArmor", LootTableList.CHESTS_DESERT_PYRAMID, "main", 15,
+                    DeeperDepthsItems.COPPER_ARMOR.getHorseArmour());
+            endCityHorseArmor = new LootTableEntry(config, ENTRIES, "endCityHorseArmor", LootTableList.CHESTS_END_CITY_TREASURE, "main", 1,
+                    DeeperDepthsItems.COPPER_ARMOR.getHorseArmour());
+            jungleTempleHorseArmor = new LootTableEntry(config, ENTRIES, "jungleTempleHorseArmor", LootTableList.CHESTS_JUNGLE_TEMPLE, "main", 1,
+                    DeeperDepthsItems.COPPER_ARMOR.getHorseArmour());
+            netherFortressHorseArmor = new LootTableEntry(config, ENTRIES, "netherFortressHorseArmor", LootTableList.CHESTS_NETHER_BRIDGE, "main", 5,
+                    DeeperDepthsItems.COPPER_ARMOR.getHorseArmour());
+            strongholdHorseArmor = new LootTableEntry(config, ENTRIES, "strongholdHorseArmor", LootTableList.CHESTS_STRONGHOLD_CORRIDOR, "main", 1,
+                    DeeperDepthsItems.COPPER_ARMOR.getHorseArmour());
+            villageBlacksmithHorseArmor = new LootTableEntry(config, ENTRIES, "villageBlacksmithHorseArmor", LootTableList.CHESTS_VILLAGE_BLACKSMITH, "main", 1,
+                    DeeperDepthsItems.COPPER_ARMOR.getHorseArmour());
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();

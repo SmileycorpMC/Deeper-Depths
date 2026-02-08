@@ -1,0 +1,21 @@
+{
+  "group": "deeperdepths:deepslate_tile",
+  "type": "minecraft:crafting_shaped",
+  "mirror": true,
+  "pattern": [
+	"M  ",
+	"MM ",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:stone",
+      "data": 11
+    }
+  },
+  "result": {
+    "item": "deeperdepths:deepslate_tile_stairs",
+    "data": 0,
+    "count": 4
+  }
+}

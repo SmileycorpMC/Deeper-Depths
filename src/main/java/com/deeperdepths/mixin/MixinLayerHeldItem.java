@@ -26,7 +26,7 @@ public class MixinLayerHeldItem {
     @Shadow @Final protected RenderLivingBase<?> livingEntityRenderer;
 
     @Inject(method = "renderHeldItem", at = @At("HEAD"), cancellable = true)
-    public void setRotationAngles$TAIL(EntityLivingBase entity, ItemStack stack, ItemCameraTransforms.TransformType transforms, EnumHandSide hand, CallbackInfo callback) {
+    public void deeperdepths$setRotationAngles$TAIL(EntityLivingBase entity, ItemStack stack, ItemCameraTransforms.TransformType transforms, EnumHandSide hand, CallbackInfo callback) {
         if (!(entity instanceof EntityPlayer)) return;
         if (entity.getActiveItemStack() != stack || !(stack.getItem() instanceof ItemSpyglass)) return;
         if (!(livingEntityRenderer.getMainModel() instanceof ModelBiped)) return;

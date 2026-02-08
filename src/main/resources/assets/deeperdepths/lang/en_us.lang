@@ -32,6 +32,10 @@ item.deeperdepths.copper_chestplate.name=Copper Chestplate
 item.deeperdepths.copper_leggings.name=Copper Leggings
 item.deeperdepths.copper_boots.name=Copper Boots
 item.deeperdepths.copper_horse_armour.name=Copper Horse Armor
+item.deeperdepths.explorer_map.name=Explorer Map
+item.deeperdepths.trial_explorer_map.name=Trial Explorer Map
+item.deeperdepths.geode_explorer_map.name=Geode Explorer Map
+item.deeperdepths.city_explorer_map.name=City Explorer Map
 
 tile.deeperdepths.tuff.name=Tuff
 tile.deeperdepths.tuff_slab.name=Tuff Slab
@@ -57,6 +61,7 @@ tile.deeperdepths.large_amethyst_bud.name=Large Amethyst Bud
 tile.deeperdepths.amethyst_cluster.name=Amethyst Cluster
 
 tile.deeperdepths.deepslate.name=Deepslate
+tile.deeperdepths.infested_deepslate.name=Infested Deepslate
 tile.deeperdepths.cobbled_deepslate.name=Cobbled Deepslate
 tile.deeperdepths.cobbled_deepslate_slab.name=Cobbled Deepslate Slab
 tile.deeperdepths.cobbled_deepslate_stairs.name=Cobbled Deepslate Stairs
@@ -249,7 +254,8 @@ tile.deeperdepths.trial_spawner.name=Trial Spawner
 tile.deeperdepths.vault.name=Vault
 tile.deeperdepths.ominous_vault.name=Ominous Vault
 
-container.deeperdepths.copper_chest.name=Copper Chest
+container.deeperdepths.copper_chest=Copper Chest
+container.deeperdepths.copper_double_chest=Copper Double Chest
 
 effect.deeperdepths.bad_omen=Bad Omen
 effect.deeperdepths.trial_omen=Trial Omen

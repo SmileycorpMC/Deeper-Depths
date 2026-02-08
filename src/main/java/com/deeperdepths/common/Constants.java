@@ -5,7 +5,6 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -18,16 +17,16 @@ public class Constants {
 	
 	public static final String NAME = "Deeper Depths";
 	public static final String MODID = "deeperdepths";
-	public static final String VERSION = "1.1.0";
-	public static final String DEPENDENCIES = "required-after:atlaslib@1.1.8";
+	public static final String VERSION = "1.1.1b";
+	public static final String DEPENDENCIES = "required-after:atlaslib@[1.1.9,)";
 	public static final String PATH = "com.deeperdepths.";
 	public static final String CLIENT = PATH + "client.ClientProxy";
 	public static final String SERVER = PATH + "common.CommonProxy";
     public static final boolean FUNNY = isFunny();
 
 	/** The damage source used by Maces. */
-	public static DamageSource causeMaceDamage(Entity source)
-	{ return (new EntityDamageSource(MODID + "." + "mace", source)); }
+	public static DamageSource causeMaceDamage(Entity source, float breachPercent)
+	{ return (new EntityMaceDamageSource(MODID + "." + "mace", source, breachPercent)); }
 
 	public static String name(String name) {
 		return MODID + "." + name.toLowerCase(Locale.US);

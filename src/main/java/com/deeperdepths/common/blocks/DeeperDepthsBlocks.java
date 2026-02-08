@@ -64,24 +64,20 @@ public class DeeperDepthsBlocks {
     public static final BlockCopperChain COPPER_CHAINS = new BlockCopperChain(false);
     public static final BlockCopperChain WAXED_COPPER_CHAINS = new BlockCopperChain(true);
     public static final BlockCopperLantern COPPER_LANTERN = new BlockCopperLantern();
-    //public static final Map<EnumWeatherStage, BlockCopperChain> COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
-    //public static final Map<EnumWeatherStage, BlockCopperChain> WAXED_COPPER_CHAINS = Maps.newEnumMap(EnumWeatherStage.class);
-    //public static final Map<EnumWeatherStage, BlockCopperLantern> COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
-    //public static final Map<EnumWeatherStage, BlockCopperLantern> WAXED_COPPER_LANTERNS = Maps.newEnumMap(EnumWeatherStage.class);
     //public static final BlockCopperGolemStatue GOLEM_STATUE = new BlockCopperGolemStatue(false);
     //public static final BlockCopperGolemStatue WAXED_GOLEM_STATUE = new BlockCopperGolemStatue(true);
 
     public static final BlockAmethyst AMETHYST_BLOCK = new BlockAmethyst("amethyst_block");
     public static final BlockBuddingAmethyst BUDDING_AMETHYST = new BlockBuddingAmethyst();
     public static final Map<EnumClusterSize, BlockAmethystBud> AMETHYST_BUDS = Maps.newEnumMap(EnumClusterSize.class);
-    
+
+    public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
     public static final BlockCandle CANDLE = new BlockCandle(null);
     public static final Map<EnumDyeColor, BlockCandle> CANDLES = Maps.newEnumMap(EnumDyeColor.class);
     public static final BlockTrialSpawner TRIAL_SPAWNER = new BlockTrialSpawner();
     public static final BlockVault VAULT = new BlockVault();
     public static final BlockTrialPot TRIAL_POT = new BlockTrialPot();
     public static final BlockHeavyCore HEAVY_CORE = new BlockHeavyCore();
-    public static final BlockTintedGlass TINTED_GLASS = new BlockTintedGlass();
     public static final BlockCopperTorch COPPER_TORCH = new BlockCopperTorch();
     
     //sculk

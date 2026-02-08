@@ -2,18 +2,20 @@ package com.deeperdepths.config;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.smileycorp.atlas.api.config.EntityAttributesEntry;
 
 import java.io.File;
 
 public class EntityConfig {
-    
+
+    public static int copperArmourChance;
     public static EntityAttributesEntry bogged;
     public static int poisonArrowDuration;
     public static double boggedAttackCooldownEasy = 3.5;
     public static double boggedAttackCooldownNormal = 3.5;
     public static double boggedAttackCooldownHard = 2.5;
     public static EntityAttributesEntry breeze;
-    public static EntityAttributesEntry warden;
+    //public static EntityAttributesEntry warden;
     //public static EntityAttributesEntry glare;
     //public static EntityAttributesEntry copper_golem;
     
@@ -21,6 +23,8 @@ public class EntityConfig {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/deeperdepths/entities.cfg"));
         try{
             config.load();
+            //general
+            copperArmourChance = config.get("copperArmourChance", "General", 3, "Chance for copper armour to replace gold or leather armour on spawned mobs. (Set to 0 to disable, default is 3, meaning 1/3 are replaced)").getInt();
             //bogged
             bogged = new EntityAttributesEntry(config, "bogged", 0.25, 32, 2, 16, 0, 0, 0);
             poisonArrowDuration = config.get("bogged", "poisonArrowDuration", 4, "How long the poison from arrows last, in seconds").getInt();

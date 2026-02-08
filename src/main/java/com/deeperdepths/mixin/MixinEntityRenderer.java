@@ -17,7 +17,7 @@ public class MixinEntityRenderer {
     @Shadow @Final private Minecraft mc;
 
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;turn(FF)V", ordinal = 1), method = "updateCameraAndRender")
-    public void turn(EntityPlayerSP instance, float yaw, float pitch, Operation<Void> original) {
+    public void deeperdepths$turn(EntityPlayerSP instance, float yaw, float pitch, Operation<Void> original) {
         if (mc.gameSettings.thirdPersonView > 0 | !(instance.getActiveItemStack().getItem() instanceof ItemSpyglass)) original.call(instance, yaw, pitch);
         original.call(instance, yaw * 0.46875f, pitch * 0.46875f);
     }

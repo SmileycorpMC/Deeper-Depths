@@ -1,10 +1,12 @@
 package com.deeperdepths.client.tesr;
 
 import com.deeperdepths.common.Constants;
+import com.deeperdepths.common.blocks.BlockCopperChest;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.blocks.tiles.TileCopperChest;
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,8 +27,13 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
     @Override
     public void render(TileCopperChest te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         EnumFacing direction = te.getOtherDirection();
-        if (direction == EnumFacing.NORTH || direction == EnumFacing.WEST) return;
+        if ((direction == EnumFacing.NORTH || direction == EnumFacing.WEST) && destroyStage < 0) return;
         World world = getWorld();
+        IBlockState state = null;
+        if (te.hasWorld()) {
+            state = world.getBlockState(te.getPos());
+            if (!(state.getBlock() instanceof BlockCopperChest)) return;
+        }
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
@@ -52,12 +59,12 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
                 GlStateManager.scale(8, 4, 1);
                 GlStateManager.translate(0.0625f, 0.0625f, 0.0625f);
                 GlStateManager.matrixMode(5888);
-            };
+            }
             TileCopperChest other = (TileCopperChest) world.getTileEntity(te.getPos().offset(direction));
             float otherLidAngle = other.prevLidAngle + (other.lidAngle - other.prevLidAngle) * partialTicks;
             if (otherLidAngle > lidAngle) lidAngle = otherLidAngle;
         }
-        bindTexture(getTexture(te));
+        if (destroyStage < 0) bindTexture(getTexture(te));
         GlStateManager.pushMatrix();
         GlStateManager.enableRescaleNormal();
         if (destroyStage < 0) GlStateManager.color(1, 1, 1, alpha);
@@ -65,8 +72,8 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
         GlStateManager.scale(1, -1, -1);
         GlStateManager.translate(0.5f, 0.5f, 0.5f);
         int rotation = 0;
-        if (te.getWorld() != null) {
-            EnumFacing facing = world.getBlockState(te.getPos()).getValue(BlockHorizontal.FACING);
+        if (state != null) {
+            EnumFacing facing = state.getValue(BlockHorizontal.FACING);
             switch (facing) {
                 case NORTH:
                     rotation = 180;
@@ -79,8 +86,10 @@ public class TESRCopperChest extends TileEntitySpecialRenderer<TileCopperChest> 
                     break;
             }
             if (direction != null) {
-                if (facing == EnumFacing.EAST) GlStateManager.translate(0, 0, -1);
-                else if (facing == EnumFacing.NORTH) GlStateManager.translate(1, 0, 0);
+                if (facing == EnumFacing.EAST && direction == EnumFacing.SOUTH) GlStateManager.translate(0, 0, -1);
+                else if (facing == EnumFacing.WEST && direction == EnumFacing.NORTH) GlStateManager.translate(0, 0, 1);
+                else if (facing == EnumFacing.NORTH && direction == EnumFacing.EAST) GlStateManager.translate(1, 0, 0);
+                else if (facing == EnumFacing.SOUTH && direction == EnumFacing.WEST) GlStateManager.translate(-1, 0, 0);
             }
         }
         GlStateManager.rotate(rotation, 0, 1, 0);

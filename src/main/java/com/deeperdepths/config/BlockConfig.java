@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import net.smileycorp.atlas.api.config.BlockStatEntry;
 
 import java.io.File;
 import java.util.List;
@@ -25,9 +26,11 @@ public class BlockConfig {
     public static boolean sameTypeChests;
     public static BlockStatEntry copperOre;
     public static BlockStatEntry deepslate;
+    public static boolean silverfishInfestDeepslate;
     public static BlockStatEntry deepslateBricks;
     public static BlockStatEntry deepslateTiles;
     public static BlockStatEntry heavyCore;
+    public static BlockStatEntry infestedDeepslate;
     public static BlockStatEntry reinforcedDeepslate;
     public static BlockStatEntry tintedGlass;
     public static BlockStatEntry trialPot;
@@ -54,9 +57,11 @@ public class BlockConfig {
             sameTypeChests = config.get("copper chest", "sameTypeChests", true, "Do copper chests only connect to chests of the same oxidisation and wage states? (false behaves like vanilla.)").getBoolean();
             copperOre = new BlockStatEntry(config, "copper ore", 3, 3, 1);
             deepslate = new BlockStatEntry(config, "deepslate", 3, 6, 0);
+            silverfishInfestDeepslate = config.get("deepslate", "silverfishInfestDeepslate", true, "Can silverfish hide in and infest deepslate?").getBoolean();
             deepslateBricks = new BlockStatEntry(config, "deepslate bricks", 3.5, 6, 0);
             deepslateTiles = new BlockStatEntry(config, "deepslate tiles", 3, 6, 0);
             heavyCore = new BlockStatEntry(config, "heavy core", 10, 50, 0);
+            infestedDeepslate = new BlockStatEntry(config, "infestedDeepslate ", 1.5, 0.75, 0);
             reinforcedDeepslate = new BlockStatEntry(config, "reinforced deepslate", 55, 1200, 4);
             tintedGlass = new BlockStatEntry(config, "tinted glass", 0.3, 0.3, 0);
             trialPot = new BlockStatEntry(config, "trial pot", 0, 0, 0);
