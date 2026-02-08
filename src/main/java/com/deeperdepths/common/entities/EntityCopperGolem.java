@@ -1,5 +1,6 @@
 package com.deeperdepths.common.entities;
 
+import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.entities.ai.EntityAICopperGolemItemSorting;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
@@ -7,17 +8,25 @@ import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import scala.util.control.Exception;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class EntityCopperGolem extends EntityGolem
 {
+
+    public static final DataParameter<Byte> WEATHER_STAGE = EntityDataManager.createKey(EntityCopperGolem.class, DataSerializers.BYTE);
+
     /** Chests already checked during this run */
     public Set<BlockPos> memoryDepositContainers = new HashSet<>();
+    private boolean waxed = false;
 
     public EntityCopperGolem(World worldIn)
     {
@@ -29,6 +38,7 @@ public class EntityCopperGolem extends EntityGolem
     {
         super.entityInit();
         this.setSize(0.49F, 0.98F);
+        dataManager.register(WEATHER_STAGE, (byte) 0);
     }
 
     protected void initEntityAI()
@@ -74,13 +84,32 @@ public class EntityCopperGolem extends EntityGolem
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
-
+        compound.setByte("weather_stage", (byte) getWeatherStage().ordinal());
+        compound.setBoolean("waxed", isWaxed());
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
-
+        if (compound.hasKey("weather_stage")) setWeatherStage(EnumWeatherStage.values()[compound.getByte("weather_stage") % 4]);
+        if (compound.hasKey("waxed")) setWaxed(compound.getBoolean("waxed"));
     }
+
+    public void setWeatherStage(EnumWeatherStage stage) {
+        dataManager.set(WEATHER_STAGE, (byte) stage.ordinal());
+    }
+
+    public EnumWeatherStage getWeatherStage() {
+        return EnumWeatherStage.values()[dataManager.get(WEATHER_STAGE) % 4];
+    }
+
+    public boolean isWaxed() {
+        return waxed;
+    }
+
+    public void setWaxed(boolean waxed) {
+        this.waxed = waxed;
+    }
+
 }
