@@ -2,8 +2,10 @@ package com.deeperdepths.integration;
 
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
+import com.deeperdepths.common.entities.EntityCopperGolem;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.shared.TinkerFluids;
@@ -15,6 +17,8 @@ public class TinkersConstructIntegration {
     //plus if futuremc is installed vanilla's jank ass copper to cut copper 4x stonecutting recipe makes that a whole lot worse
     public static void registerRecipes() {
         TinkerRegistry.registerMelting(DeeperDepthsItems.COPPER_ARMOR.getHorseArmour(), TinkerFluids.copper, Material.VALUE_Ingot * 4);
+        TinkerRegistry.registerMelting(DeeperDepthsItems.SPYGLASS, TinkerFluids.copper, Material.VALUE_Ingot * 2);
+        TinkerRegistry.registerEntityMelting(EntityCopperGolem.class, new FluidStack(TinkerFluids.copper, Material.VALUE_Ingot));
         for (EnumWeatherStage stage : EnumWeatherStage.values()) {
             TinkerRegistry.registerMelting(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal()),
                     TinkerFluids.copper, Material.VALUE_Block / 4);
