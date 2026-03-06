@@ -13,7 +13,7 @@ public class ThermalExpansionIntegration {
 
     public static void registerRecipes() {
         int smelterEnergy = SmelterManager.DEFAULT_ENERGY * 3 / 2;
-        ItemStack copperIngot =  ItemHelper.getOre("ingotCopper", 1);
+        ItemStack copperIngot =  ItemHelper.getOre("ingotCopper");
         for (Item item : DeeperDepthsItems.COPPER_TOOLS.getItems()) SmelterManager.addRecycleRecipe(smelterEnergy,
                 new ItemStack(item), copperIngot, 1);
         SmelterManager.addRecycleRecipe(smelterEnergy, new ItemStack(DeeperDepthsItems.COPPER_ARMOR.getHelmet()),
