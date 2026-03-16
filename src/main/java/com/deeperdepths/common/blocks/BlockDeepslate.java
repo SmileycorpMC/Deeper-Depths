@@ -149,7 +149,7 @@ public class BlockDeepslate extends BlockRotatedPillar implements IBlockProperti
 
     @Override
     public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
-        return target.apply(Blocks.STONE.getDefaultState());
+        return !state.getValue(INFESTED) && target.apply(Blocks.STONE.getDefaultState());
     }
 
 }
