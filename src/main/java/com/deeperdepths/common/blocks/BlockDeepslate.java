@@ -5,6 +5,7 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.config.BlockConfig;
+import com.google.common.base.Predicate;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -16,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -24,6 +26,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.smileycorp.atlas.api.config.BlockStatEntry;
 
@@ -143,5 +146,10 @@ public class BlockDeepslate extends BlockRotatedPillar implements IBlockProperti
         ItemStack stack = placer.getHeldItem(hand);
         return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(INFESTED, stack.getMetadata() > 0);
     }
-    
+
+    @Override
+    public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target) {
+        return target.apply(Blocks.STONE.getDefaultState());
+    }
+
 }
