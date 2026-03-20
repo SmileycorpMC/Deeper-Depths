@@ -164,6 +164,7 @@ public class EntityAICopperGolemItemSorting extends EntityAIBase
         fullResetSortingTasks();
     }
 
+    /* TODO: Sort based on nearest position, instead of manually set! */
     /** Checks for a position near the chest that can be reached. */
     private BlockPos findPathablePosNearChest(BlockPos chestPos)
     {
@@ -257,7 +258,7 @@ public class EntityAICopperGolemItemSorting extends EntityAIBase
         for (int i = 0; i < chest.getSizeInventory(); i++)
         {
             ItemStack slotStack = chest.getStackInSlot(i);
-            if (ItemStack.areItemsEqual(slotStack, golem.getHeldItem(EnumHand.MAIN_HAND)) && slotStack.getCount() < slotStack.getMaxStackSize()) return true;
+            if (ItemStack.areItemsEqual(slotStack, golem.getHeldItem(EnumHand.MAIN_HAND))) return true;
         }
         return false;
     }
