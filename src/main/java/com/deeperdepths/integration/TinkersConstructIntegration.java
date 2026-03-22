@@ -18,7 +18,10 @@ public class TinkersConstructIntegration {
     public static void registerRecipes() {
         TinkerRegistry.registerMelting(DeeperDepthsItems.COPPER_ARMOR.getHorseArmour(), TinkerFluids.copper, Material.VALUE_Ingot * 4);
         TinkerRegistry.registerMelting(DeeperDepthsItems.SPYGLASS, TinkerFluids.copper, Material.VALUE_Ingot * 2);
-        TinkerRegistry.registerEntityMelting(EntityCopperGolem.class, new FluidStack(TinkerFluids.copper, Material.VALUE_Ingot));
+        //apparently this recipe is fired whenever a golem takes damage in the smeltery, which does 1 heart of damage
+        //so it should be 144 (amount of fluid per ingot) / 12 (default health) which is 12
+        //TODO: add an accessor for attributes in the entity attributes config next atlas update so we can just calculate this
+        TinkerRegistry.registerEntityMelting(EntityCopperGolem.class, new FluidStack(TinkerFluids.copper, 12));
         for (EnumWeatherStage stage : EnumWeatherStage.values()) {
             TinkerRegistry.registerMelting(new ItemStack(DeeperDepthsBlocks.CUT_COPPER, 1, stage.ordinal()),
                     TinkerFluids.copper, Material.VALUE_Block / 4);
