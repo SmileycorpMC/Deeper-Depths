@@ -2,6 +2,7 @@ package com.deeperdepths.common.entities;
 
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.entities.ai.EntityAICopperGolemItemSorting;
+import com.deeperdepths.config.EntityConfig;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityGolem;
@@ -52,13 +53,9 @@ public class EntityCopperGolem extends EntityGolem
 
 
     @Override
-    protected void applyEntityAttributes()
-    {
+    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(32.0D);
+        EntityConfig.copper_golem.applyAttributes(this);
     }
 
     public boolean processInteract(EntityPlayer player, EnumHand hand)
