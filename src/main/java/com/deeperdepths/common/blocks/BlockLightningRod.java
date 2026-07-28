@@ -2,6 +2,7 @@ package com.deeperdepths.common.blocks;
 
 import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepths;
+import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.capabilities.LightingRods;
 import com.deeperdepths.config.BlockConfig;
@@ -42,6 +43,7 @@ public class BlockLightningRod extends BlockDeeperDepths implements ICopperBlock
         super(getName(stage, waxed), Material.IRON, BlockConfig.copper.getHardness(), BlockConfig.copper.getResistance(), BlockConfig.copper.getHarvestLevel());
         this.stage = stage;
         this.waxed = waxed;
+        setSoundType(DeeperDepthsSoundTypes.COPPER);
         setDefaultState(getBlockState().getBaseState().withProperty(BlockDirectional.FACING, EnumFacing.UP).withProperty(POWERED, false));
     }
 
