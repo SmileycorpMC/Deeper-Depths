@@ -21,7 +21,6 @@
     "MixinBlockFluidRenderer",
     "MixinBlockRenderDispatcher",
     "MixinEntityRenderer",
-    "MixinInventoryEffectRenderer",
     "MixinItemModelMesher",
     "MixinItemRenderer",
     "MixinLayerHeldItem",

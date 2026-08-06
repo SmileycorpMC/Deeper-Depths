@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Loader;
 public class PotionBadOmen extends PotionDeeperDepths {
     
     protected PotionBadOmen() {
-        super("bad_omen", true, 0x0B6138, 0);
+        super("bad_omen", true, 0x0B6138, 0, 4);
     }
     
     @Override
