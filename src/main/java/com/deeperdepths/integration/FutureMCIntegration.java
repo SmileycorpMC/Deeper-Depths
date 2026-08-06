@@ -16,21 +16,37 @@ public class FutureMCIntegration {
 
     public static void registerRecipes() {
         OreDictionary.registerOre("wax", new ItemStack(FItems.INSTANCE.getHONEYCOMB()));
+
+        //all base stone blocks
         for (EnumStoneType type : EnumStoneType.SHAPED_TYPES) addStoneRecipes(type);
+
+        //tuff
         addSubStoneRecipes(EnumStoneType.TUFF, EnumStoneType.POLISHED_TUFF);
         addSubStoneRecipes(EnumStoneType.TUFF, EnumStoneType.TUFF_BRICK);
         addSubStoneRecipes(EnumStoneType.POLISHED_TUFF, EnumStoneType.TUFF_BRICK);
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.TUFF.getStack()), EnumStoneType.CHISELED_TUFF.getStack());
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.TUFF.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.POLISHED_TUFF.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.TUFF_BRICK.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
+
+        //cobbled deepslate to variants
         addSubStoneRecipes(EnumStoneType.COBBLED_DEEPSLATE, EnumStoneType.POLISHED_DEEPSLATE);
         addSubStoneRecipes(EnumStoneType.COBBLED_DEEPSLATE, EnumStoneType.DEEPSLATE_BRICK);
         addSubStoneRecipes(EnumStoneType.COBBLED_DEEPSLATE, EnumStoneType.DEEPSLATE_TILE);
         addSubStoneRecipes(EnumStoneType.POLISHED_DEEPSLATE, EnumStoneType.DEEPSLATE_BRICK);
         addSubStoneRecipes(EnumStoneType.POLISHED_DEEPSLATE, EnumStoneType.DEEPSLATE_TILE);
         addSubStoneRecipes(EnumStoneType.DEEPSLATE_BRICK, EnumStoneType.DEEPSLATE_TILE);
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.TUFF.getStack()), EnumStoneType.CHISELED_TUFF.getStack());
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.TUFF.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.POLISHED_TUFF.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.TUFF_BRICK.getStack()), EnumStoneType.CHISELED_TUFF_BRICK.getStack());
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.COBBLED_DEEPSLATE.getStack()), EnumStoneType.CHISELED_DEEPSLATE.getStack());
+
+        //new in 26.1-snapshot 8
+        //regular deepslate can be chisseled
+        addSubStoneRecipes(new ItemStack(DeeperDepthsBlocks.DEEPSLATE), EnumStoneType.COBBLED_DEEPSLATE);
+        addSubStoneRecipes(new ItemStack(DeeperDepthsBlocks.DEEPSLATE), EnumStoneType.POLISHED_DEEPSLATE);
+        addSubStoneRecipes(new ItemStack(DeeperDepthsBlocks.DEEPSLATE), EnumStoneType.DEEPSLATE_BRICK);
+        addSubStoneRecipes(new ItemStack(DeeperDepthsBlocks.DEEPSLATE), EnumStoneType.DEEPSLATE_TILE);
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.DEEPSLATE)), EnumStoneType.CHISELED_DEEPSLATE.getStack());
+
+        //copper recipes for stages
         for (EnumWeatherStage stage : EnumWeatherStage.values()) addCopperRecipes(stage);
     }
     
@@ -41,12 +57,16 @@ public class FutureMCIntegration {
     }
     
     private static void addSubStoneRecipes(EnumStoneType main, EnumStoneType type) {
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main.getStack()), type.getStack());
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main.getStack()),
+        addSubStoneRecipes(main.getStack(), type);
+    }
+
+    private static void addSubStoneRecipes(ItemStack main, EnumStoneType type) {
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main), type.getStack());
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main),
                 new ItemStack(DeeperDepthsBlocks.STONE_STAIRS.get(type)));
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main.getStack()),
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main),
                 new ItemStack(DeeperDepthsBlocks.STONE_WALL, 1, type.getShapedMeta()));
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main.getStack()),
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main),
                 new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 2, type.getShapedMeta()));
     }
     
