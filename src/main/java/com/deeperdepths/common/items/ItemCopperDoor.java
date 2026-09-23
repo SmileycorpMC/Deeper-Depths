@@ -59,5 +59,10 @@ public class ItemCopperDoor<T extends BlockCopperDoor> extends ItemDoor implemen
     public T getBlock() {
         return (T) block;
     }
+
+    @Override
+    public int getItemBurnTime(ItemStack stack) {
+        return 0;
+    }
     
 }
