@@ -47,6 +47,11 @@ public class DeeperDepthsItems {
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
+        //setup copper armour durability
+        COPPER_ARMOR.getHelmet().setMaxDamage(121);
+        COPPER_ARMOR.getChestplate().setMaxDamage(176);
+        COPPER_ARMOR.getLeggings().setMaxDamage(165);
+        COPPER_ARMOR.getBoots().setMaxDamage(143);
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DeeperDepthsBlocks.BLOCKS) {
             if (block instanceof BlockCandle) register(registry, new ItemBlockCandle((BlockCandle) block));
