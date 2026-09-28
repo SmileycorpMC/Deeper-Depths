@@ -5,6 +5,7 @@ import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.integration.*;
+import com.deeperdepths.integration.chisel.ChiselIntegration;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;

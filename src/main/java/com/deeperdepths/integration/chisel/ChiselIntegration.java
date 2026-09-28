@@ -1,4 +1,4 @@
-package com.deeperdepths.integration;
+package com.deeperdepths.integration.chisel;
 
 import com.deeperdepths.common.blocks.BlockDDStone;
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
@@ -14,6 +14,8 @@ public class ChiselIntegration {
         registerStoneVariants(registry, "stoneTuff", EnumStoneType.Material.TUFF, EnumStoneType.Material.TUFF_BRICKS);
         registerStoneVariants(registry, "stoneDeepslate", EnumStoneType.Material.DEEPSLATE, EnumStoneType.Material.DEEPSLATE_BRICKS,
                 EnumStoneType.Material.DEEPSLATE_TILES);
+        registry.removeGroup("blockCopper");
+        registry.addGroup(new CopperCarvingGroup());
     }
 
     private static void registerStoneVariants(ICarvingRegistry registry, String name, EnumStoneType.Material... materials) {
