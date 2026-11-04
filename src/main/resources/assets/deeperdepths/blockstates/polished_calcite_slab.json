@@ -4,10 +4,10 @@
     "transform": "forge:default-block",
     "uvlock": true,
     "textures": {
-      "all": "deeperdepths:blocks/polished_calcite_slab",
-      "top": "#all",
-      "bottom": "#all",
-      "side": "#all"
+      "end": "deeperdepths:blocks/polished_calcite",
+      "top": "#end",
+      "bottom": "#end",
+      "side": "deeperdepths:blocks/polished_calcite_slab"
     }
   },
   "variants": {
@@ -18,7 +18,7 @@
     ],
     "double": [
       {
-        "model": "cube_all"
+        "model": "cube_column"
       }
     ],
     "half=top": [
