@@ -53,6 +53,19 @@ tile.deeperdepths.tuff_brick_wall.name=Tuff Brick Wall
 tile.deeperdepths.chiseled_tuff_brick.name=Chiseled Tuff Bricks
 
 tile.deeperdepths.calcite.name=Calcite
+tile.deeperdepths.calcite_stairs.name=Calcite Stairs
+tile.deeperdepths.calcite_slab.name=Calcite Slab
+tile.deeperdepths.calcite_wall.name=Calcite Wall
+tile.deeperdepths.calcite_pillar.name=Calcite Pillar
+tile.deeperdepths.polished_calcite.name=Polished Calcite
+tile.deeperdepths.polished_calcite_stairs.name=Polished Calcite Stairs
+tile.deeperdepths.polished_calcite_slab.name=Polished Calcite Slab
+tile.deeperdepths.polished_calcite_wall.name=Polished Calcite Wall
+tile.deeperdepths.polished_calcite_brick.name=Polished Calcite Bricks
+tile.deeperdepths.polished_calcite_brick_stairs.name=Polished Calcite Brick Stairs
+tile.deeperdepths.polished_calcite_brick_slab.name=Polished Calcite Brick Slab
+tile.deeperdepths.polished_calcite_brick_wall.name=Polished Calcite Brick Wall
+
 tile.deeperdepths.amethyst_block.name=Amethyst Block
 tile.deeperdepths.budding_amethyst.name=Budding Amethyst
 tile.deeperdepths.small_amethyst_bud.name=Small Amethyst Bud

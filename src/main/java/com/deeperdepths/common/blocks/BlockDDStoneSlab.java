@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class BlockDDStoneSlab extends BlockDDSlab {
     
-    public static final PropertyEnum<EnumStoneType> VARIANT = PropertyEnum.create("variant", EnumStoneType.class, EnumStoneType.SHAPED_TYPES);
+    public static final PropertyEnum<EnumStoneType> VARIANT = PropertyEnum.create("variant", EnumStoneType.class, EnumStoneType.SHAPED_TYPES.subList(0, 8));
     
     public BlockDDStoneSlab(boolean isDouble) {
         super(Material.ROCK, "Stone_Slab", isDouble);

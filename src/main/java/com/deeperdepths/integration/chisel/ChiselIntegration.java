@@ -14,6 +14,7 @@ public class ChiselIntegration {
         registerStoneVariants(registry, "stoneTuff", EnumStoneType.Material.TUFF, EnumStoneType.Material.TUFF_BRICKS);
         registerStoneVariants(registry, "stoneDeepslate", EnumStoneType.Material.DEEPSLATE, EnumStoneType.Material.DEEPSLATE_BRICKS,
                 EnumStoneType.Material.DEEPSLATE_TILES);
+        registerStoneVariants(registry, "stoneCalcite", EnumStoneType.Material.CALCITE);
         registry.removeGroup("blockCopper");
         registry.addGroup(new CopperCarvingGroup());
     }

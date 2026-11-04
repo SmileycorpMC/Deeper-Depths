@@ -1,0 +1,19 @@
+{
+  "group": "deeperdepths:polished_calcite",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:stone",
+      "data": 13
+    }
+  },
+  "result": {
+    "item": "deeperdepths:stone_slab_2",
+    "data": 0,
+    "count": 6
+  }
+}

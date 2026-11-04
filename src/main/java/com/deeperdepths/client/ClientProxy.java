@@ -78,6 +78,7 @@ public class ClientProxy extends CommonProxy {
     public static void registerModels(ModelRegistryEvent event) {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DEEPSLATE, new DeepslateStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE, new MetaStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.PILLAR, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_WALL, new WallStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_BLOCK, new MetaStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CUT_COPPER, new MetaStateMapper());
@@ -90,6 +91,8 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_LANTERN, new CopperLanternStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_STONE_SLAB, new SlabStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.STONE_SLAB_2, new SlabStateMapper());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_STONE_SLAB_2, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CUT_COPPER_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.DOUBLE_CUT_COPPER_SLAB, new SlabStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.TRIAL_POT, new StateMap.Builder().ignore(BlockTrialPot.CRACKED).build());

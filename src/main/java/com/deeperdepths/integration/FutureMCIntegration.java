@@ -1,6 +1,7 @@
 package com.deeperdepths.integration;
 
 import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
+import com.deeperdepths.common.blocks.enums.EnumPillarType;
 import com.deeperdepths.common.blocks.enums.EnumStoneType;
 import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.items.ICopperItem;
@@ -46,6 +47,12 @@ public class FutureMCIntegration {
         addSubStoneRecipes(new ItemStack(DeeperDepthsBlocks.DEEPSLATE), EnumStoneType.DEEPSLATE_TILE);
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DeeperDepthsBlocks.DEEPSLATE)), EnumStoneType.CHISELED_DEEPSLATE.getStack());
 
+        //26.4-snapshot 7 calcite variants
+        addSubStoneRecipes(EnumStoneType.CALCITE, EnumStoneType.POLISHED_CALCITE);
+        addSubStoneRecipes(EnumStoneType.CALCITE, EnumStoneType.POLISHED_CALCITE_BRICK);
+        addSubStoneRecipes(EnumStoneType.POLISHED_CALCITE, EnumStoneType.POLISHED_CALCITE_BRICK);
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(EnumStoneType.CALCITE.getStack()), EnumPillarType.CALCITE.getStack());
+
         //copper recipes for stages
         for (EnumWeatherStage stage : EnumWeatherStage.values()) addCopperRecipes(stage);
     }
@@ -53,7 +60,9 @@ public class FutureMCIntegration {
     private static void addStoneRecipes(EnumStoneType type) {
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(type.getStack()), new ItemStack(DeeperDepthsBlocks.STONE_STAIRS.get(type)));
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(type.getStack()), new ItemStack(DeeperDepthsBlocks.STONE_WALL, 1, type.getShapedMeta()));
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(type.getStack()), new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 2, type.getShapedMeta()));
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(type.getStack()), type.getShapedMeta() >= 8 ?
+                new ItemStack(DeeperDepthsBlocks.STONE_SLAB_2, 2, type.getShapedMeta() - 8)
+                : new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 2, type.getShapedMeta()));
     }
     
     private static void addSubStoneRecipes(EnumStoneType main, EnumStoneType type) {
@@ -67,7 +76,8 @@ public class FutureMCIntegration {
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main),
                 new ItemStack(DeeperDepthsBlocks.STONE_WALL, 1, type.getShapedMeta()));
         StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(main),
-                new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 2, type.getShapedMeta()));
+                type.getShapedMeta() >= 8 ? new ItemStack(DeeperDepthsBlocks.STONE_SLAB_2, 2, type.getShapedMeta() - 8)
+                        : new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 2, type.getShapedMeta()));
     }
     
     private static void addCopperRecipes(EnumWeatherStage stage) {
