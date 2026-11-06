@@ -1,13 +1,12 @@
 package com.deeperdepths.common;
 
-import com.deeperdepths.common.blocks.BlockCandle;
-import com.deeperdepths.common.blocks.BlockLightningRod;
-import com.deeperdepths.common.blocks.ICopperBlock;
-import com.deeperdepths.common.blocks.IFluidloggable;
+import com.deeperdepths.common.blocks.*;
+import com.deeperdepths.common.blocks.enums.EnumWeatherStage;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import com.deeperdepths.common.entities.EntityBreeze;
+import com.deeperdepths.common.entities.EntityCopperGolem;
 import com.deeperdepths.common.entities.EntityWindCharge;
 import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.items.ItemMace;
@@ -16,6 +15,7 @@ import com.deeperdepths.common.potion.PotionDeeperDepths;
 import com.deeperdepths.config.BlockConfig;
 import com.deeperdepths.config.LootTablesConfig;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -26,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -150,6 +151,33 @@ public class DeeperDepthsEventHandler {
                 BlockCandle.light(event.getWorld(), state, pos);
                 event.setCanceled(true);
             }
+        }
+    }
+
+    //copper golem spawning
+    @SubscribeEvent
+    public void neighborNotify(BlockEvent.NeighborNotifyEvent event) {
+        IBlockState state = event.getState();
+        if (state.getBlock() != Blocks.PUMPKIN) return;
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        for (EnumFacing side : event.getNotifiedSides()) {
+            BlockPos pos1 = pos.offset(side);
+            IBlockState state1 = world.getBlockState(pos1);
+            if (state1.getBlock() != DeeperDepthsBlocks.COPPER_BLOCK) continue;
+            boolean waxed = state1.getValue(BlockCopper.WAXED);
+            EnumWeatherStage stage = state1.getValue(ICopperBlock.WEATHER_STAGE);
+            world.setBlockToAir(pos);
+            world.setBlockState(pos1, (waxed ? DeeperDepthsBlocks.WAXED_COPPER_CHEST : DeeperDepthsBlocks.COPPER_CHEST).getDefaultState()
+                    .withProperty(BlockHorizontal.FACING, state.getValue(BlockHorizontal.FACING)).withProperty(ICopperBlock.WEATHER_STAGE, stage), 3);
+            EntityCopperGolem golem = new EntityCopperGolem(world);
+            golem.setWaxed(waxed);
+            golem.setWeatherStage(stage);
+            //vanilla doesn't do this, but it looks better
+            //translate down to the top of the chest hitbox if it is placed under the golem
+            golem.setPosition(pos.getX() + 0.5f, pos.getY() - (side == EnumFacing.DOWN ? 0.125 : 0), pos.getZ() + 0.5f);
+            world.spawnEntity(golem);
+            return;
         }
     }
 
