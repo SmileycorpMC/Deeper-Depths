@@ -3,6 +3,7 @@ package com.deeperdepths.common.blocks;
 import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepths;
 import net.minecraft.block.BlockTorch;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -21,6 +22,8 @@ public class BlockCopperTorch extends BlockTorch implements IBlockProperties {
         setRegistryName(Constants.loc(name));
         setCreativeTab(DeeperDepths.CREATIVE_TAB);
         setLightLevel(0.9375f);
+        setHardness(0);;
+        setSoundType(SoundType.WOOD);
     }
 
     @Override

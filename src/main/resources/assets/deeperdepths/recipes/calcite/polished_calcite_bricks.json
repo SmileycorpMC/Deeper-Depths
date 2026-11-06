@@ -1,0 +1,20 @@
+{
+  "group": "deeperdepths:calcite",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "MM",
+    "MM"
+  ],
+  "key": {
+    "M": {
+      "item": "deeperdepths:stone",
+      "data": 13
+    }
+  },
+  "result": {
+    "item": "deeperdepths:stone",
+    "data": 14,
+    "count": 4
+  }
+}

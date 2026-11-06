@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "uvlock": true,
+    "textures": {
+      "end": "deeperdepths:blocks/polished_calcite",
+      "top": "#end",
+      "bottom": "#end",
+      "side": "deeperdepths:blocks/polished_calcite_slab"
+    }
+  },
+  "variants": {
+    "normal": [
+      {
+        "model": "half_slab"
+      }
+    ],
+    "double": [
+      {
+        "model": "cube_column"
+      }
+    ],
+    "half=top": [
+      {
+        "model": "half_slab",
+        "x": 180
+      }
+    ],
+    "half=bottom": [
+      {
+        "model": "half_slab"
+      }
+    ]
+  }
+}

@@ -32,9 +32,12 @@ public class DeeperDepthsBlocks {
     public static final BlockDDStone STONE = new BlockDDStone();
     public static final BlockDDStoneSlab STONE_SLAB = new BlockDDStoneSlab(false);
     public static final BlockDDStoneSlab DOUBLE_STONE_SLAB = new BlockDDStoneSlab(true);
+    public static final BlockDDStoneSlab2 STONE_SLAB_2 = new BlockDDStoneSlab2(false);
+    public static final BlockDDStoneSlab2 DOUBLE_STONE_SLAB_2 = new BlockDDStoneSlab2(true);
     public static final Map<EnumStoneType, BlockDDStairs> STONE_STAIRS = Maps.newEnumMap(EnumStoneType.class);
     public static final BlockDDStoneWall STONE_WALL = new BlockDDStoneWall();
     public static final BlockReinforcedDeepslate REINFORCED_DEEPSLATE = new BlockReinforcedDeepslate();
+    public static final BlockPillar PILLAR = new BlockPillar();
     
     //copper
     public static final BlockDeeperDepths COPPER_ORE = new BlockDeeperDepths("Copper_Ore", Material.ROCK, BlockConfig.copperOre.getHardness(), BlockConfig.copperOre.getHardness(), BlockConfig.copperOre.getHarvestLevel());

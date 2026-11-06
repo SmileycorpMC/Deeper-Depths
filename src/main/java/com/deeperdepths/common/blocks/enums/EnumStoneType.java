@@ -12,6 +12,7 @@ import net.smileycorp.atlas.api.config.BlockStatEntry;
 
 import java.util.List;
 
+//thank you 26.4 snapshot 7 for making this file way messier
 public enum EnumStoneType implements IStringSerializable {
     
     TUFF("tuff", Material.TUFF, true),
@@ -26,13 +27,20 @@ public enum EnumStoneType implements IStringSerializable {
     DEEPSLATE_BRICK("deepslate_brick", Material.DEEPSLATE_BRICKS, true),
     CRACKED_DEEPSLATE_BRICK("cracked_deepslate_brick", Material.DEEPSLATE_BRICKS, false),
     DEEPSLATE_TILE("deepslate_tile", Material.DEEPSLATE_TILES, true),
-    CRACKED_DEEPSLATE_TILE("cracked_deepslate_tile", Material.DEEPSLATE_TILES, false);
+    CRACKED_DEEPSLATE_TILE("cracked_deepslate_tile", Material.DEEPSLATE_TILES, false),
+    POLISHED_CALCITE("polished_calcite", Material.CALCITE, true),
+    POLISHED_CALCITE_BRICK("polished_calcite_brick", Material.CALCITE, true);
     
     public static final List<EnumStoneType> SHAPED_TYPES = getShapedTypes();
-    
+
+    //big jank
+    //calcite is earlier in the meta list than deepslate
+    //setting hasVariants to true has the side effect of completely messing up the metadata for all deepslate slabs and walls of any variant
+    //to fix it I'm just manually adding it
     private static List<EnumStoneType> getShapedTypes() {
         List<EnumStoneType> list = Lists.newArrayList();
         for (EnumStoneType type : values()) if (type.hasVariants) list.add(type);
+        list.add(7, CALCITE);
         return list;
     }
     
@@ -87,9 +95,10 @@ public enum EnumStoneType implements IStringSerializable {
     public SoundType getSoundType() {
         return material.soundType;
     }
-    
+
+    //used for some mod integration stuff so manually check if it's calcite
     public boolean hasVariants() {
-        return hasVariants;
+        return hasVariants || this == CALCITE;
     }
 
     public ItemStack getStack() {

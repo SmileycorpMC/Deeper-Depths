@@ -17,7 +17,7 @@ public class EntityConfig {
     public static EntityAttributesEntry breeze;
     //public static EntityAttributesEntry warden;
     //public static EntityAttributesEntry glare;
-    //public static EntityAttributesEntry copper_golem;
+    public static EntityAttributesEntry copper_golem;
     
     public static void syncConfig(FMLPreInitializationEvent event) {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/deeperdepths/entities.cfg"));
@@ -34,7 +34,7 @@ public class EntityConfig {
             //breeze
             breeze = new EntityAttributesEntry(config, "breeze", 0.63, 24, 3, 30, 0, 0, 0);
             //warden = new EntityAttributesEntry(config, "warden", 0.3, 32, 30, 500, 0, 0, 1);
-            //copper_golem = new EntityAttributesEntry(config, "copper_golem", 0.2, 48, 0, 12, 0, 0, 0);
+            copper_golem = new EntityAttributesEntry(config, "copper_golem", 0.3, 32, 0, 12, 0, 0, 0);
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();

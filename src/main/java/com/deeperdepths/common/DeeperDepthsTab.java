@@ -98,6 +98,13 @@ public class DeeperDepthsTab extends CreativeTabs {
         }
         stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_TORCH));
         stacks.add(new ItemStack(DeeperDepthsBlocks.COPPER_ORE));
+        for (EnumStoneType type : EnumStoneType.Material.CALCITE.getTypes()) {
+            stacks.add(type.getStack());
+            stacks.add(new ItemStack(DeeperDepthsBlocks.STONE_STAIRS.get(type)));
+            stacks.add(type.getShapedMeta() >= 8 ? new ItemStack(DeeperDepthsBlocks.STONE_SLAB_2, 1, type.getShapedMeta() - 8) : new ItemStack(DeeperDepthsBlocks.STONE_SLAB, 1, type.getShapedMeta()));
+            stacks.add(new ItemStack(DeeperDepthsBlocks.STONE_WALL, 1, type.getShapedMeta()));
+            if (type == EnumStoneType.CALCITE) stacks.add(new ItemStack(DeeperDepthsBlocks.PILLAR));
+        }
         for (ItemStack stack : cached) if (!contains(stack, stacks)) stacks.add(stack);
     }
 

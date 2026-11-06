@@ -15,6 +15,7 @@
 	"MixinItem",
     "MixinItemMap",
 	"MixinSoundEvent",
+    "MixinWorldGenMinable",
     "MixinWorldServer"
   ],
   "client": [
@@ -22,7 +23,6 @@
     "MixinBlockFluidRenderer",
     "MixinBlockRenderDispatcher",
     "MixinEntityRenderer",
-    "MixinInventoryEffectRenderer",
     "MixinItemModelMesher",
     "MixinItemRenderer",
     "MixinLayerHeldItem",

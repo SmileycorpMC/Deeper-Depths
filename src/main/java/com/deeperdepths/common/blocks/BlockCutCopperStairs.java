@@ -19,6 +19,7 @@ public class BlockCutCopperStairs extends BlockDDStairs implements ICopperBlock 
     public BlockCutCopperStairs(EnumWeatherStage stage, boolean waxed) {
         super(getName(stage, waxed), DeeperDepthsBlocks.CUT_COPPER.getDefaultState().withProperty(WEATHER_STAGE, stage));
         setSoundType(DeeperDepthsSoundTypes.COPPER);
+        setHarvestLevel("pickaxe", BlockConfig.copper.getHarvestLevel());
         this.stage = stage;
         this.waxed = waxed;
         needsRandomTick = BlockConfig.copperAges &! waxed && stage != EnumWeatherStage.OXIDIZED;
