@@ -87,7 +87,7 @@ public class DeeperDepthsBlocks {
     public static final Block SCULK_CATALYST = new BlockSculkCatalyst();
     public static final Block SCULK_SHRIEKER = new BlockSculkShrieker();
     public static final Block SCULK_SENSOR = new BlockSculkSensor("sculk_sensor");
-    //public static final Block CALIBRATED_SCULK_SENSOR = null;
+    public static final Block CALIBRATED_SCULK_SENSOR = new BlockCalibratedSculkSensor();
     
     //this is a terrible way of doing it, but I'm feeling lazy for this part
     @SubscribeEvent
@@ -133,6 +133,7 @@ public class DeeperDepthsBlocks {
         GameRegistry.registerTileEntity(TileCopperChest.class, Constants.loc("copper_chest"));
 		GameRegistry.registerTileEntity(TileSculkCatalyst.class, Constants.loc("sculk_catalyst"));
         GameRegistry.registerTileEntity(TileSculkSensor.class, Constants.loc("sculk_sensor"));
+        GameRegistry.registerTileEntity(TileCalibratedSculkSensor.class, Constants.loc("calibrated_sculk_sensor"));
     }
     
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

@@ -107,6 +107,7 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.WAXED_COPPER_CHEST, new StateMap.Builder().ignore(BlockCopperChest.FACING).build());
 		for (Block block : DeeperDepthsBlocks.SCULK_VEINS) ModelLoader.setCustomStateMapper(block, new SculkVeinStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.SCULK_SENSOR, new StateMap.Builder().ignore(IFluidloggable.WATERLOGGED).build());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CALIBRATED_SCULK_SENSOR, new StateMap.Builder().ignore(IFluidloggable.WATERLOGGED).build());
 
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
