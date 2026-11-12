@@ -7,8 +7,6 @@ import com.deeperdepths.common.blocks.IFluidloggable;
 import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.config.SensorSoundHandler;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.audio.PositionedSound;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -16,13 +14,10 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.atlas.api.util.DirectionUtils;
-import net.smileycorp.atlas.api.util.MathUtils;
 
 public class TileSculkSensor extends TileEntity implements ITickable, VibrationHandler.Listener {
     
@@ -39,15 +34,20 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
         super.invalidate();
         if (world instanceof WorldServer) VibrationHandler.getInstance((WorldServer) world).remove(this);
     }
-    
+
     @Override
-    public boolean canHear(SoundEvent sound, double x, double y, double z) {
-        if (getDistanceSq(x, y, z) > 64 || canHear(SensorSoundHandler.getSoundFrequency(sound)) || cooldown > 0) return false;
-        return VibrationHandler.getInstance((WorldServer) world).isOccluded(x, y, z, pos);
+    public Vec3d getPosition() {
+        return DirectionUtils.centerOf(pos);
     }
 
-    private boolean canHear(int frequency) {
-        return frequency > 0;
+    @Override
+    public int getRange() {
+        return 8;
+    }
+
+    @Override
+    public boolean canHear(SoundEvent sound, double x, double y, double z) {
+        return cooldown == 0;
     }
 
     @Override
