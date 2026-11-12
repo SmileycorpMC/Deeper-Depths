@@ -2,7 +2,6 @@ package com.deeperdepths.config;
 
 import com.deeperdepths.common.ISoundFrequency;
 import com.google.common.collect.Maps;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundEvent;
 
 import java.util.Map;
