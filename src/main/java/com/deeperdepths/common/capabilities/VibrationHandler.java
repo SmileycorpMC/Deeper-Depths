@@ -42,7 +42,7 @@ public class VibrationHandler {
         if (SensorSoundHandler.getSoundFrequency(sound) == 0) return;
         for (Listener listener : listeners) {
             Vec3d pos = listener.getPosition();
-            if (pos.squareDistanceTo(x, y, z) > Math.pow(listener.getRange(), 2) &! isOccluded(x, y, z, pos)
+            if (pos.squareDistanceTo(x, y, z) <= Math.pow(listener.getRange(), 2) &! isOccluded(x, y, z, pos)
                     && listener.canHear(sound, x, y, z)) listener.reactToSound(sound, x, y, z);
         }
         if (sound == DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE) ((ISoundFrequency)sound).setSoundFrequency(0);
@@ -52,7 +52,7 @@ public class VibrationHandler {
         return DirectionUtils.hasCollision(world, new Vec3d(soundX, soundY, soundZ), pos, (world, pos1, state, block) -> block == Blocks.WOOL);
     }
 
-    public  void playResonance(BlockPos pos, int frequency) {
+    public void playResonance(BlockPos pos, int frequency) {
             SoundEvent sound = DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE;
             ((ISoundFrequency)sound).setSoundFrequency(frequency);
             world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
