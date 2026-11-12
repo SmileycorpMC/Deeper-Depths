@@ -1,0 +1,6 @@
+{
+    "parent": "deeperdepths:block/sculk_sensor",
+    "textures": {
+        "tendrils": "deeperdepths:blocks/sculk_sensor_tendril_active"
+    }
+}

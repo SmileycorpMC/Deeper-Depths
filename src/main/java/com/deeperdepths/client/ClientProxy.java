@@ -8,10 +8,7 @@ import com.deeperdepths.client.tesr.TESRTrialSpawner;
 import com.deeperdepths.client.tesr.TESRVault;
 import com.deeperdepths.common.CommonProxy;
 import com.deeperdepths.common.Constants;
-import com.deeperdepths.common.blocks.BlockCopperChest;
-import com.deeperdepths.common.blocks.BlockTrialPot;
-import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
-import com.deeperdepths.common.blocks.IBlockProperties;
+import com.deeperdepths.common.blocks.*;
 import com.deeperdepths.common.blocks.tiles.TileCopperChest;
 import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
@@ -109,7 +106,8 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.COPPER_CHEST, new StateMap.Builder().ignore(BlockCopperChest.FACING).build());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.WAXED_COPPER_CHEST, new StateMap.Builder().ignore(BlockCopperChest.FACING).build());
 		for (Block block : DeeperDepthsBlocks.SCULK_VEINS) ModelLoader.setCustomStateMapper(block, new SculkVeinStateMapper());
-		
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.SCULK_SENSOR, new StateMap.Builder().ignore(IFluidloggable.WATERLOGGED).build());
+
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
                 ((IBlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
