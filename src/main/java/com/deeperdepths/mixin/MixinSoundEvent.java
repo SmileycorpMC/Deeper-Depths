@@ -3,10 +3,12 @@ package com.deeperdepths.mixin;
 import com.deeperdepths.common.ISoundFrequency;
 import net.minecraft.util.SoundEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(SoundEvent.class)
 public class MixinSoundEvent implements ISoundFrequency {
     
+    @Unique
     private int frequency = -1;
     
     @Override
