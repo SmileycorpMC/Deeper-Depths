@@ -1,0 +1,38 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": {
+            "model": "deeperdepths:calibrated_sculk_sensor"
+        },
+        "active=false,facing=north": {
+            "model": "deeperdepths:calibrated_sculk_sensor"
+        },
+        "active=false,facing=south": {
+            "model": "deeperdepths:calibrated_sculk_sensor",
+            "y": 180
+        },
+        "active=false,facing=west": {
+            "model": "deeperdepths:calibrated_sculk_sensor",
+            "y": 270
+        },
+        "active=false,facing=east": {
+            "model": "deeperdepths:calibrated_sculk_sensor",
+            "y": 90
+        },
+        "active=true,facing=north": {
+            "model": "deeperdepths:calibrated_sculk_sensor_active"
+        },
+        "active=true,facing=south": {
+            "model": "deeperdepths:calibrated_sculk_sensor_active",
+            "y": 180
+        },
+        "active=true,facing=west": {
+            "model": "deeperdepths:calibrated_sculk_sensor_active",
+            "y": 270
+        },
+        "active=true,facing=east": {
+            "model": "deeperdepths:calibrated_sculk_sensor_active",
+            "y": 90
+        }
+    }
+}
