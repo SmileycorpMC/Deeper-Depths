@@ -45,7 +45,7 @@ public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider,
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(WATERLOGGED, meta % 2 == 1).withProperty(ACTIVE, meta > 1);
+        return getDefaultState().withProperty(WATERLOGGED, (meta & 1) != 0).withProperty(ACTIVE, (meta & 2) != 0);
     }
 
     @Override
@@ -116,7 +116,8 @@ public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider,
         return tile instanceof TileSculkSensor ? ((TileSculkSensor) tile).getFrequency() : 0;
     }
 
-    public static AxisAlignedBB getAABB() {
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
