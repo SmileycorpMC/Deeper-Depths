@@ -2,6 +2,7 @@ package com.deeperdepths.config;
 
 import com.deeperdepths.common.ISoundFrequency;
 import com.google.common.collect.Maps;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundEvent;
 
 import java.util.Map;
@@ -12,9 +13,11 @@ public class SensorSoundHandler {
     
     public static void init() {
         SOUND_STRENGTHS.put("block.cloth", 0);
+        SOUND_STRENGTHS.put("block.end_portal_frame.fill", 0);
+        SOUND_STRENGTHS.put("entity.endereye.death", 0);
         SOUND_STRENGTHS.put("sculk_sensor.clicking", 0);
         SOUND_STRENGTHS.put("step", 1);
-        SOUND_STRENGTHS.put("fall", 1);
+        SOUND_STRENGTHS.put("fall", 2);
         SOUND_STRENGTHS.put("swim", 1);
         SOUND_STRENGTHS.put("flap", 1);
         SOUND_STRENGTHS.put("entity.arrow.hit", 2);
@@ -47,8 +50,8 @@ public class SensorSoundHandler {
         SOUND_STRENGTHS.put("block", 11);
         SOUND_STRENGTHS.put("cast_spell", 14);
         SOUND_STRENGTHS.put("teleport", 14);
-        SOUND_STRENGTHS.put("death", 14);
-        SOUND_STRENGTHS.put("explode", 14);
+        SOUND_STRENGTHS.put("death", 15);
+        SOUND_STRENGTHS.put("explode", 15);
     }
     
     public static int getSoundFrequency(SoundEvent sound) {
