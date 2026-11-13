@@ -1,0 +1,23 @@
+{
+  "group": "deeperdepths:calibrated_sculk_sensor",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    " A ",
+    "ASA"
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "gemAmethyst"
+    },
+    "S": {
+      "item": "deeperdepths:sculk_sensor",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "deeperdepths:calibrated_sculk_sensor",
+    "count": 1
+  }
+}
