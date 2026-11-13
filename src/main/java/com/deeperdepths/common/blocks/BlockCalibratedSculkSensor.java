@@ -37,15 +37,9 @@ public class BlockCalibratedSculkSensor extends BlockSculkSensor {
         return super.getStateFromMeta(meta).withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta / 4));
     }
 
-    @Nullable
-    @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileCalibratedSculkSensor();
-    }
-
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return getDefaultState().withProperty(BlockHorizontal.FACING, placer.getHorizontalFacing());
+        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand).withProperty(BlockHorizontal.FACING, placer.getHorizontalFacing());
     }
 
     @Override
@@ -56,6 +50,12 @@ public class BlockCalibratedSculkSensor extends BlockSculkSensor {
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirror) {
         return state.withRotation(mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta) {
+        return new TileCalibratedSculkSensor();
     }
 
 }
