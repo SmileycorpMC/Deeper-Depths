@@ -39,7 +39,7 @@ public class MixinEntityRenderer {
         Entity entity = mc.getRenderViewEntity();
         if (!(entity instanceof EntityLivingBase)) return;
         if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
-        float darkness = (float) Math.sin((entity.ticksExisted + partialTicks) / 40f) * 0.5f;
+        float darkness = (float) Math.sin((entity.ticksExisted + partialTicks) / 20f) * 0.5f;
         r.set(Math.max(r.get() - darkness, 0));
         g.set(Math.max(g.get() - darkness, 0));
         b.set(Math.max(b.get() - darkness, 0));
@@ -53,7 +53,7 @@ public class MixinEntityRenderer {
         if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
         //store the game settings gamma before modifying it
         mcGamma = mc.gameSettings.gammaSetting;
-        mc.gameSettings.gammaSetting -= (float) Math.sin((entity.ticksExisted + partialTicks) / 40f) * 0.5f;
+        mc.gameSettings.gammaSetting -= (float) Math.sin((entity.ticksExisted + partialTicks) / 20f) * 0.5f;
     }
 
 
