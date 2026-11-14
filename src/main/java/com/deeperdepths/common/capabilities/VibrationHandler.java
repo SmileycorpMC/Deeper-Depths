@@ -5,6 +5,7 @@ import com.deeperdepths.common.ISoundFrequency;
 import com.deeperdepths.config.SensorSoundHandler;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -12,7 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.atlas.api.util.DirectionUtils;
+import org.lwjgl.Sys;
 
+import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -25,6 +28,7 @@ public class VibrationHandler {
 
     private final WorldServer world;
     private final HashSet<Listener> listeners = Sets.newHashSet();
+    private Entity ctxEntity = null;
     
     public VibrationHandler(WorldServer world) {
         this.world = world;
@@ -38,14 +42,23 @@ public class VibrationHandler {
         listeners.remove(listener);
     }
     
-    public void playSound(SoundEvent sound, double x, double y, double z) {
-        if (SensorSoundHandler.getSoundFrequency(sound) == 0) return;
+    public void playSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
+        if (SensorSoundHandler.getSoundFrequency(sound) == 0) {
+            ctxEntity = null;
+            return;
+        }
+        if (ctxEntity != null) entity = ctxEntity;
+        if (entity != null && entity.isSneaking()) {
+            ctxEntity = null;
+            return;
+        }
         for (Listener listener : listeners) {
             Vec3d pos = listener.getPosition();
             if (pos.squareDistanceTo(x, y, z) <= Math.pow(listener.getRange(), 2) &! isOccluded(x, y, z, pos)
-                    && listener.canHear(sound, x, y, z)) listener.reactToSound(sound, x, y, z);
+                    && listener.canHear(entity, sound, x, y, z)) listener.reactToSound(entity, sound, x, y, z);
         }
         if (sound == DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE) ((ISoundFrequency)sound).setSoundFrequency(0);
+        ctxEntity = null;
     }
 
     public boolean isOccluded(double soundX, double soundY, double soundZ, Vec3d pos) {
@@ -53,11 +66,15 @@ public class VibrationHandler {
     }
 
     public void playResonance(BlockPos pos, int frequency) {
-            SoundEvent sound = DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE;
-            ((ISoundFrequency)sound).setSoundFrequency(frequency);
-            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                    sound, SoundCategory.BLOCKS, 1, RESONANCE_PITCHES[frequency]);
-        }
+        SoundEvent sound = DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE;
+        ((ISoundFrequency)sound).setSoundFrequency(frequency);
+        world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                sound, SoundCategory.BLOCKS, 1, RESONANCE_PITCHES[frequency]);
+    }
+
+    public void setEntityContext(Entity entity) {
+        ctxEntity = entity;
+    }
     
     public static VibrationHandler getInstance(WorldServer world) {
         int dimension = world.provider.getDimension();
@@ -81,9 +98,9 @@ public class VibrationHandler {
 
         int getRange();
         
-        boolean canHear(SoundEvent sound, double x, double y, double z);
+        boolean canHear(@Nullable Entity entity, SoundEvent sound, double x, double y, double z);
         
-        void reactToSound(SoundEvent sound, double x, double y, double z);
+        void reactToSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z);
         
     }
 }

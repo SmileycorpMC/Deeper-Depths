@@ -1,10 +1,15 @@
 package com.deeperdepths.mixin;
 
+import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Used to handle Weaving affecting movement speed through Webs.
  */
 @Mixin(Entity.class)
-public class MixinEntity
+public abstract class MixinEntity
 {
     @Shadow
     public double motionX;
@@ -25,6 +30,10 @@ public class MixinEntity
     public double motionZ;
     @Shadow
     public boolean isInWeb;
+
+    @Shadow public World world;
+
+    @Shadow public abstract void readFromNBT(NBTTagCompound compound);
 
     /** Places this directly before web movement is handles in `Entity.class`, basically hijacking it */
     @Inject(method = "move", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;isInWeb:Z", shift = At.Shift.BEFORE))
@@ -53,4 +62,11 @@ public class MixinEntity
             }
         }
     }
+
+    @Inject(method = "playSound", at = @At(value = "HEAD"))
+    public void deeperdepths$playSound$HEAD(SoundEvent sound, float volume, float pitch, CallbackInfo callback) {
+        if (world.isRemote) return;
+        VibrationHandler.getInstance((WorldServer) world).setEntityContext((Entity)(Object)this);
+    }
+
 }

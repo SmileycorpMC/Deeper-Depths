@@ -23,7 +23,7 @@ public class DeeperDepthsWorldListener implements IWorldEventListener {
     
     @Override
     public void playSoundToAllNearExcept(@Nullable EntityPlayer player, SoundEvent sound, SoundCategory category, double x, double y, double z, float volume, float pitch) {
-        if (sound != null && volume > 0) VibrationHandler.getInstance(world).playSound(sound, x, y, z);
+        if (sound != null && volume > 0) VibrationHandler.getInstance(world).playSound(player, sound, x, y, z);
     }
     
     @Override

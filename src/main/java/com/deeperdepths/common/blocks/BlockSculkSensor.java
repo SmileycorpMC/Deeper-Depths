@@ -83,8 +83,8 @@ public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider,
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileSculkSensor) {
             TileSculkSensor sensor = (TileSculkSensor) tile;
-            if (sensor.canHear(DeeperDepthsSoundEvents.SCULK_SENSOR_STEP, pos.getX(), pos.getY(), pos.getZ()))
-                sensor.reactToSound(DeeperDepthsSoundEvents.SCULK_SENSOR_STEP, pos.getX(), pos.getY(), pos.getZ());
+            if (sensor.canHear(entity, DeeperDepthsSoundEvents.SCULK_SENSOR_STEP, pos.getX(), pos.getY(), pos.getZ()))
+                sensor.reactToSound(entity, DeeperDepthsSoundEvents.SCULK_SENSOR_STEP, pos.getX(), pos.getY(), pos.getZ());
         }
     }
 

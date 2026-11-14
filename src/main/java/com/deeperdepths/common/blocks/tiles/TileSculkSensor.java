@@ -7,6 +7,7 @@ import com.deeperdepths.common.blocks.IFluidloggable;
 import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.config.SensorSoundHandler;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -46,12 +47,12 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
     }
 
     @Override
-    public boolean canHear(SoundEvent sound, double x, double y, double z) {
+    public boolean canHear(Entity entity, SoundEvent sound, double x, double y, double z) {
         return cooldown == 0;
     }
 
     @Override
-    public void reactToSound(SoundEvent sound, double x, double y, double z) {
+    public void reactToSound(Entity entity, SoundEvent sound, double x, double y, double z) {
         cooldown = 40;
         frequency = SensorSoundHandler.getSoundFrequency(sound);
         power = Math.max(1, 15 - (int) (15f / 8f * DirectionUtils.centerOf(pos).distanceTo(new Vec3d(x, y, z))));
