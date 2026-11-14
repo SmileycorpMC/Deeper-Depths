@@ -134,6 +134,7 @@ public class DeeperDepthsBlocks {
 		GameRegistry.registerTileEntity(TileSculkCatalyst.class, Constants.loc("sculk_catalyst"));
         GameRegistry.registerTileEntity(TileSculkSensor.class, Constants.loc("sculk_sensor"));
         GameRegistry.registerTileEntity(TileCalibratedSculkSensor.class, Constants.loc("calibrated_sculk_sensor"));
+        GameRegistry.registerTileEntity(TileSculkShrieker.class, Constants.loc("sculk_shrieker"));
     }
     
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

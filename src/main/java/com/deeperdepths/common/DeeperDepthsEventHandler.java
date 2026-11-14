@@ -6,6 +6,7 @@ import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import com.deeperdepths.common.capabilities.DeathLocation;
+import com.deeperdepths.common.capabilities.WardenSpawnTracker;
 import com.deeperdepths.common.entities.EntityBreeze;
 import com.deeperdepths.common.entities.EntityCopperGolem;
 import com.deeperdepths.common.entities.EntityWindCharge;
@@ -276,6 +277,7 @@ public class DeeperDepthsEventHandler {
         if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(CapabilityWindChargeFall.ID, new CapabilityWindChargeFall.Provider(new CapabilityWindChargeFall.WindChargeHorn(), CapabilityWindChargeFall.WINDBURSTHEIGHT_CAP, null));
             event.addCapability(Constants.loc("death_location"), new DeathLocation.Provider());
+            event.addCapability(Constants.loc("warden_tracker"), new WardenSpawnTracker.Provider());
         }
     }
 
@@ -413,6 +415,9 @@ public class DeeperDepthsEventHandler {
     public void clone(PlayerEvent.Clone event) {
         EntityPlayer original = event.getOriginal();
         EntityPlayer player = event.getEntityPlayer();
+        WardenSpawnTracker oTracker = WardenSpawnTracker.get(original);
+        WardenSpawnTracker tracker = WardenSpawnTracker.get(original);
+        if (oTracker != null && tracker != null) tracker.readFromNBT(oTracker.writeToNbt());
         if (!player.hasCapability(DeathLocation.CAPABILITY, null)) return;
         if (event.isWasDeath()) {
             player.getCapability(DeathLocation.CAPABILITY, null)

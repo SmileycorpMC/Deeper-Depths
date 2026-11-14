@@ -3,18 +3,29 @@ package com.deeperdepths.common.blocks;
 import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
+import com.deeperdepths.common.blocks.tiles.TileSculkShrieker;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockSculkShrieker extends BlockSculk
-{
+import javax.annotation.Nullable;
+
+public class BlockSculkShrieker extends BlockSculk  implements ITileEntityProvider, IFluidloggable {
+
     public static final AxisAlignedBB SLAB_AABB = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.5, 1.0);
 
     public BlockSculkShrieker()
@@ -23,21 +34,46 @@ public class BlockSculkShrieker extends BlockSculk
         setSoundType(DeeperDepthsSoundTypes.SCULK);
     }
 
-
-    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
-    {
-        if (entityIn instanceof EntityPlayer)
-        { preformShriek(worldIn, pos); }
-
-        super.onEntityWalk(worldIn, pos, entityIn);
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, WATERLOGGED);
     }
 
-    public void preformShriek(World world, BlockPos pos)
-    {
-        world.playSound(null, pos, DeeperDepthsSoundEvents.SCULK_SHRIEKER_SHRIEK, SoundCategory.BLOCKS, 1.7F, (world.rand.nextFloat() * 0.4F) + 0.6F);
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return (state.getValue(WATERLOGGED) ? 1 : 0);
+    }
 
-        for (int i = 0; i < 10; i++)
-        { DeeperDepths.proxy.spawnParticle(8, world, pos.getX() + 0.5f, pos.getY() + 0.4F, pos.getZ() + 0.5f, 0, 0.1, 0, 5 * i); }
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(WATERLOGGED, (meta & 1) != 0);
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        super.breakBlock(world, pos, state);
+        if (world.getBlockState(pos) != Blocks.AIR) return;
+        if (state.getValue(WATERLOGGED)) world.setBlockState(pos, Blocks.WATER.getDefaultState(), 3);
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        IBlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
+        IBlockState replaced = world.getBlockState(pos);
+        if (replaced.getBlock() != Blocks.WATER) return state;
+        if (replaced.getValue(BlockLiquid.LEVEL) != 0) return state;
+        return state.withProperty(WATERLOGGED, world.getBlockState(pos).getBlock() == Blocks.WATER);
+    }
+
+    @Override
+    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
+        return 5;
+    }
+
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (tile instanceof TileSculkShrieker) ((TileSculkShrieker) tile).tryShriek(entityIn);
+        super.onEntityWalk(worldIn, pos, entityIn);
     }
 
 
@@ -53,4 +89,11 @@ public class BlockSculkShrieker extends BlockSculk
 
     @Override
     public boolean isOpaqueCube(IBlockState state) { return false; }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return new TileSculkShrieker();
+    }
+
 }

@@ -3,6 +3,7 @@ package com.deeperdepths.common;
 import com.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import com.deeperdepths.common.capabilities.DeathLocation;
+import com.deeperdepths.common.capabilities.WardenSpawnTracker;
 import com.deeperdepths.common.entities.DeeperDepthsEntities;
 import com.deeperdepths.common.entities.EntityWindCharge;
 import com.deeperdepths.common.items.DeeperDepthsItems;
@@ -51,6 +52,7 @@ public class CommonProxy {
         NetworkHandler.init();
         CapabilityManager.INSTANCE.register(CapabilityWindChargeFall.ICapabilityWindChargeFall.class, new CapabilityWindChargeFall.Storage(), CapabilityWindChargeFall.WindChargeHorn::new);
         CapabilityManager.INSTANCE.register(DeathLocation.class, new DeathLocation.Storage(), DeathLocation.Impl::new);
+        CapabilityManager.INSTANCE.register(WardenSpawnTracker.class, new WardenSpawnTracker.Storage(), WardenSpawnTracker.Impl::new);
     }
     
     public void postInit(FMLPostInitializationEvent event)
