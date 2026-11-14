@@ -79,6 +79,8 @@ public class Constants {
 				return new ParticleChargedGust.Factory();
 			case 8:
 				return new ParticleShriek.Factory();
+			case 9:
+				return new ParticleVibration.Factory();
 		}
 	}
 }

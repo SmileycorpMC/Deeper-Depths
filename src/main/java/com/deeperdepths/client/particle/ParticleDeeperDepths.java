@@ -85,6 +85,60 @@ public class ParticleDeeperDepths extends Particle
             };
     }
 
+    public static Vec3d[] generateBasicQuad(float particleSize, float rotX, float rotY, float rotZ)
+    {
+        Vec3d[] basicQuad = new Vec3d[] { new Vec3d(-particleSize, -particleSize, 0), new Vec3d(-particleSize,  particleSize, 0),
+                new Vec3d( particleSize,  particleSize, 0), new Vec3d( particleSize, -particleSize, 0) };
+
+        float cosX = MathHelper.cos(rotX);
+        float sinX = MathHelper.sin(rotX);
+        float cosY = MathHelper.cos(rotY);
+        float sinY = MathHelper.sin(rotY);
+        float cosZ = MathHelper.cos(rotZ);
+        float sinZ = MathHelper.sin(rotZ);
+
+        for (int i = 0; i < basicQuad.length; i++)
+        {
+            Vec3d v = basicQuad[i];
+            double x = v.x;
+            double y = v.y;
+            double z = v.z;
+
+            double y1 = y * cosX - z * sinX;
+            double z1 = y * sinX + z * cosX;
+            double x2 = x * cosY + z1 * sinY;
+            double z2 = -x * sinY + z1 * cosY;
+            double x3 = x2 * cosZ - y1 * sinZ;
+            double y3 = x2 * sinZ + y1 * cosZ;
+
+            basicQuad[i] = new Vec3d(x3, y3, z2);
+        }
+
+        return basicQuad;
+    }
+
+
+    /** It's a sideways particle, that can be rotated about based on the given Vex3d.*/
+    public static Vec3d[] quadRotateToFacing(Vec3d[] quad, Vec3d facing)
+    {
+        /* First, the quad's facing is assumed to be the given `direction` (duh) */
+        Vec3d quadFacing = facing.lengthSquared() > 0.0001D ? facing.normalize() : new Vec3d(0, 0, 1);
+        /* Then, assume the TRUE world's up */
+        Vec3d worldUp = Math.abs(quadFacing.y) > 0.99 ? new Vec3d(1, 0, 0) : new Vec3d(0, 1, 0);
+        /* Generate the quad's directions based on Facing and Up */
+        Vec3d quadRight = worldUp.crossProduct(quadFacing).normalize();
+        Vec3d quadUp = quadFacing.crossProduct(quadRight).normalize();
+
+        /* Transform the fucker. */
+        for (int i = 0; i < 4; i++)
+        {
+            Vec3d baseQuad = quad[i];
+            quad[i] = quadRight.scale(baseQuad.x).add(quadUp.scale(baseQuad.y)).add(quadFacing.scale(baseQuad.z));
+        }
+
+        return quad;
+    }
+
     /** The logic for brightness transitioning from Combined Light to Full Bright. Made a separate method due to how often it is used. */
     public int brightnessIncreaseToFull(float partialTicks)
     {
