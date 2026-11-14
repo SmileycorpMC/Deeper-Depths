@@ -2,7 +2,6 @@ package com.deeperdepths.common.capabilities;
 
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.ISoundFrequency;
-import com.deeperdepths.config.SensorSoundHandler;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
@@ -13,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.atlas.api.util.DirectionUtils;
-import org.lwjgl.Sys;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
