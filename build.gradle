@@ -85,7 +85,7 @@ configurations {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 	implementation "org.spongepowered:mixin:0.8"
-    implementation "curse.maven:atlas-463826:6981034"
+    implementation "curse.maven:atlas-463826:9619241"
     compileOnly "curse.maven:raids-977633:5626565"
     compileOnly "curse.maven:chisel-235279:2535488"
     compileOnly "curse.maven:jei-238222:4393461"
