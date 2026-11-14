@@ -48,7 +48,7 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
 
     @Override
     public boolean canHear(Entity entity, SoundEvent sound, double x, double y, double z) {
-        return cooldown == 0;
+        return SensorSoundHandler.getSoundFrequency(sound) != 0 && cooldown == 0;
     }
 
     @Override
@@ -63,8 +63,11 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
         }
         IBlockState state = world.getBlockState(pos);
         if (!(state.getBlock() instanceof BlockSculkSensor)) return;
-        if (!state.getValue(IFluidloggable.WATERLOGGED)) world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                DeeperDepthsSoundEvents.SCULK_SENSOR_CLICKING, SoundCategory.BLOCKS, 1, 1);
+        if (!state.getValue(IFluidloggable.WATERLOGGED)) {
+            VibrationHandler.getInstance((WorldServer) world).setEntityContext(entity);
+            world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    DeeperDepthsSoundEvents.SCULK_SENSOR_CLICKING, SoundCategory.BLOCKS, 1, 1);
+        }
         world.setBlockState(pos, state.withProperty(BlockSculkSensor.ACTIVE, true));
         world.markBlockRangeForRenderUpdate(pos, pos);
     }

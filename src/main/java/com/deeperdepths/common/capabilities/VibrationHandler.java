@@ -43,10 +43,6 @@ public class VibrationHandler {
     }
     
     public void playSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
-        if (SensorSoundHandler.getSoundFrequency(sound) == 0) {
-            ctxEntity = null;
-            return;
-        }
         if (ctxEntity != null) entity = ctxEntity;
         if (entity != null && entity.isSneaking()) {
             ctxEntity = null;
