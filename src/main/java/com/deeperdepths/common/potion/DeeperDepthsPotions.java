@@ -21,6 +21,7 @@ public class DeeperDepthsPotions
     public static final Potion INFESTED = new PotionInfested("infested", true, 9214860, EntitySilverfish.class, 10, 1, 2, false);
     public static final Potion WEAVING = new PotionWeaving("weaving", true, 7891290, Blocks.WEB, 2, 3, 1);
     public static final Potion WIND_CHARGED = new PotionWindCharged("wind_charged", true, 12438015);
+    public static final Potion DARKNESS = new PotionDeeperDepths("darkness", true, 0x292721, 7); //imprisoning me, all that I see, absolute horror
 
     public static final PotionType OOZING_POTION = new PotionType(Constants.MODID + "." + "oozing", new PotionEffect[] { new PotionEffect(OOZING, 3600, 0)} ).setRegistryName("oozing");
     public static final PotionType INFESTED_POTION = new PotionType(Constants.MODID + "." + "infested", new PotionEffect[] { new PotionEffect(INFESTED, 3600, 0)} ).setRegistryName("infested");
@@ -36,6 +37,7 @@ public class DeeperDepthsPotions
         event.getRegistry().register(DeeperDepthsPotions.INFESTED);
         event.getRegistry().register(DeeperDepthsPotions.WEAVING);
         event.getRegistry().register(DeeperDepthsPotions.WIND_CHARGED);
+        event.getRegistry().register(DeeperDepthsPotions.DARKNESS);
     }
 
     @SubscribeEvent

@@ -12,9 +12,9 @@
     "MixinEntity",
     "MixinEntityLiving",
     "MixinEntityLivingBase",
-	"MixinItem",
+    "MixinItem",
     "MixinItemMap",
-	"MixinSoundEvent",
+    "MixinSoundEvent",
     "MixinWorldGenMinable",
     "MixinWorldServer"
   ],
@@ -26,7 +26,8 @@
     "MixinItemModelMesher",
     "MixinItemRenderer",
     "MixinLayerHeldItem",
-    "MixinModelBiped"
+    "MixinModelBiped",
+    "MixinRenderGlobal"
   ],
   "server": []
 }

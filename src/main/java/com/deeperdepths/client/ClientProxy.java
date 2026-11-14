@@ -15,6 +15,7 @@ import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.capabilities.DeathLocation;
 import com.deeperdepths.common.entities.*;
 import com.deeperdepths.common.items.DeeperDepthsItems;
+import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.client.Minecraft;
@@ -28,6 +29,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -44,6 +46,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -57,6 +60,7 @@ public class ClientProxy extends CommonProxy {
     private static float FOV = 1;
     private static float OLD_FOV = 1;
     private static float SCOPE_SCALE = 1;
+    private static float DARKNESS_TICKS = 0;
     public static ResourceLocation SPYGLASS_TEXTURE = Constants.loc("textures/misc/spyglass_scope.png");
 
     public static Tuple<Integer, BlockPos> DEATH_DATA = null;
@@ -165,6 +169,13 @@ public class ClientProxy extends CommonProxy {
     {
         if (event.phase != TickEvent.Phase.START) return;
         Minecraft mc = Minecraft.getMinecraft();
+
+        //progresses the darkness darkeneing fog closing in
+        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+        if ((entity instanceof EntityLivingBase) && ((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) {
+            if (DARKNESS_TICKS < 22) DARKNESS_TICKS++;
+        } else if (DARKNESS_TICKS > 0) DARKNESS_TICKS = 0;
+
         EntityPlayerSP player = mc.player;
         if (player == null) return;
         OLD_FOV = FOV;
@@ -242,8 +253,32 @@ public class ClientProxy extends CommonProxy {
         tessellator.draw();
     }
 
+    //render darkness fog
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void renderFog(EntityViewRenderEvent.RenderFogEvent event) {
+        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+        if (!(entity instanceof EntityLivingBase)) return;
+        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
+        float factor = DARKNESS_TICKS == 22 ? 0 : 1 - ((DARKNESS_TICKS + (float) event.getRenderPartialTicks()) / 22f);
+        float end = 15f + (event.getFarPlaneDistance() - 15f) * factor;
+        GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
+        GlStateManager.setFogStart(end * 0.75f);
+        GlStateManager.setFogEnd(end);
+    }
+
+    //set darkness fog colour
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void fogColor(EntityViewRenderEvent.FogColors event) {
+        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+        if (!(entity instanceof EntityLivingBase)) return;
+        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
+        event.setRed(0);
+        event.setGreen(0);
+        event.setBlue(0);
+    }
+
     public static boolean isLocalPlayer(EntityPlayer player) {
         return player == Minecraft.getMinecraft().player;
     }
-    
+
 }
