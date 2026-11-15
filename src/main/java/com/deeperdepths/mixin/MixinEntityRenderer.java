@@ -38,8 +38,8 @@ public class MixinEntityRenderer {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;isPotionActive(Lnet/minecraft/potion/Potion;)Z"), method = "updateLightmap")
     public void deeperdepths$updateLightmap$isPotionActive(float partialTicks, CallbackInfo callback, @Local(ordinal = 9) LocalFloatRef r, @Local(ordinal = 10) LocalFloatRef g, @Local(ordinal = 11) LocalFloatRef b) {
         Entity entity = mc.getRenderViewEntity();
-        if (ClientProxy.DARKNESS_TICKS == 0) return;
-        float darkness = (float) Math.sin((entity.ticksExisted + partialTicks) / 20f) * 0.5f;
+        if (ClientProxy.DARKNESS_TICKS == 0 || entity == null) return;
+        float darkness = (1 + (float) Math.sin((entity.ticksExisted + partialTicks) / 20f)) * 0.25f;
         r.set(Math.max(r.get() - darkness, 0));
         g.set(Math.max(g.get() - darkness, 0));
         b.set(Math.max(b.get() - darkness, 0));
@@ -49,10 +49,10 @@ public class MixinEntityRenderer {
     @Inject(at = @At(value = "HEAD"), method = "updateLightmap")
     public void deeperdepths$updateLightmap$HEAD(float partialTicks, CallbackInfo callback) {
         Entity entity = mc.getRenderViewEntity();
-        if (ClientProxy.DARKNESS_TICKS == 0) return;
+        if (ClientProxy.DARKNESS_TICKS == 0 || entity == null) return;
         //store the game settings gamma before modifying it
         mcGamma = mc.gameSettings.gammaSetting;
-        mc.gameSettings.gammaSetting -= (float) Math.sin((entity.ticksExisted + partialTicks) / 20f) * 0.5f;
+        mc.gameSettings.gammaSetting -= (1 + (float) Math.sin((entity.ticksExisted + partialTicks) / 20f)) * 0.25f;
     }
 
 
