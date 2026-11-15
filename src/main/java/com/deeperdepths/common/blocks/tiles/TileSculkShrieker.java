@@ -5,10 +5,12 @@ import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.blocks.BlockSculkShrieker;
 import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.common.capabilities.WardenSpawnTracker;
+import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -20,10 +22,16 @@ import net.minecraft.world.WorldServer;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class TileSculkShrieker extends TileEntity implements ITickable, VibrationHandler.Listener {
 
+    private static final SoundEvent[] WARNING_SOUNDS = {
+            DeeperDepthsSoundEvents.WARDEN_NEARBY_CLOSE, DeeperDepthsSoundEvents.WARDEN_NEARBY_CLOSER,
+            DeeperDepthsSoundEvents.WARDEN_NEARBY_CLOSEST, DeeperDepthsSoundEvents.WARDEN_LISTENING_ANGRY};
+
     private int cooldown = 0;
+    private int warningLevel;
 
     @Override
     public void setWorld(World world) {
@@ -59,7 +67,18 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
 
     @Override
     public void update() {
-        if (cooldown > 0) cooldown--;
+        if (cooldown == 0) return;
+        if (--cooldown == 0) {
+            //darkness warn and spawning
+            if (warningLevel < 4 |! trySpawnWarden()) {
+                Random rand = world.rand;
+                world.playSound(null, pos.add(rand.nextInt(20) - 10, rand.nextInt(20) - 10, rand.nextInt(20) - 10),
+                        WARNING_SOUNDS[warningLevel - 1], SoundCategory.HOSTILE, 5, 1);
+            }
+            PotionEffect effect = new PotionEffect(DeeperDepthsPotions.DARKNESS, 260, 0, false, false);
+            for (EntityPlayer player : world.getPlayers(EntityPlayer.class, player -> player.getDistanceSq(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 1600))
+                player.addPotionEffect(effect);
+        }
     }
 
     public void tryShriek(@Nullable Entity entity) {
@@ -71,11 +90,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
             break;
         }
         if (player == null) return;
-        if (world.getDifficulty() != EnumDifficulty.PEACEFUL) {
-            int warningLevel = WardenSpawnTracker.tryWarn(world, pos, player);
-            if (warningLevel == 0) return;
-            //darkness warn and spawning
-        }
+        if (world.getDifficulty() != EnumDifficulty.PEACEFUL) warningLevel = WardenSpawnTracker.tryWarn(world, pos, player);
         cooldown = 90;
 
         IBlockState state = world.getBlockState(pos);
@@ -85,9 +100,14 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
         for (int i = 0; i < 10; i++) DeeperDepths.proxy.spawnParticle(8, world, pos.getX() + 0.5f, pos.getY() + 0.4F, pos.getZ() + 0.5f, 0, 0.1, 0, 5 * i);
     }
 
+    private boolean trySpawnWarden() {
+        return false;
+    }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setInteger("cooldown", cooldown);
+        compound.setInteger("warningLevel", warningLevel);
         return super.writeToNBT(compound);
     }
 
@@ -95,6 +115,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         cooldown = compound.getInteger("cooldown");
+        warningLevel = compound.getInteger("warningLevel");
     }
 
 }
