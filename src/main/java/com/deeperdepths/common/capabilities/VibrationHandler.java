@@ -1,5 +1,6 @@
 package com.deeperdepths.common.capabilities;
 
+import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.ISoundFrequency;
 import com.google.common.collect.Maps;
@@ -49,7 +50,10 @@ public class VibrationHandler {
         for (Listener listener : listeners) {
             Vec3d pos = listener.getPosition();
             if (pos.squareDistanceTo(x, y, z) <= Math.pow(listener.getRange(), 2) &! isOccluded(x, y, z, pos)
-                    && listener.canHear(entity, sound, x, y, z)) listener.reactToSound(entity, sound, x, y, z);
+                    && listener.canHear(entity, sound, x, y, z)) {
+                listener.reactToSound(entity, sound, x, y, z);
+                DeeperDepths.proxy.spawnParticle(9, world, x, y, z, pos.x, pos.y, pos.z, (int) pos.distanceTo(new Vec3d(x, y, z)));
+            }
         }
         if (sound == DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE) ((ISoundFrequency)sound).setSoundFrequency(0);
         ctxEntity = null;

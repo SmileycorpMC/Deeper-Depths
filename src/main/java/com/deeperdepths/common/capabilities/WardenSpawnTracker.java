@@ -20,6 +20,7 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public interface WardenSpawnTracker {
@@ -75,18 +76,25 @@ public interface WardenSpawnTracker {
 
         @Override
         public boolean isOnCooldown() {
-            return cooldown == 0;
+            return cooldown != 0;
         }
 
         @Override
         public NBTTagCompound writeToNbt() {
-            return null;
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setInteger("warningLevel", warningLevel);
+            nbt.setInteger("cooldown", cooldown);
+            nbt.setInteger("lastWarning", lastWarning);
+            return nbt;
         }
 
         @Override
         public void readFromNBT(NBTTagCompound nbt) {
-
+            warningLevel = nbt.getInteger("warningLevel");
+            cooldown = nbt.getInteger("cooldown");
+            lastWarning = nbt.getInteger("lastWarning");
         }
+
     }
 
     class Storage implements Capability.IStorage<WardenSpawnTracker> {
@@ -137,16 +145,19 @@ public interface WardenSpawnTracker {
     }
 
     //replace wither skeletons with warden when it's ready
-    //just used for texting
+    //just used for testing
     static int tryWarn(World world, BlockPos pos, EntityPlayer player) {
         Vec3d vec = DirectionUtils.centerOf(pos);
         if (!world.getEntitiesWithinAABB(EntityWitherSkeleton.class,
-                new AxisAlignedBB(vec.addVector(24, 24, 24), vec.subtract(24, 24, 24))).isEmpty()) return 0;
+                new AxisAlignedBB(vec.addVector(24, 24, 24), vec.subtract(24, 24, 24))).isEmpty())  return 0;
         List<EntityPlayer> players = world.getPlayers(EntityPlayer.class, player1 -> player1 == player ||
                 (vec.squareDistanceTo(player1.posX, player1.posY, player1.posZ) <= 256 && player1.isEntityAlive() &! player1.isSpectator()));
-        Stream<WardenSpawnTracker> stream = players.stream().map(WardenSpawnTracker::get).filter(Predicates.not(WardenSpawnTracker::isOnCooldown));
-        stream.forEach(WardenSpawnTracker::increaseWarningLevel);
-        return stream.max(Comparator.comparing(WardenSpawnTracker::getWarningLevel)).get().getWarningLevel();
+        int warningLevel = 0;
+        for (WardenSpawnTracker tracker : players.stream().map(WardenSpawnTracker::get).filter(Predicates.not(WardenSpawnTracker::isOnCooldown)).collect(Collectors.toList())) {
+            tracker.increaseWarningLevel();
+            if (warningLevel < tracker.getWarningLevel()) warningLevel = tracker.getWarningLevel();
+        }
+        return warningLevel;
     }
 
 }

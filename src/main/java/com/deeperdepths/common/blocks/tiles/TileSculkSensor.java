@@ -48,11 +48,12 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
 
     @Override
     public boolean canHear(Entity entity, SoundEvent sound, double x, double y, double z) {
-        return SensorSoundHandler.getSoundFrequency(sound) != 0 && cooldown == 0;
+        return SensorSoundHandler.getSoundFrequency(sound) != 0 && cooldown == 0 &! pos.equals(new BlockPos(x, y, z));
     }
 
     @Override
     public void reactToSound(Entity entity, SoundEvent sound, double x, double y, double z) {
+        if (cooldown > 0) return;
         cooldown = 40;
         frequency = SensorSoundHandler.getSoundFrequency(sound);
         power = Math.max(1, 15 - (int) (15f / 8f * DirectionUtils.centerOf(pos).distanceTo(new Vec3d(x, y, z))));

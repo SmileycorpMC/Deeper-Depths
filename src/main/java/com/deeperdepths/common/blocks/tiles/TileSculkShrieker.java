@@ -57,7 +57,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
 
     @Override
     public boolean canHear(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
-        return sound == DeeperDepthsSoundEvents.SCULK_SENSOR_CLICKING;
+        return sound == DeeperDepthsSoundEvents.SCULK_SENSOR_CLICKING  && cooldown == 0;
     }
 
     @Override
@@ -69,6 +69,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
     public void update() {
         if (cooldown == 0) return;
         if (--cooldown == 0) {
+            if (warningLevel == 0) return;
             //darkness warn and spawning
             if (warningLevel < 4 |! trySpawnWarden()) {
                 Random rand = world.rand;
@@ -78,10 +79,12 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
             PotionEffect effect = new PotionEffect(DeeperDepthsPotions.DARKNESS, 260, 0, false, false);
             for (EntityPlayer player : world.getPlayers(EntityPlayer.class, player -> player.getDistanceSq(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 1600))
                 player.addPotionEffect(effect);
+            warningLevel = 0;
         }
     }
 
     public void tryShriek(@Nullable Entity entity) {
+        if (cooldown > 0) return;
         if (entity == null) return;
         EntityPlayer player = null;
         if (entity instanceof EntityPlayer) player = (EntityPlayer) entity;
@@ -92,7 +95,6 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
         if (player == null) return;
         if (world.getDifficulty() != EnumDifficulty.PEACEFUL) warningLevel = WardenSpawnTracker.tryWarn(world, pos, player);
         cooldown = 90;
-
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof BlockSculkShrieker &! state.getValue(BlockSculkShrieker.WATERLOGGED))
             world.playSound(null, pos, DeeperDepthsSoundEvents.SCULK_SHRIEKER_SHRIEK, SoundCategory.BLOCKS, 1.7F, (world.rand.nextFloat() * 0.4F) + 0.6F);

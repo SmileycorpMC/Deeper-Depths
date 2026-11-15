@@ -18,6 +18,7 @@ import com.deeperdepths.common.items.DeeperDepthsItems;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
@@ -26,7 +27,9 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -112,6 +115,12 @@ public class ClientProxy extends CommonProxy {
 		for (Block block : DeeperDepthsBlocks.SCULK_VEINS) ModelLoader.setCustomStateMapper(block, new SculkVeinStateMapper());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.SCULK_SENSOR, new StateMap.Builder().ignore(IFluidloggable.WATERLOGGED).build());
         ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.CALIBRATED_SCULK_SENSOR, new StateMap.Builder().ignore(IFluidloggable.WATERLOGGED).build());
+        ModelLoader.setCustomStateMapper(DeeperDepthsBlocks.SCULK_SHRIEKER, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return new ModelResourceLocation(Constants.loc("sculk_shrieker"), "normal");
+            }
+        });
 
         ModelLoader.setCustomMeshDefinition(DeeperDepthsItems.OMINOUS_BOTTLE, stack -> new ModelResourceLocation(Constants.locStr("ominous_bottle")));
         for (Item item : DeeperDepthsItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&

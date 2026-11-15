@@ -67,6 +67,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.smileycorp.atlas.api.config.LootTableEntry;
 
 import java.util.Optional;
@@ -277,7 +278,7 @@ public class DeeperDepthsEventHandler {
         if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(CapabilityWindChargeFall.ID, new CapabilityWindChargeFall.Provider(new CapabilityWindChargeFall.WindChargeHorn(), CapabilityWindChargeFall.WINDBURSTHEIGHT_CAP, null));
             event.addCapability(Constants.loc("death_location"), new DeathLocation.Provider());
-            event.addCapability(Constants.loc("warden_tracker"), new WardenSpawnTracker.Provider());
+            event.addCapability(Constants.loc("warden_spawn_tracker"), new WardenSpawnTracker.Provider());
         }
     }
 
@@ -448,6 +449,12 @@ public class DeeperDepthsEventHandler {
         Tuple<Integer, BlockPos> data = DeathLocation.getDeathInformation((EntityPlayer) entity);
         if (data == null) return;
         SyncDeathLocationMessage.send(event.getEntityPlayer(), entity.getEntityId(), data.getFirst(), data.getSecond());
+    }
+
+    @SubscribeEvent
+    public void playerTick(TickEvent.PlayerTickEvent event) {
+        WardenSpawnTracker tracker = WardenSpawnTracker.get(event.player);
+        if (tracker != null) tracker.tick();
     }
 
 }
