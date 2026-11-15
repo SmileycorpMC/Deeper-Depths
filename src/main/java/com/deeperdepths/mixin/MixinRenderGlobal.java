@@ -1,5 +1,6 @@
 package com.deeperdepths.mixin;
 
+import com.deeperdepths.client.ClientProxy;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -16,9 +17,7 @@ public class MixinRenderGlobal {
     //prevent rendering the sky while darkness is active
     @Inject(at = @At(value = "HEAD"), method = "renderSky(FI)V", cancellable = true)
     public void deeperdepths$renderSky(float partialTicks, int pass, CallbackInfo callback) {
-        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-        if (!(entity instanceof EntityLivingBase)) return;
-        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
+        if (ClientProxy.DARKNESS_TICKS == 0) return;
         callback.cancel();
     }
 

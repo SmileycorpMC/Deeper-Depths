@@ -1,5 +1,6 @@
 package com.deeperdepths.mixin;
 
+import com.deeperdepths.client.ClientProxy;
 import com.deeperdepths.common.items.ItemSpyglass;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -37,8 +38,7 @@ public class MixinEntityRenderer {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;isPotionActive(Lnet/minecraft/potion/Potion;)Z"), method = "updateLightmap")
     public void deeperdepths$updateLightmap$isPotionActive(float partialTicks, CallbackInfo callback, @Local(ordinal = 9) LocalFloatRef r, @Local(ordinal = 10) LocalFloatRef g, @Local(ordinal = 11) LocalFloatRef b) {
         Entity entity = mc.getRenderViewEntity();
-        if (!(entity instanceof EntityLivingBase)) return;
-        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
+        if (ClientProxy.DARKNESS_TICKS == 0) return;
         float darkness = (float) Math.sin((entity.ticksExisted + partialTicks) / 20f) * 0.5f;
         r.set(Math.max(r.get() - darkness, 0));
         g.set(Math.max(g.get() - darkness, 0));
@@ -49,8 +49,7 @@ public class MixinEntityRenderer {
     @Inject(at = @At(value = "HEAD"), method = "updateLightmap")
     public void deeperdepths$updateLightmap$HEAD(float partialTicks, CallbackInfo callback) {
         Entity entity = mc.getRenderViewEntity();
-        if (!(entity instanceof EntityLivingBase)) return;
-        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
+        if (ClientProxy.DARKNESS_TICKS == 0) return;
         //store the game settings gamma before modifying it
         mcGamma = mc.gameSettings.gammaSetting;
         mc.gameSettings.gammaSetting -= (float) Math.sin((entity.ticksExisted + partialTicks) / 20f) * 0.5f;
@@ -60,9 +59,7 @@ public class MixinEntityRenderer {
     //reset game settings gamma if modified by darkness
     @Inject(at = @At(value = "RETURN"), method = "updateLightmap")
     public void deeperdepths$updateLightmap$RETURN(float partialTicks, CallbackInfo callback) {
-        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-        if (!(entity instanceof EntityLivingBase)) return;
-        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
+        if (ClientProxy.DARKNESS_TICKS == 0) return;
         mc.gameSettings.gammaSetting = mcGamma;
     }
 

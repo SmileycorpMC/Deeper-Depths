@@ -63,7 +63,7 @@ public class ClientProxy extends CommonProxy {
     private static float FOV = 1;
     private static float OLD_FOV = 1;
     private static float SCOPE_SCALE = 1;
-    private static float DARKNESS_TICKS = 0;
+    public static float DARKNESS_TICKS = 0;
     public static ResourceLocation SPYGLASS_TEXTURE = Constants.loc("textures/misc/spyglass_scope.png");
 
     public static Tuple<Integer, BlockPos> DEATH_DATA = null;
@@ -183,7 +183,7 @@ public class ClientProxy extends CommonProxy {
         Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
         if ((entity instanceof EntityLivingBase) && ((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) {
             if (DARKNESS_TICKS < 22) DARKNESS_TICKS++;
-        } else if (DARKNESS_TICKS > 0) DARKNESS_TICKS = 0;
+        } else if (DARKNESS_TICKS > 0) DARKNESS_TICKS--;
 
         EntityPlayerSP player = mc.player;
         if (player == null) return;
@@ -266,9 +266,9 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void renderFog(EntityViewRenderEvent.RenderFogEvent event) {
         Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-        if (!(entity instanceof EntityLivingBase)) return;
-        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
-        float factor = DARKNESS_TICKS == 22 ? 0 : 1 - ((DARKNESS_TICKS + (float) event.getRenderPartialTicks()) / 22f);
+        if (DARKNESS_TICKS == 0) return;
+        float factor = DARKNESS_TICKS == 22 ? 0 : 1 - ((DARKNESS_TICKS + (float) event.getRenderPartialTicks() * (
+                entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS) ? 1 : -1)) / 22f);
         float end = 15f + (event.getFarPlaneDistance() - 15f) * factor;
         GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
         GlStateManager.setFogStart(end * 0.75f);
@@ -278,9 +278,7 @@ public class ClientProxy extends CommonProxy {
     //set darkness fog colour
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void fogColor(EntityViewRenderEvent.FogColors event) {
-        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-        if (!(entity instanceof EntityLivingBase)) return;
-        if (!((EntityLivingBase) entity).isPotionActive(DeeperDepthsPotions.DARKNESS)) return;
+        if (DARKNESS_TICKS == 0) return;
         event.setRed(0);
         event.setGreen(0);
         event.setBlue(0);
