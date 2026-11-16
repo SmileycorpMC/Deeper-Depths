@@ -31,7 +31,8 @@ public class BlockSculkCatalyst extends BlockSculk implements ITileEntityProvide
         return 5;
     }
 
-    @Override
+    //used for testing
+    /*@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         TileSculkCatalyst tile = (TileSculkCatalyst) world.getTileEntity(pos);
@@ -49,7 +50,7 @@ public class BlockSculkCatalyst extends BlockSculk implements ITileEntityProvide
             world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,  DeeperDepthsSoundEvents.TRIAL_POT_INSERT, SoundCategory.BLOCKS, 1, 1);
         }
         return true;
-    }
+    }*/
 
     @Nullable
     @Override
