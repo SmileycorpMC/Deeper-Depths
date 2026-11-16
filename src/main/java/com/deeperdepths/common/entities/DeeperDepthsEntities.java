@@ -22,7 +22,7 @@ public class DeeperDepthsEntities
         registerEntity("chambers_painting", EntityDDPainting.class, ++id, 81);
         registerEntity("ominous_item_spawner", EntityOminousItemSpawner.class, ++id, 8);
 
-        registerEntity("copper_golem", EntityCopperGolem.class, ++id, 81, 12299217, 8355255);
+        registerEntity("copper_golem", EntityCopperGolem.class, ++id, 81, 0xC87456, 0xAC5E44);
     }
 
     public static void registerEntitySpawns() {
