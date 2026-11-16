@@ -6,6 +6,7 @@ import com.deeperdepths.common.blocks.tiles.TileTrialSpawner;
 import com.deeperdepths.common.blocks.tiles.TileVault;
 import com.deeperdepths.common.capabilities.CapabilityWindChargeFall;
 import com.deeperdepths.common.capabilities.DeathLocation;
+import com.deeperdepths.common.capabilities.SculkCatalysts;
 import com.deeperdepths.common.capabilities.WardenSpawnTracker;
 import com.deeperdepths.common.entities.EntityBreeze;
 import com.deeperdepths.common.entities.EntityCopperGolem;
@@ -49,9 +50,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -455,6 +454,13 @@ public class DeeperDepthsEventHandler {
     public void playerTick(TickEvent.PlayerTickEvent event) {
         WardenSpawnTracker tracker = WardenSpawnTracker.get(event.player);
         if (tracker != null) tracker.tick();
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void livingDie(LivingExperienceDropEvent event) {
+        EntityLivingBase entity = event.getEntityLiving();
+        if (entity.world.isRemote) return;
+        if (SculkCatalysts.getInstance((WorldServer) entity.world).tryConsume(entity, event.getDroppedExperience())) event.setDroppedExperience(0);
     }
 
 }
