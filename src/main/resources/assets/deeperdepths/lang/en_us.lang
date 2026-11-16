@@ -462,6 +462,10 @@ advancements.deeperdepths.is_it_a_balloon.title=Is It a Balloon?
 advancements.deeperdepths.is_it_a_balloon.description=Look at a Ghast through a Spyglass
 advancements.deeperdepths.is_it_a_plane.title=Is It a Plane?
 advancements.deeperdepths.is_it_a_plane.description=Look at the Ender Dragon through a Spyglass
+advancements.deeperdepths.it_spreads.title=It Spreads
+advancements.deeperdepths.it_spreads.description=Kill a mob near a Sculk Catalyst
+advancements.deeperdepths.sneak_100.title=Sneak 100
+advancements.deeperdepths.sneak_100.description=Sneak near a Sculk Sensor or Warden to prevent it from detecting you
 
 stat.deeperdepths.duped_copper=Duped Copper
 

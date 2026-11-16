@@ -28,7 +28,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 
-version = "1.12.2-sculk-test-4"
+version = "1.12.2-sculk-test-5"
 group = "com.deeperdepths"
 archivesBaseName = "Deeper-Depths"
 
@@ -48,11 +48,15 @@ minecraft {
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
+
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            args("-Dmixin.debug.export=true",
-                    '-Dmixin.hotSwap=true',
-                    '-Dmixin.checks.interfaces=true')
+            property 'mixin.debug.export', 'true'
+            property 'mixin.hotSwap', 'true'
+            property 'mixin.checks.interfaces', 'true'
+            // property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
+            arg '-torg.spongepowered.asm.launch.MixinTweaker'
+            arg "-mixin.config=mixins.deeperdepths.json"
         }
 
         server {

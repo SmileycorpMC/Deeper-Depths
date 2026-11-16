@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:adventure/root",
+  "display": {
+    "icon": {
+      "item": "deeperdepths:sculk_sensor"
+	},
+    "title": {
+      "translate": "advancements.deeperdepths.sneak_100.title"
+    },
+    "description": {
+      "translate": "advancements.deeperdepths.sneak_100.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "sneak": {
+      "trigger": "deeperdepths:sneak_100",
+      "conditions": {}
+    }
+  },
+  "requirements": []
+}

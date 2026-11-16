@@ -3,9 +3,11 @@ package com.deeperdepths.common.capabilities;
 import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.ISoundFrequency;
+import com.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -44,19 +46,25 @@ public class VibrationHandler {
     public void playSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
         if (ctxEntity != null) entity = ctxEntity;
         if (entity != null && entity.isSneaking()) {
+            Entity entity1 = entity;
+            if (entity instanceof EntityPlayerMP && listeners.stream().anyMatch(listener ->
+                    canHear(listener, listener.getPosition(), entity1, sound, x, y, z)))
+                DeeperDepthsAdvancements.SNEAK_100.trigger((EntityPlayerMP) entity);
             ctxEntity = null;
             return;
         }
         for (Listener listener : listeners) {
             Vec3d pos = listener.getPosition();
-            if (pos.squareDistanceTo(x, y, z) <= Math.pow(listener.getRange(), 2) &! isOccluded(x, y, z, pos)
-                    && listener.canHear(entity, sound, x, y, z)) {
-                listener.reactToSound(entity, sound, x, y, z);
-                DeeperDepths.proxy.spawnParticle(9, world, x, y, z, pos.x, pos.y, pos.z, (int) pos.distanceTo(new Vec3d(x, y, z)));
-            }
+            if (!canHear(listener, pos, entity, sound, x, y, z)) continue;
+            listener.reactToSound(entity, sound, x, y, z);
+            DeeperDepths.proxy.spawnParticle(9, world, x, y, z, pos.x, pos.y, pos.z, (int) pos.distanceTo(new Vec3d(x, y, z)));
         }
         if (sound == DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE) ((ISoundFrequency)sound).setSoundFrequency(0);
         ctxEntity = null;
+    }
+
+    public boolean canHear(Listener listener, Vec3d pos, @Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
+        return pos.squareDistanceTo(x, y, z) <= Math.pow(listener.getRange(), 2) &! isOccluded(x, y, z, pos) && listener.canHear(entity, sound, x, y, z);
     }
 
     public boolean isOccluded(double soundX, double soundY, double soundZ, Vec3d pos) {

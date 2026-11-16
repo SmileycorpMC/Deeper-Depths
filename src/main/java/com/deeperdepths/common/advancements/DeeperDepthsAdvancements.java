@@ -10,6 +10,8 @@ public class DeeperDepthsAdvancements {
     public static DeeperDepthsCriterionTrigger WAX_OFF = new DeeperDepthsCriterionTrigger("wax_off");
     public static DeeperDepthsCriterionTrigger OVER_OVERKILL = new DeeperDepthsCriterionTrigger("over_overkill");
     public static SpyglassCriterionTrigger SPYGLASS = new SpyglassCriterionTrigger();
+    public static DeeperDepthsCriterionTrigger IT_SPREADS = new DeeperDepthsCriterionTrigger("it_spreads");
+    public static DeeperDepthsCriterionTrigger SNEAK_100 = new DeeperDepthsCriterionTrigger("sneak_100");
 
     public static void init() {
         CriteriaTriggers.register(LETS_GO_GAMBLING);
@@ -18,6 +20,8 @@ public class DeeperDepthsAdvancements {
         CriteriaTriggers.register(WAX_OFF);
         CriteriaTriggers.register(OVER_OVERKILL);
         CriteriaTriggers.register(SPYGLASS);
+        CriteriaTriggers.register(IT_SPREADS);
+        CriteriaTriggers.register(SNEAK_100);
     }
     
 }
