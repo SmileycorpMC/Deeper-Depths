@@ -81,7 +81,7 @@ public class DeeperDepthsBlocks {
     public static final BlockCopperTorch COPPER_TORCH = new BlockCopperTorch();
     
     //sculk
-    public static final Block SCULK = new BlockSculk("sculk", 0.2f, 0.2f);
+    public static final Block SCULK = new BlockSculk("sculk", BlockConfig.sculk);
     public static final Block[] SCULK_VEINS = {new BlockSculkVein(0), new BlockSculkVein(1),
             new BlockSculkVein(2), new BlockSculkVein(3)};
     public static final Block SCULK_CATALYST = new BlockSculkCatalyst();

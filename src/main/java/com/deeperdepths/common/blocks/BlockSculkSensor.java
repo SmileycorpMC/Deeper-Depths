@@ -3,6 +3,7 @@ package com.deeperdepths.common.blocks;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.tiles.TileSculkSensor;
+import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.PropertyBool;
@@ -28,7 +29,7 @@ public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider,
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.5, 1);
 
     public BlockSculkSensor(String name) {
-        super(name, 1.5f, 1.5f);
+        super(name, BlockConfig.sculkSensor);
         setSoundType(DeeperDepthsSoundTypes.SCULK_SENSOR);
         setLightLevel(0.125f);
         setDefaultState(getBlockState().getBaseState().withProperty(WATERLOGGED, false).withProperty(ACTIVE, false));
@@ -73,7 +74,7 @@ public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider,
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileSculkSensor();
+        return new TileSculkSensor(BlockConfig.sculkSensorCooldown);
     }
     
     @Override

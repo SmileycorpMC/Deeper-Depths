@@ -35,6 +35,7 @@ public class CommonProxy {
         BlockConfig.syncConfig(event);
         EntityConfig.syncConfig(event);
         LootTablesConfig.syncConfig(event);
+        VibrationsConfig.syncConfig(event);
         WorldConfig.syncConfig(event);
         MinecraftForge.EVENT_BUS.register(new DeeperDepthsEventHandler());
         DeeperDepthsEntities.registerEntities();
@@ -44,7 +45,6 @@ public class CommonProxy {
         LootFunctionManager.registerFunction(new ApplyEnchantments.Serializer());
         DeeperDepthsAdvancements.init();
         DeeperDepthsSoundEvents.registerSounds();
-        SensorSoundHandler.init();
     }
     
     public void init(FMLInitializationEvent event)

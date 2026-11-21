@@ -1,22 +1,19 @@
 package com.deeperdepths.common.blocks;
 
-import com.deeperdepths.common.DeeperDepths;
-import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.tiles.TileSculkShrieker;
+import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -30,7 +27,7 @@ public class BlockSculkShrieker extends BlockSculk  implements ITileEntityProvid
 
     public BlockSculkShrieker()
     {
-        super("sculk_shrieker", 3, 3);
+        super("sculk_shrieker", BlockConfig.sculkShrieker);
         setSoundType(DeeperDepthsSoundTypes.SCULK);
     }
 
@@ -75,7 +72,6 @@ public class BlockSculkShrieker extends BlockSculk  implements ITileEntityProvid
         if (tile instanceof TileSculkShrieker) ((TileSculkShrieker) tile).tryShriek(entityIn);
         super.onEntityWalk(worldIn, pos, entityIn);
     }
-
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {

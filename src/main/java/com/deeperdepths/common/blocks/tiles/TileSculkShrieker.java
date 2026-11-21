@@ -6,6 +6,7 @@ import com.deeperdepths.common.blocks.BlockSculkShrieker;
 import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.common.capabilities.WardenSpawnTracker;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
+import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,7 +53,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
 
     @Override
     public int getRange() {
-        return 8;
+        return BlockConfig.sculkShriekerDetectionRange;
     }
 
     @Override
@@ -76,8 +77,9 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
                 world.playSound(null, pos.add(rand.nextInt(20) - 10, rand.nextInt(20) - 10, rand.nextInt(20) - 10),
                         WARNING_SOUNDS[warningLevel - 1], SoundCategory.HOSTILE, 5, 1);
             }
-            PotionEffect effect = new PotionEffect(DeeperDepthsPotions.DARKNESS, 260, 0, false, false);
-            for (EntityPlayer player : world.getPlayers(EntityPlayer.class, player -> player.getDistanceSq(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 1600))
+            PotionEffect effect = new PotionEffect(DeeperDepthsPotions.DARKNESS, BlockConfig.sculkShriekerDarknessLength, 0, false, false);
+            for (EntityPlayer player : world.getPlayers(EntityPlayer.class, player -> player.getDistanceSq(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5)
+                    < BlockConfig.sculkShriekerDarknessRange * BlockConfig.sculkShriekerDarknessRange))
                 player.addPotionEffect(effect);
             warningLevel = 0;
         }
@@ -94,7 +96,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
         }
         if (player == null) return;
         if (world.getDifficulty() != EnumDifficulty.PEACEFUL) warningLevel = WardenSpawnTracker.tryWarn(world, pos, player);
-        cooldown = 90;
+        cooldown = BlockConfig.sculkShriekerCooldown;
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof BlockSculkShrieker &! state.getValue(BlockSculkShrieker.WATERLOGGED))
             world.playSound(null, pos, DeeperDepthsSoundEvents.SCULK_SHRIEKER_SHRIEK, SoundCategory.BLOCKS, 1.7F, (world.rand.nextFloat() * 0.4F) + 0.6F);

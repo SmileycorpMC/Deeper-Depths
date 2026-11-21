@@ -1,6 +1,7 @@
 package com.deeperdepths.common.blocks;
 
 import com.deeperdepths.common.blocks.tiles.TileCalibratedSculkSensor;
+import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -55,7 +56,7 @@ public class BlockCalibratedSculkSensor extends BlockSculkSensor {
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileCalibratedSculkSensor();
+        return new TileCalibratedSculkSensor(BlockConfig.sculkSensorCooldown);
     }
 
 }

@@ -2,10 +2,10 @@ package com.deeperdepths.common.blocks.tiles;
 
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.blocks.BlockSculkSensor;
-import com.deeperdepths.common.blocks.DeeperDepthsBlocks;
 import com.deeperdepths.common.blocks.IFluidloggable;
 import com.deeperdepths.common.capabilities.VibrationHandler;
-import com.deeperdepths.config.SensorSoundHandler;
+import com.deeperdepths.config.BlockConfig;
+import com.deeperdepths.config.VibrationsConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +23,15 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 public class TileSculkSensor extends TileEntity implements ITickable, VibrationHandler.Listener {
     
     private int cooldown, frequency, power;
-    
+
+    public TileSculkSensor() {
+        super();
+    }
+
+    public TileSculkSensor(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
     @Override
     public void setWorld(World world) {
         super.setWorld(world);
@@ -43,24 +51,23 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
 
     @Override
     public int getRange() {
-        return 8;
+        return BlockConfig.sculkSensorDetectionRange;
     }
 
     @Override
     public boolean canHear(Entity entity, SoundEvent sound, double x, double y, double z) {
-        return SensorSoundHandler.getSoundFrequency(sound) != 0 && cooldown == 0 &! pos.equals(new BlockPos(x, y, z));
+        return VibrationsConfig.getVibrationFrequency(sound) != 0 && cooldown == 0;
     }
 
     @Override
     public void reactToSound(Entity entity, SoundEvent sound, double x, double y, double z) {
         if (cooldown > 0) return;
-        cooldown = 40;
-        frequency = SensorSoundHandler.getSoundFrequency(sound);
-        power = Math.max(1, 15 - (int) (15f / 8f * DirectionUtils.centerOf(pos).distanceTo(new Vec3d(x, y, z))));
+        cooldown = BlockConfig.sculkSensorCooldown + BlockConfig.sculkSensorActiveTicks;
+        frequency = VibrationsConfig.getVibrationFrequency(sound);
+        power = Math.max(1, 15 - (int) (15f / (float) getRange() * DirectionUtils.centerOf(pos).distanceTo(new Vec3d(x, y, z))));
         for (EnumFacing facing : EnumFacing.values()) {
             BlockPos pos1 = pos.offset(facing);
-            if (world.getBlockState(pos1).getBlock() == DeeperDepthsBlocks.AMETHYST_BLOCK)
-                VibrationHandler.getInstance((WorldServer) world).playResonance(pos1, frequency);
+            if (VibrationsConfig.resonatesVibrations(world.getBlockState(pos1))) VibrationHandler.getInstance((WorldServer) world).playResonance(pos1, frequency);
         }
         IBlockState state = world.getBlockState(pos);
         if (!(state.getBlock() instanceof BlockSculkSensor)) return;
@@ -82,7 +89,7 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
     public void update() {
         if (cooldown == 0) return;
         cooldown--;
-        if (cooldown == 10) {
+        if (cooldown == BlockConfig.sculkSensorActiveTicks) {
             frequency = 0;
             power = 0;
             IBlockState state = world.getBlockState(pos);

@@ -4,6 +4,7 @@ import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.ISoundFrequency;
 import com.deeperdepths.common.advancements.DeeperDepthsAdvancements;
+import com.deeperdepths.config.VibrationsConfig;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
@@ -68,14 +69,13 @@ public class VibrationHandler {
     }
 
     public boolean isOccluded(double soundX, double soundY, double soundZ, Vec3d pos) {
-        return DirectionUtils.hasCollision(world, new Vec3d(soundX, soundY, soundZ), pos, (world, pos1, state, block) -> block == Blocks.WOOL);
+        return DirectionUtils.hasCollision(world, new Vec3d(soundX, soundY, soundZ), pos, (world, pos1, state, block) -> VibrationsConfig.occludesVibrations(state));
     }
 
     public void playResonance(BlockPos pos, int frequency) {
         SoundEvent sound = DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE;
         ((ISoundFrequency)sound).setSoundFrequency(frequency);
-        world.playSound(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                sound, SoundCategory.BLOCKS, 1, RESONANCE_PITCHES[frequency]);
+        world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, sound, SoundCategory.BLOCKS, 1, RESONANCE_PITCHES[frequency]);
     }
 
     public void setEntityContext(Entity entity) {

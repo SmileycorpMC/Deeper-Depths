@@ -9,14 +9,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.smileycorp.atlas.api.config.BlockStatEntry;
 
 import java.util.Random;
 
 public class BlockSculk extends BlockDeeperDepths implements IHoeEfficient {
-    
-    public BlockSculk(String name, float h, float r) {
+
+    public BlockSculk(String name, BlockStatEntry entry) {
+        this(name, entry.getHardness(), entry.getResistance(), entry.getHarvestLevel());
+    }
+
+    public BlockSculk(String name, float h, float r, int havestLevel) {
         super(name, Material.PLANTS, h, r);
         setSoundType(DeeperDepthsSoundTypes.SCULK);
+        setHarvestLevel(null, havestLevel);
     }
     
     @Override
