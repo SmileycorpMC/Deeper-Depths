@@ -21,8 +21,8 @@ public class DeeperDepthsEntities
         registerEntity("wind_charge", EntityWindCharge.class, ++id, 80);
         registerEntity("chambers_painting", EntityDDPainting.class, ++id, 81);
         registerEntity("ominous_item_spawner", EntityOminousItemSpawner.class, ++id, 8);
-
         registerEntity("copper_golem", EntityCopperGolem.class, ++id, 81, 12299217, 8355255);
+        registerEntity("warden", EntityWarden.class, ++id, 128, 1001033, 3790560);
     }
 
     public static void registerEntitySpawns() {

@@ -1,0 +1,15 @@
+{
+    "pools": [
+        {
+            "name": "sculk_catalyst",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "deeperdepths:sculk_catalyst",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

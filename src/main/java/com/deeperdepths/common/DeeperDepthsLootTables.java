@@ -22,6 +22,7 @@ public class DeeperDepthsLootTables
     public static final ResourceLocation BOGGED_DROPS = Constants.loc("entities/bogged");
     public static final ResourceLocation BOGGED_SHEAR = Constants.loc("entities/bogged_shear");
     public static final ResourceLocation BREEZE_DROPS = Constants.loc("entities/breeze");
+    public static final ResourceLocation WARDEN_DROPS = Constants.loc("entities/warden");
 
     public static void registerLootTables()
     {
@@ -36,5 +37,6 @@ public class DeeperDepthsLootTables
         LootTableList.register(BOGGED_DROPS);
         LootTableList.register(BOGGED_SHEAR);
         LootTableList.register(BREEZE_DROPS);
+        LootTableList.register(WARDEN_DROPS);
     }
 }

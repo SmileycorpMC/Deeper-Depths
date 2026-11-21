@@ -24,6 +24,7 @@ public class VibrationsConfig {
 
     public static int sculkSensorDetectionRange;
     public static int sculkShriekerDetectionRange;
+    public static int wardenDetectionRange;
 
     private static String[] resonatesConfig;
     private static List<StateMatch> resonates;
@@ -81,6 +82,7 @@ public class VibrationsConfig {
 
             sculkSensorDetectionRange = config.get("detection ranges", "sculkSensor", 8, "How far can sculk sensors detect vibrations?").getInt();
             sculkShriekerDetectionRange = config.get("detection ranges", "sculkShrieker", 8, "How far can sculk shriekers detect vibrations?").getInt();
+            wardenDetectionRange = config.get("detection ranges", "warden", 16, "How far can wardens detect vibrations?").getInt();
 
             vibrationFrequenciesConfig = config.getStringList("vibrationFrequencies", "sounds", vibrationFrequenciesConfig,
                    "Sound registry names and frequencies in the format <name>-<frequency>, any sounds that match the specified registry name have the specified frequency, the higher in the list the higher priority the frequency has");

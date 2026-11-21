@@ -15,10 +15,14 @@ public class EntityConfig {
     public static double boggedAttackCooldownNormal = 3.5;
     public static double boggedAttackCooldownHard = 2.5;
     public static EntityAttributesEntry breeze;
-    //public static EntityAttributesEntry warden;
+    public static EntityAttributesEntry warden;
+    public static int wardenVibrationCooldown;
+    public static int wardenDarknessFrequency;
+    public static int wardenDarknessLength;
+    public static double wardenDarknessRange;
     //public static EntityAttributesEntry glare;
     public static EntityAttributesEntry copper_golem;
-    
+
     public static void syncConfig(FMLPreInitializationEvent event) {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/deeperdepths/entities.cfg"));
         try{
@@ -33,7 +37,13 @@ public class EntityConfig {
             boggedAttackCooldownHard = config.get("bogged", "attackCooldownHard", 2.5, "The cooldown between firing on Hard, in seconds").getDouble();
             //breeze
             breeze = new EntityAttributesEntry(config, "breeze", 0.63, 24, 3, 30, 0, 0, 0);
-            //warden = new EntityAttributesEntry(config, "warden", 0.3, 32, 30, 500, 0, 0, 1);
+            //warden
+            warden = new EntityAttributesEntry(config, "warden", 0.3, 32, 30, 500, 0, 0, 1);
+            wardenVibrationCooldown = config.get("warden", "vibrationCooldown", 40, "How long after a warden receives a vibration until it can receive another one, in ticks").getInt();
+            wardenDarknessFrequency = config.get("warden", "darknessFrequency", 120, "How many ticks before the warden applies darkness to nearby players?").getInt();
+            wardenDarknessLength = config.get("warden", "darkness length", 260, "How many ticks does a warden give darkness for?").getInt();
+            wardenDarknessRange = config.get("warden", "darknessRange", 20, "How close to a warden does a player need to get the darkness effect?").getDouble();
+            //copper golem
             copper_golem = new EntityAttributesEntry(config, "copper_golem", 0.3, 32, 0, 12, 0, 0, 0);
         } catch(Exception e) {
         } finally {
