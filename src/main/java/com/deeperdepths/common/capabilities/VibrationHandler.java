@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -49,13 +48,13 @@ public class VibrationHandler {
         if (entity != null && entity.isSneaking()) {
             Entity entity1 = entity;
             if (entity instanceof EntityPlayerMP && listeners.stream().anyMatch(listener ->
-                    canHear(listener, listener.getPosition(), entity1, sound, x, y, z)))
+                    canHear(listener, listener.getListenerPos(), entity1, sound, x, y, z)))
                 DeeperDepthsAdvancements.SNEAK_100.trigger((EntityPlayerMP) entity);
             ctxEntity = null;
             return;
         }
         for (Listener listener : listeners) {
-            Vec3d pos = listener.getPosition();
+            Vec3d pos = listener.getListenerPos();
             if (!canHear(listener, pos, entity, sound, x, y, z)) continue;
             listener.reactToSound(entity, sound, x, y, z);
             DeeperDepths.proxy.spawnParticle(9, world, x, y, z, pos.x, pos.y, pos.z, (int) pos.distanceTo(new Vec3d(x, y, z)));
@@ -100,7 +99,7 @@ public class VibrationHandler {
     
     public interface Listener {
 
-        Vec3d getPosition();
+        Vec3d getListenerPos();
 
         int getRange();
         

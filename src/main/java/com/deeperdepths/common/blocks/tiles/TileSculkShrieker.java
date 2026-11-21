@@ -48,7 +48,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
     }
 
     @Override
-    public Vec3d getPosition() {
+    public Vec3d getListenerPos() {
         return DirectionUtils.centerOf(pos);
     }
 
