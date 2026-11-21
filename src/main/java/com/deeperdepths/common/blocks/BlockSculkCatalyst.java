@@ -22,7 +22,7 @@ public class BlockSculkCatalyst extends BlockSculk implements ITileEntityProvide
     
     @Override
     public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-        return 5;
+        return BlockConfig.sculkCatalystXpDrop;
     }
 
     //used for testing

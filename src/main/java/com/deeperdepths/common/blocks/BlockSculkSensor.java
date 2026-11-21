@@ -68,7 +68,7 @@ public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider,
 
     @Override
     public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-        return 5;
+        return BlockConfig.sculkSensorXpDrop;
     }
 
     @Nullable

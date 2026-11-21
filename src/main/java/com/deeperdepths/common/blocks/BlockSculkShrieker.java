@@ -64,7 +64,7 @@ public class BlockSculkShrieker extends BlockSculk  implements ITileEntityProvid
 
     @Override
     public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-        return 5;
+        return BlockConfig.sculkShriekerXpDrop;
     }
 
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {

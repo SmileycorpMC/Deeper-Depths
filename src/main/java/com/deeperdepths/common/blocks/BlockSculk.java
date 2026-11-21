@@ -1,6 +1,7 @@
 package com.deeperdepths.common.blocks;
 
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
+import com.deeperdepths.config.BlockConfig;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -47,7 +48,7 @@ public class BlockSculk extends BlockDeeperDepths implements IHoeEfficient {
     
     @Override
     public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-        return 1;
+        return BlockConfig.sculkXpDrop;
     }
     
     @Override
