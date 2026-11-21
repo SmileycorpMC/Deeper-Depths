@@ -51,7 +51,7 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
 
     @Override
     public int getRange() {
-        return BlockConfig.sculkSensorDetectionRange;
+        return VibrationsConfig.sculkSensorDetectionRange;
     }
 
     @Override

@@ -22,6 +22,9 @@ public class VibrationsConfig {
     private static String[] occludesVibrationsConfig;
     private static List<StateMatch> occludesVibrations;
 
+    public static int sculkSensorDetectionRange;
+    public static int sculkShriekerDetectionRange;
+
     private static String[] resonatesConfig;
     private static List<StateMatch> resonates;
 
@@ -75,6 +78,10 @@ public class VibrationsConfig {
             config.load();
             occludesVibrationsConfig = config.getStringList("occludesVibrations", "blocks", new String[]{"minecraft:wool:*", "minecraft:carpet:*"}, "Blocks that block vibrations, formatted as registry name:metadata, no meta or wildcard meta '*' makes any meta of the blocks top vibrations.");
             resonatesConfig = config.getStringList("resonates", "blocks", new String[]{"deeperdepths:amethyst:*"}, "Blocks that sculk sensors can resonate sounds through, formatted as registry name:metadata, no meta or wildcard meta '*' makes any meta of the blocks resonate.");
+
+            sculkSensorDetectionRange = config.get("detection ranges", "sculkSensor", 8, "How far can sculk sensors detect vibrations?").getInt();
+            sculkShriekerDetectionRange = config.get("detection ranges", "sculkShrieker", 8, "How far can sculk shriekers detect vibrations?").getInt();
+
             vibrationFrequenciesConfig = config.getStringList("vibrationFrequencies", "sounds", vibrationFrequenciesConfig,
                    "Sound registry names and frequencies in the format <name>-<frequency>, any sounds that match the specified registry name have the specified frequency, the higher in the list the higher priority the frequency has");
         } catch(Exception e) {

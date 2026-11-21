@@ -39,13 +39,11 @@ public class BlockConfig {
     public static BlockStatEntry sculkSensor;
     public static int sculkSensorActiveTicks;
     public static int sculkSensorCooldown;
-    public static int sculkSensorDetectionRange;
     public static int sculkSensorXpDrop;
     public static BlockStatEntry sculkShrieker;
     public static int sculkShriekerCooldown;
     public static int sculkShriekerDarknessLength;
     public static double sculkShriekerDarknessRange;
-    public static int sculkShriekerDetectionRange;
     public static int sculkShriekerXpDrop;
     public static BlockStatEntry tintedGlass;
     public static BlockStatEntry trialPot;
@@ -85,13 +83,11 @@ public class BlockConfig {
             sculkSensor = new BlockStatEntry(config, "sculk sensor", 1.5, 1.5, 0);
             sculkSensorActiveTicks = config.get("sculk sensor", "active ticks", 30, "How many ticks do sculk sensors stay active for?").getInt();
             sculkSensorCooldown = config.get("sculk sensor", "cooldown", 10, "How many ticks after a sculk sensor stops being active before it can listen for sounds again?").getInt();
-            sculkSensorDetectionRange = config.get("sculk sensor", "detection range", 8, "How far can sculk sensors detect?").getInt();
             sculkSensorXpDrop = config.get("sculk sensor", "xp drop", 5, "How much xp do sculk sensors drop?").getInt();
             sculkShrieker = new BlockStatEntry(config, "sculk shrieker", 3, 3, 0);
             sculkShriekerCooldown = config.get("sculk shrieker", "cooldown", 10, "How many ticks after a sculk shrieker activates before it can activate again?").getInt();
             sculkShriekerDarknessLength = config.get("sculk shrieker", "darkness length", 260, "How many ticks does a sculk shrieker give darkness for?").getInt();
             sculkShriekerDarknessRange = config.get("sculk shrieker", "darkness range", 40, "How close to a shrieker does a player need to get the darkness effect?").getDouble();
-            sculkShriekerDetectionRange = config.get("sculk shrieker", "detection range", 8, "How far can sculk shriekers detect?").getInt();
             sculkShriekerXpDrop = config.get("sculk shrieker", "xp drop", 5, "How much xp do sculk shriekers drop?").getInt();
             tintedGlass = new BlockStatEntry(config, "tinted glass", 0.3, 0.3, 0);
             trialPot = new BlockStatEntry(config, "trial pot", 0, 0, 0);

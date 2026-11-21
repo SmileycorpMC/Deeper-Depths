@@ -7,6 +7,7 @@ import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.common.capabilities.WardenSpawnTracker;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.config.BlockConfig;
+import com.deeperdepths.config.VibrationsConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,7 +54,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
 
     @Override
     public int getRange() {
-        return BlockConfig.sculkShriekerDetectionRange;
+        return VibrationsConfig.sculkShriekerDetectionRange;
     }
 
     @Override
