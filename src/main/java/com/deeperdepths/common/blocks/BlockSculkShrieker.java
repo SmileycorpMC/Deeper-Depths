@@ -29,6 +29,7 @@ public class BlockSculkShrieker extends BlockSculk  implements ITileEntityProvid
     {
         super("sculk_shrieker", BlockConfig.sculkShrieker);
         setSoundType(DeeperDepthsSoundTypes.SCULK);
+        setDefaultState(getBlockState().getBaseState().withProperty(WATERLOGGED, false));
     }
 
     @Override
