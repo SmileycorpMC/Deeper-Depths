@@ -75,6 +75,7 @@ minecraft {
 
 mixin {
     add sourceSets.main, "mixins.deeperdepths.refmap.json"
+    config "mixins.deeperdepths.json"
 }
 
 repositories {
