@@ -21,7 +21,8 @@ import net.minecraft.world.WorldServer;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 
 public class TileSculkSensor extends TileEntity implements ITickable, VibrationHandler.Listener {
-    
+
+    private final VibrationHandler.Data vibrationData = new VibrationHandler.Data(this);
     private int cooldown, frequency, power;
 
     public TileSculkSensor() {
@@ -81,15 +82,21 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
     }
 
     @Override
+    public VibrationHandler.Data getVibrationData() {
+        return vibrationData;
+    }
+
+    @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         return oldState.getBlock() != newState.getBlock();
     }
 
     @Override
     public void update() {
+        if (world instanceof WorldServer) getVibrationData().tick((WorldServer) world);
         if (cooldown == 0) return;
         cooldown--;
-        if (cooldown == BlockConfig.sculkSensorActiveTicks) {
+        if (cooldown == BlockConfig.sculkSensorCooldown) {
             frequency = 0;
             power = 0;
             IBlockState state = world.getBlockState(pos);
@@ -114,6 +121,7 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
         compound.setInteger("cooldown", cooldown);
         compound.setInteger("frequency", frequency);
         compound.setInteger("power", power);
+        compound.setTag("vibration_data", vibrationData.writeToNBT());
         return super.writeToNBT(compound);
     }
 
@@ -123,6 +131,7 @@ public class TileSculkSensor extends TileEntity implements ITickable, VibrationH
         cooldown = compound.getInteger("cooldown");
         frequency = compound.getInteger("frequency");
         power = compound.getInteger("power");
+        vibrationData.readFromNBT(compound.getTagList("vibration_data", 10));
     }
 
 }

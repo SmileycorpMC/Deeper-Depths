@@ -32,6 +32,7 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
             DeeperDepthsSoundEvents.WARDEN_NEARBY_CLOSE, DeeperDepthsSoundEvents.WARDEN_NEARBY_CLOSER,
             DeeperDepthsSoundEvents.WARDEN_NEARBY_CLOSEST, DeeperDepthsSoundEvents.WARDEN_LISTENING_ANGRY};
 
+    private final VibrationHandler.Data vibrationData = new VibrationHandler.Data(this);
     private int cooldown = 0;
     private int warningLevel;
 
@@ -68,7 +69,13 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
     }
 
     @Override
+    public VibrationHandler.Data getVibrationData() {
+        return vibrationData;
+    }
+
+    @Override
     public void update() {
+        if (world instanceof WorldServer) getVibrationData().tick((WorldServer) world);
         if (cooldown == 0) return;
         if (--cooldown == 0) {
             if (warningLevel == 0) return;
@@ -112,7 +119,8 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setInteger("cooldown", cooldown);
-        compound.setInteger("warningLevel", warningLevel);
+        compound.setInteger("warning_level", warningLevel);
+        compound.setTag("vibration_data", vibrationData.writeToNBT());
         return super.writeToNBT(compound);
     }
 
@@ -120,7 +128,8 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         cooldown = compound.getInteger("cooldown");
-        warningLevel = compound.getInteger("warningLevel");
+        warningLevel = compound.getInteger("warning_level");
+        vibrationData.readFromNBT(compound.getTagList("vibration_data", 10));
     }
 
 }

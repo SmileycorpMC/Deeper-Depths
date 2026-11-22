@@ -78,7 +78,7 @@ public class VibrationsConfig {
         try{
             config.load();
             occludesVibrationsConfig = config.getStringList("occludesVibrations", "blocks", new String[]{"minecraft:wool:*", "minecraft:carpet:*"}, "Blocks that block vibrations, formatted as registry name:metadata, no meta or wildcard meta '*' makes any meta of the blocks top vibrations.");
-            resonatesConfig = config.getStringList("resonates", "blocks", new String[]{"deeperdepths:amethyst:*"}, "Blocks that sculk sensors can resonate sounds through, formatted as registry name:metadata, no meta or wildcard meta '*' makes any meta of the blocks resonate.");
+            resonatesConfig = config.getStringList("resonates", "blocks", new String[]{"deeperdepths:amethyst_block:*"}, "Blocks that sculk sensors can resonate sounds through, formatted as registry name:metadata, no meta or wildcard meta '*' makes any meta of the blocks resonate.");
 
             sculkSensorDetectionRange = config.get("detection ranges", "sculkSensor", 8, "How far can sculk sensors detect vibrations?").getInt();
             sculkShriekerDetectionRange = config.get("detection ranges", "sculkShrieker", 8, "How far can sculk shriekers detect vibrations?").getInt();

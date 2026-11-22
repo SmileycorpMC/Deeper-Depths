@@ -46,6 +46,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     private int vibrationCooldown = 40;
     private final Object2IntMap<UUID> angerLevels = new Object2IntOpenHashMap<>();
+    private final VibrationHandler.Data vibrationData = new VibrationHandler.Data(this);
 
     public EntityWarden(World world) {
         super(world);
@@ -93,6 +94,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     @Override
     public void onUpdate() {
         if (world.isRemote) return;
+        if (world instanceof WorldServer) getVibrationData().tick((WorldServer) world);
         int stateTimer = getStateTimer();
         if (stateTimer == 0 && getState() != EnumState.IDLE) setState(EnumState.IDLE, 0);
         else dataManager.set(STATE_TIMER, stateTimer - 1);
@@ -150,7 +152,12 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         playSound(DeeperDepthsSoundEvents.WARDEN_TENDRIL_CLICKS, 5, getSoundPitch());
         if (vibrationCooldown == 0) vibrationCooldown = EntityConfig.wardenVibrationCooldown;
     }
-    
+
+    @Override
+    public VibrationHandler.Data getVibrationData() {
+        return vibrationData;
+    }
+
     public EnumAnger getAngerLevel() {
         return EnumAnger.get(getAnger());
     }
@@ -221,7 +228,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
-        compound.setInteger("vibrationCooldown", vibrationCooldown);
+        compound.setInteger("vibration_cooldown", vibrationCooldown);
         NBTTagList angerLevels = new NBTTagList();
         for (Map.Entry<UUID, Integer> entry : this.angerLevels.entrySet()) {
             NBTTagCompound nbt = new NBTTagCompound();
@@ -229,25 +236,27 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             nbt.setInteger("anger", entry.getValue());
             angerLevels.appendTag(nbt);
         }
-        compound.setTag("angerLevels", angerLevels);
+        compound.setTag("anger_levels", angerLevels);
         compound.setByte("state", dataManager.get(STATE));
-        compound.setInteger("stateTimer", getStateTimer());
+        compound.setInteger("state_timer", getStateTimer());
+        compound.setTag("vibration_data", vibrationData.writeToNBT());
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
-        vibrationCooldown = compound.getInteger("vibrationCooldown");
-        if (compound.hasKey("angerLevels", 9)) {
+        vibrationCooldown = compound.getInteger("vibration_cooldown");
+        if (compound.hasKey("anger_levels", 9)) {
             angerLevels.clear();
-            NBTTagList angerLevels = compound.getTagList("angerLevels", 10);
+            NBTTagList angerLevels = compound.getTagList("anger_levels", 10);
             for (NBTBase nbtBase : angerLevels) try {
                 NBTTagCompound nbt = (NBTTagCompound) nbtBase;
                 this.angerLevels.put(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("uuid")), nbt.getInteger("anger"));
             } catch (Exception e) {}
         }
         dataManager.set(STATE, compound.getByte("state"));
-        dataManager.set(STATE_TIMER, compound.getInteger("stateTimer"));
+        dataManager.set(STATE_TIMER, compound.getInteger("state_timer"));
+        vibrationData.readFromNBT(compound.getTagList("vibration_data", 10));
     }
 
     public boolean canTarget(@Nullable Entity entity) {

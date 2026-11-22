@@ -5,20 +5,26 @@ import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.ISoundFrequency;
 import com.deeperdepths.common.advancements.DeeperDepthsAdvancements;
 import com.deeperdepths.config.VibrationsConfig;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class VibrationHandler {
     
@@ -37,6 +43,7 @@ public class VibrationHandler {
 
     public void add(Listener listener) {
         listeners.add(listener);
+        listener.getVibrationData().spawnParticles(world);
     }
     
     public void remove(Listener listener) {
@@ -56,8 +63,7 @@ public class VibrationHandler {
         for (Listener listener : listeners) {
             Vec3d pos = listener.getListenerPos();
             if (!canHear(listener, pos, entity, sound, x, y, z)) continue;
-            listener.reactToSound(entity, sound, x, y, z);
-            DeeperDepths.proxy.spawnParticle(9, world, x, y, z, pos.x, pos.y, pos.z, (int) pos.distanceTo(new Vec3d(x, y, z)));
+            listener.addVibration(world, entity, sound, x, y, z);
         }
         if (sound == DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE) ((ISoundFrequency)sound).setSoundFrequency(0);
         ctxEntity = null;
@@ -93,19 +99,115 @@ public class VibrationHandler {
         return instance;
     }
     
-    public static class Vibration {
-    
-    }
-    
     public interface Listener {
 
         Vec3d getListenerPos();
 
         int getRange();
-        
+
         boolean canHear(@Nullable Entity entity, SoundEvent sound, double x, double y, double z);
-        
+
         void reactToSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z);
-        
+
+        Data getVibrationData();
+
+        default void addVibration(WorldServer world, @Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
+            getVibrationData().addVibration(world, entity, sound, x, y, z);
+        }
+
     }
+
+    public static class Data {
+
+        private final Listener listener;
+        private final List<Vibration> vibrations = Lists.newArrayList();
+
+        public Data(Listener listener) {
+            this.listener = listener;
+        }
+
+        public void addVibration(WorldServer world, @Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
+            Vibration vibration = new Vibration(x, y, z, listener, entity == null ? null : entity.getUniqueID(), sound);
+            vibrations.add(vibration);
+            vibration.spawnParticle(world);
+        }
+
+        public void tick(WorldServer world) {
+            Iterator<Vibration> iterator = vibrations.iterator();
+            while (iterator.hasNext()) {
+                Vibration vibration = iterator.next();
+                vibration.tick(world);
+                if (!vibration.isActive) iterator.remove();
+            }
+        }
+
+        public NBTTagList writeToNBT() {
+            NBTTagList vibrations = new NBTTagList();
+            this.vibrations.forEach(vibration -> vibrations.appendTag(vibration.toNbt()));
+            return vibrations;
+        }
+
+        public void readFromNBT(NBTTagList vibrations) {
+            this.vibrations.clear();
+            vibrations.forEach(nbt -> this.vibrations.add(Vibration.fromNBT(listener, (NBTTagCompound) nbt)));
+        }
+
+        public void spawnParticles(WorldServer worldServer) {
+            vibrations.forEach(vibration -> vibration.spawnParticle(worldServer));
+        }
+
+    }
+
+    public static class Vibration {
+
+        private double x, y, z;
+        private final Listener destination;
+        private final UUID entity;
+        private final SoundEvent sound;
+        private boolean isActive = true;
+
+        public Vibration(double x, double y, double z, Listener destination, @Nullable UUID entity, SoundEvent sound) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.destination = destination;
+            this.entity = entity;
+            this.sound = sound;
+        }
+
+        public void tick(WorldServer world) {
+            Vec3d destinationPos = destination.getListenerPos();
+            if (destinationPos.squareDistanceTo(x, y, z) <= 1) {
+                destination.reactToSound(entity == null ? null : world.getEntityFromUuid(entity), sound, x, y, z);
+                isActive = false;
+                return;
+            }
+            Vec3d dir = DirectionUtils.getDirectionVec(new Vec3d(x, y, z), destinationPos);
+            x += dir.x;
+            y += dir.y;
+            z += dir.z;
+        }
+
+        public void spawnParticle(World world) {
+            Vec3d pos = destination.getListenerPos();
+            DeeperDepths.proxy.spawnParticle(9, world, x, y, z, pos.x, pos.y, pos.z, (int) pos.distanceTo(new Vec3d(x, y, z)));
+        }
+
+        public NBTTagCompound toNbt() {
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setDouble("x", x);
+            nbt.setDouble("y", y);
+            nbt.setDouble("z", z);
+            if (entity != null) nbt.setTag("entity", NBTUtil.createUUIDTag(entity));
+            nbt.setString("sound", sound.toString());
+            return nbt;
+        }
+
+        public static Vibration fromNBT(Listener listener, NBTTagCompound nbt) {
+            return new Vibration(nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), listener, nbt.hasKey("entity", 10) ?
+                    NBTUtil.getUUIDFromTag(nbt.getCompoundTag("entity")) : null, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(nbt.getString("sound"))));
+        }
+
+    }
+
 }
