@@ -3,6 +3,7 @@ package com.deeperdepths.common.entities;
 import com.deeperdepths.common.DeeperDepthsLootTables;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.capabilities.VibrationHandler;
+import com.deeperdepths.common.entities.ai.EntityAIWardenRoar;
 import com.deeperdepths.common.entities.ai.EntityAIWardenSniff;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.config.EntityConfig;
@@ -70,6 +71,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     protected void initEntityAI() {
+        tasks.addTask(6, new EntityAIWardenRoar(this));
         tasks.addTask(7, new EntityAIWardenSniff(this));
     }
 
