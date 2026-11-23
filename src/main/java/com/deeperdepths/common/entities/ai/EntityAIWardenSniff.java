@@ -20,7 +20,7 @@ public class EntityAIWardenSniff extends EntityAIBase {
     
     @Override
     public boolean shouldExecute() {
-        return warden.getAttackTarget() == null && warden.getState() == EntityWarden.EnumState.IDLE
+        return warden.getState() == EntityWarden.EnumState.IDLE
                 && warden.ticksExisted + sniffCooldown - lastSniff <= 0;
     }
 

@@ -36,7 +36,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class EntityWarden extends EntityMob implements VibrationHandler.Listener {
@@ -95,7 +97,15 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     public void onUpdate() {
-        if (world.isRemote) return;
+        if (world.isRemote) {
+            //wiki states 0 anger is 30bpm (40 ticks between beats) and anger >= 80 is 120bpm (10 ticks between beats)
+            //plugging it into a graphing calculator gives the function f(x) = 40 - 0.375x
+            //0.375 * 80 = 30 gives the linear rate of change we need to match the vanilla  heartbeat
+            if (ticksExisted % (40 - MathHelper.clamp((float)getAnger() / (float) EnumAnger.ANGRY.minimumAnger, 0, 1) * 30f) == 0) {
+                world.playSound(posX, posY, posZ, DeeperDepthsSoundEvents.WARDEN_HEARTBEAT, getSoundCategory(), 5, getSoundPitch(), false);
+                //sound played clientside, so we can sync the heartbeat animation to the sound here
+            }
+        }
         if (world instanceof WorldServer) getVibrationData().tick((WorldServer) world);
         int stateTimer = getStateTimer();
         if (stateTimer == 0 && getState() != EnumState.IDLE) setState(EnumState.IDLE, 0);
@@ -116,6 +126,20 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             }
             dataManager.set(CLIENT_ANGER, getAnger());
         }
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        boolean damaged = super.attackEntityFrom(source, amount);
+        if (damaged) {
+            Entity attacker = source.getTrueSource();
+            if (attacker instanceof EntityLivingBase && attacker.getDistanceSq(this) <= 900) {
+                increaseAnger((EntityLivingBase) attacker, 100);
+                setAttackTarget((EntityLivingBase) attacker);
+            }
+
+        }
+        return damaged;
     }
 
     //wardens disable shields
@@ -165,17 +189,23 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     }
     
     public int getAnger() {
-        return world.isRemote ? dataManager.get(CLIENT_ANGER) : getAnger(getAttackTarget());
+        return world.isRemote ? dataManager.get(CLIENT_ANGER) : getAnger(getAngerTarget());
     }
 
     public int getAnger(@Nullable EntityLivingBase entity) {
         return entity == null ? 0 : angerLevels.getOrDefault(entity.getUniqueID(), 0);
     }
 
+    public EntityLivingBase getAngerTarget() {
+        return world.isRemote ? null : angerLevels.object2IntEntrySet().stream().max(Comparator.comparing(Object2IntMap.Entry::getIntValue))
+                .map(uuidEntry -> (EntityLivingBase) ((WorldServer) world).getEntityFromUuid(uuidEntry.getKey())).orElse(null);
+    }
+
     @Override
     public boolean isEntityInvulnerable(DamageSource source) {
-        return source.isUnblockable() |! getState().isInvunerable();
+        return getState().isInvunerable() &! source.isUnblockable();
     }
+
 
     @Nullable
     @Override
@@ -279,8 +309,8 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     public enum EnumAnger {
 
         CALM(0, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING),
-        AGITATED(0, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING),
-        ANGRY(0, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING);
+        AGITATED(40, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING),
+        ANGRY(80, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING);
 
         private final int minimumAnger;
         private final SoundEvent idleSound, listeningSound;

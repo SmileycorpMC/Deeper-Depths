@@ -21,7 +21,7 @@ public class EntityAIWardenRoar extends EntityAIBase {
     
     @Override
     public boolean shouldExecute() {
-        if (warden.getAttackTarget() == null || warden.getState() != EntityWarden.EnumState.IDLE) return false;
+        if (warden.getAngerTarget() == null || warden.getState() != EntityWarden.EnumState.IDLE) return false;
         int anger = warden.getAnger();
         return anger > 80 && anger < 100;
     }
@@ -34,7 +34,7 @@ public class EntityAIWardenRoar extends EntityAIBase {
     @Override
     public void startExecuting() {
         warden.setState(EntityWarden.EnumState.ROARING, 84);
-        target = warden.getAttackTarget();
+        target = warden.getAngerTarget();
         roar();
     }
 
