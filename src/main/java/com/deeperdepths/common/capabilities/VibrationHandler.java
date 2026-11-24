@@ -34,19 +34,29 @@ public class VibrationHandler {
             1.68179283050743f, 1.78179743628068f, 2};
 
     private final WorldServer world;
-    private final HashSet<Listener> listeners = Sets.newHashSet();
+    private final Set<Listener> listeners = Sets.newHashSet();
     private Entity ctxEntity = null;
+    private boolean running = false;
+    private final Set<Runnable> setModifications = Sets.newHashSet();
     
     public VibrationHandler(WorldServer world) {
         this.world = world;
     }
 
     public void add(Listener listener) {
+        if (running) {
+            setModifications.add(() -> add(listener));
+            return;
+        }
         listeners.add(listener);
         listener.getVibrationData().spawnParticles(world);
     }
     
     public void remove(Listener listener) {
+        if (running) {
+            setModifications.add(() -> remove(listener));
+            return;
+        }
         listeners.remove(listener);
     }
     
@@ -60,6 +70,7 @@ public class VibrationHandler {
             ctxEntity = null;
             return;
         }
+        running = true;
         for (Listener listener : listeners) {
             Vec3d pos = listener.getListenerPos();
             if (!canHear(listener, pos, entity, sound, x, y, z)) continue;
@@ -67,6 +78,8 @@ public class VibrationHandler {
         }
         if (sound == DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE) ((ISoundFrequency)sound).setSoundFrequency(0);
         ctxEntity = null;
+        running = false;
+        setModifications.forEach(Runnable::run);
     }
 
     public boolean canHear(Listener listener, Vec3d pos, @Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
