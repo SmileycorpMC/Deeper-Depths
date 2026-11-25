@@ -31,16 +31,12 @@ public class EntityAIWardenRoar extends EntityAIBase {
         warden.getNavigator().clearPath();
         warden.setState(EntityWarden.EnumState.ROARING);
         target = warden.getAngerTarget();
-        roar();
+        warden.playSound(DeeperDepthsSoundEvents.WARDEN_ROAR, 3, 1);
     }
 
     @Override
     public void updateTask() {
         warden.getLookHelper().setLookPositionWithEntity(target, warden.getHorizontalFaceSpeed(), warden.getVerticalFaceSpeed());
-    }
-
-    private void roar() {
-        warden.playSound(DeeperDepthsSoundEvents.WARDEN_ROAR, 3, 1);
     }
 
     @Override
