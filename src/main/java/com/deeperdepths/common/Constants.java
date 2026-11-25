@@ -5,6 +5,7 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,9 +25,14 @@ public class Constants {
 	public static final String SERVER = PATH + "common.CommonProxy";
     public static final boolean FUNNY = isFunny();
 
+
 	/** The damage source used by Maces. */
 	public static DamageSource causeMaceDamage(Entity source, float breachPercent)
 	{ return (new EntityMaceDamageSource(MODID + "." + "mace", source, breachPercent)); }
+
+	public static DamageSource causeSonicBoomDamage(Entity source) {
+		return new EntityDamageSource(MODID + ".sonic_boom", source).setDamageBypassesArmor().setMagicDamage().setDifficultyScaled();
+	}
 
 	public static String name(String name) {
 		return MODID + "." + name.toLowerCase(Locale.US);

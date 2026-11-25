@@ -6,6 +6,7 @@ import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.common.entities.ai.EntityAIWardenInvestigateDisturbance;
 import com.deeperdepths.common.entities.ai.EntityAIWardenRoar;
 import com.deeperdepths.common.entities.ai.EntityAIWardenSniff;
+import com.deeperdepths.common.entities.ai.EntityAIWardenSonicBoom;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.config.EntityConfig;
 import com.deeperdepths.config.VibrationsConfig;
@@ -53,6 +54,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     private final Object2IntMap<UUID> angerLevels = new Object2IntOpenHashMap<>();
     private final VibrationHandler.Data vibrationData = new VibrationHandler.Data(this);
     private Vec3d disturbance = null;
+    private int sonicBoomCooldown = 40;
 
     public EntityWarden(World world) {
         super(world);
@@ -77,6 +79,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     protected void initEntityAI() {
+        tasks.addTask(1, new EntityAIWardenSonicBoom(this));
         tasks.addTask(2, new EntityAIAttackMelee(this, 1, true));
         tasks.addTask(3, new EntityAIWardenRoar(this));
         tasks.addTask(4, new EntityAIWardenSniff(this));
@@ -117,11 +120,11 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         if (world instanceof WorldServer) getVibrationData().tick((WorldServer) world);
         int stateTimer = getStateTimer();
         if (getState() != EnumState.IDLE) {
-
             if (stateTimer == 0) setState(EnumState.IDLE);
             else dataManager.set(STATE_TIMER, stateTimer - 1);
         }
         if (vibrationCooldown > 0) vibrationCooldown--;
+        if (getAttackTarget() != null && sonicBoomCooldown > 0) sonicBoomCooldown--;
         if (ticksExisted + getEntityId() % EntityConfig.wardenDarknessFrequency == 0) {
             PotionEffect effect = new PotionEffect(DeeperDepthsPotions.DARKNESS, EntityConfig.wardenDarknessLength, 0, false, false);
             for (EntityPlayer player : world.getPlayers(EntityPlayer.class, player -> player.getDistanceSq(this)
@@ -166,6 +169,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     public boolean attackEntityAsMob(Entity entity) {
         boolean damaged = super.attackEntityAsMob(entity);
         if (damaged && entity instanceof EntityLivingBase) {
+            resetSonicBoomCooldown();
             playSound(DeeperDepthsSoundEvents.WARDEN_ATTACK_IMPACT, 10, getSoundPitch());
             EntityLivingBase living = (EntityLivingBase) entity;
             if (!living.isEntityAlive()) increaseAnger(living, -150);
@@ -195,10 +199,11 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     public void reactToSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
-        if (!isEntityAlive()) return;
+        if (!isEntityAlive() |! canTarget(entity)) return;
         playSound(DeeperDepthsSoundEvents.WARDEN_TENDRIL_CLICKS, 5, getSoundPitch());
         if (vibrationCooldown == 0) vibrationCooldown = EntityConfig.wardenVibrationCooldown;
         setDisturbance(new Vec3d(x, y, z));
+        increaseAnger((EntityLivingBase) entity, 35);
     }
 
     @Override
@@ -226,6 +231,12 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     @Override
     public boolean isEntityInvulnerable(DamageSource source) {
         return (getState().isInvunerable() &! source.isUnblockable()) || super.isEntityInvulnerable(source);
+    }
+
+    @Override
+    public void setAttackTarget(@Nullable EntityLivingBase entity) {
+        super.setAttackTarget(canTarget(entity) ? entity : null);
+        resetSonicBoomCooldown();
     }
 
     @Nullable
@@ -278,6 +289,14 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         return dataManager.get(STATE_TIMER);
     }
 
+    public int getSonicBoomCooldown() {
+        return sonicBoomCooldown;
+    }
+
+    public void resetSonicBoomCooldown() {
+        sonicBoomCooldown = 40;
+    }
+
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
@@ -313,8 +332,10 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     }
 
     public boolean canTarget(@Nullable Entity entity) {
+        if (entity == null) return false;
         if (entity instanceof EntityWarden) return false;
         if (!(entity instanceof EntityLivingBase)) return false;
+        if (!entity.isEntityAlive() |! entity.isAddedToWorld()) return false;
         if (!(entity instanceof EntityPlayer)) return true;
         EntityPlayer player = (EntityPlayer) entity;
         return !(player.isSpectator() || player.isCreative());
@@ -339,6 +360,16 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     public void setDisturbance(Vec3d disturbance) {
         this.disturbance = disturbance;
+    }
+
+    @Nullable
+    public EntityLivingBase getAttackTarget() {
+        EntityLivingBase target = super.getAttackTarget();
+        if (!canTarget(target)) {
+            setAttackTarget(null);
+            return null;
+        }
+        return target;
     }
 
     public enum EnumAnger {
@@ -385,7 +416,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         BURROWING(0),
         ROARING(64),
         SNIFFING(64),
-        SHOOTING(0);
+        SONIC_BOOM(60);
 
         private final int length;
 
@@ -402,7 +433,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         }
 
         public static EnumState get(byte id) {
-            return values()[MathHelper.clamp(id, 0, 4)];
+            return values()[MathHelper.clamp(id, 0, values().length)];
         }
 
     }
