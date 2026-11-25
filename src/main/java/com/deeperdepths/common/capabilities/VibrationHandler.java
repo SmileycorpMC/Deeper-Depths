@@ -177,21 +177,27 @@ public class VibrationHandler {
         private final Listener destination;
         private final UUID entity;
         private final SoundEvent sound;
+        private final Vec3d start;
         private boolean isActive = true;
 
         public Vibration(double x, double y, double z, Listener destination, @Nullable UUID entity, SoundEvent sound) {
+            this(x, y, z, destination, entity, sound, new Vec3d(x, y, z));
+        }
+
+        public Vibration(double x, double y, double z, Listener destination, @Nullable UUID entity, SoundEvent sound, Vec3d start) {
             this.x = x;
             this.y = y;
             this.z = z;
             this.destination = destination;
             this.entity = entity;
             this.sound = sound;
+            this.start = start;
         }
 
         public void tick(WorldServer world) {
             Vec3d destinationPos = destination.getListenerPos();
             if (destinationPos.squareDistanceTo(x, y, z) <= 1) {
-                destination.reactToSound(entity == null ? null : world.getEntityFromUuid(entity), sound, x, y, z);
+                destination.reactToSound(entity == null ? null : world.getEntityFromUuid(entity), sound, start.x, start.y, start.z);
                 isActive = false;
                 return;
             }
@@ -213,12 +219,16 @@ public class VibrationHandler {
             nbt.setDouble("z", z);
             if (entity != null) nbt.setTag("entity", NBTUtil.createUUIDTag(entity));
             nbt.setString("sound", sound.toString());
+            nbt.setDouble("start_x", start.x);
+            nbt.setDouble("start_y", start.y);
+            nbt.setDouble("start_z", start.z);
             return nbt;
         }
 
         public static Vibration fromNBT(Listener listener, NBTTagCompound nbt) {
             return new Vibration(nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), listener, nbt.hasKey("entity", 10) ?
-                    NBTUtil.getUUIDFromTag(nbt.getCompoundTag("entity")) : null, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(nbt.getString("sound"))));
+                    NBTUtil.getUUIDFromTag(nbt.getCompoundTag("entity")) : null, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(nbt.getString("sound"))),
+                    new Vec3d(nbt.getDouble("start_x"), nbt.getDouble("start_y"), nbt.getDouble("start_z")));
         }
 
     }
