@@ -3,6 +3,7 @@ package com.deeperdepths.common.entities;
 import com.deeperdepths.common.DeeperDepthsLootTables;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.capabilities.VibrationHandler;
+import com.deeperdepths.common.entities.ai.EntityAIWardenInvestigateDisturbance;
 import com.deeperdepths.common.entities.ai.EntityAIWardenRoar;
 import com.deeperdepths.common.entities.ai.EntityAIWardenSniff;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
@@ -14,6 +15,8 @@ import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -38,7 +41,6 @@ import net.minecraft.world.WorldServer;
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 public class EntityWarden extends EntityMob implements VibrationHandler.Listener {
@@ -50,6 +52,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     private int vibrationCooldown = 40;
     private final Object2IntMap<UUID> angerLevels = new Object2IntOpenHashMap<>();
     private final VibrationHandler.Data vibrationData = new VibrationHandler.Data(this);
+    private Vec3d disturbance = null;
 
     public EntityWarden(World world) {
         super(world);
@@ -61,6 +64,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         setPathPriority(PathNodeType.DAMAGE_CACTUS, 0);
         setPathPriority(PathNodeType.DAMAGE_OTHER, 0);
         setPathPriority(PathNodeType.LAVA, 0);
+        stepHeight = 1;
     }
 
     @Override
@@ -73,8 +77,11 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     protected void initEntityAI() {
-        tasks.addTask(6, new EntityAIWardenRoar(this));
-        tasks.addTask(7, new EntityAIWardenSniff(this));
+        tasks.addTask(2, new EntityAIAttackMelee(this, 1, true));
+        tasks.addTask(3, new EntityAIWardenRoar(this));
+        tasks.addTask(4, new EntityAIWardenSniff(this));
+        tasks.addTask(6, new EntityAIWardenInvestigateDisturbance(this));
+        tasks.addTask(7, new EntityAIWander(this, 0.5, 20));
     }
 
     @Override
@@ -97,19 +104,23 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     public void onUpdate() {
+        super.onUpdate();
         if (world.isRemote) {
             //wiki states 0 anger is 30bpm (40 ticks between beats) and anger >= 80 is 120bpm (10 ticks between beats)
             //plugging it into a graphing calculator gives the function f(x) = 40 - 0.375x
             //0.375 * 80 = 30 gives the linear rate of change we need to match the vanilla  heartbeat
-            if (ticksExisted % (40 - MathHelper.clamp((float)getAnger() / (float) EnumAnger.ANGRY.minimumAnger, 0, 1) * 30f) == 0) {
+            if (ticksExisted % (40 - MathHelper.clamp((float)getAnger() / (float) EnumAnger.ANGRY.getMinimumAnger(), 0, 1) * 30f) == 0) {
                 world.playSound(posX, posY, posZ, DeeperDepthsSoundEvents.WARDEN_HEARTBEAT, getSoundCategory(), 5, getSoundPitch(), false);
                 //sound played clientside, so we can sync the heartbeat animation to the sound here
             }
         }
         if (world instanceof WorldServer) getVibrationData().tick((WorldServer) world);
         int stateTimer = getStateTimer();
-        if (stateTimer == 0 && getState() != EnumState.IDLE) setState(EnumState.IDLE, 0);
-        else dataManager.set(STATE_TIMER, stateTimer - 1);
+        if (getState() != EnumState.IDLE) {
+
+            if (stateTimer == 0) setState(EnumState.IDLE);
+            else dataManager.set(STATE_TIMER, stateTimer - 1);
+        }
         if (vibrationCooldown > 0) vibrationCooldown--;
         if (ticksExisted + getEntityId() % EntityConfig.wardenDarknessFrequency == 0) {
             PotionEffect effect = new PotionEffect(DeeperDepthsPotions.DARKNESS, EntityConfig.wardenDarknessLength, 0, false, false);
@@ -120,6 +131,10 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             ObjectIterator<Object2IntMap.Entry<UUID>> iterator = angerLevels.object2IntEntrySet().iterator();
             while (iterator.hasNext()) {
                 Object2IntMap.Entry<UUID> entry = iterator.next();
+                if (!canTarget(((WorldServer)world).getEntityFromUuid(entry.getKey()))) {
+                    iterator.remove();
+                    return;
+                }
                 int anger = entry.getIntValue();
                 if (anger <= 1) iterator.remove();
                 else entry.setValue(anger - 1);
@@ -133,13 +148,17 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         boolean damaged = super.attackEntityFrom(source, amount);
         if (damaged) {
             Entity attacker = source.getTrueSource();
-            if (attacker instanceof EntityLivingBase && attacker.getDistanceSq(this) <= 900) {
+            if (attacker instanceof EntityLivingBase && attacker.getDistanceSq(this) <= 900)
                 increaseAnger((EntityLivingBase) attacker, 100);
-                setAttackTarget((EntityLivingBase) attacker);
-            }
-
         }
         return damaged;
+    }
+
+    @Override
+    protected void collideWithEntity(Entity entity) {
+        super.collideWithEntity(entity);
+        if (!canTarget(entity)) return;
+        increaseAnger((EntityLivingBase) entity, 100);
     }
 
     //wardens disable shields
@@ -147,7 +166,9 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     public boolean attackEntityAsMob(Entity entity) {
         boolean damaged = super.attackEntityAsMob(entity);
         if (damaged && entity instanceof EntityLivingBase) {
+            playSound(DeeperDepthsSoundEvents.WARDEN_ATTACK_IMPACT, 10, getSoundPitch());
             EntityLivingBase living = (EntityLivingBase) entity;
+            if (!living.isEntityAlive()) increaseAnger(living, -150);
             ItemStack stack = ((EntityLivingBase) entity).getActiveItemStack();
             if (!stack.getItem().isShield(stack, living)) return true;
             if (living instanceof EntityPlayer) ((EntityPlayer) living).disableShield(true);
@@ -177,6 +198,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         if (!isEntityAlive()) return;
         playSound(DeeperDepthsSoundEvents.WARDEN_TENDRIL_CLICKS, 5, getSoundPitch());
         if (vibrationCooldown == 0) vibrationCooldown = EntityConfig.wardenVibrationCooldown;
+        setDisturbance(new Vec3d(x, y, z));
     }
 
     @Override
@@ -203,14 +225,13 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     public boolean isEntityInvulnerable(DamageSource source) {
-        return getState().isInvunerable() &! source.isUnblockable();
+        return (getState().isInvunerable() &! source.isUnblockable()) || super.isEntityInvulnerable(source);
     }
-
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return getAngerLevel().idleSound;
+        return getState() == EnumState.ROARING ? null : getAngerLevel().getAmbientSound();
     }
 
     @Override
@@ -248,9 +269,9 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         return EnumState.get(dataManager.get(STATE));
     }
 
-    public void setState(EnumState state, int ticks) {
+    public void setState(EnumState state) {
         dataManager.set(STATE, (byte) state.ordinal());
-        dataManager.set(STATE_TIMER, ticks);
+        dataManager.set(STATE_TIMER, state.getLength());
     }
 
     public int getStateTimer() {
@@ -300,24 +321,38 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     }
 
     public void increaseAnger(EntityLivingBase entity, int angerIncrease) {
+        if (!canTarget(entity) || isAIDisabled()) {
+            angerLevels.remove(entity);
+            return;
+        }
         UUID uuid = entity.getUniqueID();
         int anger = MathHelper.clamp(angerLevels.getOrDefault(uuid, 0) + angerIncrease, 0, 150);
         if (anger == 0) angerLevels.remove(uuid);
         else angerLevels.put(uuid, anger);
+        if (getState() == EnumState.ROARING) return;
+        playSound(getAngerLevel().getListeningSound(), 10, getSoundPitch());
+    }
+
+    public Vec3d getDisturbance() {
+        return disturbance;
+    }
+
+    public void setDisturbance(Vec3d disturbance) {
+        this.disturbance = disturbance;
     }
 
     public enum EnumAnger {
 
         CALM(0, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING),
-        AGITATED(40, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING),
-        ANGRY(80, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING);
+        AGITATED(40, DeeperDepthsSoundEvents.WARDEN_AGITATED, DeeperDepthsSoundEvents.WARDEN_LISTENING),
+        ANGRY(80, DeeperDepthsSoundEvents.WARDEN_ANGRY, DeeperDepthsSoundEvents.WARDEN_LISTENING_ANGRY);
 
         private final int minimumAnger;
-        private final SoundEvent idleSound, listeningSound;
+        private final SoundEvent ambientSound, listeningSound;
 
-        EnumAnger(int minimumAnger, SoundEvent idleSound, SoundEvent listeningSound) {
+        EnumAnger(int minimumAnger, SoundEvent ambientSound, SoundEvent listeningSound) {
             this.minimumAnger = minimumAnger;
-            this.idleSound = idleSound;
+            this.ambientSound = ambientSound;
             this.listeningSound = listeningSound;
         }
 
@@ -326,7 +361,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         }
 
         public SoundEvent getAmbientSound() {
-            return idleSound;
+            return ambientSound;
         }
 
         public SoundEvent getListeningSound() {
@@ -345,18 +380,29 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     }
 
     public enum EnumState {
-        IDLE,
-        EMERGING,
-        BURROWING,
-        ROARING,
-        SNIFFING;
+        IDLE(0),
+        EMERGING(0),
+        BURROWING(0),
+        ROARING(64),
+        SNIFFING(64),
+        SHOOTING(0);
 
-        public static EnumState get(byte id) {
-            return values()[MathHelper.clamp(id, 0, 4)];
+        private final int length;
+
+        EnumState(int length) {
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
         }
 
         public boolean isInvunerable() {
             return this == EMERGING;
+        }
+
+        public static EnumState get(byte id) {
+            return values()[MathHelper.clamp(id, 0, 4)];
         }
 
     }

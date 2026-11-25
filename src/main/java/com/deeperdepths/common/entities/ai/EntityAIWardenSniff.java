@@ -21,7 +21,7 @@ public class EntityAIWardenSniff extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         return warden.getState() == EntityWarden.EnumState.IDLE
-                && warden.ticksExisted + sniffCooldown - lastSniff <= 0;
+                && warden.ticksExisted - lastSniff - sniffCooldown >= 0 && warden.getAngerTarget() != null;
     }
 
     @Override
@@ -31,15 +31,16 @@ public class EntityAIWardenSniff extends EntityAIBase {
 
     @Override
     public void startExecuting() {
+        warden.getNavigator().clearPath();
         warden.playSound(DeeperDepthsSoundEvents.WARDEN_SNIFF, 5, 1);
-        warden.setState(EntityWarden.EnumState.SNIFFING, 84);
+        warden.setState(EntityWarden.EnumState.SNIFFING);
     }
 
     @Override
     public void resetTask() {
         warden.getNavigator().clearPath();
         lastSniff = warden.ticksExisted;
-        sniffCooldown = 100 + warden.getRNG() .nextInt(100);
+        sniffCooldown = 100 + warden.getRNG().nextInt(100);
         //find the stinkiest nearby toes
         EntityLivingBase entity = warden.world.getClosestPlayer(warden.posX, warden.posY, warden.posZ, 20, this::canSmell);
         if (entity == null) {
