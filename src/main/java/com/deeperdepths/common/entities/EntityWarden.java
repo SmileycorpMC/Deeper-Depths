@@ -194,16 +194,19 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     @Override
     public boolean canHear(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
-        return !isAIDisabled() && isEntityAlive() && vibrationCooldown == 0 && (!(entity instanceof EntityLivingBase) || canTarget(entity));
+        boolean canhear = !isAIDisabled() && isEntityAlive() && vibrationCooldown == 0 && (!(entity instanceof EntityLivingBase) || canTarget(entity));
+        if (canhear) vibrationCooldown = EntityConfig.wardenVibrationCooldown;
+        return canhear;
     }
 
     @Override
     public void reactToSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
-        if (!isEntityAlive() |! canTarget(entity)) return;
+        if (!isEntityAlive() || (entity != null &! canTarget(entity))) return;
         playSound(DeeperDepthsSoundEvents.WARDEN_TENDRIL_CLICKS, 5, getSoundPitch());
-        if (vibrationCooldown == 0) vibrationCooldown = EntityConfig.wardenVibrationCooldown;
-        setDisturbance(new Vec3d(x, y, z));
         increaseAnger((EntityLivingBase) entity, 35);
+        EntityLivingBase angerTarget = getAngerTarget();
+        if (angerTarget == entity  || (entity instanceof EntityPlayer &! (angerTarget instanceof EntityPlayer)))
+            setDisturbance(new Vec3d(x, y, z));
     }
 
     @Override
