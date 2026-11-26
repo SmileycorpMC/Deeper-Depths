@@ -462,7 +462,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         }
 
         public boolean spawnParticles(int stateTimer) {
-            if (this == EMERGING) return stateTimer < 60;
+            if (this == EMERGING) return stateTimer > 74;
             return this == BURROWING;
         }
 
