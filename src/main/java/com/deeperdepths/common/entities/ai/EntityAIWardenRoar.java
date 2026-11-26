@@ -2,10 +2,10 @@ package com.deeperdepths.common.entities.ai;
 
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.entities.EntityWarden;
+import com.deeperdepths.config.EntityConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
-//wardens love toes
 public class EntityAIWardenRoar extends EntityAIBase {
 
     private final EntityWarden warden;
@@ -41,7 +41,7 @@ public class EntityAIWardenRoar extends EntityAIBase {
 
     @Override
     public void resetTask() {
-        warden.increaseAnger(target, 40);
+        warden.increaseAnger(target, EntityConfig.wardenAngerGainRoar);
         warden.setAttackTarget(target);
     }
 

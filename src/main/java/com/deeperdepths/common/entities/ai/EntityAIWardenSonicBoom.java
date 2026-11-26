@@ -3,6 +3,7 @@ package com.deeperdepths.common.entities.ai;
 import com.deeperdepths.common.Constants;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.entities.EntityWarden;
+import com.deeperdepths.config.EntityConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -37,7 +38,8 @@ public class EntityAIWardenSonicBoom extends EntityAIBase {
         double dx = target.posX - warden.posX;
         double dy = target.posY - warden.posY;
         double dz = target.posZ - warden.posZ;
-        return dx * dx + dz * dz <= 400 && dy * dy <= 196;
+        return dx * dx + dz * dz <= EntityConfig.wardenSonicBoomHorizontalRange * EntityConfig.wardenSonicBoomHorizontalRange
+                && dy * dy <= EntityConfig.wardenSonicBoomVerticalRange * EntityConfig.wardenSonicBoomVerticalRange;
     }
 
     @Override
@@ -61,11 +63,11 @@ public class EntityAIWardenSonicBoom extends EntityAIBase {
         //spawn particles
 
         warden.playSound(DeeperDepthsSoundEvents.WARDEN_SONIC_BOOM, 3, 1);
-        target.attackEntityFrom(Constants.causeSonicBoomDamage(warden), 10);
+        target.attackEntityFrom(Constants.causeSonicBoomDamage(warden), (float) EntityConfig.wardenSonicBoomDamage);
         LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, warden,
-                2.5f * (1 - (float)target.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue()), dir.x, dir.z);
+                (float) EntityConfig.wardenSonicBoomKnockback * (1 - (float)target.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue()), dir.x, dir.z);
         float strength = event.getStrength();
-        target.addVelocity(strength * event.getRatioX(), 0.2f * dir.y * strength, strength * event.getRatioZ());
+        target.addVelocity(strength * event.getRatioX(), (float) EntityConfig.wardenSonicBoomKnockbackYRatio * dir.y * strength, strength * event.getRatioZ());
     }
 
     @Override

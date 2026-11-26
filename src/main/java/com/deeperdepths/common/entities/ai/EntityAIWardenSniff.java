@@ -2,9 +2,12 @@ package com.deeperdepths.common.entities.ai;
 
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.entities.EntityWarden;
+import com.deeperdepths.config.EntityConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.AxisAlignedBB;
 
 //wardens love toes
 public class EntityAIWardenSniff extends EntityAIBase {
@@ -40,20 +43,28 @@ public class EntityAIWardenSniff extends EntityAIBase {
     public void resetTask() {
         warden.getNavigator().clearPath();
         lastSniff = warden.ticksExisted;
-        sniffCooldown = 100 + warden.getRNG().nextInt(100);
-        //find the stinkiest nearby toes
-        EntityLivingBase entity = warden.world.getClosestPlayer(warden.posX, warden.posY, warden.posZ, 20, this::canSmell);
-        if (entity == null) {
-            double distance = 24 * 24;
-            for (EntityLivingBase entity1 : warden.world.getEntitiesWithinAABB(EntityLivingBase.class, warden.getEntityBoundingBox().grow(7), this::canSmell)) {
-                double distance1 = warden.getDistanceSq(entity1);
-                if (distance1 < distance){
-                    entity = entity1;
-                    distance = distance1;
-                }
+        sniffCooldown = EntityConfig.wardenSniffCooldownMin + EntityConfig.wardenSniffCooldownMin < EntityConfig.wardenSniffCooldownMax ?
+                warden.getRNG().nextInt(EntityConfig.wardenSniffCooldownMax - EntityConfig.wardenSniffCooldownMin) : 0;
+        EntityLivingBase entity = getClosestEntity(EntityPlayer.class);
+        if (entity == null) entity = getClosestEntity(EntityLivingBase.class);
+        if (entity != null) warden.increaseAnger(entity, EntityConfig.wardenAngerGainSniff);
+    }
+
+    //find the stinkiest nearby toes
+    private <T extends EntityLivingBase> T getClosestEntity(Class<T> clazz) {
+        T entity = null;
+        double horizontal = EntityConfig.wardenSniffHorizontalRange;
+        double vertical = EntityConfig.wardenSniffHorizontalRange;
+        double distance = horizontal * horizontal * 2 + vertical * vertical;
+        for (T entity1 : warden.world.getEntitiesWithinAABB(clazz, new AxisAlignedBB(warden.posX - horizontal, warden.posY - vertical,
+                warden.posZ - horizontal, warden.posX + horizontal, warden.posY + vertical, warden.posZ + horizontal), this::canSmell)) {
+            double distance1 = warden.getDistanceSq(entity1);
+            if (distance1 < distance){
+                entity = entity1;
+                distance = distance1;
             }
         }
-        if (entity != null) warden.increaseAnger(entity, 35);
+        return entity;
     }
 
     //stinky toes
@@ -62,7 +73,7 @@ public class EntityAIWardenSniff extends EntityAIBase {
         double dx = warden.posX - entity.posX;
         double dy = warden.posY - entity.posY;
         double dz = warden.posZ - entity.posZ;
-        return dx * dx + dz + dz < 6 * 6 && dy * dx < 20 * 20;
+        return dx * dx + dz + dz < 6 * 6 && dy * dy < 20 * 20;
     }
 
     @Override

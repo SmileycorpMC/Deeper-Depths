@@ -39,6 +39,7 @@ import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 public class EntityWarden extends EntityMob implements VibrationHandler.Listener {
 
@@ -46,12 +47,12 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     private static final DataParameter<Byte> STATE = EntityDataManager.createKey(EntityWarden.class, DataSerializers.BYTE);
     private static final DataParameter<Integer> STATE_TIMER = EntityDataManager.createKey(EntityWarden.class, DataSerializers.VARINT);
 
-    private int vibrationCooldown = 40;
+    private int vibrationCooldown = EntityConfig.wardenVibrationCooldown;
     private final Object2IntMap<UUID> angerLevels = new Object2IntOpenHashMap<>();
     private final VibrationHandler.Data vibrationData = new VibrationHandler.Data(this);
     private Vec3d disturbance = null;
-    private int sonicBoomCooldown = 40;
-    private int burrowingCooldown = 1200;
+    private int sonicBoomCooldown = EntityConfig.wardenSonicBoomCooldown;
+    private int burrowingCooldown = EntityConfig.wardenBurrowingCooldown;
 
     public EntityWarden(World world) {
         super(world);
@@ -115,7 +116,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             for (EntityPlayer player : world.getPlayers(EntityPlayer.class, player -> player.getDistanceSq(this)
                     < EntityConfig.wardenDarknessRange * EntityConfig.wardenDarknessRange)) player.addPotionEffect(effect);
         }
-        if (ticksExisted % 20 == 0) {
+        if (ticksExisted % EntityConfig.wardenAngerDecayTicks == 0) {
             ObjectIterator<Object2IntMap.Entry<UUID>> iterator = angerLevels.object2IntEntrySet().iterator();
             while (iterator.hasNext()) {
                 Object2IntMap.Entry<UUID> entry = iterator.next();
@@ -124,8 +125,8 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
                     return;
                 }
                 int anger = entry.getIntValue();
-                if (anger <= 1) iterator.remove();
-                else entry.setValue(anger - 1);
+                if (anger <= EntityConfig.wardenAngerDecayAmount) iterator.remove();
+                else entry.setValue(anger - EntityConfig.wardenAngerDecayAmount);
             }
             dataManager.set(CLIENT_ANGER, getAnger());
         }
@@ -183,7 +184,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         if (!isEntityAlive() || getState().isDigging() || (entity != null &! canTarget(entity))) return;
         playSound(DeeperDepthsSoundEvents.WARDEN_TENDRIL_CLICKS, 5, getSoundPitch());
         resetBurrowingCooldown();
-        increaseAnger((EntityLivingBase) entity, 35);
+        increaseAnger((EntityLivingBase) entity, EntityConfig.wardenAngerGainVibration);
         EntityLivingBase angerTarget = getAngerTarget();
         if (angerTarget == entity  || (entity instanceof EntityPlayer &! (angerTarget instanceof EntityPlayer)))
             setDisturbance(new Vec3d(x, y, z));
@@ -229,7 +230,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     }
 
     public void resetSonicBoomCooldown() {
-        sonicBoomCooldown = 40;
+        sonicBoomCooldown = EntityConfig.wardenSonicBoomCooldown;
     }
 
     public int getBurrowingCooldown() {
@@ -237,7 +238,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     }
 
     public void resetBurrowingCooldown() {
-        burrowingCooldown = 1200;
+        burrowingCooldown = EntityConfig.wardenBurrowingCooldown;
     }
 
     public void increaseAnger(EntityLivingBase entity, int angerIncrease) {
@@ -246,7 +247,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             return;
         }
         UUID uuid = entity.getUniqueID();
-        int anger = MathHelper.clamp(angerLevels.getOrDefault(uuid, 0) + angerIncrease, 0, 150);
+        int anger = MathHelper.clamp(angerLevels.getOrDefault(uuid, 0) + angerIncrease, 0, EntityConfig.wardenAngerMax);
         if (anger == 0) angerLevels.remove(uuid);
         else angerLevels.put(uuid, anger);
         Anger angerLevel = getAngerLevel();
@@ -271,7 +272,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             resetSonicBoomCooldown();
             playSound(DeeperDepthsSoundEvents.WARDEN_ATTACK_IMPACT, 10, getSoundPitch());
             EntityLivingBase living = (EntityLivingBase) entity;
-            if (!living.isEntityAlive()) increaseAnger(living, -150);
+            if (!living.isEntityAlive()) increaseAnger(living, -EntityConfig.wardenAngerMax);
             ItemStack stack = ((EntityLivingBase) entity).getActiveItemStack();
             if (!stack.getItem().isShield(stack, living)) return true;
             if (living instanceof EntityPlayer) ((EntityPlayer) living).disableShield(true);
@@ -286,7 +287,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
         if (damaged) {
             Entity attacker = source.getTrueSource();
             if (attacker instanceof EntityLivingBase && attacker.getDistanceSq(this) <= 900)
-                increaseAnger((EntityLivingBase) attacker, 100);
+                increaseAnger((EntityLivingBase) attacker, EntityConfig.wardenAngerGainAttacked);
         }
         return damaged;
     }
@@ -295,7 +296,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
     protected void collideWithEntity(Entity entity) {
         super.collideWithEntity(entity);
         if (!canTarget(entity)) return;
-        increaseAnger((EntityLivingBase) entity, 100);
+        increaseAnger((EntityLivingBase) entity, EntityConfig.wardenAngerGainCollision);
     }
 
     @Override
@@ -383,7 +384,8 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             NBTTagList angerLevels = compound.getTagList("anger_levels", 10);
             for (NBTBase nbtBase : angerLevels) try {
                 NBTTagCompound nbt = (NBTTagCompound) nbtBase;
-                this.angerLevels.put(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("uuid")), nbt.getInteger("anger"));
+                this.angerLevels.put(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("uuid")),
+                        MathHelper.clamp(nbt.getInteger("anger"), 0, EntityConfig.wardenAngerMax));
             } catch (Exception e) {}
         }
         dataManager.set(STATE, compound.getByte("state"));
@@ -403,21 +405,21 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
 
     public enum Anger {
 
-        CALM(0, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING),
-        AGITATED(40, DeeperDepthsSoundEvents.WARDEN_AGITATED, DeeperDepthsSoundEvents.WARDEN_LISTENING),
-        ANGRY(80, DeeperDepthsSoundEvents.WARDEN_ANGRY, DeeperDepthsSoundEvents.WARDEN_LISTENING_ANGRY);
+        CALM(() -> 0, DeeperDepthsSoundEvents.WARDEN_AMBIENT, DeeperDepthsSoundEvents.WARDEN_LISTENING),
+        AGITATED(() -> EntityConfig.wardenAngerAgitatedMin, DeeperDepthsSoundEvents.WARDEN_AGITATED, DeeperDepthsSoundEvents.WARDEN_LISTENING),
+        ANGRY(() -> EntityConfig.wardenAngerAngryMin, DeeperDepthsSoundEvents.WARDEN_ANGRY, DeeperDepthsSoundEvents.WARDEN_LISTENING_ANGRY);
 
-        private final int minimumAnger;
+        private final Supplier<Integer> minimumAnger;
         private final SoundEvent ambientSound, listeningSound;
 
-        Anger(int minimumAnger, SoundEvent ambientSound, SoundEvent listeningSound) {
+        Anger(Supplier<Integer> minimumAnger, SoundEvent ambientSound, SoundEvent listeningSound) {
             this.minimumAnger = minimumAnger;
             this.ambientSound = ambientSound;
             this.listeningSound = listeningSound;
         }
 
         public int getMinimumAnger() {
-            return minimumAnger;
+            return minimumAnger.get();
         }
 
         public SoundEvent getAmbientSound() {
@@ -432,7 +434,7 @@ public class EntityWarden extends EntityMob implements VibrationHandler.Listener
             int length = values().length;
             for (int i = 1; i <= length; i++) {
                 Anger value = values()[length - i];
-                if (value.minimumAnger <= anger) return value;
+                if (value.getMinimumAnger() <= anger) return value;
             }
             return CALM;
         }
