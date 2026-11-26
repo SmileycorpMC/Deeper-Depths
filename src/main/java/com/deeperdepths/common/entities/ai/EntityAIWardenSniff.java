@@ -58,7 +58,7 @@ public class EntityAIWardenSniff extends EntityAIBase {
 
     //stinky toes
     private boolean canSmell(Entity entity) {
-        if (!warden.canTarget(entity)) return false;
+        if (!EntityWarden.canTarget(entity)) return false;
         double dx = warden.posX - entity.posX;
         double dy = warden.posY - entity.posY;
         double dz = warden.posZ - entity.posZ;
