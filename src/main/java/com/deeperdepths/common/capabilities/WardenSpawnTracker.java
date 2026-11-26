@@ -1,6 +1,10 @@
 package com.deeperdepths.common.capabilities;
 
+import com.deeperdepths.common.blocks.tiles.TileSculkShrieker;
+import com.deeperdepths.common.entities.EntityWarden;
+import com.deeperdepths.config.BlockConfig;
 import com.google.common.base.Predicates;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -48,7 +52,7 @@ public interface WardenSpawnTracker {
 
         @Override
         public void tick() {
-            if (warningLevel > 0 && lastWarning++ >= 12000) {
+            if (warningLevel > 0 && lastWarning++ >= BlockConfig.sculkShriekerDecayRate) {
                 warningLevel--;
                 lastWarning = 0;
             }
@@ -58,14 +62,14 @@ public interface WardenSpawnTracker {
         @Override
         public void reset() {
             warningLevel = 0;
-            cooldown = 200;
+            cooldown = BlockConfig.sculkShriekerCooldown;
             lastWarning = 0;
         }
 
         @Override
         public void increaseWarningLevel() {
             if (warningLevel < 4) warningLevel++;
-            cooldown = 200;
+            cooldown = BlockConfig.sculkShriekerCooldown;
             lastWarning = 0;
         }
 
@@ -144,11 +148,9 @@ public interface WardenSpawnTracker {
         return player.hasCapability(CAPABILITY, null) ? player.getCapability(CAPABILITY, null) : null;
     }
 
-    //replace wither skeletons with warden when it's ready
-    //just used for testing
     static int tryWarn(World world, BlockPos pos, EntityPlayer player) {
         Vec3d vec = DirectionUtils.centerOf(pos);
-        if (!world.getEntitiesWithinAABB(EntityWitherSkeleton.class,
+        if (!world.getEntitiesWithinAABB(EntityWarden.class,
                 new AxisAlignedBB(vec.addVector(24, 24, 24), vec.subtract(24, 24, 24))).isEmpty())  return 0;
         List<EntityPlayer> players = world.getPlayers(EntityPlayer.class, player1 -> player1 == player ||
                 (vec.squareDistanceTo(player1.posX, player1.posY, player1.posZ) <= 256 && player1.isEntityAlive() &! player1.isSpectator()));
@@ -159,5 +161,11 @@ public interface WardenSpawnTracker {
         }
         return warningLevel;
     }
+
+    static boolean isOnCooldown(@Nullable Entity entity) {
+        return !(entity instanceof EntityPlayer) || !entity.hasCapability(CAPABILITY, null)
+                || entity.getCapability(CAPABILITY, null).isOnCooldown();
+    }
+
 
 }

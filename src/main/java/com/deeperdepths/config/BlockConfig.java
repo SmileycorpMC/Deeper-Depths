@@ -44,6 +44,8 @@ public class BlockConfig {
     public static int sculkShriekerCooldown;
     public static int sculkShriekerDarknessLength;
     public static double sculkShriekerDarknessRange;
+    public static int sculkShriekerDecayRate;
+    public static int sculkShriekerSpawnDelay;
     public static int sculkShriekerXpDrop;
     public static BlockStatEntry tintedGlass;
     public static BlockStatEntry trialPot;
@@ -85,9 +87,11 @@ public class BlockConfig {
             sculkSensorCooldown = config.get("sculk sensor", "cooldown", 10, "How many ticks after a sculk sensor stops being active before it can listen for sounds again?").getInt();
             sculkSensorXpDrop = config.get("sculk sensor", "xp drop", 5, "How much xp do sculk sensors drop?").getInt();
             sculkShrieker = new BlockStatEntry(config, "sculk shrieker", 3, 3, 0);
-            sculkShriekerCooldown = config.get("sculk shrieker", "cooldown", 10, "How many ticks after a sculk shrieker activates before it can activate again?").getInt();
+            sculkShriekerCooldown = config.get("sculk shrieker", "cooldown", 200, "How many ticks after a player activates a sculk shrieker before they can activate another one?").getInt();
             sculkShriekerDarknessLength = config.get("sculk shrieker", "darkness length", 260, "How many ticks does a sculk shrieker give darkness for?").getInt();
             sculkShriekerDarknessRange = config.get("sculk shrieker", "darkness range", 40, "How close to a shrieker does a player need to get the darkness effect?").getDouble();
+            sculkShriekerDecayRate = config.get("sculk shrieker", "decay rate", 12000, "How many ticks after a players last warning until their warning level decays?").getInt();
+            sculkShriekerSpawnDelay = config.get("sculk shrieker", "spawn delay", 90, "How many ticks after a shrieker activates until it tries to spawn a warden?").getInt();
             sculkShriekerXpDrop = config.get("sculk shrieker", "xp drop", 5, "How much xp do sculk shriekers drop?").getInt();
             tintedGlass = new BlockStatEntry(config, "tinted glass", 0.3, 0.3, 0);
             trialPot = new BlockStatEntry(config, "trial pot", 0, 0, 0);
