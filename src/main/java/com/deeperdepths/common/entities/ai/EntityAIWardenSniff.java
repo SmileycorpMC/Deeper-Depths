@@ -20,20 +20,20 @@ public class EntityAIWardenSniff extends EntityAIBase {
     
     @Override
     public boolean shouldExecute() {
-        return warden.getState() == EntityWarden.EnumState.IDLE && warden.ticksExisted - lastSniff - sniffCooldown >= 0
+        return warden.getState() == EntityWarden.State.IDLE && warden.ticksExisted - lastSniff - sniffCooldown >= 0
                 && warden.getAngerTarget() != null && warden.getAttackTarget() == null;
     }
 
     @Override
     public boolean shouldContinueExecuting() {
-        return warden.getState() == EntityWarden.EnumState.SNIFFING;
+        return warden.getState() == EntityWarden.State.SNIFFING;
     }
 
     @Override
     public void startExecuting() {
         warden.getNavigator().clearPath();
         warden.playSound(DeeperDepthsSoundEvents.WARDEN_SNIFF, 5, 1);
-        warden.setState(EntityWarden.EnumState.SNIFFING);
+        warden.setState(EntityWarden.State.SNIFFING);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class EntityAIWardenSniff extends EntityAIBase {
 
     @Override
     public boolean isInterruptible() {
-        return warden.getState() != EntityWarden.EnumState.SNIFFING;
+        return warden.getState() != EntityWarden.State.SNIFFING;
     }
 
 }

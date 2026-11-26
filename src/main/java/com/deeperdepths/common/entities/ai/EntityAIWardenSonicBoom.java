@@ -24,13 +24,13 @@ public class EntityAIWardenSonicBoom extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         EntityLivingBase target = warden.getAttackTarget();
-        return target != null && warden.getSonicBoomCooldown() == 0 && warden.getState() == EntityWarden.EnumState.IDLE
+        return target != null && warden.getSonicBoomCooldown() == 0 && warden.getState() == EntityWarden.State.IDLE
                 && isInRange(target);
     }
 
     @Override
     public boolean shouldContinueExecuting() {
-        return warden.getState() == EntityWarden.EnumState.SONIC_BOOM;
+        return warden.getState() == EntityWarden.State.SONIC_BOOM;
     }
 
     private boolean isInRange(EntityLivingBase target) {
@@ -45,7 +45,7 @@ public class EntityAIWardenSonicBoom extends EntityAIBase {
         warden.getNavigator().clearPath();
         warden.playSound(DeeperDepthsSoundEvents.WARDEN_SONIC_CHARGE,  3, 1);
         warden.getLookHelper().setLookPositionWithEntity(warden.getAttackTarget(), 30, 90);
-        warden.setState(EntityWarden.EnumState.SONIC_BOOM);
+        warden.setState(EntityWarden.State.SONIC_BOOM);
         startTime = warden.ticksExisted;
     }
 
@@ -76,7 +76,7 @@ public class EntityAIWardenSonicBoom extends EntityAIBase {
 
     @Override
     public boolean isInterruptible() {
-        return warden.getState() != EntityWarden.EnumState.SONIC_BOOM;
+        return warden.getState() != EntityWarden.State.SONIC_BOOM;
     }
 
 }

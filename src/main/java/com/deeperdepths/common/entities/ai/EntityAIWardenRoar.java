@@ -23,13 +23,13 @@ public class EntityAIWardenRoar extends EntityAIBase {
 
     @Override
     public boolean shouldContinueExecuting() {
-        return warden.getState() == EntityWarden.EnumState.ROARING;
+        return warden.getState() == EntityWarden.State.ROARING;
     }
 
     @Override
     public void startExecuting() {
         warden.getNavigator().clearPath();
-        warden.setState(EntityWarden.EnumState.ROARING);
+        warden.setState(EntityWarden.State.ROARING);
         target = warden.getAngerTarget();
         warden.playSound(DeeperDepthsSoundEvents.WARDEN_ROAR, 3, 1);
     }
@@ -47,7 +47,7 @@ public class EntityAIWardenRoar extends EntityAIBase {
 
     @Override
     public boolean isInterruptible() {
-        return warden.getState() != EntityWarden.EnumState.ROARING;
+        return warden.getState() != EntityWarden.State.ROARING;
     }
 
 }

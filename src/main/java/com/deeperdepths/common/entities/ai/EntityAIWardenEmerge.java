@@ -3,8 +3,6 @@ package com.deeperdepths.common.entities.ai;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.entities.EntityWarden;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class EntityAIWardenEmerge extends EntityAIBase {
 
@@ -17,7 +15,7 @@ public class EntityAIWardenEmerge extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return warden.getState() == EntityWarden.EnumState.EMERGING;
+        return warden.getState() == EntityWarden.State.EMERGING;
     }
 
     @Override

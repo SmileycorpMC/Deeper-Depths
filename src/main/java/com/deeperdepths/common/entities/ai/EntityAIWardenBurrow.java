@@ -25,12 +25,12 @@ public class EntityAIWardenBurrow extends EntityAIBase {
 
     @Override
     public boolean shouldContinueExecuting() {
-        return warden.getState() == EntityWarden.EnumState.BURROWING;
+        return warden.getState() == EntityWarden.State.BURROWING;
     }
 
     @Override
     public void startExecuting() {
-        warden.setState(EntityWarden.EnumState.BURROWING);
+        warden.setState(EntityWarden.State.BURROWING);
         warden.playSound(DeeperDepthsSoundEvents.WARDEN_DIG, 5, 1);
         warden.getNavigator().clearPath();
     }
