@@ -5,6 +5,7 @@ import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.blocks.BlockSculkShrieker;
 import com.deeperdepths.common.capabilities.VibrationHandler;
 import com.deeperdepths.common.capabilities.WardenSpawnTracker;
+import com.deeperdepths.common.entities.EntityWarden;
 import com.deeperdepths.common.potion.DeeperDepthsPotions;
 import com.deeperdepths.config.BlockConfig;
 import com.deeperdepths.config.VibrationsConfig;
@@ -17,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -108,12 +110,35 @@ public class TileSculkShrieker extends TileEntity implements ITickable, Vibratio
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof BlockSculkShrieker &! state.getValue(BlockSculkShrieker.WATERLOGGED))
             world.playSound(null, pos, DeeperDepthsSoundEvents.SCULK_SHRIEKER_SHRIEK, SoundCategory.BLOCKS, 1.7F, (world.rand.nextFloat() * 0.4F) + 0.6F);
-
         for (int i = 0; i < 10; i++) DeeperDepths.proxy.spawnParticle(8, world, pos.getX() + 0.5f, pos.getY() + 0.4F, pos.getZ() + 0.5f, 0, 0.1, 0, 5 * i);
     }
 
     private boolean trySpawnWarden() {
+        Random rand = world.rand;
+        for (int i = 0; i < 20; ++i) {
+            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos.getX() + rand.nextInt(10) - 5, pos.getY() + 6, pos.getZ() + rand.nextInt(10) - 5);
+            for (int j = 6; j > -6; j--) {
+                mutable.setY(pos.getY() + j);
+               if (!canSpawnAt(mutable)) continue;
+               EntityWarden warden = new EntityWarden(world);
+               warden.setPosition(mutable.getX() + 0.5, mutable.getY(), mutable.getZ() + 0.5);
+               warden.setState(EntityWarden.State.EMERGING);
+               world.spawnEntity(warden);
+               return true;
+            }
+        }
         return false;
+    }
+
+    private boolean canSpawnAt(BlockPos pos) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+        mutable.setY(pos.getY() - 1);
+        if (!world.isBlockFullCube(mutable)) return false;
+        for (int i = 0; i < 3; i++) {
+            mutable.setY(pos.getY() + i);
+            if (!world.isAirBlock(mutable)) return false;
+        }
+        return true;
     }
 
     @Override
