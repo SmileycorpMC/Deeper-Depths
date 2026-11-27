@@ -1,5 +1,6 @@
 package com.deeperdepths.common.blocks;
 
+import com.deeperdepths.common.DeeperDepths;
 import com.deeperdepths.common.DeeperDepthsSoundEvents;
 import com.deeperdepths.common.DeeperDepthsSoundTypes;
 import com.deeperdepths.common.blocks.tiles.TileSculkSensor;
@@ -20,8 +21,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.atlas.api.util.DirectionUtils;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider, IFluidloggable {
 
@@ -83,6 +88,15 @@ public class BlockSculkSensor extends BlockSculk implements ITileEntityProvider,
         if (world.isRemote) return;
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileSculkSensor) ((TileSculkSensor) tile).reactToSound(entity, DeeperDepthsSoundEvents.SCULK_SENSOR_STEP, pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+        if (!state.getValue(ACTIVE)) return;
+        EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
+        DeeperDepths.proxy.spawnParticle(10, pos.getX() + 0.5 + (facing.getFrontOffsetX() == 0 ? rand.nextFloat() - 0.5 : 0.6 * facing.getFrontOffsetX()),
+                pos.getY() + 0.25, pos.getZ() + 0.5 + (facing.getFrontOffsetZ() == 0 ? rand.nextFloat() - 0.5 : 0.6 * facing.getFrontOffsetZ()),
+        0d, rand.nextFloat() * 0.04, 0d);
     }
 
     @Override

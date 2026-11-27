@@ -87,6 +87,8 @@ public class Constants {
 				return new ParticleShriek.Factory();
 			case 9:
 				return new ParticleVibration.Factory();
+			case 10:
+				return ParticleSculkSensor::new;
 		}
 	}
 }
