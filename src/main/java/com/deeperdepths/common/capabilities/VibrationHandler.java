@@ -61,6 +61,7 @@ public class VibrationHandler {
     }
     
     public void playSound(@Nullable Entity entity, SoundEvent sound, double x, double y, double z) {
+        if (sound == null) return;
         if (ctxEntity != null) entity = ctxEntity;
         if (entity != null && entity.isSneaking()) {
             Entity entity1 = entity;
@@ -93,7 +94,7 @@ public class VibrationHandler {
     public void playResonance(BlockPos pos, int frequency) {
         SoundEvent sound = DeeperDepthsSoundEvents.AMETHYST_BLOCK_RESONATE;
         ((ISoundFrequency)sound).setSoundFrequency(frequency);
-        world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, sound, SoundCategory.BLOCKS, 1, RESONANCE_PITCHES[frequency]);
+        world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, sound, SoundCategory.BLOCKS, 1, RESONANCE_PITCHES[frequency - 1]);
     }
 
     public void setEntityContext(Entity entity) {
