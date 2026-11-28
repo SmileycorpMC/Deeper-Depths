@@ -19,7 +19,6 @@ public class EntityAIWardenSonicBoom extends EntityAIBase {
 
     public EntityAIWardenSonicBoom(EntityWarden warden) {
         this.warden = warden;
-        setMutexBits(3);
     }
 
     @Override
@@ -44,9 +43,7 @@ public class EntityAIWardenSonicBoom extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        warden.getNavigator().clearPath();
         warden.playSound(DeeperDepthsSoundEvents.WARDEN_SONIC_CHARGE,  3, 1);
-        warden.getLookHelper().setLookPositionWithEntity(warden.getAttackTarget(), 30, 90);
         warden.setState(EntityWarden.State.SONIC_BOOM);
         startTime = warden.ticksExisted;
     }
